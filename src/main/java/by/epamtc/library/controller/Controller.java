@@ -35,7 +35,7 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("WEB-INF/jsp/home/home.jsp").forward(req,resp);
+        req.getRequestDispatcher("WEB-INF/jsp/home/test.jsp").forward(req,resp);
     }
 
     @Override
