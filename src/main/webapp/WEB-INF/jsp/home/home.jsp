@@ -32,7 +32,7 @@
 
 <body>
 <div class="hero_area">
-    <jsp:include page="../components/header.jsp"/>
+    <%@ include file="../components/header.jsp" %>
     <!-- slider section -->
     <section class=" slider_section position-relative">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -514,7 +514,7 @@
 
 <!-- end contact section -->
 
-<jsp:include page="../components/footer.jsp"/>
+<%@ include file="../components/footer.jsp" %>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
