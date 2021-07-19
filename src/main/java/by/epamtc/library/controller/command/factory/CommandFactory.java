@@ -1,6 +1,9 @@
 package by.epamtc.library.controller.command.factory;
 
 import by.epamtc.library.controller.command.Command;
+import by.epamtc.library.controller.command.impl.Home;
+//import by.epamtc.library.controller.command.impl.LoginCommand;
+import by.epamtc.library.controller.command.impl.ShowLogin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +16,9 @@ public class CommandFactory {
     }
 
     private CommandFactory() {
-//        commands.put(Commands.LOGIN_COMMAND, new LoginCommand());
+        commands.put("home", new Home());
+        commands.put("login", new ShowLogin());
+//        commands.put("login", new LoginCommand());
 //        commands.put(Commands.LOGOUT_COMMAND, new LogoutCommand());
 //        commands.put(Commands.SHOW_PAGE_COMMAND, new ShowPageCommand());
     }

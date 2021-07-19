@@ -22,8 +22,11 @@
 
             <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
                 <ul class="navbar-nav  ml-auto">
+<%--                    <li class="nav-item active">--%>
+<%--                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=home">Home <span class="sr-only">(current)</span></a>--%>
+<%--                    </li>--%>
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html"> About </a>
@@ -37,8 +40,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact us</a>
                     </li>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=login">Login</a>--%>
+<%--                    </li>--%>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Login</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">

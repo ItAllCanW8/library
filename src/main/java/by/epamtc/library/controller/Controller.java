@@ -1,5 +1,8 @@
 package by.epamtc.library.controller;
 
+import by.epamtc.library.controller.command.Command;
+import by.epamtc.library.controller.command.CommandResult;
+import by.epamtc.library.controller.command.factory.CommandFactory;
 import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +39,35 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
         req.getRequestDispatcher("WEB-INF/jsp/home/home.jsp").forward(req,resp);
-    }
+
+//        String commandName = req.getParameter("command");
+//        req.setCharacterEncoding("UTF-8");
+//        if (commandName == null || "".equals(commandName)) {
+//            req.getRequestDispatcher("WEB-INF/jsp/home/home.jsp").forward(req, resp);
+//        }
+//
+//        Command command = CommandFactory.getInstance().getCommand(commandName);
+//        CommandResult commandResult;
+//        try {
+//            commandResult = command.execute(req, resp);
+//        } catch (Exception e) {
+//            LOGGER.error("Unable to execute command.", e);
+//            throw new ServletException("Unable to execute command.", e);
+//        }
+//
+//        String page = commandResult.getPage();
+//        switch (commandResult.getRoutingType()) {
+//            case FORWARD:
+//                req.getRequestDispatcher(page).forward(req, resp);
+//                break;
+//            case REDIRECT:
+//                resp.sendRedirect(req.getContextPath() + page);
+//                break;
+//            default:
+//                LOGGER.error("Unknown routing type!");
+//                resp.sendRedirect(Page.ERROR_PAGE);
+        }
+//    }
 
     @Override
     public void destroy() {

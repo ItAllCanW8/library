@@ -33,7 +33,7 @@
                             <a class="nav-link" href="contact.html">Contact us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
                         </li>
                     </ul>
                 </div>
