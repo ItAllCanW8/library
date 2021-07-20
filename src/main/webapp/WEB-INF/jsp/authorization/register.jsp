@@ -52,7 +52,7 @@
                     </div>
                     <label for="firstName">First Name*</label>
                     <div>
-                        <input type="text" id="firstName" placeholder="firstName" required/>
+                        <input type="text" id="firstName" placeholder="first name" required/>
                     </div>
                     <label for="surname">Surname*</label>
                     <div>
@@ -60,15 +60,19 @@
                     </div>
                     <label for="dateOfBirth">Date of birth*</label>
                     <div>
-                        <input type="date" id="dateOfBirth" placeholder="dateOfBirth" required/>
+                        <input type="date" id="dateOfBirth" placeholder="date of birth" required/>
                     </div>
                     <label for="phoneNumber">Phone number*</label>
                     <div>
-                        <input type="text" id="phoneNumber" placeholder="phoneNumber" required/>
+                        <input type="text" id="phoneNumber" placeholder="phone number" required/>
                     </div>
                     <label for="password">Password*</label>
                     <div>
                         <input type="password" id="password" placeholder="password" required/>
+                    </div>
+                    <label for="repeatedPassword">Repeat Password*</label>
+                    <div>
+                        <input type="password" id="repeatedPassword" placeholder="repeat password" required/>
                     </div>
                     <button type="submit">Login</button>
                 </form>

@@ -10,7 +10,7 @@
 <header class="header_section">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/home">
                 <h3>
                     Library
                 </h3>
@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
                 <ul class="navbar-nav  ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/home">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html"> About </a>
