@@ -5,6 +5,6 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<jsp:forward page="/controller"/>
+<jsp:forward page="/home"/>
 </body>
 </html>

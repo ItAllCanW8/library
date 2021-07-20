@@ -49,7 +49,7 @@
                                 <div class="detail-box">
                                     <div>
                                         <h1>
-                                            E D U C A T I O N
+                                            L I B R A R Y
                                         </h1>
                                         <a href="">
                                             Read More
@@ -85,7 +85,7 @@
                                 <div class="detail-box">
                                     <div>
                                         <h1>
-                                            E D U C A T I O N
+                                            E N T E R T A I N M E N T
                                         </h1>
                                         <a href="">
                                             Read More
