@@ -33,11 +33,11 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        process(req, resp);
+        processRequest(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        process(req, resp);
+        processRequest(req, resp);
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -45,14 +45,14 @@ public class Controller extends HttpServlet {
         req.getRequestDispatcher("WEB-INF/jsp/home/home.jsp").forward(req,resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<Command> command = CommandProvider.defineCommand(request);
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Optional<Command> command = CommandProvider.defineCommand(req);
         try {
-            CommandResult result = command.isPresent() ? command.get().execute(request, response) : new CommandResult(CommandResult.DEFAULT_PATH);
-            result.redirect(request, response);
+            CommandResult result = command.isPresent() ? command.get().execute(req, resp) : new CommandResult(CommandResult.DEFAULT_PATH);
+            result.redirect(req, resp);
         } catch (CommandException e) {
-            LOGGER.log(Level.ERROR, "Couldn't process request: " + e);
-            request.setAttribute(JspAttribute.ERROR_MESSAGE_INFO, e.getMessage());
+            LOGGER.log(Level.ERROR, "Couldn't process req: " + e);
+//            req.setAttribute(JspAttribute.ERROR_MESSAGE_INFO, e.getMessage());
             throw new ServletException(e);
         }
     }

@@ -5,8 +5,11 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.entity.UserDetails;
+import by.epamtc.library.model.entity.UserRole;
 
 import java.sql.*;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,9 +18,9 @@ public class UserDaoImpl implements UserDao {
     private static final Lock locker = new ReentrantLock();
     private static volatile UserDao instance;
 
-
     private UserDaoImpl() {
     }
+
     public static UserDao getInstance() {
         if (instance == null) {
             locker.lock();
@@ -32,7 +35,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean isEmailAvailable(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SQL_SELECT_EMAIL)) {
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_EMAIL)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             return !resultSet.next();
@@ -42,21 +45,70 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean add(User user, String password) throws DaoException {
+    public boolean isPhoneNumAvailable(String phoneNumber) throws DaoException {
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SQL_INSERT_USER)) {
-            statement.setString(1, user.getPhotoName());
-            statement.setString(2, user.getFirstName());
-            statement.setString(3, user.getLastName());
-            statement.setDate(4, Date.valueOf(user.getDateOfBirth()));
-            statement.setString(5, user.getPhoneNumber());
-            statement.setString(6, user.getEmail());
-            statement.setString(7, password);
-            statement.setByte(8, user.getIsActive() ? (byte) 1 : 0);
-            statement.setLong(9, findRoleId(user.getRole()).orElseThrow(() -> new DaoException("Invalid role")));
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PHONE_NUM)) {
+            statement.setString(1, phoneNumber);
+            ResultSet resultSet = statement.executeQuery();
+            return !resultSet.next();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private boolean insertUserDetails(UserDetails userDetails) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_USER_DETAILS)) {
+            statement.setString(1, userDetails.getName());
+            statement.setString(2, userDetails.getSurname());
+            statement.setDate(3, Date.valueOf(userDetails.getDateOfBirth()));
+            statement.setString(4, userDetails.getPhoneNumber());
+            statement.setString(5, userDetails.getPhotoPath());
+
             return (statement.executeUpdate() == 1);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
+    }
+
+    private Optional<Long> findRoleId(UserRole role) throws SQLException, ConnectionPoolException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ROLE_ID_BY_NAME)) {
+            statement.setString(1, role.name());
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(resultSet.getLong(1)) : Optional.empty());
+        }
+    }
+
+    private Optional<Long> findDetailsId(String phoneNum) throws SQLException, ConnectionPoolException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_DETAILS_ID_BY_PHONE)) {
+            statement.setString(1, phoneNum);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(resultSet.getLong(1)) : Optional.empty());
+        }
+    }
+
+    @Override
+    public boolean add(User user, String encPass) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_USER)) {
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, encPass);
+            statement.setString(4, user.getStatus());
+
+            if(insertUserDetails(user.getUserDetails())) {
+                statement.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
+                        orElseThrow(() -> new DaoException("Invalid user details")));
+                statement.setLong(6, findRoleId(user.getRole()).
+                        orElseThrow(() -> new DaoException("Invalid role")));
+
+                return (statement.executeUpdate() == 1);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+        return false;
     }
 }

@@ -5,5 +5,6 @@ import by.epamtc.library.model.entity.User;
 
 public interface UserDao {
     boolean isEmailAvailable(String email) throws DaoException;
-    boolean add(User user, String password) throws DaoException;
+    boolean isPhoneNumAvailable(String phoneNumber) throws DaoException;
+    boolean add(User user, String encPass) throws DaoException;
 }

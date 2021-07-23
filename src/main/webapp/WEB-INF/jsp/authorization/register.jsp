@@ -50,9 +50,9 @@
                     <div>
                         <input type="email" id="email" placeholder="email" required/>
                     </div>
-                    <label for="firstName">First Name*</label>
+                    <label for="name">Name*</label>
                     <div>
-                        <input type="text" id="firstName" placeholder="first name" required/>
+                        <input type="text" id="name" placeholder="name" required/>
                     </div>
                     <label for="surname">Surname*</label>
                     <div>
