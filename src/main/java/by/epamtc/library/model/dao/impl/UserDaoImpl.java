@@ -18,6 +18,9 @@ public class UserDaoImpl implements UserDao {
     private static final Lock locker = new ReentrantLock();
     private static volatile UserDao instance;
 
+    private static final String INVALID_ROLE_ERROR_MSG= "Invalid user role.";
+    private static final String INVALID_DETAILS_ERROR_MSG = "Invalid user details.";
+
     private UserDaoImpl() {
     }
 
@@ -100,9 +103,9 @@ public class UserDaoImpl implements UserDao {
 
             if(insertUserDetails(user.getUserDetails())) {
                 statement.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
-                        orElseThrow(() -> new DaoException("Invalid user details")));
+                        orElseThrow(() -> new DaoException(INVALID_DETAILS_ERROR_MSG)));
                 statement.setLong(6, findRoleId(user.getRole()).
-                        orElseThrow(() -> new DaoException("Invalid role")));
+                        orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
 
                 return (statement.executeUpdate() == 1);
             }

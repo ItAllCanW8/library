@@ -44,37 +44,38 @@
                 <form method="post" action="register.do">
                     <label for="username">Username*</label>
                     <div>
-                        <input type="text" id="username" placeholder="username" required/>
+                        <input type="text" id="username" name="username" placeholder="username" required/>
                     </div>
                     <label for="email">Email*</label>
                     <div>
-                        <input type="email" id="email" placeholder="email" required/>
+                        <input type="email" id="email" name="email" placeholder="email" required/>
                     </div>
                     <label for="name">Name*</label>
                     <div>
-                        <input type="text" id="name" placeholder="name" required/>
+                        <input type="text" id="name" name="name" placeholder="name" required/>
                     </div>
                     <label for="surname">Surname*</label>
                     <div>
-                        <input type="text" id="surname" placeholder="surname" required/>
+                        <input type="text" id="surname" name="surname" placeholder="surname" required/>
                     </div>
                     <label for="dateOfBirth">Date of birth*</label>
                     <div>
-                        <input type="date" id="dateOfBirth" placeholder="date of birth" required/>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" placeholder="date of birth" required/>
                     </div>
                     <label for="phoneNumber">Phone number*</label>
                     <div>
-                        <input type="text" id="phoneNumber" placeholder="phone number" required/>
+                        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="phone number" required/>
                     </div>
                     <label for="password">Password*</label>
                     <div>
-                        <input type="password" id="password" placeholder="password" required/>
+                        <input type="password" id="password" name="password" placeholder="password" required/>
                     </div>
                     <label for="repeatedPassword">Repeat Password*</label>
                     <div>
-                        <input type="password" id="repeatedPassword" placeholder="repeat password" required/>
+                        <input type="password" id="repeatedPassword" name="repeatedPassword"
+                               placeholder="repeat password" required/>
                     </div>
-                    <button type="submit">Login</button>
+                    <button type="submit">Register</button>
                 </form>
             </div>
         </div>

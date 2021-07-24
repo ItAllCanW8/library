@@ -1,5 +1,7 @@
 package by.epamtc.library.model.service.impl;
 
+import by.epamtc.library.controller.attribute.JspAttribute;
+import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
@@ -40,19 +42,21 @@ public class UserServiceImpl implements UserService {
     public boolean register(Map<String, String> fields) throws ServiceException {
         try {
             Optional<User> userOptional = userFactory.create(fields);
+
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
 
                 if(!dao.isEmailAvailable(user.getEmail())) {
-                    fields.put("email", "This email is already taken.");
+                    fields.put(RequestParameter.EMAIL, JspAttribute.EMAIL_AVAILABLE_ERROR_MSG);
                     return false;
                 }
 
                 if(!dao.isPhoneNumAvailable(user.getUserDetails().getPhoneNumber())) {
-                    fields.put("phoneNumber", "This phone number is already taken.");
+                    fields.put(RequestParameter.PHONE_NUMBER, JspAttribute.PHONE_NUMBER_AVAILABLE_ERROR_MSG);
                     return false;
                 }
-                String password = fields.get("password");
+
+                String password = fields.get(RequestParameter.PASSWORD);
                 String encPass = Encryptor.encrypt(password);
 
                 return dao.add(user, encPass);
@@ -61,5 +65,10 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return false;
+    }
+
+    @Override
+    public Optional<User> login(String email, String password) throws ServiceException {
+        return Optional.empty();
     }
 }

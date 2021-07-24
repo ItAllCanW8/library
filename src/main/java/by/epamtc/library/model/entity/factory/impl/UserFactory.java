@@ -1,11 +1,11 @@
 package by.epamtc.library.model.entity.factory.impl;
 
+import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
 import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.epamtc.library.model.service.validation.UserValidator;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -14,8 +14,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class UserFactory implements LibraryFactory<User> {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private static final UserRole DEFAULT_ROLE = UserRole.READER;
     private static final String DEFAULT_PHOTO_NAME = "default_avatar.png";
     private static final String DEFAULT_STATUS = "active";
@@ -38,28 +36,21 @@ public class UserFactory implements LibraryFactory<User> {
 
     @Override
     public Optional<User> create(Map<String, String> fields) {
-        Optional<User> result;
-//        if (isRegisterFormValid(fields)) {
-            String email = fields.get("email");
-            String username = fields.get("username");
+        Optional<User> result = Optional.empty();
 
-            String name = fields.get("name");
-            String surname = fields.get("surname");
-            String dateOfBirth = fields.get("dateOfBirth");
-            String phoneNumber = fields.get("phoneNumber");
+        if (UserValidator.isRegisterFormValid(fields)) {
+            String email = fields.get(RequestParameter.EMAIL);
+            String username = fields.get(RequestParameter.USERNAME);
 
-//            LOGGER.info(email);
-//            LOGGER.info(username);
-//            LOGGER.info(name);
-//            LOGGER.info(surname);
-//            LOGGER.info(dateOfBirth);
-//            LOGGER.info(phoneNumber);
-//            LOGGER.info(LocalDate.parse(dateOfBirth));
+            String name = fields.get(RequestParameter.NAME);
+            String surname = fields.get(RequestParameter.SURNAME);
+            String dateOfBirth = fields.get(RequestParameter.DATE_OF_BIRTH);
+            String phoneNumber = fields.get(RequestParameter.PHONE_NUMBER);
 
             result = Optional.of(new User(DEFAULT_ROLE,
                     new UserDetails(name, surname, LocalDate.parse(dateOfBirth),phoneNumber, DEFAULT_PHOTO_NAME),
-                    DEFAULT_STATUS, username,email));
-//        }
+                    DEFAULT_STATUS, username, email));
+        }
         return result;
     }
 }

@@ -40,11 +40,6 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("WEB-INF/jsp/home/home.jsp").forward(req,resp);
-    }
-
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Optional<Command> command = CommandProvider.defineCommand(req);
         try {
