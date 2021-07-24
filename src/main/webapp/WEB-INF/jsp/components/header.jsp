@@ -6,10 +6,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- header section starts -->
 <header class="header_section">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <c:set var="role" scope="session" value="${sessionScope.currentRole}"/>
+            <c:set var="guest" scope="session" value="GUEST"/>
+            <c:set var="admin" scope="session" value="ADMIN"/>
+            <c:set var="librarian" scope="session" value="LIBRARIAN"/>
+            <c:set var="reader" scope="session" value="READER"/>
+            <c:set var="user" scope="session" value="${sessionScope.user}"/>
             <a class="navbar-brand" href="${pageContext.request.contextPath}/home">
                 <h3>
                     Library

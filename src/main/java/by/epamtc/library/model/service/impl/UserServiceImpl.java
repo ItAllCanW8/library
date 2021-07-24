@@ -10,6 +10,7 @@ import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.UserFactory;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.validation.UserValidator;
 import by.epamtc.library.util.Encryptor;
 
 import java.util.Map;
@@ -69,6 +70,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> login(String email, String password) throws ServiceException {
+        try {
+            if (UserValidator.isEmailValid(email) && UserValidator.isPasswordValid(password) && !dao.isEmailAvailable(email)) {
+                Optional<String> passFromDb = dao.findPasswordByEmail(email);
+                if (passFromDb.isPresent() && Encryptor.check(password, passFromDb.get())) {
+                    return dao.findUserByEmail(email);
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
         return Optional.empty();
     }
 }

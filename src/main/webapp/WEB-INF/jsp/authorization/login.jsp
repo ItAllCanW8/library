@@ -57,12 +57,16 @@
                     <h5>
                         Login Now
                     </h5>
-                    <form action="">
+                    <form action="login.do" method="post">
                         <div>
-                            <input type="email" placeholder="Email " />
+                            <label for="email">
+                                <input type="email" id="email" name="email" placeholder="email" />
+                            </label>
                         </div>
                         <div>
-                            <input type="password" placeholder="Password" />
+                            <label for="password">
+                                <input type="password" id="password" name="password" placeholder="password" />
+                            </label>
                         </div>
                         <button type="submit">Login</button>
                     </form>

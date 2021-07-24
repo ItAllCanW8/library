@@ -9,6 +9,8 @@ import by.epamtc.library.model.entity.UserDetails;
 import by.epamtc.library.model.entity.UserRole;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -113,5 +115,45 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException(e);
         }
         return false;
+    }
+
+    @Override
+    public Optional<String> findPasswordByEmail(String email) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PASSWORD)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(resultSet.getString(1)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(createUserFromResultSet(resultSet)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
+        long userId = resultSet.getLong("user_id");
+        long detailsId = resultSet.getLong("details_id_fk");
+        String username = resultSet.getString("username");
+        String email = resultSet.getString("email");
+        String name = resultSet.getString("name");
+        String surname = resultSet.getString("surname");
+        LocalDate dateOfBirth = resultSet.getDate("date_of_birth").toLocalDate();
+        String phoneNumber = resultSet.getString("phone_number");
+        String photoPath = resultSet.getString("photo_path");
+        String status = resultSet.getString("status");
+        UserRole role = UserRole.valueOf(resultSet.getString("role").toUpperCase(Locale.ROOT));
+        return (new User(userId, role, new UserDetails(detailsId,name,surname,dateOfBirth,phoneNumber,photoPath),
+                status,username, email));
     }
 }
