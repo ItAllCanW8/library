@@ -8,15 +8,12 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class Login implements Command {
@@ -50,7 +47,7 @@ public class Login implements Command {
                 }
             } else {
                 req.setAttribute(RequestParameter.EMAIL, email);
-                req.setAttribute(JspAttribute.ERROR_INPUT_DATA_ATTRIBUTE, JspAttribute.ERROR_INPUT_DATA_MSG);
+                req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
             }
         } catch (ServiceException e) {
             throw new CommandException(e);

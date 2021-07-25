@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.currentLocalization}"/>
+<fmt:setBundle basename="locale.content"/>
 <!-- header section starts -->
 <header class="header_section">
     <div class="container-fluid">
@@ -17,6 +20,7 @@
             <c:set var="librarian" scope="session" value="LIBRARIAN"/>
             <c:set var="reader" scope="session" value="READER"/>
             <c:set var="user" scope="session" value="${sessionScope.user}"/>
+
             <a class="navbar-brand" href="${pageContext.request.contextPath}/home">
                 <h3>
                     Library
@@ -29,26 +33,49 @@
             <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
                 <ul class="navbar-nav  ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/home">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/home"><fmt:message
+                                key="header.home"/><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html"> About </a>
+                        <a class="nav-link" href="course.html"><fmt:message
+                                key="header.books"/></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="course.html"> Courses </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/home" id="navbarDropdown" data-toggle="dropdown"
+                           aria-expanded="false"><fmt:message
+                                key="header.changeLanguage"/></a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/change_language.do?newLocalization=ru_RU"><fmt:message
+                                    key="language.russian"/></a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/change_language.do?newLocalization=en_EN"><fmt:message
+                                    key="language.english"/></a></li>
+                        </ul>
                     </li>
+
+                    <c:if test="${role.toString().equals(guest)}">
+                        <li class="nav-item">
+                            <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/register"><fmt:message
+                                    key="header.register"/></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/login"><fmt:message
+                                    key="header.login"/></a>
+                        </li>
+                    </c:if>
+                    <c:if test="${!role.toString().equals(guest)}">
+                        <li class="nav-item">
+                            <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/logout.do"><fmt:message
+                                    key="header.logout"/></a>
+                        </li>
+                    </c:if>
+
                     <li class="nav-item">
                         <a class="nav-link" href="event.html"> Events </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
 </header>
-<!-- end header section -->

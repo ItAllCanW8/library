@@ -33,6 +33,7 @@
 <body>
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
+    <c:set var="books" scope="session" value="${books}"/>
     <!-- slider section -->
     <section class=" slider_section position-relative">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -212,16 +213,17 @@
         </div>
         <div class="course_container">
             <div class="course_content">
+                <c:forEach var="book" items="${books}">
                 <div class="box">
-                    <img src="images/c-1.jpg" alt="" />
+                    <img src="images/${book.img}" alt="" />
                     <a href="" class="">
                         <img src="images/link.png" alt="" />
                     </a>
                     <h5>
-                        LMS <br />
-                        Content
+                        ${book.title}
                     </h5>
                 </div>
+                </c:forEach>
                 <div class="box">
                     <img src="images/c-2.jpg" alt="" />
                     <a href="" class="">

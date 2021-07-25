@@ -41,8 +41,9 @@
             </ul>
             <h5 class="text-center m-2">About Creator</h5>
             <p>
-                <h5> Copyright &copy; Library <fmt:formatDate value="${date}" pattern="yyyy" /> </h5>
+                <h5 style="color:white">Copyright &copy; Library <fmt:formatDate value="${date}" pattern="yyyy" />  </h5>
             </p>
+
         </div>
     </div>
 </footer>

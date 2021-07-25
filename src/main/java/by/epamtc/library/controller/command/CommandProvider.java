@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class CommandProvider {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String DO_SUBSTRING = ".do";
     private static final String SLASH = "/";
 
@@ -24,7 +24,7 @@ public class CommandProvider {
                 CommandType commandType = CommandType.valueOf(stringCommand.toUpperCase());
                 return Optional.of(commandType.getCurrentCommand());
             } catch (IllegalArgumentException e) {
-                logger.log(Level.ERROR, "Command " + stringCommand + "isn't correct: " + e);
+                LOGGER.log(Level.ERROR, "Command " + stringCommand + " isn't correct: " + e);
             }
         }
         return Optional.empty();

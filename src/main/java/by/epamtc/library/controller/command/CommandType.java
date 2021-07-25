@@ -1,7 +1,6 @@
 package by.epamtc.library.controller.command;
 
-import by.epamtc.library.controller.command.impl.Login;
-import by.epamtc.library.controller.command.impl.Register;
+import by.epamtc.library.controller.command.impl.*;
 
 public enum CommandType {
     REGISTER {{
@@ -9,6 +8,15 @@ public enum CommandType {
     }},
     LOGIN {{
         this.command = new Login();
+    }},
+    LOGOUT {{
+        this.command = new Logout();
+    }},
+    CHANGE_LANGUAGE {{
+        this.command = new ChangeLanguage();
+    }},
+    LOAD_BOOKS {{
+        this.command = new LoadBooks();
     }};
 
     Command command;

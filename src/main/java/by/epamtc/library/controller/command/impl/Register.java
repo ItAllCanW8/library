@@ -5,7 +5,6 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.Level;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class Register implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -58,7 +56,7 @@ public class Register implements Command {
                 req.setAttribute(RequestParameter.EMAIL, fields.get(RequestParameter.EMAIL));
                 req.setAttribute(RequestParameter.PASSWORD, fields.get(RequestParameter.PASSWORD));
                 req.setAttribute(RequestParameter.REPEATED_PASSWORD, fields.get(RequestParameter.REPEATED_PASSWORD));
-                req.setAttribute(JspAttribute.ERROR_INPUT_DATA_ATTRIBUTE, JspAttribute.ERROR_INPUT_DATA_MSG);
+                req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
                 result = new CommandResult(PagePath.REGISTER, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {

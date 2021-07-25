@@ -21,4 +21,6 @@ public class SqlQuery {
     public static final String FIND_USER_DETAILS_BY_ID = "SELECT details_id FROM user_details WHERE email = ?;";
 
     public static final String SELECT_PASSWORD = "SELECT password FROM users WHERE email = ?;";
+
+    public static final String SELECT_BOOKS = "SELECT * FROM books;";
 }

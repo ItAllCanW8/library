@@ -7,8 +7,11 @@ public class JspAttribute {
     public static final String ACCOUNT_IS_DEACTIVATED = "accountIsDeactivated";
     public static final String ACCOUNT_IS_DEACTIVATED_MSG = "Couldn't login cause your account is deactivated.";
 
-    public static final String ERROR_INPUT_DATA_ATTRIBUTE = "errorInputData";
+    public static final String ERROR_INPUT_DATA = "errorInputData";
     public static final String ERROR_INPUT_DATA_MSG = "Input data isn't valid.";
+
+    public static final String NO_BOOKS = "noBooks";
+    public static final String NO_BOOKS_MSG = "No books";
 
     private JspAttribute(){}
 }
