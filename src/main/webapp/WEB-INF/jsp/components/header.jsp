@@ -21,7 +21,7 @@
             <c:set var="reader" scope="session" value="READER"/>
             <c:set var="user" scope="session" value="${sessionScope.user}"/>
 
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/home">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/home.do">
                 <h3>
                     Library
                 </h3>
@@ -33,15 +33,15 @@
             <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
                 <ul class="navbar-nav  ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/home"><fmt:message
+                        <a class="nav-link" href="${pageContext.request.contextPath}/home.do"><fmt:message
                                 key="header.home"/><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="course.html"><fmt:message
+                        <a class="nav-link" href="${pageContext.request.contextPath}/load_books.do"><fmt:message
                                 key="header.books"/></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/home" id="navbarDropdown" data-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"
                            aria-expanded="false"><fmt:message
                                 key="header.changeLanguage"/></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -70,12 +70,11 @@
                                     key="header.logout"/></a>
                         </li>
                     </c:if>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="event.html"> Events </a>
-                    </li>
                 </ul>
             </div>
         </nav>
     </div>
 </header>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>

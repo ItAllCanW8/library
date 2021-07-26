@@ -22,6 +22,8 @@ public class RequestParameter {
     public static final String BOOKS = "books";
     public static final String NEW_LOCALIZATION = "newLocalization";
 
+    public static final String HEADER_REFERER = "REFERER";
+
 
     private RequestParameter(){}
 }

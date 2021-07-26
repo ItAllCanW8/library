@@ -38,37 +38,39 @@
 <section class="login_section layout_padding">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="detail-box">
-                    <h3>
-                        GET ONLINE COURSES FOR FREE
-                    </h3>
-                    <p>
-                        Create your free account now and get immediate access to 100s of
-                        online courses
-                    </p>
-                    <a href="">
-                        REGISTER NOW
-                    </a>
-                </div>
-            </div>
+<%--            <div class="col-md-6">--%>
+<%--                <div class="detail-box">--%>
+<%--                    <h3>--%>
+<%--                        GET ONLINE COURSES FOR FREE--%>
+<%--                    </h3>--%>
+<%--                    <p>--%>
+<%--                        Create your free account now and get immediate access to 100s of--%>
+<%--                        online courses--%>
+<%--                    </p>--%>
+<%--                    <a href="${pageContext.request.contextPath}/register.jsp">--%>
+<%--                        REGISTER NOW--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="col-md-6">
                 <div class="login_form">
                     <h5>
-                        Login Now
+                        <fmt:message key="header.login"/>
                     </h5>
                     <form action="login.do" method="post">
                         <div>
                             <label for="email">
-                                <input type="email" id="email" name="email" placeholder="email" />
+                                <input type="email" id="email" name="email"
+                                       placeholder="<fmt:message key="register.inputEmail"/>" />
                             </label>
                         </div>
                         <div>
                             <label for="password">
-                                <input type="password" id="password" name="password" placeholder="password" />
+                                <input type="password" id="password" name="password"
+                                       placeholder="<fmt:message key="register.inputPassword"/>" />
                             </label>
                         </div>
-                        <button type="submit">Login</button>
+                        <button type="submit"><fmt:message key="header.login"/></button>
                     </form>
                 </div>
             </div>
@@ -77,12 +79,6 @@
 </section>
 
 <!-- end login section -->
-
-<%--<jsp:include page="../components/footer.jsp"/>--%>
-<%@ include file="../components/footer.jsp" %>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
 </body>
 </html>

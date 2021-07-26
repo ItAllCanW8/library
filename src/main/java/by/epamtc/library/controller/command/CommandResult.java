@@ -1,12 +1,16 @@
 package by.epamtc.library.controller.command;
 
+import by.epamtc.library.controller.attribute.RequestParameter;
+import by.epamtc.library.controller.attribute.ServletAttribute;
+
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CommandResult {
-    public static final String DEFAULT_PATH = "/home";
+    public static final String DEFAULT_PATH = ServletAttribute.HOME_URL;
 
     private String path;
     private Type type;
@@ -62,7 +66,7 @@ public class CommandResult {
                 break;
             }
             case RETURN_WITH_REDIRECT: {
-                String previousUrl = request.getHeader("REFERRER");
+                String previousUrl = request.getHeader(RequestParameter.HEADER_REFERER);
                 if (previousUrl == null || previousUrl.isEmpty()) {
                     previousUrl = request.getContextPath() + CommandResult.DEFAULT_PATH;
                 }

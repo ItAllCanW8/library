@@ -3,6 +3,9 @@ package by.epamtc.library.controller.command;
 import by.epamtc.library.controller.command.impl.*;
 
 public enum CommandType {
+    HOME {{
+        this.command = new Home();
+    }},
     REGISTER {{
         this.command = new Register();
     }},

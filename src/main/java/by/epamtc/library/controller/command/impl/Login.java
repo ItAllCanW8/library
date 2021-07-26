@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class Login implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -28,17 +27,15 @@ public class Login implements Command {
         CommandResult result = new CommandResult(PagePath.LOGIN, CommandResult.Type.FORWARD);
         try {
             Optional<User> userOptional = service.login(email, password);
-            LOGGER.info(userOptional);
+
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                LOGGER.info(user);
+
                 if (user.getStatus().equals("active")) {
                     HttpSession session = req.getSession();
                     session.setAttribute(SessionAttribute.USER, user);
                     session.setAttribute(SessionAttribute.CURRENT_ROLE, user.getRole());
                     session.setAttribute(SessionAttribute.USER_ID, user.getId());
-
-                    LOGGER.info(user);
 
                     result = new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.REDIRECT);
                 } else {

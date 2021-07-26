@@ -6,5 +6,5 @@ import by.epamtc.library.model.entity.Book;
 import java.util.List;
 
 public interface BookDao {
-    List<Book> loadBooks() throws DaoException;
+    List<Book> loadPopularBooks() throws DaoException;
 }

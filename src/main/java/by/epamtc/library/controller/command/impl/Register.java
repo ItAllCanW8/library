@@ -18,8 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Register implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String username = req.getParameter(RequestParameter.USERNAME);
@@ -60,7 +58,6 @@ public class Register implements Command {
                 result = new CommandResult(PagePath.REGISTER, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
-            LOGGER.log(Level.ERROR, "Error registering.");
             throw new CommandException(e);
         }
         return result;

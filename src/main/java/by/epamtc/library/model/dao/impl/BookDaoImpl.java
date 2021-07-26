@@ -5,12 +5,13 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.entity.Book;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -20,6 +21,8 @@ public class BookDaoImpl implements BookDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
     private static final Lock lock = new ReentrantLock();
     private static volatile BookDao instance;
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Constructs a VacancyDaoImpl object.
@@ -41,14 +44,14 @@ public class BookDaoImpl implements BookDao {
         return instance;
     }
     @Override
-    public List<Book> loadBooks() throws DaoException {
+    public List<Book> loadPopularBooks() throws DaoException {
         List<Book> books = new ArrayList<>();
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOKS)) {
-//            statement.setLong(1, employeeId);
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_POPULAR_BOOKS)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));
+                LOGGER.info(books.get(0));
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
@@ -58,7 +61,6 @@ public class BookDaoImpl implements BookDao {
 
     private Book createBookFromResultSet(ResultSet resultSet) throws SQLException, DaoException {
         long id = resultSet.getLong("book_id");
-//        boolean isAvailable = resultSet.getByte(2) == 1;
         String title = resultSet.getString("title");
         String author_pseudo = resultSet.getString("author_pseudo");
         String isbn = resultSet.getString("isbn");
@@ -67,6 +69,7 @@ public class BookDaoImpl implements BookDao {
         String pdf = resultSet.getString("pdf");
         String img = resultSet.getString("img");
         int availableQuantity = resultSet.getInt("available_quantity");
+
         return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription,pdf,img));
     }
 }

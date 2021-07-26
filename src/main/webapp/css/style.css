@@ -63,7 +63,7 @@ body {
 .hero_area {
   height: 100vh;
   background-color: #b5caee;
-  background-image: url(../images/bg.jpg);
+  background-image: url(../images/layout/bg.jpg);
   background-size: cover;
 }
 
@@ -132,7 +132,7 @@ a:focus {
 }
 
 .custom_nav-container .nav_search-btn {
-  background-image: url(../images/search-icon.png);
+  background-image: url(../images/layout/search-icon.png);
   background-size: 20px;
   background-repeat: no-repeat;
   background-position-y: 7px;
@@ -179,7 +179,7 @@ a:focus {
 }
 
 .custom_nav-container .navbar-toggler .navbar-toggler-icon {
-  background-image: url(../images/menu.png);
+  background-image: url(../images/layout/menu.png);
   background-size: 42px;
 }
 
@@ -477,7 +477,7 @@ a:focus {
 }
 
 .login_section {
-  background-image: url(../images/login-bg.jpg);
+  background-image: url(../images/layout/login-bg.jpg);
   background-size: cover;
   color: #ffffff;
 }
@@ -723,11 +723,11 @@ a:focus {
 }
 
 .client_section #carouselExampleControls .btn-box .carousel-control-prev {
-  background-image: url(../images/prev.png);
+  background-image: url(../images/layout/prev.png);
 }
 
 .client_section #carouselExampleControls .btn-box .carousel-control-next {
-  background-image: url(../images/next.png);
+  background-image: url(../images/layout/next.png);
   margin-bottom: 15px;
 }
 

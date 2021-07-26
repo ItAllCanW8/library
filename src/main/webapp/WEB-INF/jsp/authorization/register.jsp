@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <!-- Basic -->
@@ -39,55 +40,52 @@
         <div class="container">
             <div class="login_form">
                 <h4>
-                    Register
+                    <fmt:message key="register.title"/>
                 </h4>
                 <form method="post" action="register.do">
-                    <label for="username">Username*</label>
+                    <label for="username"><fmt:message key="register.inputUsername"/></label>
                     <div>
-                        <input type="text" id="username" name="username" placeholder="username" required/>
+                        <input type="text" id="username" name="username"
+                               placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required/>
                     </div>
-                    <label for="email">Email*</label>
+                    <label for="email"><fmt:message key="register.inputEmail"/></label>
                     <div>
-                        <input type="email" id="email" name="email" placeholder="email" required/>
+                        <input type="email" id="email" name="email" placeholder="<fmt:message key="register.inputEmailPlaceholder"/>" required/>
                     </div>
-                    <label for="name">Name*</label>
+                    <label for="name"><fmt:message key="register.inputName"/></label>
                     <div>
-                        <input type="text" id="name" name="name" placeholder="name" required/>
+                        <input type="text" id="name" name="name" placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required/>
                     </div>
-                    <label for="surname">Surname*</label>
+                    <label for="surname"><fmt:message key="register.inputSurname"/></label>
                     <div>
-                        <input type="text" id="surname" name="surname" placeholder="surname" required/>
+                        <input type="text" id="surname" name="surname" placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required/>
                     </div>
-                    <label for="dateOfBirth">Date of birth*</label>
+                    <label for="dateOfBirth"><fmt:message key="register.inputDateOfBirth"/></label>
                     <div>
-                        <input type="date" id="dateOfBirth" name="dateOfBirth" placeholder="date of birth" required/>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" placeholder="17.01.1989" required/>
                     </div>
-                    <label for="phoneNumber">Phone number*</label>
+                    <label for="phoneNumber"><fmt:message key="register.inputPhoneNumber"/></label>
                     <div>
-                        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="phone number" required/>
+                        <input type="text" id="phoneNumber" name="phoneNumber"
+                               placeholder="<fmt:message key="register.inputPhoneNumberPlaceholder"/>" required/>
                     </div>
-                    <label for="password">Password*</label>
+                    <label for="password"><fmt:message key="register.inputPassword"/></label>
                     <div>
-                        <input type="password" id="password" name="password" placeholder="password" required/>
+                        <input type="password" id="password" name="password"
+                               placeholder="<fmt:message key="register.inputPasswordPlaceholder"/>" required/>
                     </div>
-                    <label for="repeatedPassword">Repeat Password*</label>
+                    <label for="repeatedPassword"><fmt:message key="register.inputRepeatedPassword"/></label>
                     <div>
                         <input type="password" id="repeatedPassword" name="repeatedPassword"
-                               placeholder="repeat password" required/>
+                               placeholder="<fmt:message key="register.inputPasswordPlaceholder"/>" required/>
                     </div>
-                    <button type="submit">Register</button>
+                    <button type="submit"><fmt:message key="button.completeRegister"/></button>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- end login section -->
-
-    <%--<jsp:include page="../components/footer.jsp"/>--%>
-    <%@ include file="../components/footer.jsp" %>
-
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
 </body>
 </html>

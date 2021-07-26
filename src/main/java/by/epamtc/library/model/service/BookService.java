@@ -6,5 +6,5 @@ import by.epamtc.library.model.entity.Book;
 import java.util.List;
 
 public interface BookService {
-    List<Book> loadBooks() throws ServiceException;
+    List<Book> loadPopularBooks() throws ServiceException;
 }
