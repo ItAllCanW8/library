@@ -6,6 +6,7 @@ public class SessionAttribute {
     public static final String USER = "user";
     public static final String CURRENT_ROLE = "currentRole";
     public static final String CURRENT_LOCALIZATION = "currentLocalization";
+    public static final String BOOKS = "books";
 
     private SessionAttribute(){}
 }

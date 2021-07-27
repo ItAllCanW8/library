@@ -45,8 +45,34 @@ public class BookDaoImpl implements BookDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));
-                LOGGER.info(books.get(0));
             }
+
+            for(Book book: books)
+                System.out.println(book);
+
+            System.out.println(books.size() );
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+        return books;
+    }
+
+    @Override
+    public List<Book> loadBooks() throws DaoException {
+        List<Book> books = new ArrayList<>();
+
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOKS)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                books.add(createBookFromResultSet(resultSet));
+            }
+
+            for(Book book: books)
+                System.out.println(book);
+
+            System.out.println(books.size() );
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }

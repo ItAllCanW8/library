@@ -40,4 +40,13 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Book> loadBooks() throws ServiceException {
+        try {
+            return bookDao.loadBooks();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

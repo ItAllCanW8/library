@@ -78,7 +78,6 @@
     </div>
 </section>
 </div>
-<!-- end login section -->
 
 </body>
 </html>

@@ -23,4 +23,5 @@ public class SqlQuery {
     public static final String SELECT_PASSWORD = "SELECT password FROM users WHERE email = ?;";
 
     public static final String SELECT_POPULAR_BOOKS = "SELECT * FROM books ORDER BY available_quantity ASC LIMIT 6;";
+    public static final String SELECT_BOOKS = "SELECT * FROM books;";
 }

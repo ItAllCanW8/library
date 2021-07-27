@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BookDao {
     List<Book> loadPopularBooks() throws DaoException;
+    List<Book> loadBooks() throws DaoException;
 }
