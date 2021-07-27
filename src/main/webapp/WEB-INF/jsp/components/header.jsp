@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.currentLocalization}"/>
 <fmt:setBundle basename="locale.content"/>
+
 <!-- header section starts -->
 <header class="header_section">
     <div class="container-fluid">
@@ -74,7 +75,7 @@
             </div>
         </nav>
     </div>
-</header>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+</header>

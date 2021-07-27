@@ -24,15 +24,9 @@ public class BookDaoImpl implements BookDao {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    /**
-     * Constructs a VacancyDaoImpl object.
-     */
     private BookDaoImpl() {
     }
 
-    /**
-     * Returns a VacancyDao object.
-     */
     public static BookDao getInstance() {
         if (instance == null) {
             lock.lock();

@@ -39,7 +39,7 @@
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
     <c:set var="books" scope="session" value="${books}"/>
-
+</div>
 <!-- event section -->
 <section class="event_section layout_padding">
     <div class="container">
@@ -104,9 +104,6 @@
 </section>
 
 <!-- end event section -->
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
 </body>
 

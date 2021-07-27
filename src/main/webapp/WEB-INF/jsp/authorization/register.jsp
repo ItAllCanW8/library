@@ -84,8 +84,7 @@
             </div>
         </div>
     </section>
-
-    <!-- end login section -->
+</div>
 
 </body>
 </html>
