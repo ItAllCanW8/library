@@ -67,6 +67,32 @@
                     </c:if>
                     <c:if test="${!role.toString().equals(guest)}">
                         <li class="nav-item">
+                            <a class="nav-link header-link offset-1" id="navbarDropdownUser" data-toggle="dropdown"
+                               aria-expanded="false">
+                                ${sessionScope.user.username}
+                                <c:if test="${sessionScope.role.toString().equals(admin)}">
+                                    (admin)
+                                </c:if>
+
+                                <c:if test="${sessionScope.role.toString().equals(reader)}">
+                                    (reader)
+                                </c:if>
+
+                                <c:if test="${sessionScope.role.toString().equals(librarian)}">
+                                    (librarian)
+                                </c:if>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/user_profile.do">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout.do"><fmt:message
+                                        key="header.logout"/></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/logout.do"><fmt:message
                                     key="header.logout"/></a>
                         </li>
@@ -76,6 +102,6 @@
         </nav>
     </div>
 
-<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>--%>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 </header>

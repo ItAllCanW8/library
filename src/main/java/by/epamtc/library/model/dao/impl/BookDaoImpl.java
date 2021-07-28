@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -47,10 +48,12 @@ public class BookDaoImpl implements BookDao {
                 books.add(createBookFromResultSet(resultSet));
             }
 
-            for(Book book: books)
-                System.out.println(book);
+                System.out.println("popular");
 
-            System.out.println(books.size() );
+                for(Book book: books)
+                    System.out.println(book);
+
+                System.out.println(books.size() );
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -65,18 +68,32 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOKS)) {
             ResultSet resultSet = statement.executeQuery();
 
+//            System.out.println("all");
+
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));
             }
 
-            for(Book book: books)
-                System.out.println(book);
-
-            System.out.println(books.size() );
+//            for(Book book: books)
+//                System.out.println(book);
+//
+//            System.out.println(books.size() );
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
         return books;
+    }
+
+    @Override
+    public Optional<Book> findBookById(long bookId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_BY_ID)) {
+            statement.setLong(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
     }
 
     private Book createBookFromResultSet(ResultSet resultSet) throws SQLException, DaoException {
@@ -88,8 +105,9 @@ public class BookDaoImpl implements BookDao {
         String shortDescription = resultSet.getString("short_description");
         String pdf = resultSet.getString("pdf");
         String img = resultSet.getString("img");
+        String authorImg = resultSet.getString("author_img");
         int availableQuantity = resultSet.getInt("available_quantity");
 
-        return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription,pdf,img));
+        return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg));
     }
 }

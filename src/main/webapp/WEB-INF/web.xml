@@ -3,6 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>Login</servlet-name>
         <jsp-file>/WEB-INF/jsp/authorization/login.jsp</jsp-file>
@@ -20,15 +24,6 @@
         <servlet-name>Register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-
-<!--    <servlet>-->
-<!--        <servlet-name>Home</servlet-name>-->
-<!--        <jsp-file>/WEB-INF/jsp/home/home.jsp</jsp-file>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>Home</servlet-name>-->
-<!--        <url-pattern>/home.do</url-pattern>-->
-<!--    </servlet-mapping>-->
 
     <listener>
         <listener-class>by.epamtc.library.controller.listener.SessionListener</listener-class>

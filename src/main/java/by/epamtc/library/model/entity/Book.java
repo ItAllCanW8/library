@@ -10,13 +10,14 @@ public class Book {
     private String shortDescription;
     private String pdf;
     private String img;
+    private String authorImg;
 
     public Book(){}
 
     public Book(long id){this.id = id;}
 
     public Book(long id, String title, String authorPseudo, String isbn, int availableQuantity, String genre,
-                String shortDescription, String pdf, String img) {
+                String shortDescription, String pdf, String img, String authorImg) {
         this.id = id;
         this.title = title;
         this.authorPseudo = authorPseudo;
@@ -26,10 +27,11 @@ public class Book {
         this.shortDescription = shortDescription;
         this.pdf = pdf;
         this.img = img;
+        this.authorImg = authorImg;
     }
 
     public Book(String title, String authorPseudo, String isbn, int availableQuantity, String genre,
-                String shortDescription, String pdf, String img) {
+                String shortDescription, String pdf, String img, String authorImg) {
         this.title = title;
         this.authorPseudo = authorPseudo;
         this.isbn = isbn;
@@ -38,6 +40,7 @@ public class Book {
         this.shortDescription = shortDescription;
         this.pdf = pdf;
         this.img = img;
+        this.authorImg = authorImg;
     }
 
     public long getId() {
@@ -108,6 +111,14 @@ public class Book {
         this.img = img;
     }
 
+    public String getAuthorImg() {
+        return authorImg;
+    }
+
+    public void setAuthorImg(String authorImg) {
+        this.authorImg = authorImg;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,7 +134,8 @@ public class Book {
         if (!genre.equals(book.genre)) return false;
         if (!shortDescription.equals(book.shortDescription)) return false;
         if (!pdf.equals(book.pdf)) return false;
-        return img.equals(book.img);
+        if (!img.equals(book.img)) return false;
+        return authorImg.equals(book.authorImg);
     }
 
     @Override
@@ -137,6 +149,7 @@ public class Book {
         result = 31 * result + shortDescription.hashCode();
         result = 31 * result + pdf.hashCode();
         result = 31 * result + img.hashCode();
+        result = 31 * result + authorImg.hashCode();
         return result;
     }
 
@@ -152,6 +165,7 @@ public class Book {
                 ", shortDescription='" + shortDescription + '\'' +
                 ", pdf='" + pdf + '\'' +
                 ", img='" + img + '\'' +
+                ", authorImg='" + authorImg + '\'' +
                 '}';
     }
 }

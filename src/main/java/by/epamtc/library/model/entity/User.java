@@ -1,7 +1,5 @@
 package by.epamtc.library.model.entity;
 
-import java.time.LocalDate;
-
 public class User {
     private long id;
     private UserRole role;

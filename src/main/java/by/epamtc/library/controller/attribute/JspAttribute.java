@@ -13,5 +13,10 @@ public class JspAttribute {
     public static final String NO_BOOKS = "noBooks";
     public static final String NO_BOOKS_MSG = "No books";
 
+    public static final String NO_BOOK = "noBook";
+    public static final String NO_BOOK_MSG = "No book";
+
+    public static final String ERROR_MSG = "errorMsg";
+
     private JspAttribute(){}
 }

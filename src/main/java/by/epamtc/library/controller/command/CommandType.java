@@ -20,6 +20,12 @@ public enum CommandType {
     }},
     LOAD_BOOKS {{
         this.command = new LoadBooks();
+    }},
+    LOAD_BOOK_INFO{{
+        this.command = new LoadBookInfo();
+    }},
+    USER_PROFILE{{
+        this.command = new UserProfile();
     }};
 
     Command command;

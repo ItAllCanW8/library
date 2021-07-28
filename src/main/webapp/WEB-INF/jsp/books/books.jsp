@@ -6,9 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.currentLocalization}"/>
-<fmt:setBundle basename="locale.content"/>
 
 <html>
 
@@ -85,11 +82,11 @@
                 <tbody>
                 <c:forEach var="book" items="${books}">
                     <tr class="table-secondary">
-                        <th scope="row"><a href="<c:url value="to_book_info.do?bookId=${book.id}"/>">
+                        <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${book.id}"/>">
                                 ${book.title}</a></th>
                         <th scope="row"><div>
                             <img src="${pageContext.request.contextPath}/images/book-covers/${book.img}" alt=""
-                            style="max-height: 250px;max-width: 250px"></div></th>
+                                 style="max-height: 250px;max-width: 250px"></div></th>
                         <th scope="row">${book.authorPseudo}</th>
                         <th scope="row">${book.genre}</th>
                         <th scope="row">${book.isbn}</th>

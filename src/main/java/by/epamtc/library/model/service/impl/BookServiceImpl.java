@@ -10,6 +10,7 @@ import by.epamtc.library.model.entity.factory.impl.BookFactory;
 import by.epamtc.library.model.service.BookService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -45,6 +46,22 @@ public class BookServiceImpl implements BookService {
     public List<Book> loadBooks() throws ServiceException {
         try {
             return bookDao.loadBooks();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<Book> findBookById(long bookId) throws ServiceException {
+        try {
+            Optional<Book> bookOptional = bookDao.findBookById(bookId);
+            if (bookOptional.isPresent()) {
+                Book book = bookOptional.get();
+//                if (updateVacancyEmployee(book)) {
+                    bookOptional = Optional.of(book);
+//                }
+            }
+            return bookOptional;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

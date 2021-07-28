@@ -2,6 +2,7 @@ package by.epamtc.library.controller.attribute;
 
 public class RequestParameter {
     public static final String USERNAME = "username";
+    public static final String USER_DETAILS = "userDetails";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String EMAIL = "email";
@@ -23,6 +24,9 @@ public class RequestParameter {
     public static final String NEW_LOCALIZATION = "newLocalization";
 
     public static final String HEADER_REFERER = "REFERER";
+
+    public static final String BOOK_ID = "bookId";
+    public static final String BOOK = "book";
 
 
     private RequestParameter(){}

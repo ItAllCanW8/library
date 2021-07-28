@@ -1,5 +1,6 @@
 package by.epamtc.library.controller;
 
+import by.epamtc.library.controller.attribute.JspAttribute;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandProvider;
 import by.epamtc.library.controller.command.CommandResult;
@@ -33,21 +34,24 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        LOGGER.info("doGet");
         processRequest(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        LOGGER.info("doPost");
         processRequest(req, resp);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Optional<Command> command = CommandProvider.defineCommand(req);
         try {
-            CommandResult result = command.isPresent() ? command.get().execute(req, resp) : new CommandResult(CommandResult.DEFAULT_PATH);
+            CommandResult result = command.isPresent() ? command.get().execute(req, resp)
+                    : new CommandResult(CommandResult.DEFAULT_PATH);
             result.redirect(req, resp);
         } catch (CommandException e) {
             LOGGER.log(Level.ERROR, "Couldn't process req: " + e);
-//            req.setAttribute(JspAttribute.ERROR_MESSAGE_INFO, e.getMessage());
+            req.setAttribute(JspAttribute.ERROR_MSG, e.getMessage());
             throw new ServletException(e);
         }
     }
