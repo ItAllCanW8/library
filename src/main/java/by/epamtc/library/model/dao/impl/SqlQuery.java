@@ -26,4 +26,6 @@ public class SqlQuery {
     public static final String SELECT_BOOKS = "SELECT * FROM books;";
 
     public static final String FIND_BOOK_BY_ID = "SELECT * FROM books WHERE book_id = ?;";
+
+    public static final String UPDATE_USER_PHOTO = "UPDATE user_details SET photo_path = ? WHERE details_id = ?";
 }

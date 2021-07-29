@@ -118,6 +118,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean changePhoto(long detailsId, String photoPath) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_PHOTO)) {
+            statement.setString(1, photoPath);
+            statement.setLong(2, detailsId);
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public Optional<String> findPasswordByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PASSWORD)) {

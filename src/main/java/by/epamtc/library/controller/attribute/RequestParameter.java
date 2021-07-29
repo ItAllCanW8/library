@@ -28,6 +28,9 @@ public class RequestParameter {
     public static final String BOOK_ID = "bookId";
     public static final String BOOK = "book";
 
+    public static final String FILE = "file";
+    public static final String FILE_NAME = "fileName";
+
 
     private RequestParameter(){}
 }

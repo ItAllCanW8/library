@@ -1,6 +1,7 @@
 package by.epamtc.library.controller;
 
 import by.epamtc.library.controller.attribute.JspAttribute;
+import by.epamtc.library.controller.attribute.ServletAttribute;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandProvider;
 import by.epamtc.library.controller.command.CommandResult;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = "*.do", name = "Controller", loadOnStartup = 1)
+@WebServlet(urlPatterns = ServletAttribute.SERVLET_PATTERN, name = ServletAttribute.SERVLET_NAME, loadOnStartup = 1)
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
 

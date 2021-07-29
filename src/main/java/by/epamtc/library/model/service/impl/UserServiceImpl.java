@@ -82,4 +82,13 @@ public class UserServiceImpl implements UserService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public boolean changePhoto(long detailsId, String photoPath) throws ServiceException {
+        try {
+            return (UserValidator.isPhotoNameValid(photoPath) && dao.changePhoto(detailsId, photoPath));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

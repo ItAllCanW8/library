@@ -26,6 +26,12 @@ public enum CommandType {
     }},
     USER_PROFILE{{
         this.command = new UserProfile();
+    }},
+    UPLOAD_PHOTO{{
+        this.command = new UploadPhoto();
+    }},
+    LOAD_IMAGE{{
+        this.command = new LoadImage();
     }};
 
     Command command;

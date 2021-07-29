@@ -66,7 +66,7 @@
                         </li>
                     </c:if>
                     <c:if test="${!role.toString().equals(guest)}">
-                        <li class="nav-item">
+                        <li class="nav-item dropdown offset-1">
                             <a class="nav-link header-link offset-1" id="navbarDropdownUser" data-toggle="dropdown"
                                aria-expanded="false">
                                 ${sessionScope.user.username}

@@ -48,11 +48,23 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}/images/profile-photos/default_avatar.png" alt="" />
+                        <img src="${pageContext.request.contextPath}
+                        /images/profile-photos/${user.userDetails.photoPath}" alt="" />
                     </div>
-                    <div class="img-box b2">
-                        <img src="${pageContext.request.contextPath}/images/profile-photos/default_avatar.png" alt="" />
+                    <div class="img-box b1">
+                        <p class="card-text"><img
+                                src="${pageContext.request.contextPath}/load_image.do?fileName=${sessionScope.user.userDetails.photoPath}"
+                                width="128" height="128" class="rounded" alt="...">
+                        </p>
                     </div>
+                    <div class="img-box b1">
+                        <img src="${pageContext.request.contextPath}
+                        /images/book-covers/tolle.jpg" alt="" />
+                    </div>
+                    <form action="upload_photo.do" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" class="form-control-file"/>
+                        <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
+                    </form>
                 </div>
             </div>
             <div class="col-md-6">
@@ -60,16 +72,12 @@
                     <div class="heading_container">
                         <h3>${user.username}</h3>
                         <h4>${user.email}</h4>
-                        <h5>ISBN: ${user.userDetails.getName()}</h5>
-                        <h5>Genre: ${user.userDetails.getSurname()}</h5>
-                        <h5>Available quantity: ${user.userDetails.getPhoneNumber()}</h5>
                         <hr style="width:100%;text-align:left;margin-left:0">
-<%--                        <p>--%>
-<%--                            ${book.shortDescription}--%>
-<%--                        </p>--%>
-<%--                        <c:if test="${!role.toString().equals(guest)}">--%>
-<%--                            <a href="">Rent</a>--%>
-<%--                        </c:if>--%>
+                        <h5>Name: ${user.userDetails.name}</h5>
+                        <h5>Surname: ${user.userDetails.surname}</h5>
+                        <h5>Date of birth: ${user.userDetails.dateOfBirth}</h5>
+                        <h5>Phone number: ${user.userDetails.phoneNumber}</h5>
+                        <a href="">Edit</a>
                     </div>
                 </div>
             </div>
@@ -79,7 +87,6 @@
 
 <!-- end about section -->
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
 </body>
