@@ -48,18 +48,7 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}
-                        /images/profile-photos/${user.userDetails.photoPath}" alt="" />
-                    </div>
-                    <div class="img-box b1">
-                        <p class="card-text"><img
-                                src="${pageContext.request.contextPath}/load_image.do?fileName=${sessionScope.user.userDetails.photoPath}"
-                                width="128" height="128" class="rounded" alt="...">
-                        </p>
-                    </div>
-                    <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}
-                        /images/book-covers/tolle.jpg" alt="" />
+                        <img src="${pageContext.request.contextPath}/load_image.do?fileName=${sessionScope.user.userDetails.photoPath}" alt="" />
                     </div>
                     <form action="upload_photo.do" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" class="form-control-file"/>

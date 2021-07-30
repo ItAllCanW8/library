@@ -23,7 +23,7 @@ public class LoadImage implements Command {
     private static final String DEFAULT_AVATAR = "default_avatar.png";
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        String fileName = req.getParameter(RequestParameter.FILE);
+        String fileName = req.getParameter(RequestParameter.FILE_NAME);
         if (fileName != null && !fileName.isEmpty()) {
             try (ServletOutputStream outputStream = resp.getOutputStream()) {
                 outputStream.write(readFile(fileName));

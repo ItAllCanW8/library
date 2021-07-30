@@ -47,13 +47,6 @@ public class BookDaoImpl implements BookDao {
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));
             }
-
-                System.out.println("popular");
-
-                for(Book book: books)
-                    System.out.println(book);
-
-                System.out.println(books.size() );
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -68,16 +61,10 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOKS)) {
             ResultSet resultSet = statement.executeQuery();
 
-//            System.out.println("all");
-
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));
             }
 
-//            for(Book book: books)
-//                System.out.println(book);
-//
-//            System.out.println(books.size() );
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
