@@ -8,11 +8,11 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
-import by.epamtc.library.util.FileUploader;
+import by.epamtc.library.util.ImgHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.logging.log4j.Level;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UploadPhoto implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -36,9 +39,10 @@ public class UploadPhoto implements Command {
 
             String path = part.getSubmittedFileName();
             if (path != null && !path.isEmpty()) {
-                String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(FileUploader.DOT_SYMBOL));
+                String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(ImgHandler.DOT_SYMBOL));
                 try (InputStream inputStream = part.getInputStream()) {
-                    if (FileUploader.uploadFile(inputStream, FileUploader.UPLOAD_PHOTO_PATH + randomFilename)) {
+                    if (ImgHandler.uploadFile(inputStream, ImgHandler.IMG_FOLDER_PATH
+                                    + ImgHandler.PROFILE_PHOTOS_SUBFOLDER + randomFilename)) {
                         UserService service = UserServiceImpl.getInstance();
                         service.changePhoto(user.getUserDetails().getId(), randomFilename);
                         user.getUserDetails().setPhotoPath(randomFilename);
@@ -51,6 +55,5 @@ public class UploadPhoto implements Command {
             }
         }
         return new CommandResult(req.getContextPath() + CommandName.USER_PROFILE, CommandResult.Type.REDIRECT);
-//        resp.sendRedirect(req.getContextPath() + CommandName.TO_USER_PROFILE);
     }
 }

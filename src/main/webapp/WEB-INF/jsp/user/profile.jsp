@@ -48,7 +48,7 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}/load_image.do?fileName=${sessionScope.user.userDetails.photoPath}" alt="" />
+                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${sessionScope.user.userDetails.photoPath}" alt="" />
                     </div>
                     <form action="upload_photo.do" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" class="form-control-file"/>

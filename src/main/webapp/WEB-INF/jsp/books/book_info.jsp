@@ -48,10 +48,10 @@
       <div class="col-md-6">
         <div class="img_container">
           <div class="img-box b1">
-            <img src="${pageContext.request.contextPath}/images/book-covers/${book.img}" alt="" />
+            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt="" />
           </div>
           <div class="img-box b2">
-            <img src="${pageContext.request.contextPath}/images/book-covers/${book.authorImg}" alt="" />
+            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}" alt="" />
           </div>
         </div>
       </div>

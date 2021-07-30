@@ -30,8 +30,11 @@ public enum CommandType {
     UPLOAD_PHOTO{{
         this.command = new UploadPhoto();
     }},
-    LOAD_IMAGE{{
-        this.command = new LoadImage();
+    LOAD_PROFILE_PHOTO{{
+        this.command = new LoadProfilePhoto();
+    }},
+    LOAD_BOOK_COVER{{
+        this.command = new LoadBookCover();
     }};
 
     Command command;

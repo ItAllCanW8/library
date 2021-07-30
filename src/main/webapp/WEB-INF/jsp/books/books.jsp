@@ -65,8 +65,6 @@
             </h3>
             <p>
                 Upcoming Education Events to feed your brain.
-                ${pageContext.request.contextPath}
-                ${pageContext.request}
             </p>
         </div>
         <div class="event_container">
