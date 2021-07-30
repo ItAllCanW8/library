@@ -10,4 +10,6 @@ public interface UserService {
     boolean register(Map<String, String> fields) throws ServiceException;
     Optional<User> login(String email, String password) throws ServiceException;
     boolean changePhoto(long detailsId, String photoPath) throws ServiceException;
+    boolean isEmailAvailable(String email) throws ServiceException;
+    Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException;
 }

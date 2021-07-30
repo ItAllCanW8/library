@@ -13,6 +13,7 @@ import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.validation.UserValidator;
 import by.epamtc.library.util.Encryptor;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
@@ -20,9 +21,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class UserServiceImpl implements UserService {
     private static final UserDao dao = UserDaoImpl.getInstance();
-    private static final String PERCENT_SIGN = "%";
     private static final LibraryFactory<User> userFactory = UserFactory.getInstance();
-    private static final Lock locker = new ReentrantLock();
+    private static final Lock lock = new ReentrantLock();
     private static volatile UserService instance;
 
     private UserServiceImpl() {
@@ -30,11 +30,11 @@ public class UserServiceImpl implements UserService {
 
     public static UserService getInstance() {
         if (instance == null) {
-            locker.lock();
+            lock.lock();
             if (instance == null) {
                 instance = new UserServiceImpl();
             }
-            locker.unlock();
+            lock.unlock();
         }
         return instance;
     }
@@ -90,5 +90,54 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public boolean isEmailAvailable(String email) throws ServiceException {
+        try {
+            return (UserValidator.isEmailValid(email) && dao.isEmailAvailable(email));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException {
+        try {
+            if (UserValidator.isEditFormValid(newFields)) {
+                Optional<User> userOptional = dao.findUserById(userId);
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    if (user.getEmail().equals(newFields.get(RequestParameter.EMAIL)) ||
+                            dao.isEmailAvailable(newFields.get(RequestParameter.EMAIL))) {
+                        updateUserFields(user, newFields);
+                        return (dao.updateProfile(user) ? Optional.of(user) : Optional.empty());
+                    }
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return Optional.empty();
+    }
+
+    private void updateUserFields(User user, Map<String, String> fields) {
+        String newUsername = fields.get(RequestParameter.USERNAME);
+        user.setUsername(newUsername);
+
+        String newName = fields.get(RequestParameter.NAME);
+        user.getUserDetails().setName(newName);
+
+        String newSurname = fields.get(RequestParameter.SURNAME);
+        user.getUserDetails().setSurname(newSurname);
+
+        LocalDate newDateOfBirth = LocalDate.parse(fields.get(RequestParameter.DATE_OF_BIRTH));
+        user.getUserDetails().setDateOfBirth(newDateOfBirth);
+
+        String newPhoneNumber = fields.get(RequestParameter.PHONE_NUMBER);
+        user.getUserDetails().setPhoneNumber(newPhoneNumber);
+
+        String newEmail = fields.get(RequestParameter.EMAIL);
+        user.setEmail(newEmail);
     }
 }

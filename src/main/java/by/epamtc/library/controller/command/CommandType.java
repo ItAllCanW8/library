@@ -35,6 +35,9 @@ public enum CommandType {
     }},
     LOAD_BOOK_COVER{{
         this.command = new LoadBookCover();
+    }},
+    EDIT_USER_PROFILE{{
+        this.command = new EditUserProfile();
     }};
 
     Command command;

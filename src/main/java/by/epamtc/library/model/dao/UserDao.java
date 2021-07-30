@@ -12,4 +12,6 @@ public interface UserDao {
     Optional<User> findUserByEmail(String email) throws DaoException;
     boolean add(User user, String encPass) throws DaoException;
     boolean changePhoto(long detailsId, String photoPath) throws DaoException;
+    Optional<User> findUserById(long userId) throws DaoException;
+    boolean updateProfile(User user) throws DaoException;
 }

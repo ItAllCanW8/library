@@ -130,6 +130,43 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<User> findUserById(long userId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_ID)) {
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(createUserFromResultSet(resultSet)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public boolean updateProfile(User user) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement updateUserStatement = connection.prepareStatement(SqlQuery.UPDATE_USER)) {
+            updateUserStatement.setString(1, user.getUsername());
+            updateUserStatement.setString(2, user.getEmail());
+            updateUserStatement.setLong(3, user.getId());
+
+            if(updateUserStatement.executeUpdate() == 1) {
+                PreparedStatement updateUserDetailsSt = connection.prepareStatement(SqlQuery.UPDATE_USER_DETAILS);
+                updateUserDetailsSt.setString(1, user.getUserDetails().getName());
+                updateUserDetailsSt.setString(2, user.getUserDetails().getSurname());
+                updateUserDetailsSt.setDate(3, Date.valueOf(user.getUserDetails().getDateOfBirth()));
+                updateUserDetailsSt.setString(4, user.getUserDetails().getPhoneNumber());
+                updateUserDetailsSt.setLong(5, user.getId());
+
+                return (updateUserDetailsSt.executeUpdate() == 1);
+            } else {
+                throw new DaoException("Error updating user profile");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public Optional<String> findPasswordByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PASSWORD)) {

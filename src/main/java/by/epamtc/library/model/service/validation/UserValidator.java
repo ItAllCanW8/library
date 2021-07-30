@@ -184,4 +184,39 @@ public final class UserValidator {
         }
         return result;
     }
+
+    public static boolean isEditFormValid(Map<String, String> fields) {
+        boolean result = true;
+        String username = fields.get(RequestParameter.USERNAME);
+        if (!isNameValid(username)) {
+            fields.put(RequestParameter.USERNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        String name = fields.get(RequestParameter.NAME);
+        if (!isNameValid(name)) {
+            fields.put(RequestParameter.NAME, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        String surname = fields.get(RequestParameter.SURNAME);
+        if (!isNameValid(surname)) {
+            fields.put(RequestParameter.SURNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        String dateOfBirth = fields.get(RequestParameter.DATE_OF_BIRTH);
+        if (!isDateFormatValid(dateOfBirth)) {
+            fields.put(RequestParameter.DATE_OF_BIRTH, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        String phoneNumber = fields.get(RequestParameter.PHONE_NUMBER);
+        if (!isPhoneNumberValid(phoneNumber)) {
+            fields.put(RequestParameter.PHONE_NUMBER, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        String email = fields.get(RequestParameter.EMAIL);
+        if (!isEmailValid(email)) {
+            fields.put(RequestParameter.EMAIL, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        return result;
+    }
 }
