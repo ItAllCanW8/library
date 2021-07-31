@@ -6,6 +6,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.entity.UserStatus;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
@@ -29,7 +30,7 @@ public class Login implements Command {
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
 
-                if (user.getStatus().equals("active")) {
+                if (user.getStatus().equals(UserStatus.ACTIVE)) {
                     HttpSession session = req.getSession();
                     session.setAttribute(SessionAttribute.USER, user);
                     session.setAttribute(SessionAttribute.CURRENT_ROLE, user.getRole());

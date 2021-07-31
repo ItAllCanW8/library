@@ -7,9 +7,6 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,7 +55,7 @@ public class Register implements Command {
                 result = new CommandResult(PagePath.REGISTER, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            throw new CommandException("Error registering user");
         }
         return result;
     }

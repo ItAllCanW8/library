@@ -9,6 +9,8 @@ public class RequestParameter {
     public static final String DATE_OF_BIRTH = "dateOfBirth";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String PASSWORD = "password";
+//    public static final String CURRENT_PASSWORD = "currentPassword";
+    public static final String NEW_PASSWORD = "newPassword";
     public static final String REPEATED_PASSWORD = "repeatedPassword";
     ///////////////////////////BOOK////////////////////////////////
     public static final String TITLE = "title";

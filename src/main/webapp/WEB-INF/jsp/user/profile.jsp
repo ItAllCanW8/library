@@ -64,26 +64,24 @@
                         <h3>${username}</h3>
                         <h4>${email}</h4>
                         <hr style="width:100%;text-align:left;margin-left:0">
-                        <h5>Name: ${userDetails.name}</h5>
-                        <h5>Surname: ${userDetails.surname}</h5>
-                        <h5>Date of birth: ${userDetails.dateOfBirth}</h5>
-                        <h5>Phone number: ${userDetails.phoneNumber}</h5>
+                        <h5><fmt:message key="profile.name"/>: ${userDetails.name}</h5>
+                        <h5><fmt:message key="profile.surname"/>: ${userDetails.surname}</h5>
+                        <h5><fmt:message key="profile.dateOfBirth"/>: ${userDetails.dateOfBirth}</h5>
+                        <h5><fmt:message key="profile.phoneNumber"/>: ${userDetails.phoneNumber}</h5>
+                        <hr style="width:100%;text-align:left;margin-left:0">
                     </div>
 
-                    <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
                         <fmt:message key="button.edit"/>
                     </button>
 
-                    <!-- Modal -->
                     <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    </button>
+                                    <h5 class="modal-title" id="exampleModalLabel">
+                                        <fmt:message key="register.inputUsername"/></h5>
                                 </div>
 
                                 <div class="modal-body">
@@ -156,19 +154,127 @@
                                                    required
                                                    pattern="((\w)([-.](\w))?)+@((\w)([-.](\w))?)+.[a-zA-Zа-яА-Я]{2,4}">
                                         </div>
-<%--                                        <div class="col-4">--%>
-<%--                                            <button class="btn btn-outline-success button mt-4"--%>
-<%--                                                    style="margin-left: 100%"--%>
-<%--                                                    type="submit">--%>
-<%--                                                <fmt:message key="button.save"/></button>--%>
-<%--                                        </div>--%>
                                     </form>
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        <fmt:message key="button.close"/>
+                                    </button>
                                     <button type="submit" class="btn btn-primary" form="editForm">
                                         <fmt:message key="button.save"/></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePassModal">
+                        <fmt:message key="button.changePassword"/>
+                    </button>
+
+                    <div class="modal fade" id="changePassModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><fmt:message key="profile.changePassword"/></h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form id="changePassForm" method="POST" action="change_password.do">
+                                        <label for="inputCurrentPassword"><fmt:message
+                                                key="profile.currentPassword"/> </label>
+                                        <div class="form-group mt-1">
+                                            <input type="password" class="form-control field" id="inputCurrentPassword"
+                                                   name="password"
+                                                   value="${password}"
+                                                   placeholder=
+                                                           "<fmt:message key="register.inputPasswordPlaceholder"/>"
+                                                   required
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <label for="inputNewPassword"><fmt:message
+                                                    key="profile.newPassword"/> </label>
+                                        </div>
+                                        <div class="form-group mt-1">
+                                            <input type="password" class="form-control field" id="inputNewPassword"
+                                                   name="newPassword"
+                                                   value="${newPassword}"
+                                                   placeholder=
+                                                           "<fmt:message key="register.inputPasswordPlaceholder"/>"
+                                                   required
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <label for="repeatNewPassword"><fmt:message
+                                                    key="profile.repeatNewPassword"/> </label>
+                                        </div>
+                                        <div class="form-group mt-1">
+                                            <input type="password" class="form-control field" id="repeatNewPassword"
+                                                   name="repeatedPassword"
+                                                   value="${repeatedPassword}"
+                                                   placeholder=
+                                                           "<fmt:message key="register.inputPasswordPlaceholder"/>"
+                                                   required
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        <fmt:message key="button.close"/>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" form="changePassForm">
+                                        <fmt:message key="button.save"/></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <c:if test="${!role.toString().equals(admin)}">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModal">
+                            <fmt:message key="button.deactivateAccount"/>
+                        </button>
+                    </c:if>
+
+                    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><fmt:message key="button.deactivateAccount"/></h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form id="deactivateForm" method="POST" action="deactivate_account.do">
+                                        <div class="mt-1">
+                                            <h5><fmt:message key="profile.deactivateMsg"/></h5>
+                                        </div>
+                                        <div class="mt-3">
+                                            <label for="inputCurrentPassword2"><fmt:message
+                                                    key="profile.currentPassword"/> </label>
+                                        </div>
+                                        <div class="form-group mt-1">
+                                            <input type="password" class="form-control field" id="inputCurrentPassword2"
+                                                   name="currentPassword"
+                                                   placeholder=
+                                                           "<fmt:message key="register.inputPasswordPlaceholder"/>"
+                                                   required
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        <fmt:message key="button.close"/>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" form="deactivateForm">
+                                        <fmt:message key="button.deactivate"/></button>
                                 </div>
                             </div>
                         </div>
@@ -180,8 +286,6 @@
 </section>
 
 <!-- end about section -->
-
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>--%>
 
 </body>
 

@@ -219,4 +219,21 @@ public final class UserValidator {
         }
         return result;
     }
+
+    public static boolean isChangePasswordFormValid(Map<String, String> fields) {
+        boolean result = true;
+        String newPassword = fields.get(RequestParameter.NEW_PASSWORD);
+
+        if (!isPasswordValid(newPassword)) {
+            fields.put(RequestParameter.NEW_PASSWORD, "");
+            result = false;
+        }
+        String repeatedNewPassword = fields.get(RequestParameter.REPEATED_PASSWORD);
+
+        if (!isRepeatPasswordValid(newPassword, repeatedNewPassword)) {
+            fields.put(RequestParameter.REPEATED_PASSWORD, "");
+            result = false;
+        }
+        return result;
+    }
 }

@@ -7,6 +7,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.dao.impl.UserDaoImpl;
 import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.entity.UserStatus;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.UserFactory;
 import by.epamtc.library.model.service.UserService;
@@ -49,11 +50,6 @@ public class UserServiceImpl implements UserService {
 
                 if(!dao.isEmailAvailable(user.getEmail())) {
                     fields.put(RequestParameter.EMAIL, JspAttribute.EMAIL_AVAILABLE_ERROR_MSG);
-                    return false;
-                }
-
-                if(!dao.isPhoneNumAvailable(user.getUserDetails().getPhoneNumber())) {
-                    fields.put(RequestParameter.PHONE_NUMBER, JspAttribute.PHONE_NUMBER_AVAILABLE_ERROR_MSG);
                     return false;
                 }
 
@@ -119,6 +115,29 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean changePassword(long userId, Map<String, String> fields) throws ServiceException {
+        try {
+            if (UserValidator.isChangePasswordFormValid(fields)) {
+                String newPassword = fields.get(RequestParameter.NEW_PASSWORD);
+                String encryptedPassword = Encryptor.encrypt(newPassword);
+                return dao.updatePassword(userId, encryptedPassword);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deactivateUser(long userId) throws ServiceException {
+        try {
+            return dao.updateUserStatus(userId, UserStatus.DEACTIVATED);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     private void updateUserFields(User user, Map<String, String> fields) {

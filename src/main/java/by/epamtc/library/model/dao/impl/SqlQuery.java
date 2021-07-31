@@ -11,7 +11,7 @@ public class SqlQuery {
     public static final String INSERT_USER_DETAILS = "INSERT INTO user_details(name, surname, date_of_birth," +
             " phone_number, photo_path) VALUES (?,?,?,?,?);";
 
-    public static final String FIND_ROLE_ID_BY_NAME = "SELECT user_role_id FROM user_roles WHERE role = ?;";
+    public static final String FIND_ROLE_ID_BY_NAME = "SELECT role_id FROM user_roles WHERE role = ?;";
 
     public static final String FIND_USER_DETAILS_ID_BY_PHONE = "SELECT details_id FROM user_details WHERE" +
             " phone_number = ?;";
@@ -36,4 +36,7 @@ public class SqlQuery {
 
     public static final String UPDATE_USER_DETAILS= "UPDATE user_details SET name = ?, surname = ?, date_of_birth = ?," +
             " phone_number = ? WHERE details_id = ?;";
+
+    public static final String UPDATE_PASSWORD= "UPDATE users SET password = ? WHERE user_id = ?;";
+    public static final String UPDATE_USER_STATUS = "UPDATE users SET status = ? WHERE user_id = ?;";
 }

@@ -38,6 +38,9 @@ public enum CommandType {
     }},
     EDIT_USER_PROFILE{{
         this.command = new EditUserProfile();
+    }},
+    CHANGE_PASSWORD{{
+        this.command = new ChangePassword();
     }};
 
     Command command;

@@ -7,6 +7,7 @@ import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
 import by.epamtc.library.model.entity.UserRole;
+import by.epamtc.library.model.entity.UserStatus;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class UserDaoImpl implements UserDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
-    private static final Lock locker = new ReentrantLock();
+    private static final Lock lock = new ReentrantLock();
     private static volatile UserDao instance;
 
     private static final String INVALID_ROLE_ERROR_MSG= "Invalid user role.";
@@ -28,11 +29,11 @@ public class UserDaoImpl implements UserDao {
 
     public static UserDao getInstance() {
         if (instance == null) {
-            locker.lock();
+            lock.lock();
             if (instance == null) {
                 instance = new UserDaoImpl();
             }
-            locker.unlock();
+            lock.unlock();
         }
         return instance;
     }
@@ -49,21 +50,10 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
-    public boolean isPhoneNumAvailable(String phoneNumber) throws DaoException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PHONE_NUM)) {
-            statement.setString(1, phoneNumber);
-            ResultSet resultSet = statement.executeQuery();
-            return !resultSet.next();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
-        }
-    }
+    private boolean insertUserDetails(UserDetails userDetails, Connection connection) throws DaoException {
+        try (PreparedStatement statement =
+                     connection.prepareStatement(SqlQuery.INSERT_USER_DETAILS)) {
 
-    private boolean insertUserDetails(UserDetails userDetails) throws DaoException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_USER_DETAILS)) {
             statement.setString(1, userDetails.getName());
             statement.setString(2, userDetails.getSurname());
             statement.setDate(3, Date.valueOf(userDetails.getDateOfBirth()));
@@ -71,7 +61,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(5, userDetails.getPhotoPath());
 
             return (statement.executeUpdate() == 1);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
@@ -96,20 +86,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean add(User user, String encPass) throws DaoException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_USER)) {
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, encPass);
-            statement.setString(4, user.getStatus());
+        try (Connection connection = pool.takeConnection()) {
+            System.out.println(user);
+            if(insertUserDetails(user.getUserDetails(), connection)){
+                PreparedStatement insertUserSt = connection.prepareStatement(SqlQuery.INSERT_USER);
 
-            if(insertUserDetails(user.getUserDetails())) {
-                statement.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
+                insertUserSt.setString(1, user.getUsername());
+                insertUserSt.setString(2, user.getEmail());
+                insertUserSt.setString(3, encPass);
+                insertUserSt.setString(4, user.getStatus().getValue());
+
+                insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
                         orElseThrow(() -> new DaoException(INVALID_DETAILS_ERROR_MSG)));
-                statement.setLong(6, findRoleId(user.getRole()).
+                insertUserSt.setLong(6, findRoleId(user.getRole()).
                         orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
 
-                return (statement.executeUpdate() == 1);
+                return (insertUserSt.executeUpdate() == 1);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
@@ -167,6 +159,30 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean updatePassword(long userId, String newPassword) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_PASSWORD)) {
+            statement.setString(1, newPassword);
+            statement.setLong(2, userId);
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public boolean updateUserStatus(long userId, UserStatus newStatus) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_STATUS)) {
+            statement.setString(1, newStatus.getValue());
+            statement.setLong(2, userId);
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public Optional<String> findPasswordByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PASSWORD)) {
@@ -200,7 +216,7 @@ public class UserDaoImpl implements UserDao {
         LocalDate dateOfBirth = resultSet.getDate("date_of_birth").toLocalDate();
         String phoneNumber = resultSet.getString("phone_number");
         String photoPath = resultSet.getString("photo_path");
-        String status = resultSet.getString("status");
+        UserStatus status = UserStatus.fromString(resultSet.getString("status"));
         UserRole role = UserRole.valueOf(resultSet.getString("role").toUpperCase(Locale.ROOT));
         return (new User(userId, role, new UserDetails(detailsId,name,surname,dateOfBirth,phoneNumber,photoPath),
                 status,username, email));

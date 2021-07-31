@@ -4,7 +4,7 @@ public class User {
     private long id;
     private UserRole role;
     private UserDetails userDetails;
-    private String status;
+    private UserStatus status;
     private String username;
     private String email;
 
@@ -14,7 +14,7 @@ public class User {
         this.id = id;
     }
 
-    public User(long id, UserRole role, UserDetails userDetails, String status,
+    public User(long id, UserRole role, UserDetails userDetails, UserStatus status,
                 String username, String email) {
         this.id = id;
         this.role = role;
@@ -24,7 +24,7 @@ public class User {
         this.email = email;
     }
 
-    public User(UserRole role, UserDetails userDetails, String status, String username, String email) {
+    public User(UserRole role, UserDetails userDetails, UserStatus status, String username, String email) {
         this.role = role;
         this.userDetails = userDetails;
         this.status = status;
@@ -52,11 +52,11 @@ public class User {
         this.userDetails = userDetails;
     }
 
-    public String getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 

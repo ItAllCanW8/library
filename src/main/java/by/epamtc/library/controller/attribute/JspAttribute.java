@@ -9,6 +9,8 @@ public class JspAttribute {
 
     public static final String ERROR_INPUT_DATA = "errorInputData";
     public static final String ERROR_INPUT_DATA_MSG = "Input data isn't valid.";
+    public static final String ERROR_INVALID_CURR_PASSWORD = "invalidCurrPassword";
+    public static final String ERROR_INVALID_CURR_PASSWORD_MSG = "Current password isn't valid.";
 
     public static final String NO_BOOKS = "noBooks";
     public static final String NO_BOOKS_MSG = "No books";

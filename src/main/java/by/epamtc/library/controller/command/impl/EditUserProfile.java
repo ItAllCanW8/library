@@ -11,7 +11,6 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
-import org.apache.logging.log4j.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,16 +46,15 @@ public class EditUserProfile implements Command {
             if (userOptional.isPresent()) {
                 session.setAttribute(SessionAttribute.USER, userOptional.get());
             } else {
-//                if (!service.isEmailAvailable(newEmail)) {
-//                    req.setAttribute(JspAttribute.ERROR_INPUT_DATA_ATTRIBUTE, JspAttribute.EMAIL_AVAILABLE_ERROR_MESSAGE);
-//                } else {
-//                    req.setAttribute(JspAttribute.ERROR_INPUT_DATA_ATTRIBUTE, JspAttribute.ERROR_INPUT_DATA_MESSAGE);
-//                }
+                if (!service.isEmailAvailable(newEmail)) {
+                    req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.EMAIL_AVAILABLE_ERROR_MSG);
+                } else {
+                    req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
+                }
                 result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException | NumberFormatException e) {
-//            logger.log(Level.ERROR, "Couldn't edit user info");
-            throw new CommandException(e);
+            throw new CommandException("Error editing user profile");
         }
         return result;
     }

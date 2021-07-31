@@ -12,4 +12,6 @@ public interface UserService {
     boolean changePhoto(long detailsId, String photoPath) throws ServiceException;
     boolean isEmailAvailable(String email) throws ServiceException;
     Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException;
+    boolean changePassword(long userId, Map<String, String> fields) throws ServiceException;
+    boolean deactivateUser(long userId) throws ServiceException;
 }

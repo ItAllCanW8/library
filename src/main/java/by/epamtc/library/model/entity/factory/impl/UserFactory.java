@@ -4,6 +4,7 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
 import by.epamtc.library.model.entity.UserRole;
+import by.epamtc.library.model.entity.UserStatus;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.service.validation.UserValidator;
 
@@ -16,7 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class UserFactory implements LibraryFactory<User> {
     private static final UserRole DEFAULT_ROLE = UserRole.READER;
     private static final String DEFAULT_PHOTO_NAME = "default_avatar.png";
-    private static final String DEFAULT_STATUS = "active";
+    private static final UserStatus DEFAULT_STATUS = UserStatus.ACTIVE;
     private static final Lock lock = new ReentrantLock();
     private static LibraryFactory<User> instance;
 
