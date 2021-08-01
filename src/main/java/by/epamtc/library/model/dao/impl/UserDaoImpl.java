@@ -177,6 +177,8 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_STATUS)) {
             statement.setString(1, newStatus.getValue());
             statement.setLong(2, userId);
+
+            System.out.println(statement);
             return (statement.executeUpdate() == 1);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);

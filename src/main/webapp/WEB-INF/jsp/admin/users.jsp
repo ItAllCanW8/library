@@ -66,26 +66,69 @@
                     <th scope="col"><fmt:message key="profile.username"/></th>
                     <th scope="col"><fmt:message key="profile.photo"/></th>
                     <th scope="col">email</th>
-                    <th scope="col"><fmt:message key="profile.status"/></th>
+                    <th scope="col">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#changeStatusModal">
+                            <fmt:message key="profile.status"/>
+                        </button></th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <c:forEach var="user" items="${users}">
-                    <tr class="table-secondary">
-                        <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${user.id}"/>">
-                                ${user.username}</a></th>
-                        <th scope="row">
-                            <div>
-                                <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
-                                     alt="" style="max-height: 250px;max-width: 250px"></div>
-                        </th>
-                        <th scope="row">${user.email}</th>
-                        <th scope="row">${user.status}</th>
-                    <tr>
-                </c:forEach>
+                    <c:forEach var="user" items="${users}">
+                        <tr class="table-secondary">
+                            <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${user.id}"/>">
+                                    ${user.username}</a></th>
+                            <th scope="row">
+                                <div>
+                                    <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                                         alt="" style="max-height: 250px;max-width: 250px"></div>
+                            </th>
+                            <th scope="row">${user.email}</th>
+                            <th scope="row">${user.status}</th>
+                        <tr>
+                    </c:forEach>
                 </tbody>
             </table>
+
+            <div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"><fmt:message key="button.deactivateAccount"/></h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="deactivateForm" method="POST" action="deactivate_account.do">
+                                <div class="mt-1">
+                                    <h5><fmt:message key="profile.deactivateMsg"/></h5>
+                                </div>
+                                <div class="mt-3">
+                                    <label for="inputCurrentPassword2"><fmt:message
+                                            key="profile.currentPassword"/> </label>
+                                </div>
+                                <div class="form-group mt-1">
+                                    <input type="password" class="form-control field" id="inputCurrentPassword2"
+                                           name="password"
+                                           placeholder=
+                                                   "<fmt:message key="register.inputPasswordPlaceholder"/>"
+                                           required
+                                           pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <fmt:message key="button.close"/>
+                            </button>
+                            <button type="submit" class="btn btn-primary" form="deactivateForm">
+                                <fmt:message key="button.deactivate"/></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

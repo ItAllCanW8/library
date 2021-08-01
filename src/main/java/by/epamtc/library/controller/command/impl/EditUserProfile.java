@@ -40,7 +40,7 @@ public class EditUserProfile implements Command {
         fields.put(RequestParameter.EMAIL, newEmail);
 
         UserService service = UserServiceImpl.getInstance();
-        CommandResult result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.REDIRECT);
+        CommandResult result = new CommandResult(CommandName.LOAD_USER_PROFILE + userId, CommandResult.Type.REDIRECT);
         try {
             Optional<User> userOptional = service.updateProfile(userId, fields);
             if (userOptional.isPresent()) {
@@ -51,7 +51,6 @@ public class EditUserProfile implements Command {
                 } else {
                     req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
                 }
-                result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException | NumberFormatException e) {
             throw new CommandException("Error editing user profile");

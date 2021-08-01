@@ -35,13 +35,7 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.info("doGet");
-//        LOGGER.info(req.getRequestURI());
-//        LOGGER.info(req.getContextPath());
-//        LOGGER.info(req.getPathInfo());
-//        LOGGER.info(req.getSession());
-//        LOGGER.info(req.getServletPath());
-//        LOGGER.info(req.getServletPath());
+//        LOGGER.info("doGet");
         processRequest(req, resp);
     }
 

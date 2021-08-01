@@ -25,11 +25,13 @@ public class DeactivateUserAccount implements Command {
         try {
             Optional<User> userOptional = service.login(user.getEmail(), currentPassword);
             if (userOptional.isPresent()) {
+                System.out.println(user);
                 service.deactivateUser(user.getId());
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
+//                result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.FORWARD);
             } else {
                 req.setAttribute(JspAttribute.ERROR_INVALID_CURR_PASSWORD, JspAttribute.ERROR_INVALID_CURR_PASSWORD_MSG);
-                result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.FORWARD);
+//                result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException | NumberFormatException e) {
 //            logger.log(Level.ERROR, "Couldn't delete user account");

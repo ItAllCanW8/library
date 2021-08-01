@@ -36,7 +36,16 @@
 <body class="sub_page">
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-    <%--    <c:set var="user" scope="request" value="${user}"/>--%>
+    <wrong-message>
+        ${errorInputData}
+        ${invalidCurrentPassword}
+    </wrong-message>
+
+    <c:if test="${successMessage}">
+        <success-message>
+            <fmt:message key="successMessage"/>
+        </success-message>
+    </c:if>
 </div>
 
 <!-- about section -->
@@ -100,7 +109,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputUsername"
                                                    name="username"
-                                                   value="${username}"
+                                                   value="${user.username}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
                                                    pattern="[a-zA-Zа-яА-Я]{3,35}">
@@ -110,7 +119,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputName"
                                                    name="name"
-                                                   value="${userDetails.name}"
+                                                   value="${user.userDetails.name}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
                                                    pattern="[a-zA-Zа-яА-Я]{3,35}">
@@ -123,7 +132,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputSurname"
                                                    name="surname"
-                                                   value="${userDetails.surname}"
+                                                   value="${user.userDetails.surname}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
                                                    pattern="[a-zA-Zа-яА-Я]{3,35}">
@@ -135,7 +144,7 @@
                                         </div>
                                         <div class="form-group mt-1">
                                             <input type="date" id="inputDate" class="form-control" name="dateOfBirth"
-                                                   value="${userDetails.dateOfBirth}"
+                                                   value="${user.userDetails.dateOfBirth}"
                                                    required>
                                         </div>
 
@@ -146,7 +155,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputPhoneNumber"
                                                    name="phoneNumber"
-                                                   value="${userDetails.phoneNumber}"
+                                                   value="${user.userDetails.phoneNumber}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputPhoneNumberPlaceholder"/>"
                                                    required
@@ -158,7 +167,7 @@
                                         </div>
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputEmail" name="email"
-                                                   value="${email}"
+                                                   value="${user.email}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputEmailPlaceholder"/>"
                                                    required
@@ -193,7 +202,6 @@
                                         <div class="form-group mt-1">
                                             <input type="password" class="form-control field" id="inputCurrentPassword"
                                                    name="password"
-                                                   value="${password}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputPasswordPlaceholder"/>"
                                                    required
@@ -241,7 +249,8 @@
                         </div>
                     </div>
 
-                    <c:if test="${!user.role.toString().equals(admin)}">
+<%--                    <c:if test="${!user.role.toString().equals(admin)}">--%>
+                    <c:if test="${!sessionScope.role.toString().equals(admin)}">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#deactivateModal">
                             <fmt:message key="button.deactivateAccount"/>
@@ -267,7 +276,7 @@
                                         </div>
                                         <div class="form-group mt-1">
                                             <input type="password" class="form-control field" id="inputCurrentPassword2"
-                                                   name="currentPassword"
+                                                   name="password"
                                                    placeholder=
                                                            "<fmt:message key="register.inputPasswordPlaceholder"/>"
                                                    required

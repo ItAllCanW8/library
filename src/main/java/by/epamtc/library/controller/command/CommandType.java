@@ -42,6 +42,9 @@ public enum CommandType {
     CHANGE_PASSWORD{{
         this.command = new ChangePassword();
     }},
+    DEACTIVATE_ACCOUNT{{
+        this.command = new DeactivateUserAccount();
+    }},
     USERS{{
         this.command = new Users();
     }},
