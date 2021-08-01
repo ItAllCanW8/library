@@ -27,7 +27,8 @@
                     Library
                 </h3>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -61,7 +62,8 @@
                                     key="header.register"/></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/login"><fmt:message
+                            <a class="nav-link header-link offset-1"
+                               href="${pageContext.request.contextPath}/login"><fmt:message
                                     key="header.login"/></a>
                         </li>
                     </c:if>
@@ -69,7 +71,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownUser" data-toggle="dropdown"
                                aria-expanded="false">
-                                ${sessionScope.user.username}
+                                    ${sessionScope.user.username}
                                 <c:if test="${sessionScope.role.toString().equals(admin)}">
                                     (admin)
                                 </c:if>
@@ -83,17 +85,27 @@
                                 </c:if>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+<%--    href="${pageContext.request.contextPath}/user_profile.do"--%>
                                 <li><a class="dropdown-item"
-                                       href="${pageContext.request.contextPath}/user_profile.do">Profile</a></li>
+                                       href="<c:url value="load_user_profile.do?userId=${user.id}"/>"><fmt:message
+                                        key="header.profile"/></a></li>
                                 <li>
+                                <c:if test="${sessionScope.role.toString().equals(admin)}">
+                                    <li><a class="dropdown-item"
+                                           href="${pageContext.request.contextPath}/users.do"><fmt:message
+                                            key="header.users"/></a></li>
+                                    <li>
+                                </c:if>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout.do"><fmt:message
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/logout.do"><fmt:message
                                         key="header.logout"/></a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/logout.do"><fmt:message
+                            <a class="nav-link header-link offset-1"
+                               href="${pageContext.request.contextPath}/logout.do"><fmt:message
                                     key="header.logout"/></a>
                         </li>
                     </c:if>

@@ -11,6 +11,8 @@ import by.epamtc.library.model.entity.UserStatus;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
@@ -87,7 +89,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean add(User user, String encPass) throws DaoException {
         try (Connection connection = pool.takeConnection()) {
-            System.out.println(user);
             if(insertUserDetails(user.getUserDetails(), connection)){
                 PreparedStatement insertUserSt = connection.prepareStatement(SqlQuery.INSERT_USER);
 
@@ -180,6 +181,21 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
+    }
+
+    @Override
+    public List<User> findAllUsers() throws DaoException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_ALL_USERS);
+            while (resultSet.next()) {
+                users.add(createUserFromResultSet(resultSet));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+        return users;
     }
 
     @Override

@@ -41,6 +41,12 @@ public enum CommandType {
     }},
     CHANGE_PASSWORD{{
         this.command = new ChangePassword();
+    }},
+    USERS{{
+        this.command = new Users();
+    }},
+    LOAD_USER_PROFILE{{
+        this.command = new LoadUserProfile();
     }};
 
     Command command;

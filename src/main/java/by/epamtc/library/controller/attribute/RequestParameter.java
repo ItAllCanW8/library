@@ -1,6 +1,8 @@
 package by.epamtc.library.controller.attribute;
 
 public class RequestParameter {
+    public static final String USER = "user";
+    public static final String USER_ID = "userId";
     public static final String USERNAME = "username";
     public static final String USER_DETAILS = "userDetails";
     public static final String NAME = "name";
@@ -32,6 +34,8 @@ public class RequestParameter {
 
     public static final String FILE = "file";
     public static final String FILE_NAME = "fileName";
+
+    public static final String USERS = "users";
 
 
     private RequestParameter(){}

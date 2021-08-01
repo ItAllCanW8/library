@@ -18,6 +18,9 @@ public class JspAttribute {
     public static final String NO_BOOK = "noBook";
     public static final String NO_BOOK_MSG = "No book";
 
+    public static final String NO_USERS = "noUsers";
+    public static final String NO_USERS_MSG = "No users";
+
     public static final String ERROR_MSG = "errorMsg";
 
     private JspAttribute(){}

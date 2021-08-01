@@ -4,6 +4,7 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserStatus;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
@@ -16,5 +17,6 @@ public interface UserDao {
     boolean updateProfile(User user) throws DaoException;
     boolean updatePassword(long userId, String newPassword) throws DaoException;
     boolean updateUserStatus(long userId, UserStatus newStatus) throws DaoException;
+    List<User> findAllUsers() throws DaoException;
 }
 

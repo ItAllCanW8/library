@@ -1,8 +1,10 @@
 package by.epamtc.library.model.service;
 
 import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.User;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,4 +16,6 @@ public interface UserService {
     Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException;
     boolean changePassword(long userId, Map<String, String> fields) throws ServiceException;
     boolean deactivateUser(long userId) throws ServiceException;
+    List<User> findAllUsers() throws ServiceException;
+    Optional<User> findUserById(long userId) throws ServiceException;
 }

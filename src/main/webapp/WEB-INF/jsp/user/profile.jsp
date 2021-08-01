@@ -49,31 +49,41 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${sessionScope.user.userDetails.photoPath}"
+                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                              alt=""/>
                     </div>
-                    <form action="upload_photo.do" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" class="form-control-file"/>
-                        <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
-                    </form>
+                    <c:if test="${sessionScope.userId.equals(user.id)}">
+                        <form action="upload_photo.do" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file" class="form-control-file"/>
+                            <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
+                        </form>
+                    </c:if>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h3>${username}</h3>
-                        <h4>${email}</h4>
+                        <h3>${user.username}</h3>
+                        <h4>${user.email}</h4>
                         <hr style="width:100%;text-align:left;margin-left:0">
-                        <h5><fmt:message key="profile.name"/>: ${userDetails.name}</h5>
-                        <h5><fmt:message key="profile.surname"/>: ${userDetails.surname}</h5>
-                        <h5><fmt:message key="profile.dateOfBirth"/>: ${userDetails.dateOfBirth}</h5>
-                        <h5><fmt:message key="profile.phoneNumber"/>: ${userDetails.phoneNumber}</h5>
+                        <h5><fmt:message key="profile.name"/>: ${user.userDetails.name}</h5>
+                        <h5><fmt:message key="profile.surname"/>: ${user.userDetails.surname}</h5>
+                        <h5><fmt:message key="profile.dateOfBirth"/>: ${user.userDetails.dateOfBirth}</h5>
+                        <h5><fmt:message key="profile.phoneNumber"/>: ${user.userDetails.phoneNumber}</h5>
                         <hr style="width:100%;text-align:left;margin-left:0">
                     </div>
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
-                        <fmt:message key="button.edit"/>
-                    </button>
+                    <c:if test="${sessionScope.userId.equals(user.id)}">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#editProfileModal">
+                            <fmt:message key="button.edit"/>
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#changePassModal">
+                            <fmt:message key="button.changePassword"/>
+                        </button>
+                    </c:if>
 
                     <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -168,10 +178,6 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePassModal">
-                        <fmt:message key="button.changePassword"/>
-                    </button>
-
                     <div class="modal fade" id="changePassModal" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -235,8 +241,9 @@
                         </div>
                     </div>
 
-                    <c:if test="${!role.toString().equals(admin)}">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModal">
+                    <c:if test="${!user.role.toString().equals(admin)}">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#deactivateModal">
                             <fmt:message key="button.deactivateAccount"/>
                         </button>
                     </c:if>

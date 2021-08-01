@@ -44,7 +44,7 @@
 
     <script>
         $(document).ready( function () {
-            $('#example').DataTable();
+            $('#booksTable').DataTable();
         } );
     </script>
 
@@ -61,14 +61,14 @@
     <div class="container">
         <div class="heading_container">
             <h3>
-                Events
+
             </h3>
             <p>
                 Upcoming Education Events to feed your brain.
             </p>
         </div>
         <div class="event_container">
-            <table id="example" class="table table-dark table-bordered border-secondary">
+            <table id="booksTable" class="table table-dark table-bordered border-secondary">
                 <thead>
                 <tr>
                     <th scope="col">title</th>
@@ -85,7 +85,7 @@
                         <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${book.id}"/>">
                                 ${book.title}</a></th>
                         <th scope="row"><div>
-                            <img src="${pageContext.request.contextPath}/images/book-covers/${book.img}" alt=""
+                            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt=""
                                  style="max-height: 250px;max-width: 250px"></div></th>
                         <th scope="row">${book.authorPseudo}</th>
                         <th scope="row">${book.genre}</th>

@@ -7,6 +7,7 @@ public class PagePath {
     public static final String BOOKS = "/WEB-INF/jsp/books/books.jsp";
     public static final String BOOK_INFO = "/WEB-INF/jsp/books/book_info.jsp";
     public static final String USER_PROFILE = "/WEB-INF/jsp/user/profile.jsp";
+    public static final String USERS = "/WEB-INF/jsp/admin/users.jsp";
 
     private PagePath(){}
 }

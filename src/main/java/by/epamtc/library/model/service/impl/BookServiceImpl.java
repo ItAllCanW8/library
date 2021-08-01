@@ -57,9 +57,7 @@ public class BookServiceImpl implements BookService {
             Optional<Book> bookOptional = bookDao.findBookById(bookId);
             if (bookOptional.isPresent()) {
                 Book book = bookOptional.get();
-//                if (updateVacancyEmployee(book)) {
-                    bookOptional = Optional.of(book);
-//                }
+                bookOptional = Optional.of(book);
             }
             return bookOptional;
         } catch (DaoException e) {
