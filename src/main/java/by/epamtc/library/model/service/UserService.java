@@ -16,6 +16,7 @@ public interface UserService {
     Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException;
     boolean changePassword(long userId, Map<String, String> fields) throws ServiceException;
     boolean deactivateUser(long userId) throws ServiceException;
+    boolean activateUser(long userId) throws ServiceException;
     List<User> findAllUsers() throws ServiceException;
     Optional<User> findUserById(long userId) throws ServiceException;
 }

@@ -2,7 +2,6 @@ package by.epamtc.library.controller.attribute;
 
 public class JspAttribute {
     public static final String EMAIL_AVAILABLE_ERROR_MSG = "This email is already taken.";
-    public static final String PHONE_NUMBER_AVAILABLE_ERROR_MSG = "This phone number is already taken.";
     public static final String INVALID_INPUT_DATA_MSG = "";
     public static final String ACCOUNT_IS_DEACTIVATED = "accountIsDeactivated";
     public static final String ACCOUNT_IS_DEACTIVATED_MSG = "Couldn't login cause your account is deactivated.";
@@ -11,6 +10,10 @@ public class JspAttribute {
     public static final String ERROR_INPUT_DATA_MSG = "Input data isn't valid.";
     public static final String ERROR_INVALID_CURR_PASSWORD = "invalidCurrPassword";
     public static final String ERROR_INVALID_CURR_PASSWORD_MSG = "Current password isn't valid.";
+    public static final String ERROR_DEACTIVATING = "errorDeactivating";
+    public static final String ERROR_DEACTIVATING_MSG = "Error deactivating user account.";
+    public static final String ERROR_ACTIVATING = "errorActivating";
+    public static final String ERROR_ACTIVATING_MSG = "Error activating user account.";
 
     public static final String NO_BOOKS = "noBooks";
     public static final String NO_BOOKS_MSG = "No books";

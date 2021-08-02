@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-public class DeactivateUserAccount implements Command {
+public class DeactivateAccount implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         UserService service = UserServiceImpl.getInstance();
@@ -25,7 +25,6 @@ public class DeactivateUserAccount implements Command {
         try {
             Optional<User> userOptional = service.login(user.getEmail(), currentPassword);
             if (userOptional.isPresent()) {
-                System.out.println(user);
                 service.deactivateUser(user.getId());
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
 //                result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.FORWARD);

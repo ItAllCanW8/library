@@ -68,18 +68,16 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private Optional<Long> findRoleId(UserRole role) throws SQLException, ConnectionPoolException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ROLE_ID_BY_NAME)) {
+    private Optional<Long> findRoleId(UserRole role, Connection connection) throws SQLException, ConnectionPoolException {
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ROLE_ID_BY_NAME)) {
             statement.setString(1, role.name());
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(resultSet.getLong(1)) : Optional.empty());
         }
     }
 
-    private Optional<Long> findDetailsId(String phoneNum) throws SQLException, ConnectionPoolException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_DETAILS_ID_BY_PHONE)) {
+    private Optional<Long> findDetailsId(String phoneNum, Connection connection) throws SQLException, ConnectionPoolException {
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_DETAILS_ID_BY_PHONE)) {
             statement.setString(1, phoneNum);
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(resultSet.getLong(1)) : Optional.empty());
@@ -96,9 +94,9 @@ public class UserDaoImpl implements UserDao {
                     insertUserSt.setString(3, encPass);
                     insertUserSt.setString(4, user.getStatus().getValue());
 
-                    insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
+                    insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber(), connection).
                             orElseThrow(() -> new DaoException(INVALID_DETAILS_ERROR_MSG)));
-                    insertUserSt.setLong(6, findRoleId(user.getRole()).
+                    insertUserSt.setLong(6, findRoleId(user.getRole(), connection).
                             orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
 
                     return (insertUserSt.executeUpdate() == 1);

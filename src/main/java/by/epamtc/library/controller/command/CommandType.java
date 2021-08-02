@@ -43,13 +43,19 @@ public enum CommandType {
         this.command = new ChangePassword();
     }},
     DEACTIVATE_ACCOUNT{{
-        this.command = new DeactivateUserAccount();
+        this.command = new DeactivateAccount();
     }},
     USERS{{
         this.command = new Users();
     }},
     LOAD_USER_PROFILE{{
         this.command = new LoadUserProfile();
+    }},
+    DEACTIVATE_USER_ACCOUNT{{
+        this.command = new DeactivateUserById();
+    }},
+    ACTIVATE_USER_ACCOUNT{{
+        this.command = new ActivateUserById();
     }};
 
     Command command;

@@ -142,6 +142,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean activateUser(long userId) throws ServiceException {
+        try {
+            return userDao.updateUserStatus(userId, UserStatus.ACTIVE);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<User> findAllUsers() throws ServiceException {
         try {
             return userDao.findAllUsers();
