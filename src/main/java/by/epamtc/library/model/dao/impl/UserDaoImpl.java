@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     private static final Lock lock = new ReentrantLock();
     private static volatile UserDao instance;
 
-    private static final String INVALID_ROLE_ERROR_MSG= "Invalid user role.";
+    private static final String INVALID_ROLE_ERROR_MSG = "Invalid user role.";
     private static final String INVALID_DETAILS_ERROR_MSG = "Invalid user details.";
 
     private UserDaoImpl() {
@@ -89,20 +89,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean add(User user, String encPass) throws DaoException {
         try (Connection connection = pool.takeConnection()) {
-            if(insertUserDetails(user.getUserDetails(), connection)){
-                PreparedStatement insertUserSt = connection.prepareStatement(SqlQuery.INSERT_USER);
+            if (insertUserDetails(user.getUserDetails(), connection)) {
+                try (PreparedStatement insertUserSt = connection.prepareStatement(SqlQuery.INSERT_USER)) {
+                    insertUserSt.setString(1, user.getUsername());
+                    insertUserSt.setString(2, user.getEmail());
+                    insertUserSt.setString(3, encPass);
+                    insertUserSt.setString(4, user.getStatus().getValue());
 
-                insertUserSt.setString(1, user.getUsername());
-                insertUserSt.setString(2, user.getEmail());
-                insertUserSt.setString(3, encPass);
-                insertUserSt.setString(4, user.getStatus().getValue());
+                    insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
+                            orElseThrow(() -> new DaoException(INVALID_DETAILS_ERROR_MSG)));
+                    insertUserSt.setLong(6, findRoleId(user.getRole()).
+                            orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
 
-                insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber()).
-                        orElseThrow(() -> new DaoException(INVALID_DETAILS_ERROR_MSG)));
-                insertUserSt.setLong(6, findRoleId(user.getRole()).
-                        orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
-
-                return (insertUserSt.executeUpdate() == 1);
+                    return (insertUserSt.executeUpdate() == 1);
+                }
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
@@ -142,15 +142,16 @@ public class UserDaoImpl implements UserDao {
             updateUserStatement.setString(2, user.getEmail());
             updateUserStatement.setLong(3, user.getId());
 
-            if(updateUserStatement.executeUpdate() == 1) {
-                PreparedStatement updateUserDetailsSt = connection.prepareStatement(SqlQuery.UPDATE_USER_DETAILS);
-                updateUserDetailsSt.setString(1, user.getUserDetails().getName());
-                updateUserDetailsSt.setString(2, user.getUserDetails().getSurname());
-                updateUserDetailsSt.setDate(3, Date.valueOf(user.getUserDetails().getDateOfBirth()));
-                updateUserDetailsSt.setString(4, user.getUserDetails().getPhoneNumber());
-                updateUserDetailsSt.setLong(5, user.getId());
+            if (updateUserStatement.executeUpdate() == 1) {
+                try (PreparedStatement updateUserDetailsSt = connection.prepareStatement(SqlQuery.UPDATE_USER_DETAILS)) {
+                    updateUserDetailsSt.setString(1, user.getUserDetails().getName());
+                    updateUserDetailsSt.setString(2, user.getUserDetails().getSurname());
+                    updateUserDetailsSt.setDate(3, Date.valueOf(user.getUserDetails().getDateOfBirth()));
+                    updateUserDetailsSt.setString(4, user.getUserDetails().getPhoneNumber());
+                    updateUserDetailsSt.setLong(5, user.getUserDetails().getId());
 
-                return (updateUserDetailsSt.executeUpdate() == 1);
+                    return (updateUserDetailsSt.executeUpdate() == 1);
+                }
             } else {
                 throw new DaoException("Error updating user profile");
             }
@@ -178,7 +179,6 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, newStatus.getValue());
             statement.setLong(2, userId);
 
-            System.out.println(statement);
             return (statement.executeUpdate() == 1);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
@@ -236,7 +236,7 @@ public class UserDaoImpl implements UserDao {
         String photoPath = resultSet.getString("photo_path");
         UserStatus status = UserStatus.fromString(resultSet.getString("status"));
         UserRole role = UserRole.valueOf(resultSet.getString("role").toUpperCase(Locale.ROOT));
-        return (new User(userId, role, new UserDetails(detailsId,name,surname,dateOfBirth,phoneNumber,photoPath),
-                status,username, email));
+        return (new User(userId, role, new UserDetails(detailsId, name, surname, dateOfBirth, phoneNumber, photoPath),
+                status, username, email));
     }
 }

@@ -68,17 +68,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> login(String email, String password) throws ServiceException {
         try {
-            System.out.println("1 "+email);
-            System.out.println("1 "+password);
             if (UserValidator.isEmailValid(email) && UserValidator.isPasswordValid(password) && !userDao.isEmailAvailable(email)) {
-                System.out.println("2 "+email);
-                System.out.println("2 "+password);
                 Optional<String> passFromDb = userDao.findPasswordByEmail(email);
-                System.out.println("3 "+email);
-                System.out.println("3 "+password);
                 if (passFromDb.isPresent() && Encryptor.check(password, passFromDb.get())) {
-                    System.out.println("4 "+email);
-                    System.out.println("4 "+password);
                     return userDao.findUserByEmail(email);
                 }
             }

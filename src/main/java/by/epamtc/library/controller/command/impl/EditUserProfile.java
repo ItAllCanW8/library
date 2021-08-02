@@ -43,7 +43,9 @@ public class EditUserProfile implements Command {
         CommandResult result = new CommandResult(CommandName.LOAD_USER_PROFILE + userId, CommandResult.Type.REDIRECT);
         try {
             Optional<User> userOptional = service.updateProfile(userId, fields);
+            System.out.println(userOptional);
             if (userOptional.isPresent()) {
+                System.out.println(userOptional.get());
                 session.setAttribute(SessionAttribute.USER, userOptional.get());
             } else {
                 if (!service.isEmailAvailable(newEmail)) {

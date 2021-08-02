@@ -250,7 +250,8 @@
                     </div>
 
 <%--                    <c:if test="${!user.role.toString().equals(admin)}">--%>
-                    <c:if test="${!sessionScope.role.toString().equals(admin)}">
+                    <c:if test="${!sessionScope.role.toString().equals(admin) &&
+                    !sessionScope.role.toString().equals(guest)}">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#deactivateModal">
                             <fmt:message key="button.deactivateAccount"/>
