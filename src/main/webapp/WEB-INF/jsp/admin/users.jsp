@@ -68,7 +68,6 @@
                     <th scope="col"><fmt:message key="profile.role"/></th>
                     <th scope="col">email</th>
                     <th scope="col"><fmt:message key="profile.status"/></th>
-                    <th scope="col"><fmt:message key="button.changeStatus"/></th>
                 </tr>
                 </thead>
 
@@ -82,14 +81,22 @@
                                 <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                                      alt="" style="max-height: 250px;max-width: 250px"></div>
                         </th>
-                        <th scope="row">${user.role}</th>
+                        <th scope="row">${user.role}<br>
+<%--                            <input type="hidden" name="userRole" value="${user.role}">--%>
+                            <c:if test="${user.role.toString().equals(reader)}"><br>
+                                <a href="change_role_to_librarian.do?userId=${user.id}"><fmt:message key="users.changeRole"/>
+                                </a>
+                            </c:if>
+                            <c:if test="${user.role.toString().equals(librarian)}"><br>
+                                <a href="change_role_to_reader.do?userId=${user.id}"><fmt:message key="users.changeRole"/></a>
+                            </c:if>
+                        </th>
                         <th scope="row">${user.email}</th>
-                        <th scope="row">${user.status}</th>
-                        <th scope="row">
-                            <c:if test="${user.status.value.equals('active')}">
+                        <th scope="row">${user.status}
+                            <c:if test="${user.status.value.equals('active')}"><br>
                                 <a href="deactivate_user_account.do?userId=${user.id}"><fmt:message key="users.deactivate"/></a>
                             </c:if>
-                            <c:if test="${user.status.value.equals('deactivated')}">
+                            <c:if test="${user.status.value.equals('deactivated')}"><br>
                                 <a href="activate_user_account.do?userId=${user.id}"><fmt:message key="users.activate"/></a>
                             </c:if>
                         </th>

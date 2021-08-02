@@ -36,7 +36,7 @@ public class Login implements Command {
                     session.setAttribute(SessionAttribute.CURRENT_ROLE, user.getRole());
                     session.setAttribute(SessionAttribute.USER_ID, user.getId());
 
-                    result = new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.REDIRECT);
+                    result = new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.RETURN_WITH_REDIRECT);
                 } else {
                     req.setAttribute(RequestParameter.EMAIL, email);
                     req.setAttribute(JspAttribute.ACCOUNT_IS_DEACTIVATED, JspAttribute.ACCOUNT_IS_DEACTIVATED_MSG);

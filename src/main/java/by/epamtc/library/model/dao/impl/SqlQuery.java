@@ -39,7 +39,7 @@ public class SqlQuery {
 
     public static final String UPDATE_PASSWORD= "UPDATE users SET password = ? WHERE user_id = ?;";
     public static final String UPDATE_USER_STATUS = "UPDATE users SET status = ? WHERE user_id = ?;";
-
+    public static final String UPDATE_USER_ROLE = "UPDATE users SET role_id_fk = ? WHERE user_id = ?;";
     public static final String SELECT_ALL_USERS = "SELECT * FROM users JOIN user_details ON details_id = details_id_fk" +
             " JOIN user_roles ON role_id = role_id_fk;";
 }

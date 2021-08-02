@@ -56,6 +56,12 @@ public enum CommandType {
     }},
     ACTIVATE_USER_ACCOUNT{{
         this.command = new ActivateUserById();
+    }},
+    CHANGE_ROLE_TO_LIBRARIAN{{
+        this.command = new ChangeRoleToLibrarian();
+    }},
+    CHANGE_ROLE_TO_READER{{
+        this.command = new ChangeRoleToReader();
     }};
 
     Command command;

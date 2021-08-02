@@ -184,6 +184,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean updateUserRole(long userId, UserRole newRole) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_ROLE)) {
+            statement.setLong(1, findRoleId(newRole, connection).orElseThrow(()
+                    -> new DaoException(INVALID_ROLE_ERROR_MSG)));
+            statement.setLong(2, userId);
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public List<User> findAllUsers() throws DaoException {
         List<User> users = new ArrayList<>();
         try (Connection connection = pool.takeConnection();

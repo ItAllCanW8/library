@@ -7,6 +7,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.dao.impl.UserDaoImpl;
 import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.UserFactory;
@@ -145,6 +146,24 @@ public class UserServiceImpl implements UserService {
     public boolean activateUser(long userId) throws ServiceException {
         try {
             return userDao.updateUserStatus(userId, UserStatus.ACTIVE);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changeRoleToLibrarian(long userId) throws ServiceException {
+        try {
+            return userDao.updateUserRole(userId, UserRole.LIBRARIAN);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changeRoleToReader(long userId) throws ServiceException {
+        try {
+            return userDao.updateUserRole(userId, UserRole.READER);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

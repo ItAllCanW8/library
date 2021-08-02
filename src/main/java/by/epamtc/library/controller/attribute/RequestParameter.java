@@ -3,6 +3,7 @@ package by.epamtc.library.controller.attribute;
 public class RequestParameter {
     public static final String USER = "user";
     public static final String USER_ID = "userId";
+    public static final String USER_ROLE = "userRole";
     public static final String USERNAME = "username";
     public static final String USER_DETAILS = "userDetails";
     public static final String NAME = "name";

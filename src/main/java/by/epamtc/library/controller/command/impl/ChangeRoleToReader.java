@@ -13,8 +13,7 @@ import by.epamtc.library.model.service.impl.UserServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-public class ActivateUserById implements Command {
+public class ChangeRoleToReader implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String userId = req.getParameter(RequestParameter.USER_ID);
@@ -22,10 +21,11 @@ public class ActivateUserById implements Command {
         UserService service = UserServiceImpl.getInstance();
         CommandResult result = new CommandResult(CommandName.USERS, CommandResult.Type.REDIRECT);
         try {
-            if(!service.activateUser(Long.parseLong(userId)))
-                req.setAttribute(JspAttribute.ERROR_CHANGING_STATUS, JspAttribute.ERROR_CHANGING_STATUS_MSG);
+            if(!service.changeRoleToReader(Long.parseLong(userId)))
+                req.setAttribute(JspAttribute.ERROR_CHANGING_ROLE, JspAttribute.ERROR_CHANGING_ROLE_MSG);
+
         } catch (ServiceException e) {
-            throw new CommandException("Error deactivating user account");
+            throw new CommandException("Error changing user role");
         }
         return result;
     }

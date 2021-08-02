@@ -18,6 +18,6 @@ public class Logout implements Command {
         session.removeAttribute(SessionAttribute.USER_ID);
         session.removeAttribute(SessionAttribute.USER);
         session.setAttribute(SessionAttribute.CURRENT_ROLE, UserRole.GUEST);
-        return (new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.REDIRECT));
+        return (new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.RETURN_WITH_REDIRECT));
     }
 }
