@@ -8,6 +8,7 @@ public class CommandName {
     public static final String LOAD_USER_PROFILE = "/load_user_profile.do?userId=";
     public static final String DEACTIVATE_ACCOUNT = "/deactivate_user_account.do?userId=";
     public static final String ACTIVATE_ACCOUNT = "/activate_user_account.do?userId=";
+    public static final String TO_LIBRARIAN_BOOKS = "/to_librarian_books.do";
 
     private CommandName(){}
 }

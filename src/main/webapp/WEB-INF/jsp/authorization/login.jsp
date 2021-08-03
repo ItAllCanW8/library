@@ -60,14 +60,17 @@
                     <form action="login.do" method="post">
                         <div>
                             <label for="email">
-                                <input type="email" id="email" name="email"
+                                <input type="email" id="email" name="email" value="${email}"
+                                       pattern="((\w)([-.](\w))?){1,64}@((\w)([-.](\w))?){1,251}.[a-zA-Zа-яА-Я]{2,4}"
+                                       required
                                        placeholder="<fmt:message key="register.inputEmail"/>" />
                             </label>
                         </div>
                         <div>
                             <label for="password">
                                 <input type="password" id="password" name="password"
-                                       placeholder="<fmt:message key="register.inputPassword"/>" />
+                                       placeholder="<fmt:message key="register.inputPassword"/>"
+                                       required pattern="[а-яА-Я\w\s\p{Punct}]{6,255}"/>
                             </label>
                         </div>
                         <button type="submit"><fmt:message key="header.login"/></button>

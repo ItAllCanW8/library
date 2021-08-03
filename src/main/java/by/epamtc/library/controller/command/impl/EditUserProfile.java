@@ -43,13 +43,15 @@ public class EditUserProfile implements Command {
         CommandResult result = new CommandResult(CommandName.LOAD_USER_PROFILE + userId, CommandResult.Type.REDIRECT);
         try {
             Optional<User> userOptional = service.updateProfile(userId, fields);
-            System.out.println(userOptional);
+
             if (userOptional.isPresent()) {
-                System.out.println(userOptional.get());
                 session.setAttribute(SessionAttribute.USER, userOptional.get());
             } else {
                 if (!service.isEmailAvailable(newEmail)) {
                     req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.EMAIL_AVAILABLE_ERROR_MSG);
+                }
+                if (!service.isPhoneNumAvailable(newPhoneNumber)) {
+                    req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.PHONE_AVAILABLE_ERROR_MSG);
                 } else {
                     req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
                 }

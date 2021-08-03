@@ -83,12 +83,12 @@
                     </div>
 
                     <c:if test="${sessionScope.userId.equals(user.id)}">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-secondary" data-toggle="modal"
                                 data-target="#editProfileModal">
                             <fmt:message key="button.edit"/>
                         </button>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-secondary" data-toggle="modal"
                                 data-target="#changePassModal">
                             <fmt:message key="button.changePassword"/>
                         </button>
@@ -249,10 +249,9 @@
                         </div>
                     </div>
 
-<%--                    <c:if test="${!user.role.toString().equals(admin)}">--%>
                     <c:if test="${!sessionScope.role.toString().equals(admin) &&
                     !sessionScope.role.toString().equals(guest)}">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-secondary" data-toggle="modal"
                                 data-target="#deactivateModal">
                             <fmt:message key="button.deactivateAccount"/>
                         </button>

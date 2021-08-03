@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
                     return false;
                 }
 
+                if(!userDao.isPhoneNumAvailable(user.getUserDetails().getPhoneNumber())) {
+                    fields.put(RequestParameter.PHONE_NUMBER, JspAttribute.PHONE_AVAILABLE_ERROR_MSG);
+                    return false;
+                }
+
                 String password = fields.get(RequestParameter.PASSWORD);
                 String encPass = Encryptor.encrypt(password);
 
@@ -100,14 +105,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isPhoneNumAvailable(String phoneNum) throws ServiceException {
+        try {
+            return (UserValidator.isPhoneNumberValid(phoneNum) && userDao.isPhoneNumAvailable(phoneNum));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException {
         try {
             if (UserValidator.isEditFormValid(newFields)) {
                 Optional<User> userOptional = userDao.findUserById(userId);
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
-                    if (user.getEmail().equals(newFields.get(RequestParameter.EMAIL)) ||
-                            userDao.isEmailAvailable(newFields.get(RequestParameter.EMAIL))) {
+                    if ((user.getEmail().equals(newFields.get(RequestParameter.EMAIL)) ||
+                            userDao.isEmailAvailable(newFields.get(RequestParameter.EMAIL))) &&
+                        (user.getUserDetails().getPhoneNumber().equals(newFields.get(RequestParameter.PHONE_NUMBER)) ||
+                            userDao.isPhoneNumAvailable(newFields.get(RequestParameter.PHONE_NUMBER)))) {
+
                         updateUserFields(user, newFields);
                         return (userDao.updateProfile(user) ? Optional.of(user) : Optional.empty());
                     }

@@ -62,6 +62,9 @@ public enum CommandType {
     }},
     CHANGE_ROLE_TO_READER{{
         this.command = new ChangeRoleToReader();
+    }},
+    TO_LIBRARIAN_BOOKS{{
+        this.command = new LibrarianBooksPage();
     }};
 
     Command command;

@@ -27,12 +27,8 @@ public class LoadBookInfo implements Command {
                 Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));
                 if (bookOptional.isPresent()) {
                     Book book = bookOptional.get();
-//                    if (book.getIsAvailable()) {
                     req.setAttribute(RequestParameter.BOOK, book);
                     result = new CommandResult(PagePath.BOOK_INFO, CommandResult.Type.FORWARD);
-//                    } else {
-//                        req.setAttribute(JspAttribute.NO_VACANCY_ATTRIBUTE, JspAttribute.NO_VACANCY_MESSAGE);
-//                    }
                 } else {
                     req.setAttribute(JspAttribute.NO_BOOK, JspAttribute.NO_BOOK_MSG);
                 }

@@ -38,10 +38,12 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/home.do"><fmt:message
                                 key="header.home"/><span class="sr-only">(current)</span></a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/load_books.do"><fmt:message
                                 key="header.books"/></a>
                     </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"
                            aria-expanded="false"><fmt:message
@@ -61,6 +63,7 @@
                             <a class="nav-link header-link offset-1" href="${pageContext.request.contextPath}/register"><fmt:message
                                     key="header.register"/></a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link header-link offset-1"
                                href="${pageContext.request.contextPath}/login"><fmt:message
@@ -73,19 +76,18 @@
                                aria-expanded="false">
                                     ${sessionScope.user.username}
                                 <c:if test="${sessionScope.role.toString().equals(admin)}">
-                                    (admin)
+                                    (<fmt:message key="header.adminRole"/>)
                                 </c:if>
 
                                 <c:if test="${sessionScope.role.toString().equals(reader)}">
-                                    (reader)
+                                    (<fmt:message key="header.readerRole"/>)
                                 </c:if>
 
                                 <c:if test="${sessionScope.role.toString().equals(librarian)}">
-                                    (librarian)
+                                    (<fmt:message key="header.librarianRole"/>)
                                 </c:if>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
-<%--    href="${pageContext.request.contextPath}/user_profile.do"--%>
                                 <li><a class="dropdown-item"
                                        href="<c:url value="load_user_profile.do?userId=${user.id}"/>"><fmt:message
                                         key="header.profile"/></a></li>
@@ -96,6 +98,16 @@
                                             key="header.users"/></a></li>
                                     <li>
                                 </c:if>
+                                <c:if test="${sessionScope.role.toString().equals(librarian)}">
+                                    <li><a class="dropdown-item"
+                                           href="${pageContext.request.contextPath}/to_librarian_books.do"><fmt:message
+                                            key="header.booksManagement"/></a></li>
+                                    <li>
+<%--                                    <li><a class="dropdown-item"--%>
+<%--                                           href="${pageContext.request.contextPath}/reader_requests.do"><fmt:message--%>
+<%--                                            key="header.readerRequests"/></a></li>--%>
+<%--                                    <li>--%>
+                                </c:if>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item"
@@ -103,6 +115,9 @@
                                         key="header.logout"/></a></li>
                             </ul>
                         </li>
+                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                             width="64" height="64"
+                             class="rounded-circle avatar" alt="" style="margin-top: 20px">
                         <li class="nav-item">
                             <a class="nav-link header-link offset-1"
                                href="${pageContext.request.contextPath}/logout.do"><fmt:message

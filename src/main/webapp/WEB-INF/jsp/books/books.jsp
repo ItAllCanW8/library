@@ -71,12 +71,12 @@
             <table id="booksTable" class="table table-dark table-bordered border-secondary">
                 <thead>
                 <tr>
-                    <th scope="col">title</th>
-                    <th scope="col">cover</th>
-                    <th scope="col">author</th>
-                    <th scope="col">genre</th>
-                    <th scope="col">isbn</th>
-                    <th scope="col">available quantity</th>
+                    <th scope="col"><fmt:message key="books.title"/></th>
+                    <th scope="col"><fmt:message key="books.cover"/></th>
+                    <th scope="col"><fmt:message key="books.author"/></th>
+                    <th scope="col"><fmt:message key="books.genre"/></th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col"><fmt:message key="books.availableQuantity"/></th>
                 </tr>
                 </thead>
                 <tbody>

@@ -20,7 +20,7 @@ public final class UserValidator {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("((\\w)([-.](\\w))?){1,64}@((\\w)([-.](\\w))?){1,251}.[a-zA-Z]{2,4}");
     private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("(\\+?(((\\d+-\\d+)+)|(\\d{2,20})|((\\d+\\s\\d+)+)))|" +
             "(\\(\\+?\\d+\\)[-\\s]?(((\\d+-\\d+)+)|(\\d+)|((\\d+\\s\\d+)+)))");
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("[а-яА-Я\\w\\s\\p{Punct}]{6,255}");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("[\\w\\s\\p{Punct}]{6,255}");
 
     private static final int PHONE_NUMBER_MAX_LENGTH = 20;
     private static final int PHOTO_NAME_MAX_LENGTH = 45;
@@ -67,8 +67,8 @@ public final class UserValidator {
             fields.put(RequestParameter.PASSWORD, JspAttribute.INVALID_INPUT_DATA_MSG);
             result = false;
         }
-        String repeatPassword = fields.get(RequestParameter.REPEATED_PASSWORD);
-        if (!isRepeatPasswordValid(password, repeatPassword)) {
+        String repeatedPassword = fields.get(RequestParameter.REPEATED_PASSWORD);
+        if (!isRepeatedPasswordValid(password, repeatedPassword)) {
             fields.put(RequestParameter.REPEATED_PASSWORD, JspAttribute.INVALID_INPUT_DATA_MSG);
             result = false;
         }
@@ -144,7 +144,7 @@ public final class UserValidator {
         return result;
     }
 
-    public static boolean isRepeatPasswordValid(String password, String repeatedPass) {
+    public static boolean isRepeatedPasswordValid(String password, String repeatedPass) {
         if (repeatedPass == null) {
             return false;
         }
@@ -230,7 +230,7 @@ public final class UserValidator {
         }
         String repeatedNewPassword = fields.get(RequestParameter.REPEATED_PASSWORD);
 
-        if (!isRepeatPasswordValid(newPassword, repeatedNewPassword)) {
+        if (!isRepeatedPasswordValid(newPassword, repeatedNewPassword)) {
             fields.put(RequestParameter.REPEATED_PASSWORD, "");
             result = false;
         }

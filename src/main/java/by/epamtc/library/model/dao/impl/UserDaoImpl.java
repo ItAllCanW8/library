@@ -52,6 +52,19 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public boolean isPhoneNumAvailable(String phoneNum) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PHONE_NUM)) {
+            statement.setString(1, phoneNum);
+            System.out.println(statement);
+            ResultSet resultSet = statement.executeQuery();
+            return !resultSet.next();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
     private boolean insertUserDetails(UserDetails userDetails, Connection connection) throws DaoException {
         try (PreparedStatement statement =
                      connection.prepareStatement(SqlQuery.INSERT_USER_DETAILS)) {

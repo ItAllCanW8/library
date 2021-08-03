@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookDao {
+    boolean add(Book book) throws DaoException;
+    boolean bookExists(Book book) throws DaoException;
     List<Book> loadPopularBooks() throws DaoException;
     List<Book> loadBooks() throws DaoException;
     Optional<Book> findBookById(long bookId) throws DaoException;

@@ -61,8 +61,8 @@
             <h3>${book.title}</h3>
             <h4>${book.authorPseudo}</h4>
             <h5>ISBN: ${book.isbn}</h5>
-            <h5>Genre: ${book.genre}</h5>
-            <h5>Available quantity: ${book.availableQuantity}</h5>
+            <h5><fmt:message key="books.genre"/>: ${book.genre}</h5>
+            <h5><fmt:message key="books.availableQuantity"/>: ${book.availableQuantity}</h5>
             <hr style="width:100%;text-align:left;margin-left:0">
             <p>
               ${book.shortDescription}
