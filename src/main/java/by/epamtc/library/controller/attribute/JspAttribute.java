@@ -7,6 +7,7 @@ public class JspAttribute {
     public static final String ACCOUNT_IS_DEACTIVATED = "accountIsDeactivated";
     public static final String ACCOUNT_IS_DEACTIVATED_MSG = "Couldn't login cause your account is deactivated.";
 
+
     public static final String ERROR_INPUT_DATA = "errorInputData";
     public static final String ERROR_INPUT_DATA_MSG = "Input data isn't valid.";
     public static final String ERROR_INVALID_CURR_PASSWORD = "invalidCurrPassword";
@@ -15,6 +16,10 @@ public class JspAttribute {
     public static final String ERROR_CHANGING_STATUS_MSG = "Error changing user status.";
     public static final String ERROR_CHANGING_ROLE = "errorChangingRole";
     public static final String ERROR_CHANGING_ROLE_MSG = "Error changing user role.";
+    public static final String ERROR_DUPLICATE_ATTRIBUTE = "errorDuplicate";
+    public static final String ERROR_BOOK_DUPLICATE_MSG = "Couldn't create book because it already exists.";
+    public static final String ERROR_BOOK_CREATION_ATTRIBUTE = "errorBookCreation";
+    public static final String ERROR_BOOK_CREATION_MSG = "Couldn't create book, bad input data.";
 
     public static final String NO_BOOKS = "noBooks";
     public static final String NO_BOOKS_MSG = "No books";

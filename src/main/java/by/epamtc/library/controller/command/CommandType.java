@@ -65,6 +65,9 @@ public enum CommandType {
     }},
     TO_LIBRARIAN_BOOKS{{
         this.command = new LibrarianBooksPage();
+    }},
+    ADD_BOOK{{
+        this.command = new AddBook();
     }};
 
     Command command;

@@ -39,12 +39,8 @@ public class BookServiceImpl implements BookService {
         try {
             Optional<Book> bookOptional = bookFactory.create(fields);
             if (bookOptional.isPresent()) {
-//                Optional<User> employee = UserDaoImpl.getInstance().findUserById(employeeId);
-//                if (employee.isPresent()) {
-                    Book book = bookOptional.get();
-//                    book.setEmployee(employee.get());
-                    return (!bookDao.bookExists(book)) && bookDao.add(book);
-//                }
+                Book book = bookOptional.get();
+                return (!bookDao.bookExists(book)) && bookDao.add(book);
             }
         } catch (DaoException | NumberFormatException e) {
             throw new ServiceException(e);

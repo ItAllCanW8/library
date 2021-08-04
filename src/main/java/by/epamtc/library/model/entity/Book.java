@@ -5,7 +5,7 @@ public class Book {
     private String title;
     private String authorPseudo;
     private String isbn;
-    private int availableQuantity;
+    private String availableQuantity;
     private String genre;
     private String shortDescription;
     private String pdf;
@@ -16,7 +16,7 @@ public class Book {
 
     public Book(long id){this.id = id;}
 
-    public Book(long id, String title, String authorPseudo, String isbn, int availableQuantity, String genre,
+    public Book(long id, String title, String authorPseudo, String isbn, String availableQuantity, String genre,
                 String shortDescription, String pdf, String img, String authorImg) {
         this.id = id;
         this.title = title;
@@ -30,7 +30,7 @@ public class Book {
         this.authorImg = authorImg;
     }
 
-    public Book(String title, String authorPseudo, String isbn, int availableQuantity, String genre,
+    public Book(String title, String authorPseudo, String isbn, String availableQuantity, String genre,
                 String shortDescription, String pdf, String img, String authorImg) {
         this.title = title;
         this.authorPseudo = authorPseudo;
@@ -71,11 +71,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public int getAvailableQuantity() {
+    public String getAvailableQuantity() {
         return availableQuantity;
     }
 
-    public void setAvailableQuantity(int availableQuantity) {
+    public void setAvailableQuantity(String availableQuantity) {
         this.availableQuantity = availableQuantity;
     }
 
@@ -127,15 +127,12 @@ public class Book {
         Book book = (Book) o;
 
         if (id != book.id) return false;
-        if (availableQuantity != book.availableQuantity) return false;
         if (!title.equals(book.title)) return false;
         if (!authorPseudo.equals(book.authorPseudo)) return false;
         if (!isbn.equals(book.isbn)) return false;
+        if (!availableQuantity.equals(book.availableQuantity)) return false;
         if (!genre.equals(book.genre)) return false;
-        if (!shortDescription.equals(book.shortDescription)) return false;
-        if (!pdf.equals(book.pdf)) return false;
-        if (!img.equals(book.img)) return false;
-        return authorImg.equals(book.authorImg);
+        return shortDescription.equals(book.shortDescription);
     }
 
     @Override
@@ -144,12 +141,9 @@ public class Book {
         result = 31 * result + title.hashCode();
         result = 31 * result + authorPseudo.hashCode();
         result = 31 * result + isbn.hashCode();
-        result = 31 * result + availableQuantity;
+        result = 31 * result + availableQuantity.hashCode();
         result = 31 * result + genre.hashCode();
         result = 31 * result + shortDescription.hashCode();
-        result = 31 * result + pdf.hashCode();
-        result = 31 * result + img.hashCode();
-        result = 31 * result + authorImg.hashCode();
         return result;
     }
 

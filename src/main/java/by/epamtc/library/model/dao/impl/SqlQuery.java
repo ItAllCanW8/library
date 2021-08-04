@@ -42,4 +42,7 @@ public class SqlQuery {
     public static final String UPDATE_USER_ROLE = "UPDATE users SET role_id_fk = ? WHERE user_id = ?;";
     public static final String SELECT_ALL_USERS = "SELECT * FROM users JOIN user_details ON details_id = details_id_fk" +
             " JOIN user_roles ON role_id = role_id_fk;";
+    public static final String CHECK_BOOK_FOR_EXISTENCE = "SELECT * FROM books WHERE title = ?;";
+    public static final String INSERT_BOOK = "INSERT INTO books(title, author_pseudo, isbn, available_quantity," +
+            " genre, short_description, pdf, img, author_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 }

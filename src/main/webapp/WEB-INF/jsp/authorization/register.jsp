@@ -22,13 +22,13 @@
     <title>Joson</title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />
+<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />--%>
+<%--    <!-- fonts style -->--%>
+<%--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />--%>
+<%--    <!-- Custom styles for this template -->--%>
+<%--    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />--%>
+<%--    <!-- responsive style -->--%>
+<%--    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />--%>
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                     <div>
                         <input type="text" id="username" name="username" value="${username}"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>"
-                               pattern="[a-zA-Zа-яА-Я]{3,255}" required/>
+                               pattern="[a-zA-Zа-яА-Я\w]{3,255}" required/>
                     </div>
                     <label for="email"><fmt:message key="register.inputEmail"/></label>
                     <div>
@@ -87,14 +87,14 @@
                     <div>
                         <input type="password" id="password" name="password" value="${password}"
                                placeholder="<fmt:message key="register.inputPasswordPlaceholder"/>"
-                               pattern="[\w\s\p{Punct}]{6,255}"
+                               pattern="[А-Яа-я\w\s\p{Punct}]{6,255}"
                                required/>
                     </div>
                     <label for="repeatedPassword"><fmt:message key="register.inputRepeatedPassword"/></label>
                     <div>
                         <input type="password" id="repeatedPassword" name="repeatedPassword" value="${repeatedPassword}"
                                placeholder="<fmt:message key="register.inputPasswordPlaceholder"/>"
-                               pattern="[\w\s\p{Punct}]{6,255}"
+                               pattern="[А-Яа-я\w\s\p{Punct}]{6,255}"
                                required/>
                     </div>
                     <button type="submit"><fmt:message key="button.completeRegister"/></button>

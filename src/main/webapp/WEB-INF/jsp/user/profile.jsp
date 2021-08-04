@@ -23,14 +23,14 @@
     <title>Joson</title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css"/>
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"
-          rel="stylesheet"/>
-    <!-- Custom styles for this template -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>
-    <!-- responsive style -->
-    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>
+<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css"/>--%>
+<%--    <!-- fonts style -->--%>
+<%--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"--%>
+<%--          rel="stylesheet"/>--%>
+<%--    <!-- Custom styles for this template -->--%>
+<%--    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>--%>
+<%--    <!-- responsive style -->--%>
+<%--    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>--%>
 </head>
 
 <body class="sub_page">
@@ -83,13 +83,13 @@
                     </div>
 
                     <c:if test="${sessionScope.userId.equals(user.id)}">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                data-target="#editProfileModal">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#editProfileModal">
                             <fmt:message key="button.edit"/>
                         </button>
 
-                        <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                data-target="#changePassModal">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#changePassModal">
                             <fmt:message key="button.changePassword"/>
                         </button>
                     </c:if>
@@ -177,7 +177,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         <fmt:message key="button.close"/>
                                     </button>
                                     <button type="submit" class="btn btn-primary" form="editForm">
@@ -239,7 +239,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         <fmt:message key="button.close"/>
                                     </button>
                                     <button type="submit" class="btn btn-primary" form="changePassForm">
@@ -251,8 +251,8 @@
 
                     <c:if test="${!sessionScope.role.toString().equals(admin) &&
                     !sessionScope.role.toString().equals(guest)}">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                data-target="#deactivateModal">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#deactivateModal">
                             <fmt:message key="button.deactivateAccount"/>
                         </button>
                     </c:if>
@@ -286,7 +286,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         <fmt:message key="button.close"/>
                                     </button>
                                     <button type="submit" class="btn btn-primary" form="deactivateForm">

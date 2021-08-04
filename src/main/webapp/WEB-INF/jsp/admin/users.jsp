@@ -23,19 +23,19 @@
     <title>Joson</title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css"/>
+<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css"/>--%>
 
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"
-          rel="stylesheet"/>
-    <!-- Custom styles for this template -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>
-    <!-- responsive style -->
-    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>
+<%--    <!-- fonts style -->--%>
+<%--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"--%>
+<%--          rel="stylesheet"/>--%>
+<%--    <!-- Custom styles for this template -->--%>
+<%--    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>--%>
+<%--    <!-- responsive style -->--%>
+<%--    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>--%>
 
-    <script src="http://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
-    <script src="http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+<%--    <script src="http://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>--%>
+<%--    <script src="http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js" type="text/javascript"></script>--%>
+<%--    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>--%>
 
     <script>
         $(document).ready(function () {

@@ -16,11 +16,12 @@ import java.util.stream.Collectors;
 
 public final class UserValidator {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Zа-яА-Я]{3,255}");
+    private static final Pattern NAME_PATTERN = Pattern.compile("[а-яА-Я]{3,255}");
+    private static final Pattern USERNAME_PATTERN = Pattern.compile("[а-яА-Я\\w]{3,255}");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("((\\w)([-.](\\w))?){1,64}@((\\w)([-.](\\w))?){1,251}.[a-zA-Z]{2,4}");
     private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("(\\+?(((\\d+-\\d+)+)|(\\d{2,20})|((\\d+\\s\\d+)+)))|" +
             "(\\(\\+?\\d+\\)[-\\s]?(((\\d+-\\d+)+)|(\\d+)|((\\d+\\s\\d+)+)))");
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("[\\w\\s\\p{Punct}]{6,255}");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{6,255}");
 
     private static final int PHONE_NUMBER_MAX_LENGTH = 20;
     private static final int PHOTO_NAME_MAX_LENGTH = 45;
@@ -33,7 +34,7 @@ public final class UserValidator {
         boolean result = true;
 
         String username = fields.get(RequestParameter.USERNAME);
-        if (!isNameValid(username)) {
+        if (!isUsernameValid(username)) {
             fields.put(RequestParameter.USERNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
             result = false;
         }
@@ -92,29 +93,25 @@ public final class UserValidator {
         return result;
     }
 
-    public static boolean isNameValid(String name) {
-        if (name == null) {
-            return false;
+    public static boolean isUsernameValid(String username) {
+        boolean result = isFieldValid(username, USERNAME_PATTERN);
+        if (!result) {
+            LOGGER.log(Level.DEBUG, "Username isn't valid: " + username);
         }
+        return result;
+    }
 
-        Matcher matcher = NAME_PATTERN.matcher(name);
-        boolean result = matcher.matches();
-
+    public static boolean isNameValid(String name) {
+        boolean result = isFieldValid(name, NAME_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Name isn't valid: " + name);
         }
-
         return result;
     }
 
     public static boolean isPhoneNumberValid(String phoneNumber) {
-        if (phoneNumber == null) {
-            return false;
-        }
-
-        Matcher matcher = PHONE_NUMBER_PATTERN.matcher(phoneNumber);
-        boolean result = matcher.matches() && phoneNumber.length() <= PHONE_NUMBER_MAX_LENGTH;
-
+        boolean result = isFieldValid(phoneNumber, PHONE_NUMBER_PATTERN) &&
+                phoneNumber.length() <= PHONE_NUMBER_MAX_LENGTH;
         if (!result) {
             LOGGER.log(Level.DEBUG, "Phone number isn't valid: " + phoneNumber);
         }
@@ -122,11 +119,7 @@ public final class UserValidator {
     }
 
     public static boolean isEmailValid(String email) {
-        if (email == null) {
-            return false;
-        }
-        Matcher matcher = EMAIL_PATTERN.matcher(email);
-        boolean result = matcher.matches();
+        boolean result = isFieldValid(email, EMAIL_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Email isn't valid: " + email);
         }
@@ -145,12 +138,7 @@ public final class UserValidator {
     }
 
     public static boolean isRepeatedPasswordValid(String password, String repeatedPass) {
-        if (repeatedPass == null) {
-            return false;
-        }
-
-        boolean result = isPasswordValid(password) && password.equals(repeatedPass);
-
+        boolean result = isFieldValid(password, PASSWORD_PATTERN) && password.equals(repeatedPass);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Repeated password isn't valid: " + repeatedPass);
         }
@@ -158,13 +146,7 @@ public final class UserValidator {
     }
 
     public static boolean isPasswordValid(String password) {
-        if (password == null) {
-            return false;
-        }
-
-        Matcher matcher = PASSWORD_PATTERN.matcher(password);
-        boolean result = matcher.matches();
-
+        boolean result = isFieldValid(password, PASSWORD_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Password isn't valid: " + password);
         }
@@ -172,13 +154,7 @@ public final class UserValidator {
     }
 
     public static boolean isDateFormatValid(String date) {
-        if (date == null) {
-            return false;
-        }
-
-        Matcher matcher = DATE_FORMAT_PATTERN.matcher(date);
-        boolean result = matcher.matches() && LocalDate.parse(date).isBefore(LocalDate.now());
-
+        boolean result = isFieldValid(date, DATE_FORMAT_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Date isn't valid: " + date);
         }
@@ -188,7 +164,7 @@ public final class UserValidator {
     public static boolean isEditFormValid(Map<String, String> fields) {
         boolean result = true;
         String username = fields.get(RequestParameter.USERNAME);
-        if (!isNameValid(username)) {
+        if (!isUsernameValid(username)) {
             fields.put(RequestParameter.USERNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
             result = false;
         }
@@ -235,5 +211,12 @@ public final class UserValidator {
             result = false;
         }
         return result;
+    }
+
+    private static boolean isFieldValid(String field, Pattern pattern){
+        if (field == null)
+            return false;
+
+        return pattern.matcher(field).matches();
     }
 }

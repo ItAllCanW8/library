@@ -88,8 +88,7 @@ public class UserDetails {
         if (!name.equals(that.name)) return false;
         if (!surname.equals(that.surname)) return false;
         if (!dateOfBirth.equals(that.dateOfBirth)) return false;
-        if (!phoneNumber.equals(that.phoneNumber)) return false;
-        return photoPath.equals(that.photoPath);
+        return phoneNumber.equals(that.phoneNumber);
     }
 
     @Override
@@ -99,7 +98,6 @@ public class UserDetails {
         result = 31 * result + surname.hashCode();
         result = 31 * result + dateOfBirth.hashCode();
         result = 31 * result + phoneNumber.hashCode();
-        result = 31 * result + photoPath.hashCode();
         return result;
     }
 

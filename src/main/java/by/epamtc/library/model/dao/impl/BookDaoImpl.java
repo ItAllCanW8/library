@@ -8,10 +8,7 @@ import by.epamtc.library.model.entity.Book;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +35,39 @@ public class BookDaoImpl implements BookDao {
         }
         return instance;
     }
+
+    @Override
+    public boolean add(Book book) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_BOOK)) {
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getAuthorPseudo());
+            statement.setString(3, book.getIsbn());
+            statement.setString(4, book.getAvailableQuantity());
+            statement.setString(5, book.getGenre());
+            statement.setString(6, book.getShortDescription());
+            statement.setString(7, book.getPdf());
+            statement.setString(8, book.getImg());
+            statement.setString(9, book.getAuthorImg());
+
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public boolean bookExists(Book book) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.CHECK_BOOK_FOR_EXISTENCE)) {
+            statement.setString(1, book.getTitle());
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
     @Override
     public List<Book> loadPopularBooks() throws DaoException {
         List<Book> books = new ArrayList<>();
@@ -68,6 +98,8 @@ public class BookDaoImpl implements BookDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
+
+        System.out.println(books);
         return books;
     }
 
@@ -93,7 +125,7 @@ public class BookDaoImpl implements BookDao {
         String pdf = resultSet.getString("pdf");
         String img = resultSet.getString("img");
         String authorImg = resultSet.getString("author_img");
-        int availableQuantity = resultSet.getInt("available_quantity");
+        String availableQuantity = resultSet.getString("available_quantity");
 
         return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg));
     }
