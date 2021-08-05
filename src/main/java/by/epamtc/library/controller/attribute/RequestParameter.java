@@ -23,8 +23,8 @@ public class RequestParameter {
     public static final String BOOK_GENRE = "bookGenre";
     public static final String BOOK_DESCRIPTION = "bookDescription";
     public static final String BOOK_PDF = "bookPdf";
-    public static final String BOOK_IMG = "bookCover";
-    public static final String BOOK_AUTHOR_PHOTO = "bookCover";
+    public static final String BOOK_COVER = "bookCover";
+    public static final String BOOK_AUTHOR_PHOTO = "bookAuthorPhoto";
 
     public static final String BOOKS = "books";
     public static final String NEW_LOCALIZATION = "newLocalization";

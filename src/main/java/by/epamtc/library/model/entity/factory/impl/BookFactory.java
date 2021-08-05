@@ -35,6 +35,7 @@ public class BookFactory implements LibraryFactory<Book> {
     public Optional<Book> create(Map<String, String> fields) {
         Optional<Book> result = Optional.empty();
         if (BookValidator.isBookFormValid(fields)) {
+            System.out.println("form valid");
             String title = fields.get(RequestParameter.BOOK_TITLE);
             String author = fields.get(RequestParameter.BOOK_AUTHOR);
             String isbn = fields.get(RequestParameter.BOOK_ISBN);
@@ -44,6 +45,8 @@ public class BookFactory implements LibraryFactory<Book> {
 
             result = Optional.of(new Book(title,author,isbn,quantity,genre,description,DEFAULT_PDF,
                     DEFAULT_COVER, DEFAULT_AUTHOR_PHOTO));
+
+            System.out.println(result.get());
         }
         return result;
     }

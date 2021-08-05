@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public final class UserValidator {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Pattern NAME_PATTERN = Pattern.compile("[а-яА-Я]{3,255}");
+    private static final Pattern NAME_PATTERN = Pattern.compile("[а-яА-Яa-zA-Z]{3,255}");
     private static final Pattern USERNAME_PATTERN = Pattern.compile("[а-яА-Я\\w]{3,255}");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("((\\w)([-.](\\w))?){1,64}@((\\w)([-.](\\w))?){1,251}.[a-zA-Z]{2,4}");
     private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("(\\+?(((\\d+-\\d+)+)|(\\d{2,20})|((\\d+\\s\\d+)+)))|" +

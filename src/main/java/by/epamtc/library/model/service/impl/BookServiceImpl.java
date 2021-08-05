@@ -8,6 +8,8 @@ import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookFactory;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.validation.BookValidator;
+import by.epamtc.library.model.service.validation.UserValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -75,6 +77,24 @@ public class BookServiceImpl implements BookService {
                 bookOptional = Optional.of(book);
             }
             return bookOptional;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changeCover(long bookId, String path) throws ServiceException {
+        try {
+            return (BookValidator.isPhotoNameValid(path) && bookDao.changeCover(bookId, path));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changeAuthorPhoto(long bookId, String path) throws ServiceException {
+        try {
+            return (BookValidator.isPhotoNameValid(path) && bookDao.changeAuthorPhoto(bookId, path));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

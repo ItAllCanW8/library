@@ -45,4 +45,6 @@ public class SqlQuery {
     public static final String CHECK_BOOK_FOR_EXISTENCE = "SELECT * FROM books WHERE title = ?;";
     public static final String INSERT_BOOK = "INSERT INTO books(title, author_pseudo, isbn, available_quantity," +
             " genre, short_description, pdf, img, author_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String UPDATE_BOOK_COVER = "UPDATE books SET img = ? WHERE book_id = ?";
+    public static final String UPDATE_AUTHOR_PHOTO = "UPDATE books SET author_img = ? WHERE book_id = ?";
 }

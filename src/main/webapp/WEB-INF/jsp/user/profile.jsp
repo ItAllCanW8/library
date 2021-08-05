@@ -112,7 +112,7 @@
                                                    value="${user.username}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
-                                                   pattern="[a-zA-Zа-яА-Я]{3,35}">
+                                                   pattern="[а-яА-Я\w]{3,255}">
                                         </div>
 
                                         <label for="inputName"><fmt:message key="register.inputName"/> </label>
@@ -122,7 +122,7 @@
                                                    value="${user.userDetails.name}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
-                                                   pattern="[a-zA-Zа-яА-Я]{3,35}">
+                                                   pattern="[а-яА-Яa-zA-Z]{3,255}">
                                         </div>
 
                                         <div class="mt-3">
@@ -135,7 +135,7 @@
                                                    value="${user.userDetails.surname}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
-                                                   pattern="[a-zA-Zа-яА-Я]{3,35}">
+                                                   pattern="[а-яА-Яa-zA-Z]{3,255}">
                                         </div>
 
                                         <div class="mt-3">
@@ -205,7 +205,7 @@
                                                    placeholder=
                                                            "<fmt:message key="register.inputPasswordPlaceholder"/>"
                                                    required
-                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,255}">
                                         </div>
 
                                         <div class="mt-3">
@@ -219,7 +219,7 @@
                                                    placeholder=
                                                            "<fmt:message key="register.inputPasswordPlaceholder"/>"
                                                    required
-                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,255}">
                                         </div>
 
                                         <div class="mt-3">
@@ -233,7 +233,7 @@
                                                    placeholder=
                                                            "<fmt:message key="register.inputPasswordPlaceholder"/>"
                                                    required
-                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,80}">
+                                                   pattern="[а-яА-Я\w\s\p{Punct}]{6,255}">
                                         </div>
                                     </form>
                                 </div>

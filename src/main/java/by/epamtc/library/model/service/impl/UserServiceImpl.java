@@ -120,11 +120,14 @@ public class UserServiceImpl implements UserService {
                 Optional<User> userOptional = userDao.findUserById(userId);
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
-                    if ((user.getEmail().equals(newFields.get(RequestParameter.EMAIL)) ||
-                            userDao.isEmailAvailable(newFields.get(RequestParameter.EMAIL))) &&
-                        (user.getUserDetails().getPhoneNumber().equals(newFields.get(RequestParameter.PHONE_NUMBER)) ||
-                            userDao.isPhoneNumAvailable(newFields.get(RequestParameter.PHONE_NUMBER)))) {
 
+                    boolean isEmailAvailable = user.getEmail().equals(newFields.get(RequestParameter.EMAIL)) ||
+                            userDao.isEmailAvailable(newFields.get(RequestParameter.EMAIL));
+                    boolean isPhoneNumAvailable = user.getUserDetails().getPhoneNumber().
+                            equals(newFields.get(RequestParameter.PHONE_NUMBER)) ||
+                            userDao.isPhoneNumAvailable(newFields.get(RequestParameter.PHONE_NUMBER));
+
+                    if (isEmailAvailable && isPhoneNumAvailable) {
                         updateUserFields(user, newFields);
                         return (userDao.updateProfile(user) ? Optional.of(user) : Optional.empty());
                     }
@@ -227,5 +230,7 @@ public class UserServiceImpl implements UserService {
 
         String newEmail = fields.get(RequestParameter.EMAIL);
         user.setEmail(newEmail);
+
+        System.out.println("new user "+ user);
     }
 }

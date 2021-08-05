@@ -61,7 +61,6 @@ public class AddBook implements Command {
                     req.setAttribute(JspAttribute.ERROR_BOOK_CREATION_ATTRIBUTE, JspAttribute.ERROR_BOOK_CREATION_MSG);
                 }
                 result = new CommandResult(CommandName.TO_LIBRARIAN_BOOKS, CommandResult.Type.FORWARD);
-                System.out.println(result.getPath());
             }
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, "Couldn't create book");

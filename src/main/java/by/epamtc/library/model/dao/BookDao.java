@@ -12,4 +12,6 @@ public interface BookDao {
     List<Book> loadPopularBooks() throws DaoException;
     List<Book> loadBooks() throws DaoException;
     Optional<Book> findBookById(long bookId) throws DaoException;
+    boolean changeCover(long bookId, String path) throws DaoException;
+    boolean changeAuthorPhoto(long bookId, String path) throws DaoException;
 }

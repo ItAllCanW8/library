@@ -99,7 +99,6 @@ public class BookDaoImpl implements BookDao {
             throw new DaoException(e);
         }
 
-        System.out.println(books);
         return books;
     }
 
@@ -110,6 +109,27 @@ public class BookDaoImpl implements BookDao {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public boolean changeCover(long bookId, String path) throws DaoException {
+        return changePhoto(bookId, path, SqlQuery.UPDATE_BOOK_COVER);
+    }
+
+    @Override
+    public boolean changeAuthorPhoto(long bookId, String path) throws DaoException {
+        return changePhoto(bookId, path, SqlQuery.UPDATE_AUTHOR_PHOTO);
+    }
+
+    private boolean changePhoto(long bookId, String path, String query) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, path);
+            statement.setLong(2, bookId);
+            return (statement.executeUpdate() == 1);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }

@@ -49,7 +49,7 @@ public enum CommandType {
         this.command = new Users();
     }},
     LOAD_USER_PROFILE{{
-        this.command = new LoadUserProfile();
+        this.command = new LoadUserProfileById();
     }},
     DEACTIVATE_USER_ACCOUNT{{
         this.command = new DeactivateUserById();
@@ -68,6 +68,12 @@ public enum CommandType {
     }},
     ADD_BOOK{{
         this.command = new AddBook();
+    }},
+    UPLOAD_BOOK_COVER{{
+        this.command = new UploadBookCover();
+    }},
+    UPLOAD_AUTHOR_PHOTO{{
+        this.command = new UploadAuthorPhoto();
     }};
 
     Command command;

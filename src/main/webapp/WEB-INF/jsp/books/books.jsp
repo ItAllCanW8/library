@@ -32,36 +32,6 @@
 <%--    <!-- responsive style -->--%>
 <%--    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />--%>
 
-<%--works--%>
-<%--    <script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>--%>
-<%--    <script src="http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"    type="text/javascript"></script>--%>
-<%--    <link href="http://cdn.datatables.net/1.10.3/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />--%>
-    <script src="http://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
-    <script src="http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"    type="text/javascript"></script>
-    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>--%>
-
-
-    <script>
-        $(document).ready( function () {
-            $('#booksTable').DataTable(
-                {
-                    "processing": true,
-                    "serverSide": true,
-                    "ajax": "/load_books.do",
-                    "columns": [
-                        { "data": "Title" },
-                        { "data": "Cover" },
-                        { "data": "Author" },
-                        { "data": "Genre" },
-                        { "data": "ISBN" },
-                        { "data": "Available quantity" }
-                    ]
-                }
-            );
-        } );
-    </script>
-
 </head>
 
 <body class="sub_page">

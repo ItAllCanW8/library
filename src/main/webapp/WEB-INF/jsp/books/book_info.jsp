@@ -22,14 +22,6 @@
 
   <title>Joson</title>
 
-  <!-- bootstrap core css -->
-<%--  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />--%>
-<%--  <!-- fonts style -->--%>
-<%--  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />--%>
-<%--  <!-- Custom styles for this template -->--%>
-<%--  <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />--%>
-<%--  <!-- responsive style -->--%>
-<%--  <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />--%>
 </head>
 
 <body class="sub_page">
@@ -53,6 +45,21 @@
           <div class="img-box b2">
             <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}" alt="" />
           </div>
+          <c:if test="${sessionScope.userId.equals(user.id)}">
+            <label for="coverUpload">Upload book cover </label>
+            <form action="upload_book_cover.do?bookId=${book.id}" method="post" enctype="multipart/form-data" id="coverUpload">
+              <input type="file" name="bookCover" class="form-control-file"/>
+              <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
+            </form>
+          </c:if>
+
+          <label for="authorPhotoUpload">Upload author photo</label>
+          <c:if test="${sessionScope.userId.equals(user.id)}">
+            <form action="upload_author_photo.do?bookId=${book.id}" method="post" enctype="multipart/form-data" id="authorPhotoUpload">
+              <input type="file" name="bookAuthorPhoto" class="form-control-file"/>
+              <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
+            </form>
+          </c:if>
         </div>
       </div>
       <div class="col-md-6">
@@ -67,7 +74,7 @@
             <p>
               ${book.shortDescription}
             </p>
-            <c:if test="${!role.toString().equals(guest)}">
+            <c:if test="${role.toString().equals(reader)}">
               <a href="">Rent</a>
             </c:if>
           </div>
@@ -76,11 +83,6 @@
     </div>
   </div>
 </section>
-
-<!-- end about section -->
-
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>--%>
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>--%>
 
 </body>
 

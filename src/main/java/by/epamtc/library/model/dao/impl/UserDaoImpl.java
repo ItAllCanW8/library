@@ -57,7 +57,6 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PHONE_NUM)) {
             statement.setString(1, phoneNum);
-            System.out.println(statement);
             ResultSet resultSet = statement.executeQuery();
             return !resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
