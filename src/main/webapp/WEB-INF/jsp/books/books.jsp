@@ -22,16 +22,6 @@
 
     <title>Joson</title>
 
-    <!-- bootstrap core css -->
-<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />--%>
-
-<%--    <!-- fonts style -->--%>
-<%--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />--%>
-<%--    <!-- Custom styles for this template -->--%>
-<%--    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />--%>
-<%--    <!-- responsive style -->--%>
-<%--    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />--%>
-
 </head>
 
 <body class="sub_page">

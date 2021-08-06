@@ -1,5 +1,6 @@
 package by.epamtc.library.model.service.impl;
 
+import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookDao;
@@ -42,7 +43,8 @@ public class BookServiceImpl implements BookService {
             Optional<Book> bookOptional = bookFactory.create(fields);
             if (bookOptional.isPresent()) {
                 Book book = bookOptional.get();
-                return (!bookDao.bookExists(book)) && bookDao.add(book);
+                if(bookDao.isTitleAvailable(fields.get(RequestParameter.BOOK_TITLE)))
+                    return (bookDao.add(book));
             }
         } catch (DaoException | NumberFormatException e) {
             throw new ServiceException(e);
@@ -98,5 +100,60 @@ public class BookServiceImpl implements BookService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public boolean isTitleAvailable(String title) throws ServiceException {
+        try {
+            return (bookDao.isTitleAvailable(title));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateBook(long bookId, Map<String, String> newFields) throws ServiceException {
+        try {
+            if (BookValidator.isBookFormValid(newFields)) {
+                Optional<Book> bookOptional = bookDao.findBookById(bookId);
+                if (bookOptional.isPresent()) {
+                    Book book = bookOptional.get();
+
+                    if(book.getTitle().equals(newFields.get(RequestParameter.BOOK_TITLE)) ||
+                            bookDao.isTitleAvailable(newFields.get(RequestParameter.BOOK_TITLE))){
+                        updateBookInfo(book, newFields);
+                        return (bookDao.updateBook(book));
+                    }
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteBook(long bookId) throws ServiceException {
+        try {
+            return (bookDao.deleteBook(bookId));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void updateBookInfo(Book book, Map<String, String> fields) {
+        String newTitle = fields.get(RequestParameter.BOOK_TITLE);
+        String newAuthor = fields.get(RequestParameter.BOOK_AUTHOR);
+        String newIsbn = fields.get(RequestParameter.BOOK_ISBN);
+        String newQuantity = fields.get(RequestParameter.BOOK_QUANTITY);
+        String newGenre = fields.get(RequestParameter.BOOK_GENRE);
+        String newDescription = fields.get(RequestParameter.BOOK_DESCRIPTION);
+
+        book.setTitle(newTitle);
+        book.setAuthorPseudo(newAuthor);
+        book.setIsbn(newIsbn);
+        book.setAvailableQuantity(newQuantity);
+        book.setGenre(newGenre);
+        book.setShortDescription(newDescription);
     }
 }

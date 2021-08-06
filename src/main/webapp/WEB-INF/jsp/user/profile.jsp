@@ -5,7 +5,7 @@
   Time: 15:56
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 
 <html>
 
@@ -22,15 +22,6 @@
 
     <title>Joson</title>
 
-    <!-- bootstrap core css -->
-<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css"/>--%>
-<%--    <!-- fonts style -->--%>
-<%--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"--%>
-<%--          rel="stylesheet"/>--%>
-<%--    <!-- Custom styles for this template -->--%>
-<%--    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>--%>
-<%--    <!-- responsive style -->--%>
-<%--    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>--%>
 </head>
 
 <body class="sub_page">
@@ -171,7 +162,7 @@
                                                    placeholder=
                                                            "<fmt:message key="register.inputEmailPlaceholder"/>"
                                                    required
-                                                   pattern="((\w)([-.](\w))?)+@((\w)([-.](\w))?)+.[a-zA-Zа-яА-Я]{2,4}">
+                                                   pattern="((\w)|(\w[.-]\w)){1,42}@((\w)|(\w[.-]\w)){1,41}.[a-zA-Zа-яА-Я]{2,4}">
                                         </div>
                                     </form>
                                 </div>

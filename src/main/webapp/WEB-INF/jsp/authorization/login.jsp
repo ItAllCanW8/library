@@ -52,7 +52,7 @@
                         <div>
                             <label for="email">
                                 <input type="email" id="email" name="email" value="${email}"
-                                       pattern="((\w)([-.](\w))?){1,64}@((\w)([-.](\w))?){1,251}.[a-zA-Zа-яА-Я]{2,4}"
+                                       pattern="((\w)|(\w[.-]\w)){1,42}@((\w)|(\w[.-]\w)){1,41}.[a-zA-Zа-яА-Я]{2,4}"
                                        required
                                        placeholder="<fmt:message key="register.inputEmail"/>" />
                             </label>

@@ -45,18 +45,18 @@
           <div class="img-box b2">
             <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}" alt="" />
           </div>
-          <c:if test="${sessionScope.userId.equals(user.id)}">
+          <c:if test="${role.toString().equals(librarian)}">
             <label for="coverUpload">Upload book cover </label>
             <form action="upload_book_cover.do?bookId=${book.id}" method="post" enctype="multipart/form-data" id="coverUpload">
-              <input type="file" name="bookCover" class="form-control-file"/>
+              <input type="file" name="bookCover" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
             </form>
           </c:if>
 
-          <label for="authorPhotoUpload">Upload author photo</label>
-          <c:if test="${sessionScope.userId.equals(user.id)}">
+          <c:if test="${role.toString().equals(librarian)}">
+            <label for="authorPhotoUpload">Upload author photo</label>
             <form action="upload_author_photo.do?bookId=${book.id}" method="post" enctype="multipart/form-data" id="authorPhotoUpload">
-              <input type="file" name="bookAuthorPhoto" class="form-control-file"/>
+              <input type="file" name="bookAuthorPhoto" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
             </form>
           </c:if>
@@ -77,11 +77,90 @@
             <c:if test="${role.toString().equals(reader)}">
               <a href="">Rent</a>
             </c:if>
+
+            <c:if test="${role.toString().equals(librarian)}">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                      data-bs-target="#editProfileModal">
+                <fmt:message key="button.edit"/>
+              </button>
+              <hr style="width:100%;text-align:left;margin-left:0">
+              <input type="hidden" name="bookCover" value="${book.img}"/>
+              <input type="hidden" name="bookAuthorPhoto" value="${book.authorImg}"/>
+              <a class="btn btn-secondary" href="delete_book.do?bookId=${book.id}" role="button">
+                <fmt:message key="button.delete"/>
+              </a>
+            </c:if>
+
+            <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title"><fmt:message key="button.edit"/></h4>
+                  </div>
+
+                  <div class="modal-body">
+                    <form id="editBookForm" method="POST" action="edit_book.do?bookId=${book.id}">
+                      <label for="inputBookTitle"><fmt:message key="books.title"/></label>
+                      <div class="form-group mt-1">
+                        <input type="text" id="inputBookTitle" name="bookTitle" class="form-control field"
+                               placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
+                               value="${book.title}" pattern="[А-Яа-я\w\p{Blank}]{3,255}"/>
+                      </div>
+
+                      <label for="inputBookAuthor"><fmt:message key="books.author"/></label>
+                      <div class="form-group mt-1">
+                        <input type="text" id="inputBookAuthor" name="bookAuthor" class="form-control field"
+                               placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
+                               value="${book.authorPseudo}" pattern="[А-Яа-яa-zA-Z.\s]{3,255}"/>
+                      </div>
+
+                      <label for="inputBookISBN">ISBN-13</label>
+                      <div class="form-group mt-1">
+                        <input type="text" id="inputBookISBN" name="bookISBN" class="form-control field"
+                               placeholder="<fmt:message key="books.isbnPlaceholder"/>" required
+                               value="${book.isbn}" pattern="[\d]{13}"/>
+                      </div>
+
+                      <label for="inputBookGenre"><fmt:message key="books.genre"/></label>
+                      <div class="form-group mt-1">
+                        <input type="text" id="inputBookGenre" name="bookGenre" class="form-control field"
+                               placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
+                               value="${book.genre}" pattern="[А-Яа-яa-zA-Z]{3,45}"/>
+                      </div>
+
+                      <label for="inputBookQuantity"><fmt:message key="books.availableQuantity"/></label>
+                      <div class="form-group mt-1">
+                        <input type="text" id="inputBookQuantity" name="bookQuantity" class="form-control field"
+                               placeholder="<fmt:message key="books.quantityPlaceholder"/>" required
+                               value="${book.availableQuantity}" pattern="[\d]{1,4}"/>
+                      </div>
+
+                      <label for="inputBookDescription"><fmt:message key="books.shortDescription"/></label>
+                      <div class="form-group mt-1">
+                            <textarea type="text" id="inputBookDescription" name="bookDescription" class="form-control"
+                                      rows="5"
+                                      placeholder="<fmt:message key="register.inputNamePlaceholder"/>"
+                                      required minlength="3" maxlength="1000">${book.shortDescription}</textarea>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      <fmt:message key="button.close"/>
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="editBookForm">
+                      <fmt:message key="button.save"/></button>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </section>
 
 </body>

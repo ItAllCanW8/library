@@ -2,7 +2,6 @@ package by.epamtc.library.controller.command.impl;
 
 import by.epamtc.library.controller.attribute.CommandName;
 import by.epamtc.library.controller.attribute.JspAttribute;
-import by.epamtc.library.controller.attribute.PagePath;
 import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
@@ -11,7 +10,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
-import by.epamtc.library.util.ImgHandler;
+import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
@@ -46,10 +45,10 @@ public class UploadBookCover implements Command {
 
                 String path = part.getSubmittedFileName();
                 if (path != null && !path.isEmpty()) {
-                    String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(ImgHandler.DOT_SYMBOL));
+                    String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(FileHandler.DOT_SYMBOL));
                     try (InputStream inputStream = part.getInputStream()) {
-                        if (ImgHandler.uploadFile(inputStream, ImgHandler.IMG_FOLDER_PATH
-                                + ImgHandler.BOOK_COVERS_SUBFOLDER + randomFilename)) {
+                        if (FileHandler.uploadFile(inputStream, FileHandler.IMG_FOLDER_PATH
+                                + FileHandler.BOOK_COVERS_SUBFOLDER + randomFilename)) {
                             if(service.changeCover(book.getId(), randomFilename)){
                                 book.setImg(randomFilename);
                                 req.setAttribute(RequestParameter.BOOK, book);

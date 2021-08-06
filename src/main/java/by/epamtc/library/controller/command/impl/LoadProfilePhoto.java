@@ -5,7 +5,7 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.util.ImgHandler;
+import by.epamtc.library.util.FileHandler;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,7 @@ public class LoadProfilePhoto implements Command {
         String fileName = req.getParameter(RequestParameter.FILE_NAME);
         if (fileName != null && !fileName.isEmpty()) {
             try (ServletOutputStream outputStream = resp.getOutputStream()) {
-                outputStream.write(ImgHandler.readFile(fileName, ImgHandler.PROFILE_PHOTOS_SUBFOLDER));
+                outputStream.write(FileHandler.readFile(fileName, FileHandler.PROFILE_PHOTOS_SUBFOLDER));
             } catch (IOException | ServiceException e) {
                 LOGGER.log(Level.ERROR, e);
             }

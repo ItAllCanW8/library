@@ -50,7 +50,7 @@ public class AddBook implements Command {
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
             } else {
                 if (BookValidator.isBookFormValid(fields)) {
-                    req.setAttribute(JspAttribute.ERROR_DUPLICATE_ATTRIBUTE, JspAttribute.ERROR_BOOK_DUPLICATE_MSG);
+                    req.setAttribute(JspAttribute.ERROR_DUPLICATE, JspAttribute.ERROR_BOOK_DUPLICATE_MSG);
                 } else {
                     req.setAttribute(RequestParameter.BOOK_TITLE, fields.get(RequestParameter.BOOK_TITLE));
                     req.setAttribute(RequestParameter.BOOK_AUTHOR, fields.get(RequestParameter.BOOK_AUTHOR));
@@ -58,7 +58,7 @@ public class AddBook implements Command {
                     req.setAttribute(RequestParameter.BOOK_QUANTITY, fields.get(RequestParameter.BOOK_QUANTITY));
                     req.setAttribute(RequestParameter.BOOK_DESCRIPTION, fields.get(RequestParameter.BOOK_DESCRIPTION));
                     req.setAttribute(RequestParameter.BOOK_ISBN, fields.get(RequestParameter.BOOK_ISBN));
-                    req.setAttribute(JspAttribute.ERROR_BOOK_CREATION_ATTRIBUTE, JspAttribute.ERROR_BOOK_CREATION_MSG);
+                    req.setAttribute(JspAttribute.ERROR_BOOK_CREATION, JspAttribute.ERROR_BOOK_CREATION_MSG);
                 }
                 result = new CommandResult(CommandName.TO_LIBRARIAN_BOOKS, CommandResult.Type.FORWARD);
             }

@@ -2,6 +2,7 @@ package by.epamtc.library.model.service;
 
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
+import by.epamtc.library.model.entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -14,4 +15,7 @@ public interface BookService {
     Optional<Book> findBookById(long bookId) throws ServiceException;
     boolean changeCover(long bookId, String path) throws ServiceException;
     boolean changeAuthorPhoto(long bookId, String path) throws ServiceException;
+    boolean isTitleAvailable(String title) throws ServiceException;
+    boolean updateBook(long bookId, Map<String, String> newFields) throws ServiceException;
+    boolean deleteBook(long bookId) throws ServiceException;
 }

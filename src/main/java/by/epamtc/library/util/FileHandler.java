@@ -1,6 +1,7 @@
 package by.epamtc.library.util;
 
 import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.entity.factory.impl.BookFactory;
 
 import javax.servlet.ServletException;
 import java.io.File;
@@ -11,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ImgHandler {
+public class FileHandler {
     public static final String DOT_SYMBOL = ".";
     private static final String DEFAULT_AVATAR = "default_avatar.png";
     public static final String IMG_FOLDER_PATH = "F:" + File.separator + "University" + File.separator
@@ -35,10 +36,10 @@ public class ImgHandler {
 
     public static byte[] readFile(String fileName, String subfolder) throws ServiceException {
         byte[] result;
-        String fileUri = ImgHandler.IMG_FOLDER_PATH + subfolder + fileName;
+        String fileUri = FileHandler.IMG_FOLDER_PATH + subfolder + fileName;
         Path filePath = Paths.get(fileUri);
         if (!Files.exists(filePath)) {
-            filePath = Paths.get(ImgHandler.IMG_FOLDER_PATH + subfolder + DEFAULT_AVATAR);
+            filePath = Paths.get(FileHandler.IMG_FOLDER_PATH + subfolder + DEFAULT_AVATAR);
         }
         try {
             result = Files.readAllBytes(filePath);
@@ -48,5 +49,19 @@ public class ImgHandler {
         return result;
     }
 
-    private ImgHandler(){}
+    public static void deleteBookFiles(String bookCoverName, String authorPhotoName){
+        if(!bookCoverName.equals(BookFactory.DEFAULT_COVER)) {
+            File bookCover = new File(IMG_FOLDER_PATH + BOOK_COVERS_SUBFOLDER, bookCoverName);
+            System.out.println(bookCover);
+//            bookCover.delete();
+        }
+
+        if(!authorPhotoName.equals(BookFactory.DEFAULT_AUTHOR_PHOTO)) {
+            File authorPhoto = new File(IMG_FOLDER_PATH + BOOK_COVERS_SUBFOLDER, authorPhotoName);
+            System.out.println(authorPhoto);
+//            authorPhoto.delete();
+        }
+    }
+
+    private FileHandler(){}
 }

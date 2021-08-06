@@ -20,6 +20,17 @@ public class BookDaoImpl implements BookDao {
     private static final Lock lock = new ReentrantLock();
     private static volatile BookDao instance;
 
+    private static final String bookIdCol = "book_id";
+    private static final String bookTitleCol = "title";
+    private static final String bookAuthorCol = "author_pseudo";
+    private static final String bookIsbnCol = "isbn";
+    private static final String bookGenreCol = "genre";
+    private static final String bookDescCol = "short_description";
+    private static final String bookPdfCol = "pdf";
+    private static final String bookImgCol = "img";
+    private static final String bookAuthorImgCol = "author_img";
+    private static final String bookQuantityCol = "available_quantity";
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     private BookDaoImpl() {
@@ -51,18 +62,6 @@ public class BookDaoImpl implements BookDao {
             statement.setString(9, book.getAuthorImg());
 
             return (statement.executeUpdate() == 1);
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public boolean bookExists(Book book) throws DaoException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.CHECK_BOOK_FOR_EXISTENCE)) {
-            statement.setString(1, book.getTitle());
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -124,6 +123,49 @@ public class BookDaoImpl implements BookDao {
         return changePhoto(bookId, path, SqlQuery.UPDATE_AUTHOR_PHOTO);
     }
 
+    @Override
+    public boolean updateBook(Book book) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK)) {
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getAuthorPseudo());
+            statement.setString(3, book.getIsbn());
+            statement.setString(4, book.getAvailableQuantity());
+            statement.setString(5, book.getGenre());
+            statement.setString(6, book.getShortDescription());
+            statement.setLong(7, book.getId());
+
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteBook(long bookId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_BOOK)) {
+            statement.setLong(1, bookId);
+
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+
+    @Override
+    public boolean isTitleAvailable(String title) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.CHECK_BOOK_FOR_EXISTENCE)) {
+            statement.setString(1, title);
+            ResultSet resultSet = statement.executeQuery();
+            return !resultSet.next();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
     private boolean changePhoto(long bookId, String path, String query) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -136,16 +178,16 @@ public class BookDaoImpl implements BookDao {
     }
 
     private Book createBookFromResultSet(ResultSet resultSet) throws SQLException, DaoException {
-        long id = resultSet.getLong("book_id");
-        String title = resultSet.getString("title");
-        String author_pseudo = resultSet.getString("author_pseudo");
-        String isbn = resultSet.getString("isbn");
-        String genre = resultSet.getString("genre");
-        String shortDescription = resultSet.getString("short_description");
-        String pdf = resultSet.getString("pdf");
-        String img = resultSet.getString("img");
-        String authorImg = resultSet.getString("author_img");
-        String availableQuantity = resultSet.getString("available_quantity");
+        long id = resultSet.getLong(bookIdCol);
+        String title = resultSet.getString(bookTitleCol);
+        String author_pseudo = resultSet.getString(bookAuthorCol);
+        String isbn = resultSet.getString(bookIsbnCol);
+        String genre = resultSet.getString(bookGenreCol);
+        String shortDescription = resultSet.getString(bookDescCol);
+        String pdf = resultSet.getString(bookPdfCol);
+        String img = resultSet.getString(bookImgCol);
+        String authorImg = resultSet.getString(bookAuthorImgCol);
+        String availableQuantity = resultSet.getString(bookQuantityCol);
 
         return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg));
     }

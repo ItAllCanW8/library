@@ -74,6 +74,12 @@ public enum CommandType {
     }},
     UPLOAD_AUTHOR_PHOTO{{
         this.command = new UploadAuthorPhoto();
+    }},
+    EDIT_BOOK{{
+        this.command = new EditBook();
+    }},
+    DELETE_BOOK{{
+        this.command = new DeleteBook();
     }};
 
     Command command;

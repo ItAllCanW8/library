@@ -14,9 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BookFactory implements LibraryFactory<Book> {
     private static final Lock lock = new ReentrantLock();
     private static LibraryFactory<Book> instance;
-    private static final String DEFAULT_COVER = "default_book_cover.png";
-    private static final String DEFAULT_AUTHOR_PHOTO = "default_author_photo.png";
-    private static final String DEFAULT_PDF = "default_book_pdf.pdf";
+    public static final String DEFAULT_COVER = "default_book_cover.png";
+    public static final String DEFAULT_AUTHOR_PHOTO = "default_author_photo.png";
+    public static final String DEFAULT_PDF = "default_book_pdf.pdf";
 
     private BookFactory() {
     }
@@ -35,7 +35,6 @@ public class BookFactory implements LibraryFactory<Book> {
     public Optional<Book> create(Map<String, String> fields) {
         Optional<Book> result = Optional.empty();
         if (BookValidator.isBookFormValid(fields)) {
-            System.out.println("form valid");
             String title = fields.get(RequestParameter.BOOK_TITLE);
             String author = fields.get(RequestParameter.BOOK_AUTHOR);
             String isbn = fields.get(RequestParameter.BOOK_ISBN);
@@ -45,8 +44,6 @@ public class BookFactory implements LibraryFactory<Book> {
 
             result = Optional.of(new Book(title,author,isbn,quantity,genre,description,DEFAULT_PDF,
                     DEFAULT_COVER, DEFAULT_AUTHOR_PHOTO));
-
-            System.out.println(result.get());
         }
         return result;
     }

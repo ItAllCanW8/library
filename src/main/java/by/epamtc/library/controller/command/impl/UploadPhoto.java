@@ -8,7 +8,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
-import by.epamtc.library.util.ImgHandler;
+import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
@@ -39,10 +39,10 @@ public class UploadPhoto implements Command {
 
             String path = part.getSubmittedFileName();
             if (path != null && !path.isEmpty()) {
-                String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(ImgHandler.DOT_SYMBOL));
+                String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(FileHandler.DOT_SYMBOL));
                 try (InputStream inputStream = part.getInputStream()) {
-                    if (ImgHandler.uploadFile(inputStream, ImgHandler.IMG_FOLDER_PATH
-                                    + ImgHandler.PROFILE_PHOTOS_SUBFOLDER + randomFilename)) {
+                    if (FileHandler.uploadFile(inputStream, FileHandler.IMG_FOLDER_PATH
+                                    + FileHandler.PROFILE_PHOTOS_SUBFOLDER + randomFilename)) {
                         UserService service = UserServiceImpl.getInstance();
                         service.changePhoto(user.getUserDetails().getId(), randomFilename);
                         user.getUserDetails().setPhotoPath(randomFilename);
