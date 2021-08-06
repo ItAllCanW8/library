@@ -18,16 +18,8 @@ public class Book {
 
     public Book(long id, String title, String authorPseudo, String isbn, String availableQuantity, String genre,
                 String shortDescription, String pdf, String img, String authorImg) {
+        this(title, authorPseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg);
         this.id = id;
-        this.title = title;
-        this.authorPseudo = authorPseudo;
-        this.isbn = isbn;
-        this.availableQuantity = availableQuantity;
-        this.genre = genre;
-        this.shortDescription = shortDescription;
-        this.pdf = pdf;
-        this.img = img;
-        this.authorImg = authorImg;
     }
 
     public Book(String title, String authorPseudo, String isbn, String availableQuantity, String genre,
@@ -149,17 +141,18 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", authorPseudo='" + authorPseudo + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", availableQuantity=" + availableQuantity +
-                ", genre='" + genre + '\'' +
-                ", shortDescription='" + shortDescription + '\'' +
-                ", pdf='" + pdf + '\'' +
-                ", img='" + img + '\'' +
-                ", authorImg='" + authorImg + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder(Book.class.getSimpleName() + "{");
+        sb.append("id=").append(id);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", authorPseudo='").append(authorPseudo).append('\'');
+        sb.append(", isbn='").append(isbn).append('\'');
+        sb.append(", availableQuantity='").append(availableQuantity).append('\'');
+        sb.append(", genre='").append(genre).append('\'');
+        sb.append(", shortDescription='").append(shortDescription).append('\'');
+        sb.append(", pdf='").append(pdf).append('\'');
+        sb.append(", img='").append(img).append('\'');
+        sb.append(", authorImg='").append(authorImg).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

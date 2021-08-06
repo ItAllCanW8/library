@@ -16,12 +16,8 @@ public class User {
 
     public User(long id, UserRole role, UserDetails userDetails, UserStatus status,
                 String username, String email) {
+        this(role,userDetails,status,username,email);
         this.id = id;
-        this.role = role;
-        this.userDetails = userDetails;
-        this.status = status;
-        this.username = username;
-        this.email = email;
     }
 
     public User(UserRole role, UserDetails userDetails, UserStatus status, String username, String email) {
@@ -104,13 +100,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", role=" + role +
-                ", userDetails=" + userDetails +
-                ", status='" + status + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder(User.class.getSimpleName() + "{");
+        sb.append("id=").append(id);
+        sb.append(", role=").append(role);
+        sb.append(", userDetails=").append(userDetails);
+        sb.append(", status=").append(status);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

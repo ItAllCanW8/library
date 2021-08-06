@@ -16,12 +16,8 @@ public class UserDetails {
 
     public UserDetails(long id, String name, String surname, LocalDate dateOfBirth,
                        String phoneNumber, String photoPath) {
+        this(name, surname, dateOfBirth, phoneNumber, photoPath);
         this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
-        this.photoPath = photoPath;
     }
 
     public UserDetails(String name, String surname, LocalDate dateOfBirth,
@@ -103,13 +99,14 @@ public class UserDetails {
 
     @Override
     public String toString() {
-        return "UserDetails{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder(UserDetails.class.getSimpleName() + "{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", surname='").append(surname).append('\'');
+        sb.append(", dateOfBirth=").append(dateOfBirth);
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", photoPath='").append(photoPath).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
