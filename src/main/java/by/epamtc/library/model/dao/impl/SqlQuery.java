@@ -50,4 +50,5 @@ public class SqlQuery {
     public static final String DELETE_BOOK = "DELETE FROM books WHERE book_id = ?;";
     public static final String UPDATE_BOOK_COVER = "UPDATE books SET img = ? WHERE book_id = ?";
     public static final String UPDATE_AUTHOR_PHOTO = "UPDATE books SET author_img = ? WHERE book_id = ?";
+    public static final String UPDATE_BOOK_PDF = "UPDATE books SET pdf = ? WHERE book_id = ?";
 }

@@ -80,6 +80,12 @@ public enum CommandType {
     }},
     DELETE_BOOK{{
         this.command = new DeleteBook();
+    }},
+    UPLOAD_PDF{{
+        this.command = new UploadPdf();
+    }},
+    VIEW_PDF{{
+        this.command = new ViewPdf();
     }};
 
     Command command;

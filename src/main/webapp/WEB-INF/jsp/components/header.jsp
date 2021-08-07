@@ -13,14 +13,14 @@
 
 <head>
     <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+<%--    <meta charset="utf-8" />--%>
+<%--    <meta http-equiv="X-UA-Compatible" content="IE=edge" />--%>
+<%--    <!-- Mobile Metas -->--%>
+<%--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />--%>
+<%--    <!-- Site Metas -->--%>
+<%--    <meta name="keywords" content="" />--%>
+<%--    <meta name="description" content="" />--%>
+<%--    <meta name="author" content="" />--%>
 
     <title>Joson</title>
 
@@ -66,7 +66,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/load_books.do"><fmt:message
-                                key="header.books"/></a>
+                                key="header.catalogue"/></a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -127,6 +127,12 @@
                                     <li><a class="dropdown-item"
                                            href="${pageContext.request.contextPath}/to_librarian_books.do"><fmt:message
                                             key="header.booksManagement"/></a></li>
+                                    <li>
+                                </c:if>
+                                <c:if test="${sessionScope.role.toString().equals(reader)}">
+                                    <li><a class="dropdown-item"
+                                           href="${pageContext.request.contextPath}/requests.do"><fmt:message
+                                            key="header.readerRequests"/></a></li>
                                     <li>
                                 </c:if>
                                     <hr class="dropdown-divider">

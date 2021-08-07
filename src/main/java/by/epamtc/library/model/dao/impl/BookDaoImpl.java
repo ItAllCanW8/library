@@ -124,6 +124,18 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public boolean changePdf(long bookId, String path) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_PDF)) {
+            statement.setString(1, path);
+            statement.setLong(2, bookId);
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public boolean updateBook(Book book) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK)) {

@@ -10,24 +10,7 @@
 <html>
 
 <head>
-    <!-- Basic -->
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <!-- Site Metas -->
-    <meta name="keywords" content=""/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-
     <title>Joson</title>
-
-    <script>
-        $(document).ready(function () {
-            $('#usersTable').DataTable();
-        });
-    </script>
-
 </head>
 
 <body class="sub_page">
@@ -45,7 +28,7 @@
             </h3>
         </div>
         <div class="event_container">
-            <table id="example" class="table table-dark table-bordered border-secondary">
+            <table class="table table-dark table-bordered border-secondary">
                 <thead>
                 <tr>
                     <th scope="col"><fmt:message key="profile.username"/></th>
@@ -89,8 +72,6 @@
                     </c:forEach>
                 </tbody>
             </table>
-
-
         </div>
     </div>
 </section>

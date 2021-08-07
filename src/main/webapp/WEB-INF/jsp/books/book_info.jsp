@@ -5,20 +5,11 @@
   Time: 13:47
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 
 <html>
 
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
 
   <title>Joson</title>
 
@@ -46,20 +37,29 @@
             <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}" alt="" />
           </div>
           <c:if test="${role.toString().equals(librarian)}">
-            <label for="coverUpload">Upload book cover </label>
-            <form action="upload_book_cover.do?bookId=${book.id}" method="post" enctype="multipart/form-data" id="coverUpload">
+            <label for="coverUpload"><fmt:message key="librarian.uploadBookCover"/> </label>
+            <form action="upload_book_cover.do?bookId=${book.id}" method="post" enctype="multipart/form-data"
+                  id="coverUpload">
               <input type="file" name="bookCover" class="form-control-file" accept="image/jpeg, image/png"/>
-              <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
+              <input type="submit" class="btn btn-outline-secondary"
+                     value="<fmt:message key="button.upload"/>"/>
+            </form>
+
+            <label for="authorPhotoUpload"><fmt:message key="librarian.uploadAuthorPhoto"/></label>
+            <form action="upload_author_photo.do?bookId=${book.id}" method="post" enctype="multipart/form-data"
+                  id="authorPhotoUpload">
+              <input type="file" name="bookAuthorPhoto" class="form-control-file" accept="image/jpeg, image/png"/>
+              <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
+            </form>
+
+            <label for="pdfUpload"><fmt:message key="librarian.uploadAuthorPhoto"/></label>
+            <form action="upload_pdf.do?bookId=${book.id}" method="post" enctype="multipart/form-data"
+                  id="pdfUpload">
+              <input type="file" name="bookPdf" class="form-control-file" accept="application/pdf"/>
+              <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
             </form>
           </c:if>
 
-          <c:if test="${role.toString().equals(librarian)}">
-            <label for="authorPhotoUpload">Upload author photo</label>
-            <form action="upload_author_photo.do?bookId=${book.id}" method="post" enctype="multipart/form-data" id="authorPhotoUpload">
-              <input type="file" name="bookAuthorPhoto" class="form-control-file" accept="image/jpeg, image/png"/>
-              <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
-            </form>
-          </c:if>
         </div>
       </div>
       <div class="col-md-6">
@@ -74,8 +74,24 @@
             <p>
               ${book.shortDescription}
             </p>
+
             <c:if test="${role.toString().equals(reader)}">
-              <a href="">Rent</a>
+              <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${book.pdf}" role="button">
+                <fmt:message key="button.read"/>
+              </a>
+
+              <div class="dropdown">
+                <a class="dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown"
+                   aria-expanded="false"><fmt:message key="reader.rent"/></a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item btn btn-secondary" role="button"
+                         href="rent_book.do?bookId=${book.id}&how=toReadingRoom">
+                    <fmt:message key="reader.rentToReadingRoom"/></a></li>
+                  <li><a class="dropdown-item btn btn-secondary" role="button"
+                         href="rent_book.do?bookId=${book.id}&how=forSubscription">
+                    <fmt:message key="reader.rentForSubscription"/></a></li>
+                </ul>
+              </div>
             </c:if>
 
             <c:if test="${role.toString().equals(librarian)}">

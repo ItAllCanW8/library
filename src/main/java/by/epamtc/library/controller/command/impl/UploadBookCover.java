@@ -47,7 +47,7 @@ public class UploadBookCover implements Command {
                 if (path != null && !path.isEmpty()) {
                     String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(FileHandler.DOT_SYMBOL));
                     try (InputStream inputStream = part.getInputStream()) {
-                        if (FileHandler.uploadFile(inputStream, FileHandler.IMG_FOLDER_PATH
+                        if (FileHandler.uploadFile(inputStream, FileHandler.WEBAPP_FOLDER_PATH
                                 + FileHandler.BOOK_COVERS_SUBFOLDER + randomFilename)) {
                             if(service.changeCover(book.getId(), randomFilename)){
                                 book.setImg(randomFilename);

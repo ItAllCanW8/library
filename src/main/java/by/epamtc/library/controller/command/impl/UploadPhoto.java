@@ -41,7 +41,7 @@ public class UploadPhoto implements Command {
             if (path != null && !path.isEmpty()) {
                 String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(FileHandler.DOT_SYMBOL));
                 try (InputStream inputStream = part.getInputStream()) {
-                    if (FileHandler.uploadFile(inputStream, FileHandler.IMG_FOLDER_PATH
+                    if (FileHandler.uploadFile(inputStream, FileHandler.WEBAPP_FOLDER_PATH
                                     + FileHandler.PROFILE_PHOTOS_SUBFOLDER + randomFilename)) {
                         UserService service = UserServiceImpl.getInstance();
                         service.changePhoto(user.getUserDetails().getId(), randomFilename);

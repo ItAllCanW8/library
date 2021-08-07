@@ -23,6 +23,7 @@ public final class BookValidator {
     public static boolean isBookFormValid(Map<String, String> fields) {
         boolean result = true;
         String title = fields.get(RequestParameter.BOOK_TITLE);
+        System.out.println(title);
         if (!isTitleValid(title)) {
             fields.put(RequestParameter.BOOK_TITLE, JspAttribute.INVALID_INPUT_DATA_MSG);
             result = false;

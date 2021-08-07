@@ -15,7 +15,9 @@ public interface BookService {
     Optional<Book> findBookById(long bookId) throws ServiceException;
     boolean changeCover(long bookId, String path) throws ServiceException;
     boolean changeAuthorPhoto(long bookId, String path) throws ServiceException;
+    boolean changePdf(long bookId, String pdfPath) throws ServiceException;
     boolean isTitleAvailable(String title) throws ServiceException;
     boolean updateBook(long bookId, Map<String, String> newFields) throws ServiceException;
     boolean deleteBook(long bookId) throws ServiceException;
+
 }

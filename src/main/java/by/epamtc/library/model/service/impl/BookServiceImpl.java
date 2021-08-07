@@ -10,7 +10,6 @@ import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookFactory;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.validation.BookValidator;
-import by.epamtc.library.model.service.validation.UserValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -136,6 +135,16 @@ public class BookServiceImpl implements BookService {
     public boolean deleteBook(long bookId) throws ServiceException {
         try {
             return (bookDao.deleteBook(bookId));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changePdf(long bookId, String pdfPath) throws ServiceException {
+        try {
+            findBookById(bookId).get().setPdf(pdfPath);
+            return (bookDao.changePdf(bookId, pdfPath));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

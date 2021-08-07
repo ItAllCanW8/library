@@ -15,11 +15,16 @@ import java.nio.file.Paths;
 public class FileHandler {
     public static final String DOT_SYMBOL = ".";
     private static final String DEFAULT_AVATAR = "default_avatar.png";
-    public static final String IMG_FOLDER_PATH = "F:" + File.separator + "University" + File.separator
+    public static final String WEBAPP_FOLDER_PATH = "F:" + File.separator + "University" + File.separator
             + "EPAM" + File.separator + "library" + File.separator + "src" + File.separator + "main" + File.separator +
-            "webapp" + File.separator + "images" + File.separator;
-    public static final String PROFILE_PHOTOS_SUBFOLDER = "profile-photos" + File.separator;
-    public static final String BOOK_COVERS_SUBFOLDER = "book-covers" + File.separator;
+            "webapp" + File.separator;
+//    public static final String IMG_FOLDER_PATH = "F:" + File.separator + "University" + File.separator
+//            + "EPAM" + File.separator + "library" + File.separator + "src" + File.separator + "main" + File.separator +
+//            "webapp" + File.separator + "images" + File.separator;
+
+    public static final String PROFILE_PHOTOS_SUBFOLDER = "images" + File.separator + "profile-photos" + File.separator;
+    public static final String BOOK_COVERS_SUBFOLDER = "images" + File.separator + "book-covers" + File.separator;
+    public static final String BOOK_PDF_SUBFOLDER = "pdf" + File.separator;
 
     public static boolean uploadFile(InputStream inputStream, String path) throws ServletException {
         try {
@@ -36,10 +41,10 @@ public class FileHandler {
 
     public static byte[] readFile(String fileName, String subfolder) throws ServiceException {
         byte[] result;
-        String fileUri = FileHandler.IMG_FOLDER_PATH + subfolder + fileName;
+        String fileUri = FileHandler.WEBAPP_FOLDER_PATH + subfolder + fileName;
         Path filePath = Paths.get(fileUri);
         if (!Files.exists(filePath)) {
-            filePath = Paths.get(FileHandler.IMG_FOLDER_PATH + subfolder + DEFAULT_AVATAR);
+            filePath = Paths.get(FileHandler.WEBAPP_FOLDER_PATH + subfolder + DEFAULT_AVATAR);
         }
         try {
             result = Files.readAllBytes(filePath);
@@ -51,13 +56,13 @@ public class FileHandler {
 
     public static void deleteBookFiles(String bookCoverName, String authorPhotoName){
         if(!bookCoverName.equals(BookFactory.DEFAULT_COVER)) {
-            File bookCover = new File(IMG_FOLDER_PATH + BOOK_COVERS_SUBFOLDER, bookCoverName);
+            File bookCover = new File(WEBAPP_FOLDER_PATH + BOOK_COVERS_SUBFOLDER, bookCoverName);
             System.out.println(bookCover);
 //            bookCover.delete();
         }
 
         if(!authorPhotoName.equals(BookFactory.DEFAULT_AUTHOR_PHOTO)) {
-            File authorPhoto = new File(IMG_FOLDER_PATH + BOOK_COVERS_SUBFOLDER, authorPhotoName);
+            File authorPhoto = new File(WEBAPP_FOLDER_PATH + BOOK_COVERS_SUBFOLDER, authorPhotoName);
             System.out.println(authorPhoto);
 //            authorPhoto.delete();
         }
