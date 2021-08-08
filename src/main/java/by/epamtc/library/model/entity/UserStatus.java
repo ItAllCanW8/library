@@ -19,6 +19,6 @@ public enum UserStatus {
                 return status;
         }
 
-        throw new IllegalArgumentException("No constant Port with value " + value + " found");
+        throw new IllegalArgumentException("No constant UserStatus with value " + value + " found");
     }
 }

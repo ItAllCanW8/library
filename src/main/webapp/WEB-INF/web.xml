@@ -25,6 +25,28 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>by.epamtc.library.controller.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>PermissionFilter</filter-name>
+        <filter-class>by.epamtc.library.controller.filter.PermissionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PermissionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>by.epamtc.library.controller.listener.SessionListener</listener-class>
     </listener>

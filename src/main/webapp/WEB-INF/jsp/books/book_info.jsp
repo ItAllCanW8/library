@@ -85,10 +85,10 @@
                    aria-expanded="false"><fmt:message key="reader.rent"/></a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="rent_book.do?bookId=${book.id}&how=toReadingRoom">
+                         href="rent_book.do?bookId=${book.id}&requestType=toReadingRoom">
                     <fmt:message key="reader.rentToReadingRoom"/></a></li>
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="rent_book.do?bookId=${book.id}&how=forSubscription">
+                         href="rent_book.do?bookId=${book.id}&requestType=forSubscription">
                     <fmt:message key="reader.rentForSubscription"/></a></li>
                 </ul>
               </div>

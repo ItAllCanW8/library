@@ -1,21 +1,59 @@
 package by.epamtc.library.controller.command.impl;
 
+import by.epamtc.library.controller.attribute.CommandName;
+import by.epamtc.library.controller.attribute.JspAttribute;
+import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.controller.attribute.SessionAttribute;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
+import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
+import org.apache.logging.log4j.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class RentBook implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();
-        User user = (User) session.getAttribute(SessionAttribute.USER);
+        User reader = (User) session.getAttribute(SessionAttribute.USER);
+        String bookId = req.getParameter(RequestParameter.BOOK_ID);
+        String rentMethod = req.getParameter(RequestParameter.BOOK_REQUEST_TYPE);
+
+        Map<String, String> fields = new LinkedHashMap<>();
+        fields.put(RequestParameter.BOOK_REQUEST_TYPE, rentMethod);
+        fields.put(RequestParameter.BOOK_ID, bookId);
+
+        CommandResult result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.REDIRECT);
+        BookRequestService service = BookRequestServiceImpl.getInstance();
+//        try {
+//            if (service.createApplicantRequest(fields, reader)) {
+//                MailSender mailSender = MailSender.MailSenderHolder.HOLDER.getMailSender();
+//                String applicantEmail = applicant.getEmail();
+//                mailSender.setupEmail(applicantEmail, MailMessage.HR_SYSTEM_MAIL_SUBJECT, MailMessage.CREATION_APPLICANT_REQUEST_MAIL_TEXT);
+//                mailSender.send();
+//                session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
+//            } else {
+//                if (ApplicantRequestValidator.isSummaryValid(summary)) {
+//                    req.setAttribute(JspAttribute.ERROR_DUPLICATE_ATTRIBUTE, JspAttribute.ERROR_APPLICANT_REQUEST_DUPLICATE_MESSAGE);
+//                } else {
+//                    req.setAttribute(JspAttribute.ERROR_APPLICANT_REQUEST_CREATION_ATTRIBUTE, JspAttribute.ERROR_APPLICANT_REQUEST_CREATION_MESSAGE);
+//                }
+//                result = new CommandResult(CommandName.TO_VACANCY_INFO + vacancyIdStr, CommandResult.Type.FORWARD);
+//            }
+//        } catch (ServiceException e) {
+//            logger.log(Level.ERROR, "Couldn't create applicant request");
+//            throw new CommandException(e);
+//        }
+
         return  new CommandResult(CommandResult.DEFAULT_PATH);
     }
 }

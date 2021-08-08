@@ -65,7 +65,7 @@ public class ConnectionPool {
             throw new ConnectionPoolException("Oops! Error finding db driver.", e);
         }
 
-        LOGGER.info("Connection pool initialized successfully.");
+        LOGGER.info("Connection pool initialized.");
     }
 
     public Connection takeConnection() throws ConnectionPoolException {
@@ -107,6 +107,6 @@ public class ConnectionPool {
             throw new ConnectionPoolException("Oops! Error closing connections.", e);
         }
 
-        LOGGER.info("Connection pool closed successfully.");
+        LOGGER.info("Connection pool closed.");
     }
 }

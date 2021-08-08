@@ -1,6 +1,67 @@
 package by.epamtc.library.model.service.impl;
 
+import by.epamtc.library.controller.attribute.RequestParameter;
+import by.epamtc.library.exception.DaoException;
+import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.dao.BookDao;
+import by.epamtc.library.model.dao.BookRequestDao;
+import by.epamtc.library.model.dao.UserDao;
+import by.epamtc.library.model.dao.impl.BookDaoImpl;
+import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
+import by.epamtc.library.model.dao.impl.UserDaoImpl;
+import by.epamtc.library.model.entity.Book;
+import by.epamtc.library.model.entity.BookRequest;
+import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.BookService;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class BookRequestServiceImpl implements BookRequestService {
+    private static final BookRequestDao bookRequestDao = BookRequestDaoImpl.getInstance();
+    private static final UserDao userDao = UserDaoImpl.getInstance();
+    private static final BookDao bookDao = BookDaoImpl.getInstance();
+    private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
+    private static final BookService bookService = BookServiceImpl.getInstance();
+    private static final Lock locker = new ReentrantLock();
+    private static volatile BookRequestService instance;
+
+    private BookRequestServiceImpl() {
+    }
+
+    public static BookRequestService getInstance() {
+        if (instance == null) {
+            locker.lock();
+            if (instance == null) {
+                instance = new BookRequestServiceImpl();
+            }
+            locker.unlock();
+        }
+        return instance;
+    }
+
+    @Override
+    public boolean createBookRequest(Map<String, String> fields, User reader) throws ServiceException {
+        Optional<BookRequest> requestOptional = bookRequestFactory.create(fields);
+        try {
+            if (requestOptional.isPresent()) {
+                long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
+                Optional<Book> bookOptional = bookService.findBookById(bookId);
+                if (bookOptional.isPresent()) {
+                    BookRequest request = requestOptional.get();
+                    request.setUser(reader);
+                    request.setBook(bookOptional.get());
+//                    return (!applicantRequestDao.applicantRequestExists(request) && applicantRequestDao.add(request));
+                }
+            }
+        } catch (NumberFormatException e) {
+            throw new ServiceException(e);
+        }
+        return false;
+    }
 }

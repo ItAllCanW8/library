@@ -16,6 +16,8 @@ public class RequestParameter {
     public static final String NEW_PASSWORD = "newPassword";
     public static final String REPEATED_PASSWORD = "repeatedPassword";
     ///////////////////////////BOOK////////////////////////////////
+    public static final String BOOK_ID = "bookId";
+    public static final String BOOK = "book";
     public static final String BOOK_TITLE = "bookTitle";
     public static final String BOOK_AUTHOR = "bookAuthor";
     public static final String BOOK_ISBN = "bookISBN";
@@ -25,20 +27,17 @@ public class RequestParameter {
     public static final String BOOK_PDF = "bookPdf";
     public static final String BOOK_COVER = "bookCover";
     public static final String BOOK_AUTHOR_PHOTO = "bookAuthorPhoto";
-
     public static final String BOOKS = "books";
+    public static final String BOOK_REQUEST_TYPE = "requestType";
+
     public static final String NEW_LOCALIZATION = "newLocalization";
 
     public static final String HEADER_REFERER = "REFERER";
-
-    public static final String BOOK_ID = "bookId";
-    public static final String BOOK = "book";
 
     public static final String FILE = "file";
     public static final String FILE_NAME = "fileName";
 
     public static final String USERS = "users";
-
 
     private RequestParameter(){}
 }

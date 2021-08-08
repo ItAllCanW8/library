@@ -86,6 +86,9 @@ public enum CommandType {
     }},
     VIEW_PDF{{
         this.command = new ViewPdf();
+    }},
+    RENT_BOOK{{
+        this.command = new RentBook();
     }};
 
     Command command;
