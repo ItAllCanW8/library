@@ -1,30 +1,36 @@
 package by.epamtc.library.model.entity;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class BookRequest {
     private long id;
+    private BookRequestType type;
     private BookRequestState state;
-    private LocalDate requestDate;
-    private LocalDate processingDate;
-    private LocalDate closingDate;
+    private String requestDate;
+    private String processingDate;
+    private String closingDate;
     private int penaltyAmount;
     private Book book;
     private User user;
 
     public BookRequest(){}
 
-    public BookRequest(long id, BookRequestState state, LocalDate requestDate, Book book, User user) {
+    public BookRequest(long id, BookRequestState state, String requestDate, Book book, User user) {
         this(state, requestDate, book, user);
         this.id = id;
     }
 
-    public BookRequest(BookRequestState state, LocalDate requestDate, Book book, User user) {
+    public BookRequest(BookRequestState state, String requestDate, Book book, User user) {
         this.state = state;
         this.requestDate = requestDate;
         this.book = book;
         this.user = user;
+    }
+
+    public BookRequest(BookRequestType type, BookRequestState state, String requestDate){
+        this.type = type;
+        this.state = state;
+        this.requestDate = requestDate;
     }
 
     public long getId() {
@@ -39,27 +45,27 @@ public class BookRequest {
         this.state = state;
     }
 
-    public LocalDate getRequestDate() {
+    public String getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(LocalDate requestDate) {
+    public void setRequestDate(String requestDate) {
         this.requestDate = requestDate;
     }
 
-    public LocalDate getProcessingDate() {
+    public String getProcessingDate() {
         return processingDate;
     }
 
-    public void setProcessingDate(LocalDate processingDate) {
+    public void setProcessingDate(String processingDate) {
         this.processingDate = processingDate;
     }
 
-    public LocalDate getClosingDate() {
+    public String getClosingDate() {
         return closingDate;
     }
 
-    public void setClosingDate(LocalDate closingDate) {
+    public void setClosingDate(String closingDate) {
         this.closingDate = closingDate;
     }
 
@@ -87,6 +93,14 @@ public class BookRequest {
         this.user = user;
     }
 
+    public BookRequestType getType() {
+        return type;
+    }
+
+    public void setType(BookRequestType type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,12 +110,12 @@ public class BookRequest {
 
         if (id != that.id) return false;
         if (penaltyAmount != that.penaltyAmount) return false;
+        if (type != that.type) return false;
         if (state != that.state) return false;
         if (!requestDate.equals(that.requestDate)) return false;
         if (!Objects.equals(processingDate, that.processingDate))
             return false;
-        if (!Objects.equals(closingDate, that.closingDate))
-            return false;
+        if (!Objects.equals(closingDate, that.closingDate)) return false;
         if (!book.equals(that.book)) return false;
         return user.equals(that.user);
     }
@@ -109,6 +123,7 @@ public class BookRequest {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + type.hashCode();
         result = 31 * result + state.hashCode();
         result = 31 * result + requestDate.hashCode();
         result = 31 * result + (processingDate != null ? processingDate.hashCode() : 0);
@@ -123,6 +138,7 @@ public class BookRequest {
     public String toString() {
         final StringBuilder sb = new StringBuilder(BookRequest.class.getSimpleName()+"{");
         sb.append("id=").append(id);
+        sb.append(", type=").append(type);
         sb.append(", state=").append(state);
         sb.append(", requestDate=").append(requestDate);
         sb.append(", processingDate=").append(processingDate);

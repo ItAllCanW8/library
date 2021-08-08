@@ -51,4 +51,10 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_COVER = "UPDATE books SET img = ? WHERE book_id = ?";
     public static final String UPDATE_AUTHOR_PHOTO = "UPDATE books SET author_img = ? WHERE book_id = ?";
     public static final String UPDATE_BOOK_PDF = "UPDATE books SET pdf = ? WHERE book_id = ?";
+
+    public static final String CHECK_BOOK_REQUEST_FOR_EXISTENCE = "SELECT request_id FROM book_requests WHERE" +
+            " book_id_fk = ? AND user_id_fk = ?;";
+    public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
+            " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
+    public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
 }

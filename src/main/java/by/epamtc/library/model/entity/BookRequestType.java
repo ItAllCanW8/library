@@ -19,6 +19,6 @@ public enum BookRequestType {
                 return type;
         }
 
-        throw new IllegalArgumentException("No constant BookRequestType with value " + value + " found");
+        return null;
     }
 }

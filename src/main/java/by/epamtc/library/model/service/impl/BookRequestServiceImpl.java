@@ -46,20 +46,42 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
+    public boolean bookRequestExists(BookRequest request) throws ServiceException {
+        try {
+            return bookRequestDao.bookRequestExists(request);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean createBookRequest(Map<String, String> fields, User reader) throws ServiceException {
         Optional<BookRequest> requestOptional = bookRequestFactory.create(fields);
         try {
             if (requestOptional.isPresent()) {
                 long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
                 Optional<Book> bookOptional = bookService.findBookById(bookId);
+
                 if (bookOptional.isPresent()) {
                     BookRequest request = requestOptional.get();
+                    Book book = bookOptional.get();
+
+                    if(Integer.parseInt(book.getAvailableQuantity()) <= 0)
+                        return false;
+
                     request.setUser(reader);
-                    request.setBook(bookOptional.get());
-//                    return (!applicantRequestDao.applicantRequestExists(request) && applicantRequestDao.add(request));
+                    request.setBook(book);
+
+                    boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
+                    if(isRequestCreated){
+                        bookDao.updateAvailableQuantity(bookId,
+                                Integer.parseInt(book.getAvailableQuantity()) - 1 );
+                    }
+
+                    return isRequestCreated;
                 }
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | DaoException e) {
             throw new ServiceException(e);
         }
         return false;

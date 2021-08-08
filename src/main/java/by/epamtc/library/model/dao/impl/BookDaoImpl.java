@@ -178,6 +178,19 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    @Override
+    public boolean updateAvailableQuantity(long bookId, int newQuantity) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_QUANTITY)) {
+            statement.setString(1, String.valueOf(newQuantity));
+            statement.setLong(2, bookId);
+
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+    }
+
     private boolean changePhoto(long bookId, String path, String query) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

@@ -34,5 +34,8 @@ public class JspAttribute {
 
     public static final String ERROR_MSG = "errorMsg";
 
+    public static final String ERROR_REQUEST_CREATION = "errorRequestCreation";
+    public static final String ERROR_REQUEST_CREATION_MSG = "Error creating request because you have already created such";
+
     private JspAttribute(){}
 }

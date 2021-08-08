@@ -18,4 +18,5 @@ public interface BookDao {
     boolean updateBook(Book book) throws DaoException;
     boolean deleteBook(long bookId) throws DaoException;
     boolean isTitleAvailable(String title) throws DaoException;
+    boolean updateAvailableQuantity(long bookId, int newQuantity) throws DaoException;
 }

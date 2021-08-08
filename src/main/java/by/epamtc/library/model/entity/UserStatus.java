@@ -19,6 +19,6 @@ public enum UserStatus {
                 return status;
         }
 
-        throw new IllegalArgumentException("No constant UserStatus with value " + value + " found");
+        return null;
     }
 }
