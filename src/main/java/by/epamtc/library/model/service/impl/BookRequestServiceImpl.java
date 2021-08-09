@@ -19,8 +19,6 @@ import by.epamtc.library.model.service.BookService;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = BookRequestDaoImpl.getInstance();
@@ -28,22 +26,28 @@ public class BookRequestServiceImpl implements BookRequestService {
     private static final BookDao bookDao = BookDaoImpl.getInstance();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
     private static final BookService bookService = BookServiceImpl.getInstance();
-    private static final Lock locker = new ReentrantLock();
-    private static volatile BookRequestService instance;
 
     private BookRequestServiceImpl() {
     }
 
-    public static BookRequestService getInstance() {
-        if (instance == null) {
-            locker.lock();
-            if (instance == null) {
-                instance = new BookRequestServiceImpl();
-            }
-            locker.unlock();
-        }
-        return instance;
+    private static class Holder {
+        static final BookRequestService INSTANCE = new BookRequestServiceImpl();
     }
+
+    public static BookRequestService getInstance() {
+        return BookRequestServiceImpl.Holder.INSTANCE;
+    }
+
+//    public static BookRequestService getInstance() {
+//        if (instance == null) {
+//            locker.lock();
+//            if (instance == null) {
+//                instance = new BookRequestServiceImpl();
+//            }
+//            locker.unlock();
+//        }
+//        return instance;
+//    }
 
     @Override
     public boolean bookRequestExists(BookRequest request) throws ServiceException {

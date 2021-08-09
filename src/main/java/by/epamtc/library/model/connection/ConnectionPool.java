@@ -2,6 +2,7 @@ package by.epamtc.library.model.connection;
 
 import by.epamtc.library.exception.ConnectionPoolException;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +25,8 @@ public class ConnectionPool {
     private BlockingQueue<ProxyConnection> freePool;
     private BlockingQueue<ProxyConnection> occupiedConnections;
 
+    private static final int FATAL_CONNECTION_ERROR_NUMBER = 5;
+
     private ConnectionPool() {
     }
 
@@ -39,11 +42,12 @@ public class ConnectionPool {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("db.properties")) {
             Properties properties = new Properties();
             properties.load(input);
+            byte errorCounter = 0;
 
+            int poolSize = Integer.parseInt(properties.getProperty(POOL_SIZE));
             String url = properties.getProperty(DB_URL);
             String user = properties.getProperty(DB_USER);
             String password = properties.getProperty(DB_PASSWORD);
-            int poolSize = Integer.parseInt(properties.getProperty(POOL_SIZE));
 
             Class.forName(properties.getProperty(DB_DRIVER));
 
@@ -51,18 +55,25 @@ public class ConnectionPool {
             occupiedConnections = new ArrayBlockingQueue<>(poolSize);
 
             for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user, password);
-                freePool.add(new ProxyConnection(connection));
+                try {
+                    Connection connection = DriverManager.getConnection(url, user, password);
+                    freePool.add(new ProxyConnection(connection));
+                }
+                catch (SQLException e) {
+                    LOGGER.log(Level.ERROR, "Connection hasn't been created.", e);
+                    errorCounter++;
+                    if(errorCounter >= FATAL_CONNECTION_ERROR_NUMBER){
+                        LOGGER.log(Level.FATAL, errorCounter + " connections haven't been created.");
+                        throw new RuntimeException(errorCounter + " connections haven't been created.");
+                    }
+                }
             }
         } catch (IOException e) {
-            LOGGER.error("Oops! Error loading db properties.", e);
-            throw new ConnectionPoolException("Oops! Error loading db properties.", e);
-        } catch (SQLException e) {
-            LOGGER.error("Oops! Error connecting to db.", e);
-            throw new ConnectionPoolException("Oops! Error connecting to db.", e);
+            LOGGER.log(Level.ERROR, "Error loading db properties.", e);
+            throw new ConnectionPoolException("Error loading db properties.", e);
         } catch (ClassNotFoundException e) {
-            LOGGER.error("Oops! Error finding db driver.", e);
-            throw new ConnectionPoolException("Oops! Error finding db driver.", e);
+            LOGGER.log(Level.ERROR,"Error finding db driver.", e);
+            throw new ConnectionPoolException("Error finding db driver.", e);
         }
 
         LOGGER.info("Connection pool initialized.");
@@ -75,8 +86,8 @@ public class ConnectionPool {
             connection = freePool.take();
             occupiedConnections.put(connection);
         } catch (InterruptedException e) {
-            LOGGER.error("Oops! Error connecting to data source.", e);
-            throw new ConnectionPoolException("Oops! Error connecting to data source.", e);
+            LOGGER.log(Level.ERROR, "Error taking connection.", e);
+            throw new ConnectionPoolException("Error taking connection.", e);
         }
         return connection;
     }
@@ -87,24 +98,21 @@ public class ConnectionPool {
             try {
                 freePool.put((ProxyConnection) connection);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                LOGGER.error("Oops! Error releasing connection.", e);
-                throw new ConnectionPoolException("Oops! Error releasing connection.", e);
+                LOGGER.log(Level.ERROR,"Error releasing connection.", e);
+                throw new ConnectionPoolException("Error releasing connection.", e);
             }
         }
     }
 
     public void dispose() throws ConnectionPoolException {
         try {
-            for (ProxyConnection connection : freePool) {
+            for (ProxyConnection connection : freePool)
                 connection.reallyClose();
-            }
-            for (ProxyConnection connection : occupiedConnections) {
+            for (ProxyConnection connection : occupiedConnections)
                 connection.reallyClose();
-            }
         } catch (SQLException e) {
-            LOGGER.error("Oops! Error closing connections.", e);
-            throw new ConnectionPoolException("Oops! Error closing connections.", e);
+            LOGGER.log(Level.ERROR,"Error destroying connection pool.", e);
+            throw new ConnectionPoolException("Error destroying connection pool.", e);
         }
 
         LOGGER.info("Connection pool closed.");

@@ -19,10 +19,10 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private BookRequestDaoImpl() {
     }
     private static class Holder {
-        static final BookRequestDaoImpl INSTANCE = new BookRequestDaoImpl();
+        static final BookRequestDao INSTANCE = new BookRequestDaoImpl();
     }
 
-    public static BookRequestDaoImpl getInstance() {
+    public static BookRequestDao getInstance() {
         return BookRequestDaoImpl.Holder.INSTANCE;
     }
 

@@ -5,6 +5,8 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.entity.Book;
+import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,13 +14,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class BookDaoImpl implements BookDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
-    private static final Lock lock = new ReentrantLock();
-    private static volatile BookDao instance;
 
     private static final String bookIdCol = "book_id";
     private static final String bookTitleCol = "title";
@@ -36,15 +34,12 @@ public class BookDaoImpl implements BookDao {
     private BookDaoImpl() {
     }
 
+    private static class Holder {
+        static final BookDao INSTANCE = new BookDaoImpl();
+    }
+
     public static BookDao getInstance() {
-        if (instance == null) {
-            lock.lock();
-            if (instance == null) {
-                instance = new BookDaoImpl();
-            }
-            lock.unlock();
-        }
-        return instance;
+        return BookDaoImpl.Holder.INSTANCE;
     }
 
     @Override

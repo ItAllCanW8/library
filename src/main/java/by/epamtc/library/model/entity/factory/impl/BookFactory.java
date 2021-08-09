@@ -5,15 +5,10 @@ import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.service.validation.BookValidator;
 
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class BookFactory implements LibraryFactory<Book> {
-    private static final Lock lock = new ReentrantLock();
-    private static LibraryFactory<Book> instance;
     public static final String DEFAULT_COVER = "default_book_cover.png";
     public static final String DEFAULT_AUTHOR_PHOTO = "default_author_photo.png";
     public static final String DEFAULT_PDF = "default_book_pdf.pdf";
@@ -21,16 +16,24 @@ public class BookFactory implements LibraryFactory<Book> {
     private BookFactory() {
     }
 
-    public static LibraryFactory<Book> getInstance() {
-        if (instance == null) {
-            lock.lock();
-            if (instance == null) {
-                instance = new BookFactory();
-            }
-            lock.unlock();
-        }
-        return instance;
+    private static class Holder {
+        static final LibraryFactory<Book> INSTANCE = new BookFactory();
     }
+
+    public static LibraryFactory<Book> getInstance() {
+        return BookFactory.Holder.INSTANCE;
+    }
+
+//    public static LibraryFactory<Book> getInstance() {
+//        if (instance == null) {
+//            lock.lock();
+//            if (instance == null) {
+//                instance = new BookFactory();
+//            }
+//            lock.unlock();
+//        }
+//        return instance;
+//    }
     @Override
     public Optional<Book> create(Map<String, String> fields) {
         Optional<Book> result = Optional.empty();

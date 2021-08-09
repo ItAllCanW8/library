@@ -11,29 +11,20 @@ import by.epamtc.library.model.service.validation.UserValidator;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class UserFactory implements LibraryFactory<User> {
     private static final UserRole DEFAULT_ROLE = UserRole.READER;
     private static final String DEFAULT_PHOTO_NAME = "default_avatar.png";
     private static final UserStatus DEFAULT_STATUS = UserStatus.ACTIVE;
-    private static final Lock lock = new ReentrantLock();
-    private static LibraryFactory<User> instance;
 
     private UserFactory() {
     }
 
-    public static LibraryFactory<User> getInstance() {
-        if (instance == null) {
-            lock.lock();
-            if (instance == null) {
-                instance = new UserFactory();
-            }
-            lock.unlock();
-        }
-        return instance;
+    private static class Holder {
+        static final LibraryFactory<User> INSTANCE = new UserFactory();
     }
+
+    public static LibraryFactory<User> getInstance() { return UserFactory.Holder.INSTANCE; }
 
     @Override
     public Optional<User> create(Map<String, String> fields) {

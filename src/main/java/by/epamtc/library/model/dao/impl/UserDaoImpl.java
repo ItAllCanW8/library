@@ -3,6 +3,7 @@ package by.epamtc.library.model.dao.impl;
 import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
+import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
@@ -15,13 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class UserDaoImpl implements UserDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
-    private static final Lock lock = new ReentrantLock();
-    private static volatile UserDao instance;
 
     private static final String INVALID_ROLE_ERROR_MSG = "Invalid user role.";
     private static final String INVALID_DETAILS_ERROR_MSG = "Invalid user details.";
@@ -29,15 +26,12 @@ public class UserDaoImpl implements UserDao {
     private UserDaoImpl() {
     }
 
+    private static class Holder {
+        static final UserDao INSTANCE = new UserDaoImpl();
+    }
+
     public static UserDao getInstance() {
-        if (instance == null) {
-            lock.lock();
-            if (instance == null) {
-                instance = new UserDaoImpl();
-            }
-            lock.unlock();
-        }
-        return instance;
+        return UserDaoImpl.Holder.INSTANCE;
     }
 
     @Override

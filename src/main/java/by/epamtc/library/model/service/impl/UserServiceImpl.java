@@ -11,6 +11,7 @@ import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.UserFactory;
+import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.validation.UserValidator;
 import by.epamtc.library.util.Encryptor;
@@ -19,28 +20,19 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class UserServiceImpl implements UserService {
     private static final UserDao userDao = UserDaoImpl.getInstance();
     private static final LibraryFactory<User> userFactory = UserFactory.getInstance();
-    private static final Lock lock = new ReentrantLock();
-    private static volatile UserService instance;
 
     private UserServiceImpl() {
     }
 
-    public static UserService getInstance() {
-        if (instance == null) {
-            lock.lock();
-            if (instance == null) {
-                instance = new UserServiceImpl();
-            }
-            lock.unlock();
-        }
-        return instance;
+    private static class Holder {
+        static final UserService INSTANCE = new UserServiceImpl();
     }
+
+    public static UserService getInstance() { return UserServiceImpl.Holder.INSTANCE; }
 
     @Override
     public boolean register(Map<String, String> fields) throws ServiceException {
@@ -230,7 +222,5 @@ public class UserServiceImpl implements UserService {
 
         String newEmail = fields.get(RequestParameter.EMAIL);
         user.setEmail(newEmail);
-
-        System.out.println("new user "+ user);
     }
 }
