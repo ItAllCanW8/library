@@ -39,5 +39,7 @@ public class RequestParameter {
 
     public static final String USERS = "users";
 
+    public static final String BOOK_REQUESTS = "bookRequests";
+
     private RequestParameter(){}
 }

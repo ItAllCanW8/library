@@ -32,6 +32,9 @@ public class JspAttribute {
     public static final String NO_USERS = "noUsers";
     public static final String NO_USERS_MSG = "No users";
 
+    public static final String NO_BOOK_REQUESTS = "noBookRequests";
+    public static final String NO_BOOK_REQUESTS_MSG = "No book requests";
+
     public static final String ERROR_MSG = "errorMsg";
 
     public static final String ERROR_REQUEST_CREATION = "errorRequestCreation";

@@ -89,6 +89,9 @@ public enum CommandType {
     }},
     RENT_BOOK{{
         this.command = new RentBook();
+    }},
+    BOOK_REQUESTS{{
+        this.command = new BookRequests();
     }};
 
     Command command;

@@ -12,28 +12,12 @@
 <fmt:setBundle basename="locale.content"/>
 
 <head>
-    <!-- Basic -->
-<%--    <meta charset="utf-8" />--%>
-<%--    <meta http-equiv="X-UA-Compatible" content="IE=edge" />--%>
-<%--    <!-- Mobile Metas -->--%>
-<%--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />--%>
-<%--    <!-- Site Metas -->--%>
-<%--    <meta name="keywords" content="" />--%>
-<%--    <meta name="description" content="" />--%>
-<%--    <meta name="author" content="" />--%>
+    <title><fmt:message key="title.library"/></title>
 
-    <title>Joson</title>
-
-    <!-- bootstrap core css -->
-<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />--%>
-<%--    <!-- fonts style -->--%>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
 </head>
 
 <!-- header section starts -->
@@ -58,10 +42,10 @@
             </button>
 
             <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
-                <ul class="navbar-nav  ml-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="${pageContext.request.contextPath}/home.do"><fmt:message
-                                key="header.home"/><span class="sr-only">(current)</span></a>
+                                key="header.home"/><span class="sr-only"></span></a>
                     </li>
 
                     <li class="nav-item">
@@ -127,6 +111,10 @@
                                     <li><a class="dropdown-item"
                                            href="${pageContext.request.contextPath}/to_librarian_books.do"><fmt:message
                                             key="header.booksManagement"/></a></li>
+                                    <li>
+                                    <li><a class="dropdown-item"
+                                           href="${pageContext.request.contextPath}/book_requests.do"><fmt:message
+                                            key="librarian.bookRequests"/></a></li>
                                     <li>
                                 </c:if>
                                 <c:if test="${sessionScope.role.toString().equals(reader)}">

@@ -4,17 +4,23 @@ import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookRequestDao;
-import by.epamtc.library.model.entity.BookRequest;
-import by.epamtc.library.model.entity.BookRequestState;
-import by.epamtc.library.model.entity.BookRequestType;
+import by.epamtc.library.model.entity.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookRequestDaoImpl implements BookRequestDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
+
+    private static final String bookReqType = "request_type";
+    private static final String bookReqSate = "state";
+    private static final String bookReqDate = "request_date";
+    private static final String bookReqProcessingDate = "processing_date";
+    private static final String bookReqClosingDate = "closing_date";
+    private static final String bookReqPenaltyAmount = "penalty_amount";
+    private static final String bookReqBookId = "book_id_fk";
+    private static final String bookReqUserId = "user_id_fk";
 
     private BookRequestDaoImpl() {
     }
@@ -35,7 +41,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error checking for book request existence.");
+            throw new DaoException("Error checking for book request existence.", e);
         }
     }
 
@@ -55,7 +61,41 @@ public class BookRequestDaoImpl implements BookRequestDao {
 
             return (statement.executeUpdate() == 1);
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error adding book request." + e);
+            throw new DaoException("Error adding book request.", e);
         }
+    }
+
+    @Override
+    public List<BookRequest> loadBookRequests() throws DaoException {
+        List<BookRequest> requests = new ArrayList<>();
+
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_BOOK_REQUESTS);
+
+            while (resultSet.next()) {
+                requests.add(createRequestFromResultSet(resultSet));
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading book requests.", e);
+        }
+
+        return requests;
+    }
+
+    private BookRequest createRequestFromResultSet(ResultSet resultSet) throws SQLException {
+        BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqType));
+        BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSate));
+        String requestDate = resultSet.getString(bookReqDate);
+        String processingDate = resultSet.getString(bookReqProcessingDate);
+        String closingDate = resultSet.getString(bookReqClosingDate);
+        int penaltyAmount = resultSet.getInt(bookReqPenaltyAmount);
+
+        long bookId = resultSet.getLong(bookReqBookId);
+        long userId = resultSet.getLong(bookReqUserId);
+
+        return new BookRequest(requestType, requestState, requestDate, processingDate, closingDate,
+                penaltyAmount, new Book(bookId), new User(userId));
     }
 }

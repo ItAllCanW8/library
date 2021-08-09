@@ -8,7 +8,6 @@ import by.epamtc.library.model.dao.impl.BookDaoImpl;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookFactory;
-import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.validation.BookValidator;
 

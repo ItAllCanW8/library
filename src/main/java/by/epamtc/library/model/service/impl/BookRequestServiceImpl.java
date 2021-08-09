@@ -17,6 +17,7 @@ import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,17 +38,6 @@ public class BookRequestServiceImpl implements BookRequestService {
     public static BookRequestService getInstance() {
         return BookRequestServiceImpl.Holder.INSTANCE;
     }
-
-//    public static BookRequestService getInstance() {
-//        if (instance == null) {
-//            locker.lock();
-//            if (instance == null) {
-//                instance = new BookRequestServiceImpl();
-//            }
-//            locker.unlock();
-//        }
-//        return instance;
-//    }
 
     @Override
     public boolean bookRequestExists(BookRequest request) throws ServiceException {
@@ -89,5 +79,14 @@ public class BookRequestServiceImpl implements BookRequestService {
             throw new ServiceException(e);
         }
         return false;
+    }
+
+    @Override
+    public List<BookRequest> loadBookRequests() throws ServiceException {
+        try {
+            return bookRequestDao.loadBookRequests();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 }

@@ -9,12 +9,6 @@
 
 <html>
 
-<head>
-
-    <title>Joson</title>
-
-</head>
-
 <body class="sub_page">
 
 <div class="hero_area">
@@ -26,11 +20,8 @@
     <div class="container">
         <div class="heading_container">
             <h3>
-
+                <fmt:message key="books.catalogue"/>
             </h3>
-            <p>
-                Upcoming Education Events to feed your brain.
-            </p>
         </div>
         <div class="event_container">
             <table id="booksTable" class="table table-dark table-bordered border-secondary">
@@ -44,20 +35,21 @@
                     <th scope="col"><fmt:message key="books.availableQuantity"/></th>
                 </tr>
                 </thead>
+
                 <tbody>
-                <c:forEach var="book" items="${books}">
-                    <tr class="table-secondary">
-                        <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${book.id}"/>">
-                                ${book.title}</a></th>
-                        <th scope="row"><div>
-                            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt=""
-                                 style="max-height: 250px;max-width: 250px"></div></th>
-                        <th scope="row">${book.authorPseudo}</th>
-                        <th scope="row">${book.genre}</th>
-                        <th scope="row">${book.isbn}</th>
-                        <th scope="row">${book.availableQuantity}</th>
-                    <tr>
-                </c:forEach>
+                    <c:forEach var="request" items="${books}">
+                        <tr class="table-secondary">
+                            <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${request.id}"/>">
+                                    ${request.title}</a></th>
+                            <th scope="row"><div>
+                                <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt=""
+                                     style="max-height: 250px;max-width: 250px"></div></th>
+                            <th scope="row">${request.authorPseudo}</th>
+                            <th scope="row">${request.genre}</th>
+                            <th scope="row">${request.isbn}</th>
+                            <th scope="row">${request.availableQuantity}</th>
+                        <tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -65,5 +57,5 @@
 </section>
 
 </body>
-<%--TODO: deal with jquery imports--%>
+
 </html>

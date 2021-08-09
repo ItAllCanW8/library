@@ -7,14 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Joson</title>
-</head>
 
 <body>
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-<!-- login section -->
 
 <section class="login_section layout_padding">
     <div class="container">

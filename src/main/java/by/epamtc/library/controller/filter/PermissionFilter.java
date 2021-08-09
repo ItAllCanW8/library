@@ -44,7 +44,7 @@ public class PermissionFilter implements Filter {
 
         EnumSet<CommandType> librarianCommands = EnumSet.of(CommandType.TO_LIBRARIAN_BOOKS, CommandType.ADD_BOOK,
                 CommandType.UPLOAD_BOOK_COVER, CommandType.UPLOAD_AUTHOR_PHOTO, CommandType.UPLOAD_PDF,
-                CommandType.EDIT_BOOK, CommandType.DELETE_BOOK);
+                CommandType.EDIT_BOOK, CommandType.DELETE_BOOK, CommandType.BOOK_REQUESTS);
         librarianCommands.addAll(sameCommands);
         librarianCommands.addAll(authorizedUserCommands);
 

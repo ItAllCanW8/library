@@ -15,22 +15,22 @@ public class BookRequest {
 
     public BookRequest(){}
 
-    public BookRequest(long id, BookRequestState state, String requestDate, Book book, User user) {
-        this(state, requestDate, book, user);
-        this.id = id;
-    }
-
-    public BookRequest(BookRequestState state, String requestDate, Book book, User user) {
-        this.state = state;
-        this.requestDate = requestDate;
-        this.book = book;
-        this.user = user;
-    }
-
     public BookRequest(BookRequestType type, BookRequestState state, String requestDate){
         this.type = type;
         this.state = state;
         this.requestDate = requestDate;
+    }
+
+    public BookRequest(BookRequestType type, BookRequestState state, String requestDate, String processingDate,
+                       String closingDate, int penaltyAmount, Book book, User user) {
+        this.type = type;
+        this.state = state;
+        this.requestDate = requestDate;
+        this.processingDate = processingDate;
+        this.closingDate = closingDate;
+        this.penaltyAmount = penaltyAmount;
+        this.book = book;
+        this.user = user;
     }
 
     public long getId() {

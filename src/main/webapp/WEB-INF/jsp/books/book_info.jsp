@@ -9,16 +9,10 @@
 
 <html>
 
-<head>
-
-  <title>Joson</title>
-
-</head>
-
 <body class="sub_page">
 <div class="hero_area">
   <%@ include file="../components/header.jsp"%>
-  <c:set var="book" scope="request" value="${book}"/>
+  <c:set var="request" scope="request" value="${book}"/>
 </div>
 
 <!-- about section -->
@@ -31,14 +25,14 @@
       <div class="col-md-6">
         <div class="img_container">
           <div class="img-box b1">
-            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt="" />
+            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
           </div>
           <div class="img-box b2">
-            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}" alt="" />
+            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.authorImg}" alt="" />
           </div>
           <c:if test="${role.toString().equals(librarian)}">
             <label for="coverUpload"><fmt:message key="librarian.uploadBookCover"/> </label>
-            <form action="upload_book_cover.do?bookId=${book.id}" method="post" enctype="multipart/form-data"
+            <form action="upload_book_cover.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
                   id="coverUpload">
               <input type="file" name="bookCover" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary"
@@ -46,14 +40,14 @@
             </form>
 
             <label for="authorPhotoUpload"><fmt:message key="librarian.uploadAuthorPhoto"/></label>
-            <form action="upload_author_photo.do?bookId=${book.id}" method="post" enctype="multipart/form-data"
+            <form action="upload_author_photo.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
                   id="authorPhotoUpload">
               <input type="file" name="bookAuthorPhoto" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
             </form>
 
-            <label for="pdfUpload"><fmt:message key="librarian.uploadAuthorPhoto"/></label>
-            <form action="upload_pdf.do?bookId=${book.id}" method="post" enctype="multipart/form-data"
+            <label for="pdfUpload"><fmt:message key="librarian.uploadBookPDf"/></label>
+            <form action="upload_pdf.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
                   id="pdfUpload">
               <input type="file" name="bookPdf" class="form-control-file" accept="application/pdf"/>
               <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
@@ -65,18 +59,18 @@
       <div class="col-md-6">
         <div class="detail-box">
           <div class="heading_container">
-            <h3>${book.title}</h3>
-            <h4>${book.authorPseudo}</h4>
-            <h5>ISBN: ${book.isbn}</h5>
-            <h5><fmt:message key="books.genre"/>: ${book.genre}</h5>
-            <h5><fmt:message key="books.availableQuantity"/>: ${book.availableQuantity}</h5>
+            <h3>${request.title}</h3>
+            <h4>${request.authorPseudo}</h4>
+            <h5>ISBN: ${request.isbn}</h5>
+            <h5><fmt:message key="books.genre"/>: ${request.genre}</h5>
+            <h5><fmt:message key="books.availableQuantity"/>: ${request.availableQuantity}</h5>
             <hr style="width:100%;text-align:left;margin-left:0">
             <p>
-              ${book.shortDescription}
+              ${request.shortDescription}
             </p>
 
             <c:if test="${role.toString().equals(reader)}">
-              <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${book.pdf}" role="button">
+              <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${request.pdf}" role="button">
                 <fmt:message key="button.read"/>
               </a>
 
@@ -85,10 +79,10 @@
                    aria-expanded="false"><fmt:message key="reader.rent"/></a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="rent_book.do?bookId=${book.id}&requestType=toReadingRoom">
+                         href="rent_book.do?bookId=${request.id}&requestType=toReadingRoom">
                     <fmt:message key="reader.rentToReadingRoom"/></a></li>
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="rent_book.do?bookId=${book.id}&requestType=forSubscription">
+                         href="rent_book.do?bookId=${request.id}&requestType=forSubscription">
                     <fmt:message key="reader.rentForSubscription"/></a></li>
                 </ul>
               </div>
@@ -100,9 +94,7 @@
                 <fmt:message key="button.edit"/>
               </button>
               <hr style="width:100%;text-align:left;margin-left:0">
-              <input type="hidden" name="bookCover" value="${book.img}"/>
-              <input type="hidden" name="bookAuthorPhoto" value="${book.authorImg}"/>
-              <a class="btn btn-secondary" href="delete_book.do?bookId=${book.id}" role="button">
+              <a class="btn btn-secondary" href="delete_book.do?bookId=${request.id}" role="button">
                 <fmt:message key="button.delete"/>
               </a>
             </c:if>
@@ -116,40 +108,40 @@
                   </div>
 
                   <div class="modal-body">
-                    <form id="editBookForm" method="POST" action="edit_book.do?bookId=${book.id}">
+                    <form id="editBookForm" method="POST" action="edit_book.do?bookId=${request.id}">
                       <label for="inputBookTitle"><fmt:message key="books.title"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookTitle" name="bookTitle" class="form-control field"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                               value="${book.title}" pattern="[А-Яа-я\w\p{Blank}]{3,255}"/>
+                               value="${request.title}" pattern="[А-Яа-я\w\p{Blank}]{3,255}"/>
                       </div>
 
                       <label for="inputBookAuthor"><fmt:message key="books.author"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookAuthor" name="bookAuthor" class="form-control field"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                               value="${book.authorPseudo}" pattern="[А-Яа-яa-zA-Z.\s]{3,255}"/>
+                               value="${request.authorPseudo}" pattern="[А-Яа-яa-zA-Z.\s]{3,255}"/>
                       </div>
 
                       <label for="inputBookISBN">ISBN-13</label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookISBN" name="bookISBN" class="form-control field"
                                placeholder="<fmt:message key="books.isbnPlaceholder"/>" required
-                               value="${book.isbn}" pattern="[\d]{13}"/>
+                               value="${request.isbn}" pattern="[\d]{13}"/>
                       </div>
 
                       <label for="inputBookGenre"><fmt:message key="books.genre"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookGenre" name="bookGenre" class="form-control field"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                               value="${book.genre}" pattern="[А-Яа-яa-zA-Z]{3,45}"/>
+                               value="${request.genre}" pattern="[А-Яа-яa-zA-Z]{3,45}"/>
                       </div>
 
                       <label for="inputBookQuantity"><fmt:message key="books.availableQuantity"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookQuantity" name="bookQuantity" class="form-control field"
                                placeholder="<fmt:message key="books.quantityPlaceholder"/>" required
-                               value="${book.availableQuantity}" pattern="[\d]{1,4}"/>
+                               value="${request.availableQuantity}" pattern="[\d]{1,4}"/>
                       </div>
 
                       <label for="inputBookDescription"><fmt:message key="books.shortDescription"/></label>
@@ -157,7 +149,7 @@
                             <textarea type="text" id="inputBookDescription" name="bookDescription" class="form-control"
                                       rows="5"
                                       placeholder="<fmt:message key="register.inputNamePlaceholder"/>"
-                                      required minlength="3" maxlength="1000">${book.shortDescription}</textarea>
+                                      required minlength="3" maxlength="1000">${request.shortDescription}</textarea>
                       </div>
                     </form>
                   </div>

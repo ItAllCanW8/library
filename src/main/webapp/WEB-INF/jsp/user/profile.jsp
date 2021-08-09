@@ -9,12 +9,6 @@
 
 <html>
 
-<head>
-
-    <title>Joson</title>
-
-</head>
-
 <body class="sub_page">
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>

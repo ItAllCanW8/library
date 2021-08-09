@@ -5,8 +5,6 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.entity.Book;
-import by.epamtc.library.model.service.BookRequestService;
-import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,8 +64,8 @@ public class BookDaoImpl implements BookDao {
     public List<Book> loadPopularBooks() throws DaoException {
         List<Book> books = new ArrayList<>();
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_POPULAR_BOOKS)) {
-            ResultSet resultSet = statement.executeQuery();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_POPULAR_BOOKS);
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));
             }
@@ -82,8 +80,8 @@ public class BookDaoImpl implements BookDao {
         List<Book> books = new ArrayList<>();
 
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOKS)) {
-            ResultSet resultSet = statement.executeQuery();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_BOOKS);
 
             while (resultSet.next()) {
                 books.add(createBookFromResultSet(resultSet));

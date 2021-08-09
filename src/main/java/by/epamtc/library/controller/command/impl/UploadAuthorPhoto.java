@@ -57,6 +57,7 @@ public class UploadAuthorPhoto implements Command {
             req.setAttribute(JspAttribute.ERROR_MSG, e.getMessage());
             throw new CommandException(e);
         }
+
         return new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.REDIRECT);
     }
 }
