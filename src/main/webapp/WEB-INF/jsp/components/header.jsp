@@ -53,6 +53,13 @@
                                 key="header.catalogue"/></a>
                     </li>
 
+                    <c:if test="${sessionScope.role.toString().equals(reader)}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/reading_room.do"><fmt:message
+                                    key="header.readingRoom"/></a>
+                        </li>
+                    </c:if>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown"
                            aria-expanded="false"><fmt:message

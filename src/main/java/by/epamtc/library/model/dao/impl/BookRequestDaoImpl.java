@@ -5,14 +5,17 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookRequestDao;
 import by.epamtc.library.model.entity.*;
+import by.epamtc.library.util.DateTimeHelper;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookRequestDaoImpl implements BookRequestDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
+    private static final String bookReqId = "request_id";
     private static final String bookReqType = "request_type";
     private static final String bookReqSate = "state";
     private static final String bookReqDate = "request_date";
@@ -84,7 +87,24 @@ public class BookRequestDaoImpl implements BookRequestDao {
         return requests;
     }
 
+    @Override
+    public boolean changeRequestState(long requestId, String newRequestState) throws DaoException {
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_REQUEST_STATE)) {
+            statement.setString(1, newRequestState);
+            statement.setString(2, LocalDateTime.now().format(DateTimeHelper.formatter));
+            statement.setLong(3, requestId);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
+        }
+        catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error changing book request state.", e);
+        }
+    }
+
     private BookRequest createRequestFromResultSet(ResultSet resultSet) throws SQLException {
+        long requestId = resultSet.getLong(bookReqId);
         BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqType));
         BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSate));
         String requestDate = resultSet.getString(bookReqDate);
@@ -95,7 +115,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         long bookId = resultSet.getLong(bookReqBookId);
         long userId = resultSet.getLong(bookReqUserId);
 
-        return new BookRequest(requestType, requestState, requestDate, processingDate, closingDate,
+        return new BookRequest(requestId, requestType, requestState, requestDate, processingDate, closingDate,
                 penaltyAmount, new Book(bookId), new User(userId));
     }
 }

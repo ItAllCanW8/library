@@ -8,6 +8,7 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;

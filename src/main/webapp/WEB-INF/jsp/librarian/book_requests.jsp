@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
-<<body class="sub_page">
+<body class="sub_page">
 
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
@@ -33,6 +33,7 @@
                     <th scope="col">Processing date</th>
                     <th scope="col">Closing date</th>
                     <th scope="col">Penalty amount</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
 
@@ -50,6 +51,25 @@
                             <th scope="row">${request.processingDate}</th>
                             <th scope="row">${request.closingDate}</th>
                             <th scope="row">${request.penaltyAmount}</th>
+                            <th scope="row">
+                                <div class="dropdown col-8 mb-4">
+                                    <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
+                                            id="actionDropDown"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <fmt:message key="button.action"/>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
+                                        aria-labelledby="actionDropDown">
+                                        <li><a class="dropdown-item"
+                                               href="change_book_request_state.do?requestId=${request.id}&requestState=approved">
+                                            <fmt:message key="button.approve"/> </a></li>
+                                        <li><a class="dropdown-item"
+                                               href="change_book_request_state.do?requestId=${request.id}&requestState=denied">
+                                            <fmt:message key="button.deny"/> </a></li>
+                                    </ul>
+                                </div>
+                            </th>
                         <tr>
                     </c:forEach>
                 </tbody>

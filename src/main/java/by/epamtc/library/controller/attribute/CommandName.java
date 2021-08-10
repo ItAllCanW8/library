@@ -11,6 +11,7 @@ public class CommandName {
     public static final String TO_LIBRARIAN_BOOKS = "/to_librarian_books.do";
     public static final String ADD_BOOK = "/add_book.do";
     public static final String LOGOUT = "/logout.do";
+    public static final String BOOK_REQUESTS = "/book_requests.do";
 
     private CommandName(){}
 }

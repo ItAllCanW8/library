@@ -25,10 +25,19 @@ public class BookRequestFactory implements LibraryFactory<BookRequest> {
     @Override
     public Optional<BookRequest> create(Map<String, String> fields) {
         BookRequestType requestType = BookRequestType.fromString(fields.get(RequestParameter.BOOK_REQUEST_TYPE));
+        BookRequestState state;
 
-        if(requestType != null)
-            return (Optional.of(new BookRequest(requestType,DEFAULT_STATE,
+        if(requestType != null) {
+            if(requestType.equals(BookRequestType.TO_READING_ROOM)) {
+                state = BookRequestState.APPROVED;
+            }
+            else{
+                state = DEFAULT_STATE;
+            }
+
+            return (Optional.of(new BookRequest(requestType, state,
                     LocalDateTime.now().format(DateTimeHelper.formatter))));
+        }
 
         return Optional.empty();
     }

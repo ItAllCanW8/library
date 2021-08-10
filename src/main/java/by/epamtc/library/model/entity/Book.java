@@ -1,6 +1,8 @@
 package by.epamtc.library.model.entity;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private long id;
     private String title;
     private String authorPseudo;

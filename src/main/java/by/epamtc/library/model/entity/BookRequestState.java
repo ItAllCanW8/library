@@ -2,8 +2,7 @@ package by.epamtc.library.model.entity;
 
 public enum BookRequestState {
     LEFT("left"),
-    APPROVED_FOR_READING_ROOM("approvedForReadingRoom"),
-    APPROVED_FOR_SUBSCRIPTION("approvedForSubscription"),
+    APPROVED("approved"),
     DENIED("denied"),
     CLOSED("closed");
 

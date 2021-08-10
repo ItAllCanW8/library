@@ -58,4 +58,6 @@ public class SqlQuery {
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
     public static final String SELECT_BOOK_REQUESTS = "SELECT * FROM book_requests;";
+    public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ?, processing_date = ?" +
+            " WHERE request_id = ?;";
 }

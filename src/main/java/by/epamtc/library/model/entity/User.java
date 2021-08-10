@@ -1,6 +1,8 @@
 package by.epamtc.library.model.entity;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private long id;
     private UserRole role;
     private UserDetails userDetails;

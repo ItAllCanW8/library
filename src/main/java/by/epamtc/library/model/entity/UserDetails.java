@@ -1,8 +1,9 @@
 package by.epamtc.library.model.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class UserDetails {
+public class UserDetails implements Serializable {
     private long id;
     private String name;
     private String surname;

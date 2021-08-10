@@ -81,7 +81,6 @@ public class ConnectionPool {
 
     public Connection takeConnection() throws ConnectionPoolException {
         ProxyConnection connection;
-
         try {
             connection = freePool.take();
             occupiedConnections.put(connection);

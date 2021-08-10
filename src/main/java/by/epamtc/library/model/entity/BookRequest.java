@@ -1,8 +1,9 @@
 package by.epamtc.library.model.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class BookRequest {
+public class BookRequest implements Serializable {
     private long id;
     private BookRequestType type;
     private BookRequestState state;
@@ -13,7 +14,7 @@ public class BookRequest {
     private Book book;
     private User user;
 
-    public BookRequest(){}
+    private BookRequest(){}
 
     public BookRequest(BookRequestType type, BookRequestState state, String requestDate){
         this.type = type;
@@ -21,8 +22,9 @@ public class BookRequest {
         this.requestDate = requestDate;
     }
 
-    public BookRequest(BookRequestType type, BookRequestState state, String requestDate, String processingDate,
-                       String closingDate, int penaltyAmount, Book book, User user) {
+    public BookRequest(long requestId, BookRequestType type, BookRequestState state, String requestDate,
+                       String processingDate, String closingDate, int penaltyAmount, Book book, User user) {
+        this.id = requestId;
         this.type = type;
         this.state = state;
         this.requestDate = requestDate;

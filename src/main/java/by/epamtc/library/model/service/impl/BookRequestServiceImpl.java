@@ -9,9 +9,7 @@ import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.dao.impl.BookDaoImpl;
 import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
 import by.epamtc.library.model.dao.impl.UserDaoImpl;
-import by.epamtc.library.model.entity.Book;
-import by.epamtc.library.model.entity.BookRequest;
-import by.epamtc.library.model.entity.User;
+import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
@@ -51,6 +49,9 @@ public class BookRequestServiceImpl implements BookRequestService {
     @Override
     public boolean createBookRequest(Map<String, String> fields, User reader) throws ServiceException {
         Optional<BookRequest> requestOptional = bookRequestFactory.create(fields);
+        boolean isToReadingRoom = BookRequestType.fromString(fields.get(RequestParameter.BOOK_REQUEST_TYPE))
+                .equals(BookRequestType.TO_READING_ROOM);
+
         try {
             if (requestOptional.isPresent()) {
                 long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
@@ -60,14 +61,14 @@ public class BookRequestServiceImpl implements BookRequestService {
                     BookRequest request = requestOptional.get();
                     Book book = bookOptional.get();
 
-                    if(Integer.parseInt(book.getAvailableQuantity()) <= 0)
+                    if(!isToReadingRoom && Integer.parseInt(book.getAvailableQuantity()) <= 0)
                         return false;
 
                     request.setUser(reader);
                     request.setBook(book);
 
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
-                    if(isRequestCreated){
+                    if(!isToReadingRoom && isRequestCreated){
                         bookDao.updateAvailableQuantity(bookId,
                                 Integer.parseInt(book.getAvailableQuantity()) - 1 );
                     }
@@ -88,5 +89,17 @@ public class BookRequestServiceImpl implements BookRequestService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public boolean changeRequestState(long requestId, String newRequestStateStr) throws ServiceException {
+        try {
+            BookRequestState newRequestState = BookRequestState.fromString(newRequestStateStr);
+            if(newRequestState != null)
+                return bookRequestDao.changeRequestState(requestId, newRequestState.getValue());
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return false;
     }
 }

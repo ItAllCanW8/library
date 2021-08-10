@@ -40,6 +40,8 @@ public class RequestParameter {
     public static final String USERS = "users";
 
     public static final String BOOK_REQUESTS = "bookRequests";
+    public static final String REQUEST_ID = "requestId";
+    public static final String REQUEST_STATE = "requestState";
 
     private RequestParameter(){}
 }

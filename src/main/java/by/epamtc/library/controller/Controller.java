@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = ServletAttribute.SERVLET_PATTERN, name = ServletAttribute.SERVLET_NAME, loadOnStartup = 1)
+@WebServlet(urlPatterns = ServletAttribute.SERVLET_PATTERN, name = ServletAttribute.SERVLET_NAME)
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -37,6 +37,8 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //TODO all singleton = bad (singleton factory), closing connectionpool really?, validation in service, executeupdate() == 1?,
+        //TODO
         processRequest(req, resp);
     }
 

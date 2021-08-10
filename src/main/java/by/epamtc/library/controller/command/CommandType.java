@@ -92,6 +92,9 @@ public enum CommandType {
     }},
     BOOK_REQUESTS{{
         this.command = new BookRequests();
+    }},
+    CHANGE_BOOK_REQUEST_STATE{{
+        this.command = new ChangeBookRequestState();
     }};
 
     Command command;
