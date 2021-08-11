@@ -36,20 +36,20 @@
         </thead>
 
         <tbody>
-          <c:forEach var="request" items="${bookRequests}">
+          <c:forEach var="book" items="${bookRequests}">
             <tr class="table-secondary">
               <th scope="row">
                 <div>
-                  <a href="<c:url value="load_book_info.do?bookId=${request.book.id}"/>">
-                      ${request.book.id}</a>
+                  <a href="<c:url value="load_book_info.do?bookId=${book.book.id}"/>">
+                      ${book.book.id}</a>
                 </div>
               </th>
-              <th scope="row">${request.type}</th>
-              <th scope="row">${request.state}</th>
-              <th scope="row">${request.requestDate}</th>
-              <th scope="row">${request.processingDate}</th>
-              <th scope="row">${request.closingDate}</th>
-              <th scope="row">${request.penaltyAmount}</th>
+              <th scope="row">${book.type}</th>
+              <th scope="row">${book.state}</th>
+              <th scope="row">${book.requestDate}</th>
+              <th scope="row">${book.processingDate}</th>
+              <th scope="row">${book.closingDate}</th>
+              <th scope="row">${book.penaltyAmount}</th>
             <tr>
           </c:forEach>
         </tbody>

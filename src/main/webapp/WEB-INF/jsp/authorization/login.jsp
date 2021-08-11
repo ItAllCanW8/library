@@ -15,20 +15,19 @@
 <section class="login_section layout_padding">
     <div class="container">
         <div class="row">
-<%--            <div class="col-md-6">--%>
-<%--                <div class="detail-box">--%>
-<%--                    <h3>--%>
-<%--                        GET ONLINE COURSES FOR FREE--%>
-<%--                    </h3>--%>
-<%--                    <p>--%>
-<%--                        Create your free account now and get immediate access to 100s of--%>
-<%--                        online courses--%>
-<%--                    </p>--%>
-<%--                    <a href="${pageContext.request.contextPath}/register.jsp">--%>
-<%--                        REGISTER NOW--%>
-<%--                    </a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+            <div class="col-md-6">
+                <div class="detail-box">
+                    <h3>
+                        <fmt:message key="login.getBooksMsg"/>
+                    </h3>
+                    <p>
+                        <fmt:message key="login.createAccMsg"/>
+                    </p>
+                    <a href="${pageContext.request.contextPath}/register">
+                        <fmt:message key="login.registerNow"/>
+                    </a>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="login_form">
                     <h5>
@@ -50,7 +49,7 @@
                                        required pattern="[а-яА-Я\w\s\p{Punct}]{6,255}"/>
                             </label>
                         </div>
-                        <button type="submit"><fmt:message key="header.login"/></button>
+                        <button type="submit"><fmt:message key="button.login"/></button>
                     </form>
                 </div>
             </div>

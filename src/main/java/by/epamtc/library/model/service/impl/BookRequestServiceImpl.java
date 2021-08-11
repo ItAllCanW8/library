@@ -5,10 +5,8 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.BookRequestDao;
-import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.dao.impl.BookDaoImpl;
 import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
-import by.epamtc.library.model.dao.impl.UserDaoImpl;
 import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
@@ -21,7 +19,6 @@ import java.util.Optional;
 
 public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = BookRequestDaoImpl.getInstance();
-    private static final UserDao userDao = UserDaoImpl.getInstance();
     private static final BookDao bookDao = BookDaoImpl.getInstance();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
     private static final BookService bookService = BookServiceImpl.getInstance();
@@ -101,5 +98,14 @@ public class BookRequestServiceImpl implements BookRequestService {
             throw new ServiceException(e);
         }
         return false;
+    }
+
+    @Override
+    public List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException {
+        try {
+            return bookRequestDao.loadBookRequestsByReaderId(readerId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 }

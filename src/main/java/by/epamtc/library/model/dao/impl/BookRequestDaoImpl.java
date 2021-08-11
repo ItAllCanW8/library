@@ -88,6 +88,29 @@ public class BookRequestDaoImpl implements BookRequestDao {
     }
 
     @Override
+    public List<BookRequest> loadBookRequestsByReaderId(long readerId) throws DaoException {
+        List<BookRequest> requests = new ArrayList<>();
+
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOK_REQUESTS_BY_READER_ID)) {
+            statement.setLong(1, readerId);
+            System.out.println(statement);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                requests.add(createRequestFromResultSet(resultSet));
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading book requests by reader id.", e);
+        }
+
+        System.out.println(requests);
+
+        return requests;
+    }
+
+    @Override
     public boolean changeRequestState(long requestId, String newRequestState) throws DaoException {
         try(Connection connection = pool.takeConnection();
             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_REQUEST_STATE)) {

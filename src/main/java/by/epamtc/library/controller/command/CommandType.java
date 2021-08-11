@@ -48,6 +48,12 @@ public enum CommandType {
     USERS{{
         this.command = new Users();
     }},
+    COEFFICIENTS{{
+        this.command = new CoefficientsPage();
+    }},
+    SET_COEFFICIENTS{{
+        this.command = new SetCoefficients();
+    }},
     LOAD_USER_PROFILE{{
         this.command = new LoadUserProfileById();
     }},
@@ -95,6 +101,9 @@ public enum CommandType {
     }},
     CHANGE_BOOK_REQUEST_STATE{{
         this.command = new ChangeBookRequestState();
+    }},
+    READING_ROOM{{
+        this.command = new ReadingRoom();
     }};
 
     Command command;

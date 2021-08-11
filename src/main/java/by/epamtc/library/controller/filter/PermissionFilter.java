@@ -38,8 +38,8 @@ public class PermissionFilter implements Filter {
 
         EnumSet<CommandType> adminCommands = EnumSet.of(CommandType.CHANGE_ROLE_TO_LIBRARIAN,
                 CommandType.CHANGE_ROLE_TO_READER, CommandType.ACTIVATE_USER_ACCOUNT, CommandType.DEACTIVATE_USER_ACCOUNT,
-                CommandType.USERS);
-        adminCommands.addAll(authorizedUserCommands);
+                CommandType.USERS, CommandType.COEFFICIENTS, CommandType.SET_COEFFICIENTS);
+            adminCommands.addAll(authorizedUserCommands);
         adminCommands.addAll(sameCommands);
 
         EnumSet<CommandType> librarianCommands = EnumSet.of(CommandType.TO_LIBRARIAN_BOOKS, CommandType.ADD_BOOK,
@@ -49,7 +49,7 @@ public class PermissionFilter implements Filter {
         librarianCommands.addAll(sameCommands);
         librarianCommands.addAll(authorizedUserCommands);
 
-        EnumSet<CommandType> readerCommands = EnumSet.of(CommandType.RENT_BOOK);
+        EnumSet<CommandType> readerCommands = EnumSet.of(CommandType.RENT_BOOK, CommandType.READING_ROOM);
         readerCommands.addAll(sameCommands);
         readerCommands.addAll(authorizedUserCommands);
 

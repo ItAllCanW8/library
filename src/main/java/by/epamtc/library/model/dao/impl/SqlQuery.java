@@ -58,6 +58,11 @@ public class SqlQuery {
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
     public static final String SELECT_BOOK_REQUESTS = "SELECT * FROM book_requests;";
+    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT * FROM book_requests WHERE user_id_fk = ?;";
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ?, processing_date = ?" +
             " WHERE request_id = ?;";
+
+    public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +
+            " reading_room_opening = ?, reading_room_closing = ?";
+    public static final String SELECT_LIB_COEFFICIENTS = "SELECT * FROM coefficients;";
 }

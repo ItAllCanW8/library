@@ -10,6 +10,8 @@ public class PagePath {
     public static final String USER_PROFILE = "/WEB-INF/jsp/user/profile.jsp";
     public static final String USERS = "/WEB-INF/jsp/admin/users.jsp";
     public static final String BOOK_REQUESTS = "/WEB-INF/jsp/librarian/book_requests.jsp";
+    public static final String READING_ROOM = "/WEB-INF/jsp/reader/reading_room.jsp";
+    public static final String SET_COEFFICIENTS = "/WEB-INF/jsp/admin/set_coefficients.jsp";
     public static final String ERROR_PAGE = "/WEB-INF/jsp/error/500.jsp";
 
 

@@ -12,7 +12,6 @@
 <body>
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-    <!-- login section -->
 
     <section class="login_section layout_padding">
         <div class="container">

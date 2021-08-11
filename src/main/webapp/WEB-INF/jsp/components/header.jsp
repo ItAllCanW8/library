@@ -113,6 +113,10 @@
                                            href="${pageContext.request.contextPath}/users.do"><fmt:message
                                             key="header.users"/></a></li>
                                     <li>
+                                    <li><a class="dropdown-item"
+                                           href="${pageContext.request.contextPath}/coefficients.do"><fmt:message
+                                            key="admin.setCoefficients"/></a></li>
+                                    <li>
                                 </c:if>
                                 <c:if test="${sessionScope.role.toString().equals(librarian)}">
                                     <li><a class="dropdown-item"
