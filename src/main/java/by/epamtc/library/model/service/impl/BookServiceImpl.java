@@ -77,6 +77,34 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Optional<String> findBookCoverById(long bookId) throws ServiceException {
+        try {
+            Optional<String> bookCoverOptional = bookDao.findBookCoverById(bookId);
+            if (bookCoverOptional.isPresent()) {
+                String bookCover = bookCoverOptional.get();
+                bookCoverOptional = Optional.of(bookCover);
+            }
+            return bookCoverOptional;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<String> findBookPdfById(long bookId) throws ServiceException {
+        try {
+            Optional<String> bookPdfOptional = bookDao.findBookPdfById(bookId);
+            if (bookPdfOptional.isPresent()) {
+                String bookPdf = bookPdfOptional.get();
+                bookPdfOptional = Optional.of(bookPdf);
+            }
+            return bookPdfOptional;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean changeCover(long bookId, String path) throws ServiceException {
         try {
             return (BookValidator.isPhotoNameValid(path) && bookDao.changeCover(bookId, path));

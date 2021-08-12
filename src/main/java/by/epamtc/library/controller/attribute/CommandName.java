@@ -12,6 +12,7 @@ public class CommandName {
     public static final String ADD_BOOK = "/add_book.do";
     public static final String LOGOUT = "/logout.do";
     public static final String BOOK_REQUESTS = "/book_requests.do";
+    public static final String READER_BOOK_REQUESTS = "/my_book_requests.do";
 
     private CommandName(){}
 }

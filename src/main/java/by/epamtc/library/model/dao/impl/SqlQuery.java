@@ -30,6 +30,12 @@ public class SqlQuery {
 
     public static final String FIND_BOOK_BY_ID = "SELECT * FROM books WHERE book_id = ?;";
 
+    public static final String FIND_BOOK_COVER_BY_ID = "SELECT img FROM books WHERE book_id = ?;";
+
+    public static final String FIND_BOOK_PDF_BY_ID = "SELECT pdf FROM books WHERE book_id = ?;";
+
+    public static final String FIND_BOOK_QUANTITY_BY_ID = "SELECT available_quantity FROM books WHERE book_id = ?;";
+
     public static final String UPDATE_USER_PHOTO = "UPDATE user_details SET photo_path = ? WHERE details_id = ?";
 
     public static final String UPDATE_USER = "UPDATE users SET username = ?, email = ? WHERE user_id = ?;";
@@ -59,7 +65,8 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
     public static final String SELECT_BOOK_REQUESTS = "SELECT * FROM book_requests;";
     public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT * FROM book_requests WHERE user_id_fk = ?;";
-    public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ?, processing_date = ?" +
+    public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
+    public static final String CLOSE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = 'closed', closing_date = ?" +
             " WHERE request_id = ?;";
 
     public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +

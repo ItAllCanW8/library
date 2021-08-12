@@ -1,7 +1,7 @@
 package by.epamtc.library.model.entity;
 
 public enum BookRequestType {
-    TO_READING_ROOM("toReadingRoom"), FOR_SUBSCRIPTION("forSubscription");
+    TO_READING_ROOM("to_reading_room"), FOR_SUBSCRIPTION("for_subscription");
 
     private final String value;
 

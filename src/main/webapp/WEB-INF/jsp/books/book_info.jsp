@@ -70,10 +70,6 @@
             </p>
 
             <c:if test="${role.toString().equals(reader)}">
-              <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${book.pdf}" role="button">
-                <fmt:message key="button.read"/>
-              </a>
-
               <div class="dropdown">
                 <a class="dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown"
                    aria-expanded="false"><fmt:message key="reader.rent"/></a>
@@ -94,6 +90,9 @@
                 <fmt:message key="button.edit"/>
               </button>
               <hr style="width:100%;text-align:left;margin-left:0">
+              <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${book.pdf}" role="button">
+                <fmt:message key="button.read"/>
+              </a>
               <a class="btn btn-secondary" href="delete_book.do?bookId=${book.id}" role="button">
                 <fmt:message key="button.delete"/>
               </a>

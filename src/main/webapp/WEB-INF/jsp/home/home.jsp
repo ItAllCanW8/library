@@ -13,7 +13,7 @@
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
 
-    <c:set var="requests" scope="session" value="${books}"/>
+    <c:set var="books" scope="session" value="${books}"/>
     <!-- slider section -->
     <section class=" slider_section position-relative">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -95,7 +95,7 @@
         </div>
         <div class="course_container">
             <div class="course_content">
-                <c:forEach var="book" items="${requests}">
+                <c:forEach var="book" items="${books}">
                     <div class="box">
                         <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt="" />
                         <a href="<c:url value="load_book_info.do?bookId=${book.id}"/>">

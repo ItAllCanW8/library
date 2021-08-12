@@ -13,7 +13,7 @@
 
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-    <c:set var="requests" scope="session" value="${books}"/>
+    <c:set var="books" scope="session" value="${books}"/>
 </div>
 
 <section class="event_section layout_padding">
@@ -37,7 +37,7 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="book" items="${requests}">
+                    <c:forEach var="book" items="${books}">
                         <tr class="table-secondary">
                             <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${book.id}"/>">
                                     ${book.title}</a></th>

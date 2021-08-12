@@ -102,6 +102,12 @@ public enum CommandType {
     CHANGE_BOOK_REQUEST_STATE{{
         this.command = new ChangeBookRequestState();
     }},
+    MY_BOOK_REQUESTS{{
+        this.command = new MyBookRequests();
+    }},
+    RETURN_BOOK{{
+        this.command = new ReturnBook();
+    }},
     READING_ROOM{{
         this.command = new ReadingRoom();
     }};

@@ -13,6 +13,8 @@ public interface BookService {
     List<Book> loadPopularBooks() throws ServiceException;
     List<Book> loadBooks() throws ServiceException;
     Optional<Book> findBookById(long bookId) throws ServiceException;
+    Optional<String> findBookCoverById(long bookId) throws ServiceException;
+    Optional<String> findBookPdfById(long bookId) throws ServiceException;
     boolean changeCover(long bookId, String path) throws ServiceException;
     boolean changeAuthorPhoto(long bookId, String path) throws ServiceException;
     boolean changePdf(long bookId, String pdfPath) throws ServiceException;

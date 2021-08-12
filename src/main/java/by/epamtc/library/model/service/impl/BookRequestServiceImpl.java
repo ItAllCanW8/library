@@ -46,8 +46,12 @@ public class BookRequestServiceImpl implements BookRequestService {
     @Override
     public boolean createBookRequest(Map<String, String> fields, User reader) throws ServiceException {
         Optional<BookRequest> requestOptional = bookRequestFactory.create(fields);
-        boolean isToReadingRoom = BookRequestType.fromString(fields.get(RequestParameter.BOOK_REQUEST_TYPE))
-                .equals(BookRequestType.TO_READING_ROOM);
+        BookRequestType bookRequestType = BookRequestType.fromString(fields.get(RequestParameter.BOOK_REQUEST_TYPE));
+
+        if(bookRequestType == null)
+            return false;
+
+        boolean isToReadingRoom = bookRequestType.equals(BookRequestType.TO_READING_ROOM);
 
         try {
             if (requestOptional.isPresent()) {
@@ -98,6 +102,24 @@ public class BookRequestServiceImpl implements BookRequestService {
             throw new ServiceException(e);
         }
         return false;
+    }
+
+    @Override
+    public boolean closeBookRequest(long requestId, long bookId, BookRequestType requestType)
+            throws ServiceException {
+        try {
+            boolean isToReadingRoom = requestType.equals(BookRequestType.TO_READING_ROOM);
+            boolean isRequestClosed = bookRequestDao.closeBookRequest(requestId);
+
+            int bookAvailableQuantity = bookDao.findBookQuantityById(bookId);
+
+            if(!isToReadingRoom && isRequestClosed){
+                bookDao.updateAvailableQuantity(bookId,bookAvailableQuantity + 1 );
+            }
+            return isRequestClosed;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

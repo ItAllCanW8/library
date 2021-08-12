@@ -15,12 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 public class SetCoefficients implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        System.out.println("set");
-
         String readingRoomOpening = req.getParameter(RequestParameter.READING_ROOM_OPENING);
         String readingRoomClosing = req.getParameter(RequestParameter.READING_ROOM_CLOSING);
 
-        System.out.println(readingRoomOpening+ ""+ readingRoomClosing);
         int bookIssuingDaysNum = Integer.parseInt(req.getParameter(RequestParameter.BOOK_ISSUING_DAYS_NUM));
         LibCoefficientsService service = LibCoefficientsServiceImpl.getInstance();
 

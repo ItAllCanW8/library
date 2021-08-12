@@ -19,7 +19,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private static final String bookReqType = "request_type";
     private static final String bookReqSate = "state";
     private static final String bookReqDate = "request_date";
-    private static final String bookReqProcessingDate = "processing_date";
     private static final String bookReqClosingDate = "closing_date";
     private static final String bookReqPenaltyAmount = "penalty_amount";
     private static final String bookReqBookId = "book_id_fk";
@@ -50,10 +49,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
 
     @Override
     public boolean add(BookRequest request) throws DaoException {
-        if(BookRequestState.fromString(request.getState().getValue()) == null &&
-                BookRequestType.fromString(request.getType().getValue()) == null)
-            throw new DaoException("Invalid BookRequest state or type.");
-
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_BOOK_REQUEST)) {
             statement.setString(1, request.getType().getValue());
@@ -94,7 +89,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_BOOK_REQUESTS_BY_READER_ID)) {
             statement.setLong(1, readerId);
-            System.out.println(statement);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -105,8 +99,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
             throw new DaoException("Error loading book requests by reader id.", e);
         }
 
-        System.out.println(requests);
-
         return requests;
     }
 
@@ -115,8 +107,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         try(Connection connection = pool.takeConnection();
             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_REQUEST_STATE)) {
             statement.setString(1, newRequestState);
-            statement.setString(2, LocalDateTime.now().format(DateTimeHelper.formatter));
-            statement.setLong(3, requestId);
+            statement.setLong(2, requestId);
             statement.execute();
 
             return statement.getUpdateCount() == 1;
@@ -126,19 +117,33 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
     }
 
+    @Override
+    public boolean closeBookRequest(long requestId) throws DaoException {
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.CLOSE_BOOK_REQUEST_STATE)) {
+            statement.setString(1, LocalDateTime.now().format(DateTimeHelper.formatter));
+            statement.setLong(2, requestId);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
+        }
+        catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error closing book request with id = " + requestId, e);
+        }
+    }
+
     private BookRequest createRequestFromResultSet(ResultSet resultSet) throws SQLException {
         long requestId = resultSet.getLong(bookReqId);
         BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqType));
         BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSate));
         String requestDate = resultSet.getString(bookReqDate);
-        String processingDate = resultSet.getString(bookReqProcessingDate);
         String closingDate = resultSet.getString(bookReqClosingDate);
         int penaltyAmount = resultSet.getInt(bookReqPenaltyAmount);
 
         long bookId = resultSet.getLong(bookReqBookId);
         long userId = resultSet.getLong(bookReqUserId);
 
-        return new BookRequest(requestId, requestType, requestState, requestDate, processingDate, closingDate,
+        return new BookRequest(requestId, requestType, requestState, requestDate, closingDate,
                 penaltyAmount, new Book(bookId), new User(userId));
     }
 }

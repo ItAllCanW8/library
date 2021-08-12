@@ -130,7 +130,7 @@
                                 </c:if>
                                 <c:if test="${sessionScope.role.toString().equals(reader)}">
                                     <li><a class="dropdown-item"
-                                           href="${pageContext.request.contextPath}/requests.do"><fmt:message
+                                           href="${pageContext.request.contextPath}/my_book_requests.do"><fmt:message
                                             key="header.readerRequests"/></a></li>
                                     <li>
                                 </c:if>

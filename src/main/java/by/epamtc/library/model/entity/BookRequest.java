@@ -8,7 +8,6 @@ public class BookRequest implements Serializable {
     private BookRequestType type;
     private BookRequestState state;
     private String requestDate;
-    private String processingDate;
     private String closingDate;
     private int penaltyAmount;
     private Book book;
@@ -22,13 +21,11 @@ public class BookRequest implements Serializable {
         this.requestDate = requestDate;
     }
 
-    public BookRequest(long requestId, BookRequestType type, BookRequestState state, String requestDate,
-                       String processingDate, String closingDate, int penaltyAmount, Book book, User user) {
+    public BookRequest(long requestId, BookRequestType type, BookRequestState state, String requestDate, String closingDate, int penaltyAmount, Book book, User user) {
         this.id = requestId;
         this.type = type;
         this.state = state;
         this.requestDate = requestDate;
-        this.processingDate = processingDate;
         this.closingDate = closingDate;
         this.penaltyAmount = penaltyAmount;
         this.book = book;
@@ -53,14 +50,6 @@ public class BookRequest implements Serializable {
 
     public void setRequestDate(String requestDate) {
         this.requestDate = requestDate;
-    }
-
-    public String getProcessingDate() {
-        return processingDate;
-    }
-
-    public void setProcessingDate(String processingDate) {
-        this.processingDate = processingDate;
     }
 
     public String getClosingDate() {
@@ -115,8 +104,6 @@ public class BookRequest implements Serializable {
         if (type != that.type) return false;
         if (state != that.state) return false;
         if (!requestDate.equals(that.requestDate)) return false;
-        if (!Objects.equals(processingDate, that.processingDate))
-            return false;
         if (!Objects.equals(closingDate, that.closingDate)) return false;
         if (!book.equals(that.book)) return false;
         return user.equals(that.user);
@@ -128,7 +115,6 @@ public class BookRequest implements Serializable {
         result = 31 * result + type.hashCode();
         result = 31 * result + state.hashCode();
         result = 31 * result + requestDate.hashCode();
-        result = 31 * result + (processingDate != null ? processingDate.hashCode() : 0);
         result = 31 * result + (closingDate != null ? closingDate.hashCode() : 0);
         result = 31 * result + penaltyAmount;
         result = 31 * result + book.hashCode();
@@ -143,7 +129,6 @@ public class BookRequest implements Serializable {
         sb.append(", type=").append(type);
         sb.append(", state=").append(state);
         sb.append(", requestDate=").append(requestDate);
-        sb.append(", processingDate=").append(processingDate);
         sb.append(", closingDate=").append(closingDate);
         sb.append(", penaltyAmount=").append(penaltyAmount);
         sb.append(", book=").append(book);

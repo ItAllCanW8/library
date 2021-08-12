@@ -11,12 +11,8 @@
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
 </div>
-<%--    <c:set var="requests" scope="session" value="${bookRequests}"/>--%>
 
 <section class="course_section layout_padding-bottom">
-<%--    <div class="side_img">--%>
-<%--        <img src="${pageContext.request.contextPath}/images/layout/side-img.png" alt="" />--%>
-<%--    </div>--%>
     <div class="container">
         <div class="heading_container">
             <h3>
@@ -29,8 +25,7 @@
                     <div class="box">
                         <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt="" />
                         <h5>${book.title}</h5>
-                        <a href="<c:url value="view_pdf.do?bookPdf=${book.pdf}"/>">
-                        </a>
+                        <a href="view_pdf.do?bookPdf=${book.pdf}" style="color:white"><fmt:message key="button.read"/> </a>
                     </div>
                 </c:forEach>
             </div>

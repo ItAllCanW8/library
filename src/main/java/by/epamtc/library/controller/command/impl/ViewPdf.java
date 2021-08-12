@@ -5,6 +5,8 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.impl.BookServiceImpl;
 import by.epamtc.library.util.FileHandler;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -14,12 +16,30 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class ViewPdf implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        String pdf = req.getParameter(RequestParameter.BOOK_PDF);
+        String pdf = null;
+
+        if(req.getParameterMap().containsKey(RequestParameter.BOOK_ID)){
+            long bookId = Long.parseLong(req.getParameter(RequestParameter.BOOK_ID));
+            BookService service = BookServiceImpl.getInstance();
+
+            try{
+                Optional<String> bookpdfOptional = service.findBookPdfById(bookId);
+
+                if(bookpdfOptional.isPresent())
+                    pdf = bookpdfOptional.get();
+
+            } catch (ServiceException e) {
+                LOGGER.log(Level.ERROR, e);
+            }
+
+        } else
+            pdf = req.getParameter(RequestParameter.BOOK_PDF);
 
         if (pdf != null && !pdf.isEmpty()) {
             try (ServletOutputStream outputStream = resp.getOutputStream()) {

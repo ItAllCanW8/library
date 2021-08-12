@@ -107,6 +107,45 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public Optional<String> findBookCoverById(long bookId) throws DaoException {
+        try(Connection connection = pool.takeConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_COVER_BY_ID)) {
+            statement.setLong(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.next() ? Optional.of(resultSet.getString(bookImgCol)) : Optional.empty();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding book cover by id " + bookId, e);
+        }
+    }
+
+    @Override
+    public Optional<String> findBookPdfById(long bookId) throws DaoException {
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_PDF_BY_ID)) {
+            statement.setLong(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.next() ? Optional.of(resultSet.getString(bookPdfCol)) : Optional.empty();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding book pdf by id " + bookId, e);
+        }
+    }
+
+    @Override
+    public int findBookQuantityById(long bookId) throws DaoException {
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_QUANTITY_BY_ID)) {
+            statement.setLong(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.next() ? resultSet.getInt(bookQuantityCol) : -1;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding book quantity by id " + bookId, e);
+        }
+    }
+
+    @Override
     public boolean changeCover(long bookId, String path) throws DaoException {
         return changePhoto(bookId, path, SqlQuery.UPDATE_BOOK_COVER);
     }
