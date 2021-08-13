@@ -40,17 +40,14 @@ public class EditBook implements Command {
         CommandResult result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.REDIRECT);
         try {
             if (!service.updateBook(Long.parseLong(bookId), fields)) {
-                if (!BookValidator.isBookFormValid(fields)) {
-                    req.setAttribute(RequestParameter.BOOK_TITLE, fields.get(RequestParameter.BOOK_TITLE));
-                    req.setAttribute(RequestParameter.BOOK_AUTHOR, fields.get(RequestParameter.BOOK_AUTHOR));
-                    req.setAttribute(RequestParameter.BOOK_ISBN, fields.get(RequestParameter.BOOK_ISBN));
-                    req.setAttribute(RequestParameter.BOOK_QUANTITY, fields.get(RequestParameter.BOOK_QUANTITY));
-                    req.setAttribute(RequestParameter.BOOK_GENRE, fields.get(RequestParameter.BOOK_GENRE));
-                    req.setAttribute(RequestParameter.BOOK_DESCRIPTION, fields.get(RequestParameter.BOOK_DESCRIPTION));
-                    req.setAttribute(JspAttribute.ERROR_BOOK_UPDATING, JspAttribute.ERROR_INPUT_DATA_MSG);
-                } else {
-                    req.setAttribute(JspAttribute.ERROR_BOOK_UPDATING, JspAttribute.ERROR_BOOK_DUPLICATE_MSG);
-                }
+                req.setAttribute(RequestParameter.BOOK_TITLE, fields.get(RequestParameter.BOOK_TITLE));
+                req.setAttribute(RequestParameter.BOOK_AUTHOR, fields.get(RequestParameter.BOOK_AUTHOR));
+                req.setAttribute(RequestParameter.BOOK_ISBN, fields.get(RequestParameter.BOOK_ISBN));
+                req.setAttribute(RequestParameter.BOOK_QUANTITY, fields.get(RequestParameter.BOOK_QUANTITY));
+                req.setAttribute(RequestParameter.BOOK_GENRE, fields.get(RequestParameter.BOOK_GENRE));
+                req.setAttribute(RequestParameter.BOOK_DESCRIPTION, fields.get(RequestParameter.BOOK_DESCRIPTION));
+                req.setAttribute(JspAttribute.ERROR_BOOK_UPDATING, JspAttribute.ERROR_INPUT_DATA_MSG);
+
                 result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {

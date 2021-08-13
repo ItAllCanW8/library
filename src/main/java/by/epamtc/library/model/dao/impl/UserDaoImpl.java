@@ -68,7 +68,9 @@ public class UserDaoImpl implements UserDao {
             statement.setString(4, userDetails.getPhoneNumber());
             statement.setString(5, userDetails.getPhotoPath());
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -105,7 +107,9 @@ public class UserDaoImpl implements UserDao {
                     insertUserSt.setLong(6, findRoleId(user.getRole(), connection).
                             orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
 
-                    return (insertUserSt.executeUpdate() == 1);
+                    insertUserSt.execute();
+
+                    return insertUserSt.getUpdateCount() == 1;
                 }
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -120,7 +124,9 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_PHOTO)) {
             statement.setString(1, photoPath);
             statement.setLong(2, detailsId);
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -145,8 +151,9 @@ public class UserDaoImpl implements UserDao {
             updateUserStatement.setString(1, user.getUsername());
             updateUserStatement.setString(2, user.getEmail());
             updateUserStatement.setLong(3, user.getId());
+            updateUserStatement.execute();
 
-            if (updateUserStatement.executeUpdate() == 1) {
+            if (updateUserStatement.getUpdateCount() == 1) {
                 try (PreparedStatement updateUserDetailsSt = connection.prepareStatement(SqlQuery.UPDATE_USER_DETAILS)) {
                     updateUserDetailsSt.setString(1, user.getUserDetails().getName());
                     updateUserDetailsSt.setString(2, user.getUserDetails().getSurname());
@@ -154,7 +161,9 @@ public class UserDaoImpl implements UserDao {
                     updateUserDetailsSt.setString(4, user.getUserDetails().getPhoneNumber());
                     updateUserDetailsSt.setLong(5, user.getUserDetails().getId());
 
-                    return (updateUserDetailsSt.executeUpdate() == 1);
+                    updateUserDetailsSt.execute();
+
+                    return updateUserDetailsSt.getUpdateCount() == 1;
                 }
             } else {
                 throw new DaoException("Error updating user profile");
@@ -170,7 +179,9 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_PASSWORD)) {
             statement.setString(1, newPassword);
             statement.setLong(2, userId);
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -183,7 +194,9 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, newStatus.getValue());
             statement.setLong(2, userId);
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -196,7 +209,9 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(1, findRoleId(newRole, connection).orElseThrow(()
                     -> new DaoException(INVALID_ROLE_ERROR_MSG)));
             statement.setLong(2, userId);
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }

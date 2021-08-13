@@ -57,7 +57,9 @@ public class BookRequestDaoImpl implements BookRequestDao {
             statement.setLong(4, request.getBook().getId());
             statement.setLong(5, request.getUser().getId());
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error adding book request.", e);
         }

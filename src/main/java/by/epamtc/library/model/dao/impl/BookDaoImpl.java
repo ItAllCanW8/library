@@ -54,7 +54,9 @@ public class BookDaoImpl implements BookDao {
             statement.setString(8, book.getImg());
             statement.setString(9, book.getAuthorImg());
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -100,6 +102,7 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_BY_ID)) {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
+
             return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
@@ -184,7 +187,9 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_PDF)) {
             statement.setString(1, path);
             statement.setLong(2, bookId);
-            return (statement.executeUpdate() == 1);
+
+            statement.execute();
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -202,7 +207,9 @@ public class BookDaoImpl implements BookDao {
             statement.setString(6, book.getShortDescription());
             statement.setLong(7, book.getId());
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -214,7 +221,9 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_BOOK)) {
             statement.setLong(1, bookId);
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -240,7 +249,9 @@ public class BookDaoImpl implements BookDao {
             statement.setString(1, String.valueOf(newQuantity));
             statement.setLong(2, bookId);
 
-            return (statement.executeUpdate() == 1);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -251,7 +262,10 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, path);
             statement.setLong(2, bookId);
-            return (statement.executeUpdate() == 1);
+
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }

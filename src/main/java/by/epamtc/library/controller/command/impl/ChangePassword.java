@@ -41,11 +41,6 @@ public class ChangePassword implements Command {
                 if (service.changePassword(user.getId(), fields)) {
                     session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
                     result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.REDIRECT);
-                } else {
-                    if (!UserValidator.isChangePasswordFormValid(fields)) {
-                        req.setAttribute(RequestParameter.PASSWORD, currentPassword);
-                        req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
-                    }
                 }
             } else {
                 req.setAttribute(RequestParameter.NEW_PASSWORD, newPassword);

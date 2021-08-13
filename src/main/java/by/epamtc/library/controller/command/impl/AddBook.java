@@ -49,17 +49,14 @@ public class AddBook implements Command {
             if (service.addBook(fields)) {
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
             } else {
-                if (BookValidator.isBookFormValid(fields)) {
-                    req.setAttribute(JspAttribute.ERROR_DUPLICATE, JspAttribute.ERROR_BOOK_DUPLICATE_MSG);
-                } else {
-                    req.setAttribute(RequestParameter.BOOK_TITLE, fields.get(RequestParameter.BOOK_TITLE));
-                    req.setAttribute(RequestParameter.BOOK_AUTHOR, fields.get(RequestParameter.BOOK_AUTHOR));
-                    req.setAttribute(RequestParameter.BOOK_GENRE, fields.get(RequestParameter.BOOK_GENRE));
-                    req.setAttribute(RequestParameter.BOOK_QUANTITY, fields.get(RequestParameter.BOOK_QUANTITY));
-                    req.setAttribute(RequestParameter.BOOK_DESCRIPTION, fields.get(RequestParameter.BOOK_DESCRIPTION));
-                    req.setAttribute(RequestParameter.BOOK_ISBN, fields.get(RequestParameter.BOOK_ISBN));
-                    req.setAttribute(JspAttribute.ERROR_BOOK_CREATION, JspAttribute.ERROR_BOOK_CREATION_MSG);
-                }
+                req.setAttribute(RequestParameter.BOOK_TITLE, fields.get(RequestParameter.BOOK_TITLE));
+                req.setAttribute(RequestParameter.BOOK_AUTHOR, fields.get(RequestParameter.BOOK_AUTHOR));
+                req.setAttribute(RequestParameter.BOOK_GENRE, fields.get(RequestParameter.BOOK_GENRE));
+                req.setAttribute(RequestParameter.BOOK_QUANTITY, fields.get(RequestParameter.BOOK_QUANTITY));
+                req.setAttribute(RequestParameter.BOOK_DESCRIPTION, fields.get(RequestParameter.BOOK_DESCRIPTION));
+                req.setAttribute(RequestParameter.BOOK_ISBN, fields.get(RequestParameter.BOOK_ISBN));
+                req.setAttribute(JspAttribute.ERROR_BOOK_CREATION, JspAttribute.ERROR_BOOK_CREATION_MSG);
+
                 result = new CommandResult(CommandName.TO_LIBRARIAN_BOOKS, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
