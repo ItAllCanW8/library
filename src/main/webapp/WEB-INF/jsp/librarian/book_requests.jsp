@@ -37,45 +37,47 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="book" items="${bookRequests}">
-                        <tr class="table-secondary">
-                            <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${book.user.id}"/>">
-                                    ${book.user.id}</a></th>
-                            <th scope="row">
-                                <a href="<c:url value="load_book_info.do?bookId=${book.book.id}"/>">
-                                    <div>
-                                        <img src="${pageContext.request.contextPath}/load_book_cover.do?bookId=${book.book.id}" alt=""
-                                             style="max-height: 250px;max-width: 250px">
-                                    </div>
-                                </a>
-                            </th>
-                            <th scope="row">${book.type}</th>
-                            <th scope="row">${book.state}</th>
-                            <th scope="row">${book.requestDate}</th>
-                            <th scope="row">${book.closingDate}</th>
-                            <th scope="row">${book.penaltyAmount}</th>
-                            <th scope="row">
-                                <c:if test="${book.state.value.equals('left')}">
-                                    <div class="dropdown col-8 mb-4">
-                                        <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
-                                                id="actionDropDown"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <fmt:message key="button.action"/>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
-                                            aria-labelledby="actionDropDown">
-                                            <li><a class="dropdown-item"
-                                                   href="change_book_request_state.do?requestId=${book.id}&requestState=approved">
-                                                <fmt:message key="button.approve"/> </a></li>
-                                            <li><a class="dropdown-item"
-                                                   href="change_book_request_state.do?requestId=${book.id}&requestState=denied">
-                                                <fmt:message key="button.deny"/> </a></li>
-                                        </ul>
-                                    </div>
-                                </c:if>
-                            </th>
-                        <tr>
+                    <c:forEach var="request" items="${bookRequests}">
+                        <c:if test="${!request.type.value.equals('to_reading_room')}">
+                            <tr class="table-secondary">
+                                <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${request.user.id}"/>">
+                                    <ctg:out text="${request.user.id}"/></a></th>
+                                <th scope="row">
+                                    <a href="<c:url value="load_book_info.do?bookId=${request.book.id}"/>">
+                                        <div>
+                                            <img src="${pageContext.request.contextPath}/load_book_cover.do?bookId=${request.book.id}" alt=""
+                                                 style="max-height: 250px;max-width: 250px">
+                                        </div>
+                                    </a>
+                                </th>
+                                <th scope="row"><ctg:out text="${request.type}"/></th>
+                                <th scope="row"><ctg:out text="${request.state}"/></th>
+                                <th scope="row"><ctg:out text="${request.requestDate}"/></th>
+                                <th scope="row"><ctg:out text="${request.closingDate}"/></th>
+                                <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
+                                <th scope="row">
+                                    <c:if test="${request.state.value.equals('left')}">
+                                        <div class="dropdown col-8 mb-4">
+                                            <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
+                                                    id="actionDropDown"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                <fmt:message key="button.action"/>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
+                                                aria-labelledby="actionDropDown">
+                                                <li><a class="dropdown-item"
+                                                       href="change_book_request_state.do?requestId=${request.id}&requestState=approved">
+                                                    <fmt:message key="button.approve"/> </a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="change_book_request_state.do?requestId=${request.id}&requestState=denied">
+                                                    <fmt:message key="button.deny"/> </a></li>
+                                            </ul>
+                                        </div>
+                                    </c:if>
+                                </th>
+                            <tr>
+                        </c:if>
                     </c:forEach>
                 </tbody>
             </table>

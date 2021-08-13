@@ -120,7 +120,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
     @Override
     public boolean closeBookRequest(long requestId) throws DaoException {
         try(Connection connection = pool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement(SqlQuery.CLOSE_BOOK_REQUEST_STATE)) {
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.CLOSE_BOOK_REQUEST)) {
             statement.setString(1, LocalDateTime.now().format(DateTimeHelper.formatter));
             statement.setLong(2, requestId);
             statement.execute();

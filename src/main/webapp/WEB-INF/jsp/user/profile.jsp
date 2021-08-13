@@ -48,13 +48,13 @@
             <div class="col-md-6">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h3>${user.username}</h3>
-                        <h4>${user.email}</h4>
+                        <h3><ctg:out text="${user.username}"/></h3>
+                        <h4><ctg:out text="${user.email}"/></h4>
                         <hr style="width:100%;text-align:left;margin-left:0">
-                        <h5><fmt:message key="profile.name"/>: ${user.userDetails.name}</h5>
-                        <h5><fmt:message key="profile.surname"/>: ${user.userDetails.surname}</h5>
-                        <h5><fmt:message key="profile.dateOfBirth"/>: ${user.userDetails.dateOfBirth}</h5>
-                        <h5><fmt:message key="profile.phoneNumber"/>: ${user.userDetails.phoneNumber}</h5>
+                        <h5><fmt:message key="profile.name"/>: <ctg:out text="${user.userDetails.name}"/></h5>
+                        <h5><fmt:message key="profile.surname"/>: <ctg:out text="${user.userDetails.surname}"/></h5>
+                        <h5><fmt:message key="profile.dateOfBirth"/>: <ctg:out text="${user.userDetails.dateOfBirth}"/></h5>
+                        <h5><fmt:message key="profile.phoneNumber"/>: <ctg:out text="${user.userDetails.phoneNumber}"/></h5>
                         <hr style="width:100%;text-align:left;margin-left:0">
                     </div>
 
@@ -276,8 +276,6 @@
         </div>
     </div>
 </section>
-
-<!-- end about section -->
 
 </body>
 

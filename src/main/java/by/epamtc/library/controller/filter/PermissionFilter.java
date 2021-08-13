@@ -27,7 +27,8 @@ public class PermissionFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         EnumSet<CommandType> sameCommands = EnumSet.of(CommandType.CHANGE_LANGUAGE, CommandType.LOAD_BOOKS,
-                CommandType.LOAD_BOOK_INFO, CommandType.HOME, CommandType.LOAD_BOOK_COVER);
+                CommandType.LOAD_BOOK_INFO, CommandType.HOME, CommandType.LOAD_BOOK_COVER,
+                CommandType.FIND_BOOKS_BY_KEYWORD);
 
         EnumSet<CommandType> guestCommands = EnumSet.of(CommandType.REGISTER, CommandType.LOGIN);
         guestCommands.addAll(sameCommands);
@@ -50,7 +51,7 @@ public class PermissionFilter implements Filter {
         librarianCommands.addAll(authorizedUserCommands);
 
         EnumSet<CommandType> readerCommands = EnumSet.of(CommandType.RENT_BOOK, CommandType.READING_ROOM,
-                CommandType.MY_BOOK_REQUESTS, CommandType.RETURN_BOOK);
+                CommandType.MY_BOOK_REQUESTS, CommandType.RETURN_BOOK, CommandType.CHANGE_BOOK_REQUEST_STATE);
         readerCommands.addAll(sameCommands);
         readerCommands.addAll(authorizedUserCommands);
 
@@ -78,7 +79,7 @@ public class PermissionFilter implements Filter {
         Optional<CommandType> command = CommandProvider.defineCommandType(request);
 
         if (commands == null || !command.isPresent() || !commands.contains(command.get())) {
-            LOGGER.log(Level.ERROR, "User hasn't got permission to execute command " + command);
+            LOGGER.log(Level.ERROR, "User hasn't got permission to execute command " + command.get());
             RequestDispatcher dispatcher = request.getRequestDispatcher(ServletAttribute.HOME_URL);
             dispatcher.forward(request, response);
         } else {

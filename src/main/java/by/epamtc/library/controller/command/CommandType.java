@@ -110,6 +110,9 @@ public enum CommandType {
     }},
     READING_ROOM{{
         this.command = new ReadingRoom();
+    }},
+    FIND_BOOKS_BY_KEYWORD{{
+        this.command = new FindBooksByKeyword();
     }};
 
     Command command;

@@ -21,11 +21,11 @@
         </div>
         <div class="course_container">
             <div class="course_content">
-                <c:forEach var="book" items="${books}">
+                <c:forEach var="request" items="${books}">
                     <div class="box">
-                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt="" />
-                        <h5>${book.title}</h5>
-                        <a href="view_pdf.do?bookPdf=${book.pdf}" style="color:white"><fmt:message key="button.read"/> </a>
+                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
+                        <h5><ctg:out text="${request.title}"/></h5>
+                        <a href="view_pdf.do?bookPdf=${request.pdf}" style="color:white"><fmt:message key="button.read"/> </a>
                     </div>
                 </c:forEach>
             </div>

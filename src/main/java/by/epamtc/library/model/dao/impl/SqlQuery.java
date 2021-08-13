@@ -30,6 +30,9 @@ public class SqlQuery {
 
     public static final String FIND_BOOK_BY_ID = "SELECT * FROM books WHERE book_id = ?;";
 
+    public static final String FIND_BOOKS_BY_KEYWORD = "SELECT * FROM books WHERE title LIKE ? OR author_pseudo LIKE ? " +
+            "OR isbn LIKE ? OR genre LIKE ? OR available_quantity LIKE ?;";
+
     public static final String FIND_BOOK_COVER_BY_ID = "SELECT img FROM books WHERE book_id = ?;";
 
     public static final String FIND_BOOK_PDF_BY_ID = "SELECT pdf FROM books WHERE book_id = ?;";
@@ -59,14 +62,15 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_PDF = "UPDATE books SET pdf = ? WHERE book_id = ?";
 
     public static final String CHECK_BOOK_REQUEST_FOR_EXISTENCE = "SELECT request_id FROM book_requests WHERE" +
-            " book_id_fk = ? AND user_id_fk = ?;";
+            " book_id_fk = ? AND user_id_fk = ? AND state !=\"closed\";";
     public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
     public static final String SELECT_BOOK_REQUESTS = "SELECT * FROM book_requests;";
-    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT * FROM book_requests WHERE user_id_fk = ?;";
+    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT * FROM book_requests JOIN books ON " +
+            "book_id = book_id_fk WHERE user_id_fk = ?;";
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
-    public static final String CLOSE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = 'closed', closing_date = ?" +
+    public static final String CLOSE_BOOK_REQUEST = "UPDATE book_requests SET state = 'closed', closing_date = ?" +
             " WHERE request_id = ?;";
 
     public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +

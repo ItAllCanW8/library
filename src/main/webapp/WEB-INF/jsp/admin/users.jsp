@@ -39,14 +39,13 @@
                 <c:forEach var="user" items="${users}">
                     <tr class="table-secondary">
                         <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${user.id}"/>">
-                                ${user.username}</a></th>
+                                <ctg:out text="${user.username}"/></a></th>
                         <th scope="row">
                             <div>
                                 <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                                      alt="" style="max-height: 250px;max-width: 250px"></div>
                         </th>
-                        <th scope="row">${user.role}<br>
-<%--                            <input type="hidden" name="userRole" value="${user.role}">--%>
+                        <th scope="row"><ctg:out text="${user.role}"/><br>
                             <c:if test="${user.role.toString().equals(reader)}"><br>
                                 <a href="change_role_to_librarian.do?userId=${user.id}"><fmt:message key="users.changeRole"/>
                                 </a>
@@ -55,8 +54,8 @@
                                 <a href="change_role_to_reader.do?userId=${user.id}"><fmt:message key="users.changeRole"/></a>
                             </c:if>
                         </th>
-                        <th scope="row">${user.email}</th>
-                        <th scope="row">${user.status}
+                        <th scope="row"><ctg:out text="${user.email}"/></th>
+                        <th scope="row"><ctg:out text="${user.status}"/>
                             <c:if test="${user.status.value.equals('active')}"><br>
                                 <a href="deactivate_user_account.do?userId=${user.id}"><fmt:message key="users.deactivate"/></a>
                             </c:if>

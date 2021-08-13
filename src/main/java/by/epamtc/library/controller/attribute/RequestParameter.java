@@ -45,5 +45,7 @@ public class RequestParameter {
     public static final String REQUEST_ID = "requestId";
     public static final String REQUEST_STATE = "requestState";
 
+    public static final String SEARCH_KEYWORD = "keyword";
+
     private RequestParameter(){}
 }

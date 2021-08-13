@@ -105,6 +105,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findBooksByKeyword(String keyword) throws ServiceException {
+        try {
+            return bookDao.findBooksByKeyword(keyword);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean changeCover(long bookId, String path) throws ServiceException {
         try {
             return (BookValidator.isPhotoNameValid(path) && bookDao.changeCover(bookId, path));

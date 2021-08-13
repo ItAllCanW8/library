@@ -36,10 +36,6 @@ public class RentBook implements Command {
         BookRequestService service = BookRequestServiceImpl.getInstance();
         try {
             if (service.createBookRequest(fields, reader)) {
-//                MailSender mailSender = MailSender.MailSenderHolder.HOLDER.getMailSender();
-//                String applicantEmail = applicant.getEmail();
-//                mailSender.setupEmail(applicantEmail, MailMessage.HR_SYSTEM_MAIL_SUBJECT, MailMessage.CREATION_APPLICANT_REQUEST_MAIL_TEXT);
-//                mailSender.send();
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
             } else {
                 req.setAttribute(JspAttribute.ERROR_REQUEST_CREATION, JspAttribute.ERROR_REQUEST_CREATION_MSG);

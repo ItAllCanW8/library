@@ -133,6 +133,29 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> findBooksByKeyword(String keyword) throws DaoException {
+        List<Book> books = new ArrayList<>();
+
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOKS_BY_KEYWORD)) {
+            String keywordWithWildcard = "%"+keyword+"%";
+            statement.setString(1, keywordWithWildcard);
+            statement.setString(2, keywordWithWildcard);
+            statement.setString(3, keywordWithWildcard);
+            statement.setString(4, keywordWithWildcard);
+            statement.setString(5, keywordWithWildcard);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next())
+                books.add(createBookFromResultSet(resultSet));
+
+            return books;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding books by keyword " + keyword, e);
+        }
+    }
+
+    @Override
     public int findBookQuantityById(long bookId) throws DaoException {
         try(Connection connection = pool.takeConnection();
             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_QUANTITY_BY_ID)) {

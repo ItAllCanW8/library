@@ -116,6 +116,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             if(!isToReadingRoom && isRequestClosed){
                 bookDao.updateAvailableQuantity(bookId,bookAvailableQuantity + 1 );
             }
+
             return isRequestClosed;
         } catch (DaoException e) {
             throw new ServiceException(e);

@@ -10,6 +10,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.BookRequest;
+import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
@@ -31,16 +32,18 @@ public class ReadingRoom implements Command {
         BookRequestService bookRequestService = BookRequestServiceImpl.getInstance();
         CommandResult result = new CommandResult(PagePath.READING_ROOM, CommandResult.Type.FORWARD);
         try {
-            List<BookRequest> bookRequests = bookRequestService.loadBookRequestsByReaderId(readerId);
+            List<BookRequest> bookRequests = bookRequestService.loadBookRequestsByReaderId(readerId);;
             if (bookRequests.size() > 0) {
                 BookService bookService = BookServiceImpl.getInstance();
                 List<Book> books = new ArrayList<>(bookRequests.size());
 
                 for (BookRequest bookRequest : bookRequests) {
-                    Optional<Book> bookOptional = bookService.findBookById(bookRequest.getBook().getId());
+                    if(bookRequest.getState() != BookRequestState.CLOSED ) {
+                        Optional<Book> bookOptional = bookService.findBookById(bookRequest.getBook().getId());
 
-                    if (bookOptional.isPresent())
-                        books.add(bookOptional.get());
+                        if (bookOptional.isPresent())
+                            books.add(bookOptional.get());
+                    }
                 }
                 req.setAttribute(RequestParameter.BOOKS, books);
             } else {
