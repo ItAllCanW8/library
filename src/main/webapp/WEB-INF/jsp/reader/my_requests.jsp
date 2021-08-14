@@ -69,13 +69,12 @@
                             <fmt:message key="button.read"/> </a></li>
                           <c:if test="${request.type.value.equals('for_subscription')}">
                             <li><a class="dropdown-item"
-                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}
-                                   &bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                           <c:if test="${request.type.value.equals('to_reading_room')}">
                             <li><a class="dropdown-item"
-                                   href="change_book_request_state.do?requestId=${request.id}&requestState=closed">
+                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                         </c:if>

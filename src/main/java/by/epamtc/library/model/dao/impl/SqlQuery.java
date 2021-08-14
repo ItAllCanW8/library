@@ -65,7 +65,7 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_PDF = "UPDATE books SET pdf = ? WHERE book_id = ?";
 
     public static final String CHECK_BOOK_REQUEST_FOR_EXISTENCE = "SELECT request_id FROM book_requests WHERE" +
-            " book_id_fk = ? AND user_id_fk = ? AND state !=\"closed\";";
+            " book_id_fk = ? AND user_id_fk = ? AND state ='approved';";
     public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
@@ -77,11 +77,13 @@ public class SqlQuery {
             "penalty_amount,book_id_fk,title,img,pdf,available_quantity FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ?;";
 
-    public static final String SELECT_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
-            "book_id = book_id_fk WHERE user_id_fk = ?;";
+    public static final String LOAD_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
+            "book_id = book_id_fk WHERE user_id_fk = ? AND state ='approved';";
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
     public static final String CLOSE_BOOK_REQUEST = "UPDATE book_requests SET state = 'closed', closing_date = ?" +
             " WHERE request_id = ?;";
+
+    public static final String DELETE_BOOK_REQUEST = "DELETE FROM book_requests WHERE request_id = ?;";
 
     public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +
             " reading_room_opening = ?, reading_room_closing = ?";

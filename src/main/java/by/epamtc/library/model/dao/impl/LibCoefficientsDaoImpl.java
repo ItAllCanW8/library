@@ -29,7 +29,6 @@ public class LibCoefficientsDaoImpl implements LibCoefficientsDao {
             throws DaoException {
         try(Connection connection = pool.takeConnection();
             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_LIB_COEFFICIENTS)) {
-            System.out.println("dao");
             statement.setString(1, String.valueOf(bookIssuingDaysNum));
             statement.setString(2, readingRoomOpening);
             statement.setString(3, readingRoomClosing);

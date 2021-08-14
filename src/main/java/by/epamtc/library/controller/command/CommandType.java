@@ -113,6 +113,9 @@ public enum CommandType {
     }},
     FIND_BOOKS_BY_KEYWORD{{
         this.command = new FindBooksByKeyword();
+    }},
+    DELETE_BOOK_REQUEST{{
+        this.command = new DeleteBookRequest();
     }};
 
     Command command;

@@ -51,11 +51,7 @@ public class BookRequestServiceImpl implements BookRequestService {
         if(bookRequestType == null)
             return false;
 
-        System.out.println(bookRequestType);
-
         boolean isToReadingRoom = bookRequestType.equals(BookRequestType.TO_READING_ROOM);
-
-        System.out.println(isToReadingRoom);
 
         try {
             if (requestOptional.isPresent()) {
@@ -66,23 +62,17 @@ public class BookRequestServiceImpl implements BookRequestService {
                     BookRequest request = requestOptional.get();
                     Book book = bookOptional.get();
 
-                    System.out.println(book);
-
                     if(!isToReadingRoom && Integer.parseInt(book.getAvailableQuantity()) <= 0)
                         return false;
 
                     request.setUser(reader);
                     request.setBook(book);
 
-                    System.out.println(request);
-
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
                     if(!isToReadingRoom && isRequestCreated){
                         bookDao.updateAvailableQuantity(bookId,
                                 Integer.parseInt(book.getAvailableQuantity()) - 1 );
                     }
-
-                    System.out.println(isRequestCreated);
 
                     return isRequestCreated;
                 }
@@ -115,19 +105,26 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public boolean closeBookRequest(long requestId, long bookId, BookRequestType requestType)
+    public boolean closeBookRequest(long requestId, long bookId, int bookQuantity, BookRequestType requestType)
             throws ServiceException {
         try {
             boolean isToReadingRoom = requestType.equals(BookRequestType.TO_READING_ROOM);
             boolean isRequestClosed = bookRequestDao.closeBookRequest(requestId);
 
-            int bookAvailableQuantity = bookDao.findBookQuantityById(bookId);
-
             if(!isToReadingRoom && isRequestClosed){
-                bookDao.updateAvailableQuantity(bookId,bookAvailableQuantity + 1 );
+                bookDao.updateAvailableQuantity(bookId,bookQuantity + 1 );
             }
 
             return isRequestClosed;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteBookRequest(long requestId) throws ServiceException {
+        try{
+            return bookRequestDao.deleteBookRequest(requestId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

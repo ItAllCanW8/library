@@ -19,15 +19,14 @@ public class ReturnBook implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         long requestId = Long.parseLong(req.getParameter(RequestParameter.REQUEST_ID));
         long bookId = Long.parseLong(req.getParameter(RequestParameter.BOOK_ID));
-//        int bookQuantity
-
-
+        int bookQuantity = Integer.parseInt(req.getParameter(RequestParameter.BOOK_QUANTITY));
         BookRequestType requestType = BookRequestType.fromString(req.getParameter(RequestParameter.BOOK_REQUEST_TYPE));
+
         CommandResult result = new CommandResult(CommandName.READER_BOOK_REQUESTS, CommandResult.Type.REDIRECT);
 
         BookRequestService service = BookRequestServiceImpl.getInstance();
         try {
-            if(!service.closeBookRequest(requestId, bookId, requestType))
+            if(!service.closeBookRequest(requestId, bookId, bookQuantity, requestType))
                 result = new CommandResult(PagePath.ERROR_PAGE, CommandResult.Type.FORWARD);
         } catch (ServiceException e) {
             throw new CommandException(e);

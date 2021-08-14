@@ -15,5 +15,6 @@ public interface BookRequestService {
     List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException;
     List<BookRequest> loadReadingRoomByReaderId(long readerId) throws ServiceException;
     boolean changeRequestState(long requestId, String newRequestStateStr) throws ServiceException;
-    boolean closeBookRequest(long requestId, long bookId, BookRequestType requestType) throws ServiceException;
+    boolean closeBookRequest(long requestId, long bookId, int bookQuantity, BookRequestType requestType) throws ServiceException;
+    boolean deleteBookRequest(long requestId) throws ServiceException;
 }

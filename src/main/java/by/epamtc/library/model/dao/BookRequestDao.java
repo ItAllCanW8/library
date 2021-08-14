@@ -13,4 +13,5 @@ public interface BookRequestDao {
     List<BookRequest> loadReadingRoomByReaderId(long readerId) throws DaoException;
     boolean changeRequestState(long requestId, String newRequestState) throws DaoException;
     boolean closeBookRequest(long requestId) throws DaoException;
+    boolean deleteBookRequest(long requestId) throws DaoException;
 }

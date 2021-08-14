@@ -42,8 +42,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
             statement.setLong(2, request.getUser().getId());
             ResultSet resultSet = statement.executeQuery();
 
-            System.out.println(statement);
-
             return resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error checking for book request existence.", e);
@@ -59,8 +57,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
             statement.setString(3, request.getRequestDate());
             statement.setLong(4, request.getBook().getId());
             statement.setLong(5, request.getUser().getId());
-
-            System.out.println(statement);
 
             statement.execute();
 
@@ -113,7 +109,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         List<BookRequest> requests = new ArrayList<>();
 
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_READING_ROOM_BY_READER_ID)) {
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.LOAD_READING_ROOM_BY_READER_ID)) {
             statement.setLong(1, readerId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -156,6 +152,20 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
         catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error closing book request with id = " + requestId, e);
+        }
+    }
+
+    @Override
+    public boolean deleteBookRequest(long requestId) throws DaoException {
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_BOOK_REQUEST)) {
+            statement.setLong(1, requestId);
+            statement.execute();
+
+            return statement.getUpdateCount() == 1;
+        }
+        catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error deleting book request with id = " + requestId, e);
         }
     }
 
