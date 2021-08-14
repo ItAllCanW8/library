@@ -51,7 +51,11 @@ public class BookRequestServiceImpl implements BookRequestService {
         if(bookRequestType == null)
             return false;
 
+        System.out.println(bookRequestType);
+
         boolean isToReadingRoom = bookRequestType.equals(BookRequestType.TO_READING_ROOM);
+
+        System.out.println(isToReadingRoom);
 
         try {
             if (requestOptional.isPresent()) {
@@ -62,17 +66,23 @@ public class BookRequestServiceImpl implements BookRequestService {
                     BookRequest request = requestOptional.get();
                     Book book = bookOptional.get();
 
+                    System.out.println(book);
+
                     if(!isToReadingRoom && Integer.parseInt(book.getAvailableQuantity()) <= 0)
                         return false;
 
                     request.setUser(reader);
                     request.setBook(book);
 
+                    System.out.println(request);
+
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
                     if(!isToReadingRoom && isRequestCreated){
                         bookDao.updateAvailableQuantity(bookId,
                                 Integer.parseInt(book.getAvailableQuantity()) - 1 );
                     }
+
+                    System.out.println(isRequestCreated);
 
                     return isRequestCreated;
                 }
@@ -127,6 +137,15 @@ public class BookRequestServiceImpl implements BookRequestService {
     public List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException {
         try {
             return bookRequestDao.loadBookRequestsByReaderId(readerId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<BookRequest> loadReadingRoomByReaderId(long readerId) throws ServiceException {
+        try {
+            return bookRequestDao.loadReadingRoomByReaderId(readerId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

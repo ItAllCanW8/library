@@ -42,7 +42,7 @@
                                 <ctg:out text="${user.username}"/></a></th>
                         <th scope="row">
                             <div>
-                                <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                                <img src="load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                                      alt="" style="max-height: 250px;max-width: 250px"></div>
                         </th>
                         <th scope="row"><ctg:out text="${user.role}"/><br>

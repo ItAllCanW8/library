@@ -40,21 +40,21 @@
                     </form>
                 </div>
 
-                <div class="col-2" style="display: flex;justify-content: center">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByDate"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <fmt:message key="button.sortByDate"/>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByDate">
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/sort_books_by_date.do?sortSequence=desc"><fmt:message
-                                    key="button.sortDesc"/> </a></li>
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/sort_books_by_date.do?sortSequence=asc"><fmt:message
-                                    key="button.sortAsc"/> </a></li>
-                        </ul>
-                    </div>
-                </div>
+<%--                <div class="col-2" style="display: flex;justify-content: center">--%>
+<%--                    <div class="dropdown">--%>
+<%--                        <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByDate"--%>
+<%--                                data-bs-toggle="dropdown"--%>
+<%--                                aria-expanded="false">--%>
+<%--                            <fmt:message key="button.sortByDate"/>--%>
+<%--                        </button>--%>
+<%--                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByDate">--%>
+<%--                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/sort_books_by_date.do?sortSequence=desc"><fmt:message--%>
+<%--                                    key="button.sortDesc"/> </a></li>--%>
+<%--                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/sort_books_by_date.do?sortSequence=asc"><fmt:message--%>
+<%--                                    key="button.sortAsc"/> </a></li>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
                 <div class="col-2" style="display: flex;justify-content: center">
                     <div class="dropdown">

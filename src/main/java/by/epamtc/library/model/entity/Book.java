@@ -37,6 +37,22 @@ public class Book implements Serializable {
         this.authorImg = authorImg;
     }
 
+    public Book(long bookId, String bookTitle, String bookImg, String bookPdf) {
+        this(bookTitle, bookImg, bookPdf);
+        this.id = bookId;
+    }
+
+    public Book(String bookTitle, String bookImg, String bookPdf) {
+        this.title = bookTitle;
+        this.img = bookImg;
+        this.pdf = bookPdf;
+    }
+
+    public Book(long bookId, String bookTitle, String bookImg, String bookPdf, String bookAvailableQuantity) {
+        this(bookId, bookTitle, bookImg, bookPdf);
+        this.availableQuantity = bookAvailableQuantity;
+    }
+
     public long getId() {
         return id;
     }

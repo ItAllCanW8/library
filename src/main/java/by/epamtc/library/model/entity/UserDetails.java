@@ -30,6 +30,10 @@ public class UserDetails implements Serializable {
         this.photoPath = photoPath;
     }
 
+    public UserDetails(String userPhoto) {
+        this.photoPath = userPhoto;
+    }
+
     public long getId() {
         return id;
     }

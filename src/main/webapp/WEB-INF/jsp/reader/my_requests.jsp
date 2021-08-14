@@ -42,9 +42,10 @@
                 <th scope="row">
                   <a href="load_book_info.do?bookId=${request.book.id}">
                     <div>
-                      <img src="${pageContext.request.contextPath}/load_book_cover.do?bookId=${request.book.id}" alt=""
+                      <img src="load_book_cover.do?fileName=${request.book.img}" alt=""
                            style="max-height: 250px;max-width: 250px">
                     </div>
+                    <ctg:out text="${request.book.title}"/>
                   </a>
                 </th>
                 <th scope="row"><ctg:out text="${request.type}"/></th>
@@ -64,11 +65,12 @@
                           aria-labelledby="actionDropDown">
                         <c:if test="${request.state.value.equals('approved')}">
                           <li><a class="dropdown-item"
-                                 href="view_pdf.do?bookId=${request.book.id}">
+                                 href="view_pdf.do?bookPdf=${request.book.pdf}">
                             <fmt:message key="button.read"/> </a></li>
                           <c:if test="${request.type.value.equals('for_subscription')}">
                             <li><a class="dropdown-item"
-                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&requestType=${request.type}">
+                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}
+                                   &bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                           <c:if test="${request.type.value.equals('to_reading_room')}">

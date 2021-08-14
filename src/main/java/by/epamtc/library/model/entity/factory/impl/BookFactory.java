@@ -11,7 +11,7 @@ import java.util.Optional;
 public class BookFactory implements LibraryFactory<Book> {
     public static final String DEFAULT_COVER = "default_book_cover.png";
     public static final String DEFAULT_AUTHOR_PHOTO = "default_author_photo.png";
-    public static final String DEFAULT_PDF = "default_book_pdf.pdf";
+    public static final String DEFAULT_PDF = "";
 
     private BookFactory() {
     }
@@ -24,16 +24,6 @@ public class BookFactory implements LibraryFactory<Book> {
         return BookFactory.Holder.INSTANCE;
     }
 
-//    public static LibraryFactory<Book> getInstance() {
-//        if (instance == null) {
-//            lock.lock();
-//            if (instance == null) {
-//                instance = new BookFactory();
-//            }
-//            lock.unlock();
-//        }
-//        return instance;
-//    }
     @Override
     public Optional<Book> create(Map<String, String> fields) {
         Optional<Book> result = Optional.empty();

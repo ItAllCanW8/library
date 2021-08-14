@@ -16,11 +16,13 @@ public class SqlQuery {
     public static final String FIND_USER_DETAILS_ID_BY_PHONE = "SELECT details_id FROM user_details WHERE" +
             " phone_number = ?;";
 
-    public static final String FIND_USER_BY_EMAIL = "SELECT * FROM users JOIN user_details ON details_id =" +
-            " details_id_fk JOIN user_roles ON role_id = role_id_fk WHERE email = ?;";
+    public static final String FIND_USER_BY_EMAIL = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
+            "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk " +
+            "JOIN user_roles ON role_id = role_id_fk WHERE email = ?;";
 
-    public static final String FIND_USER_BY_ID = "SELECT * FROM users JOIN user_details ON details_id =" +
-            " details_id_fk JOIN user_roles ON role_id = role_id_fk WHERE user_id = ?;";
+    public static final String FIND_USER_BY_ID = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
+            "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk JOIN" +
+            " user_roles ON role_id = role_id_fk WHERE user_id = ?;";
 
     public static final String SELECT_PASSWORD = "SELECT password FROM users WHERE email = ?;";
 
@@ -49,9 +51,10 @@ public class SqlQuery {
     public static final String UPDATE_PASSWORD= "UPDATE users SET password = ? WHERE user_id = ?;";
     public static final String UPDATE_USER_STATUS = "UPDATE users SET status = ? WHERE user_id = ?;";
     public static final String UPDATE_USER_ROLE = "UPDATE users SET role_id_fk = ? WHERE user_id = ?;";
-    public static final String SELECT_ALL_USERS = "SELECT * FROM users JOIN user_details ON details_id = details_id_fk" +
-            " JOIN user_roles ON role_id = role_id_fk;";
-    public static final String CHECK_BOOK_FOR_EXISTENCE = "SELECT * FROM books WHERE title = ?;";
+    public static final String SELECT_ALL_USERS = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
+            "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk " +
+            "JOIN user_roles ON role_id = role_id_fk;";
+    public static final String CHECK_BOOK_FOR_EXISTENCE = "SELECT title FROM books WHERE title = ?;";
     public static final String INSERT_BOOK = "INSERT INTO books(title, author_pseudo, isbn, available_quantity," +
             " genre, short_description, pdf, img, author_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK = "UPDATE books SET title = ?, author_pseudo = ?, isbn = ?," +
@@ -66,8 +69,15 @@ public class SqlQuery {
     public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
-    public static final String SELECT_BOOK_REQUESTS = "SELECT * FROM book_requests;";
-    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT * FROM book_requests JOIN books ON " +
+    public static final String SELECT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,closing_date, " +
+            "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests JOIN users ON user_id = user_id_fk " +
+            "JOIN user_details ON details_id = details_id_fk JOIN books ON book_id = book_id_fk;";
+
+    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT request_id,request_type,state,request_date,closing_date," +
+            "penalty_amount,book_id_fk,title,img,pdf,available_quantity FROM book_requests JOIN books ON " +
+            "book_id = book_id_fk WHERE user_id_fk = ?;";
+
+    public static final String SELECT_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ?;";
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
     public static final String CLOSE_BOOK_REQUEST = "UPDATE book_requests SET state = 'closed', closing_date = ?" +

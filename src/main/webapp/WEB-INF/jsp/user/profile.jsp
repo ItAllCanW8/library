@@ -34,7 +34,7 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                        <img src="load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                              alt=""/>
                     </div>
                     <c:if test="${sessionScope.userId.equals(user.id)}">

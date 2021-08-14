@@ -32,20 +32,10 @@ public class ReadingRoom implements Command {
         BookRequestService bookRequestService = BookRequestServiceImpl.getInstance();
         CommandResult result = new CommandResult(PagePath.READING_ROOM, CommandResult.Type.FORWARD);
         try {
-            List<BookRequest> bookRequests = bookRequestService.loadBookRequestsByReaderId(readerId);;
+            List<BookRequest> bookRequests = bookRequestService.loadReadingRoomByReaderId(readerId);
+
             if (bookRequests.size() > 0) {
-                BookService bookService = BookServiceImpl.getInstance();
-                List<Book> books = new ArrayList<>(bookRequests.size());
-
-                for (BookRequest bookRequest : bookRequests) {
-                    if(bookRequest.getState() != BookRequestState.CLOSED ) {
-                        Optional<Book> bookOptional = bookService.findBookById(bookRequest.getBook().getId());
-
-                        if (bookOptional.isPresent())
-                            books.add(bookOptional.get());
-                    }
-                }
-                req.setAttribute(RequestParameter.BOOKS, books);
+                req.setAttribute(RequestParameter.BOOK_REQUESTS, bookRequests);
             } else {
                 req.setAttribute(JspAttribute.NO_BOOK_REQUESTS, JspAttribute.NO_BOOK_REQUESTS_MSG);
             }

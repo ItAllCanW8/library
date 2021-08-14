@@ -25,29 +25,37 @@
             <table id="booksTable" class="table table-dark table-bordered border-secondary">
                 <thead>
                 <tr>
-                    <th scope="col"><fmt:message key="librarian.reader"/> id</th>
+                    <th scope="col"><fmt:message key="librarian.reader"/></th>
                     <th scope="col"><fmt:message key="librarian.book"/></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Request date</th>
-                    <th scope="col">Closing date</th>
-                    <th scope="col">Penalty amount</th>
-                    <th scope="col">Action</th>
+                    <th scope="col"><fmt:message key="request.type"/></th>
+                    <th scope="col"><fmt:message key="request.state"/></th>
+                    <th scope="col"><fmt:message key="request.date"/></th>
+                    <th scope="col"><fmt:message key="request.closingDate"/></th>
+                    <th scope="col"><fmt:message key="request.penalty"/></th>
+                    <th scope="col"><fmt:message key="button.action"/></th>
                 </tr>
                 </thead>
 
                 <tbody>
                     <c:forEach var="request" items="${bookRequests}">
-                        <c:if test="${!request.type.value.equals('to_reading_room')}">
+<%--                        <c:if test="${!request.type.value.equals('to_reading_room')}">--%>
                             <tr class="table-secondary">
-                                <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${request.user.id}"/>">
-                                    <ctg:out text="${request.user.id}"/></a></th>
+                                <th scope="row">
+                                    <a href="load_user_profile.do?userId=${request.user.id}">
+                                        <div>
+                                            <img src="load_profile_photo.do?fileName=${request.user.userDetails.photoPath}" alt=""
+                                                 style="max-height: 250px;max-width: 250px">
+                                        </div>
+                                        <ctg:out text="${request.user.username}"/>
+                                    </a>
+                                </th>
                                 <th scope="row">
                                     <a href="<c:url value="load_book_info.do?bookId=${request.book.id}"/>">
                                         <div>
-                                            <img src="${pageContext.request.contextPath}/load_book_cover.do?bookId=${request.book.id}" alt=""
+                                            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.book.img}" alt=""
                                                  style="max-height: 250px;max-width: 250px">
                                         </div>
+                                        <ctg:out text="${request.book.title}"/>
                                     </a>
                                 </th>
                                 <th scope="row"><ctg:out text="${request.type}"/></th>
@@ -77,7 +85,7 @@
                                     </c:if>
                                 </th>
                             <tr>
-                        </c:if>
+<%--                        </c:if>--%>
                     </c:forEach>
                 </tbody>
             </table>

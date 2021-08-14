@@ -93,8 +93,8 @@ public class ConnectionPool {
 
     public void releaseConnection(Connection connection) throws ConnectionPoolException {
         if (connection != null) {
-            occupiedConnections.remove(connection);
             try {
+                occupiedConnections.remove(connection);
                 freePool.put((ProxyConnection) connection);
             } catch (InterruptedException e) {
                 LOGGER.log(Level.ERROR,"Error releasing connection.", e);

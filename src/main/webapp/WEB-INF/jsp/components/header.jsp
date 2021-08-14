@@ -142,7 +142,7 @@
                                         key="header.logout"/></a></li>
                             </ul>
                         </li>
-                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                        <img src="load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                              width="64" height="64"
                              class="rounded-circle avatar" alt="" style="margin-top: 20px">
                     </c:if>

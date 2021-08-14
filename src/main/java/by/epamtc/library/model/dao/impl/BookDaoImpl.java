@@ -271,7 +271,7 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    private Book createBookFromResultSet(ResultSet resultSet) throws SQLException, DaoException {
+    private Book createBookFromResultSet(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong(bookIdCol);
         String title = resultSet.getString(bookTitleCol);
         String author_pseudo = resultSet.getString(bookAuthorCol);

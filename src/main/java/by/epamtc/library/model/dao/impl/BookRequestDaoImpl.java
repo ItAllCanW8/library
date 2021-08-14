@@ -41,6 +41,9 @@ public class BookRequestDaoImpl implements BookRequestDao {
             statement.setLong(1, request.getBook().getId());
             statement.setLong(2, request.getUser().getId());
             ResultSet resultSet = statement.executeQuery();
+
+            System.out.println(statement);
+
             return resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error checking for book request existence.", e);
@@ -56,6 +59,8 @@ public class BookRequestDaoImpl implements BookRequestDao {
             statement.setString(3, request.getRequestDate());
             statement.setLong(4, request.getBook().getId());
             statement.setLong(5, request.getUser().getId());
+
+            System.out.println(statement);
 
             statement.execute();
 
@@ -74,9 +79,8 @@ public class BookRequestDaoImpl implements BookRequestDao {
             ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_BOOK_REQUESTS);
 
             while (resultSet.next()) {
-                requests.add(createRequestFromResultSet(resultSet));
+                requests.add(createRequestFromResultSet(resultSet, true));
             }
-
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error loading book requests.", e);
         }
@@ -94,11 +98,32 @@ public class BookRequestDaoImpl implements BookRequestDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                requests.add(createRequestFromResultSet(resultSet));
+                requests.add(createRequestFromResultSet(resultSet, false));
             }
 
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error loading book requests by reader id.", e);
+            throw new DaoException("Error loading book requests by reader id " + readerId, e);
+        }
+
+        return requests;
+    }
+
+    @Override
+    public List<BookRequest> loadReadingRoomByReaderId(long readerId) throws DaoException {
+        List<BookRequest> requests = new ArrayList<>();
+
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_READING_ROOM_BY_READER_ID)) {
+            statement.setLong(1, readerId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                requests.add(new BookRequest(new Book(resultSet.getString("title"),
+                        resultSet.getString("img"), resultSet.getString("pdf"))));
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading reading room by reader id " + readerId, e);
         }
 
         return requests;
@@ -134,7 +159,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
     }
 
-    private BookRequest createRequestFromResultSet(ResultSet resultSet) throws SQLException {
+    private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean isReqFromLibrarian) throws SQLException {
         long requestId = resultSet.getLong(bookReqId);
         BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqType));
         BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSate));
@@ -143,9 +168,22 @@ public class BookRequestDaoImpl implements BookRequestDao {
         int penaltyAmount = resultSet.getInt(bookReqPenaltyAmount);
 
         long bookId = resultSet.getLong(bookReqBookId);
-        long userId = resultSet.getLong(bookReqUserId);
+        String bookTitle = resultSet.getString("title");
+        String bookImg = resultSet.getString("img");
+        String bookPdf= resultSet.getString("pdf");
 
-        return new BookRequest(requestId, requestType, requestState, requestDate, closingDate,
-                penaltyAmount, new Book(bookId), new User(userId));
+        if(isReqFromLibrarian){
+            long userId = resultSet.getLong(bookReqUserId);
+            String username = resultSet.getString("username");
+            String userPhoto = resultSet.getString("photo_path");
+
+            return new BookRequest(requestId,requestType, requestState, requestDate, closingDate,
+                    penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
+        } else {
+            String bookAvailableQuantity = resultSet.getString("available_quantity");
+
+            return new BookRequest(requestId, requestType, requestState, requestDate, closingDate,
+                    penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
+        }
     }
 }

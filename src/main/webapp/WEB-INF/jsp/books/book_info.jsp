@@ -90,9 +90,11 @@
                 <fmt:message key="button.edit"/>
               </button>
               <hr style="width:100%;text-align:left;margin-left:0">
-              <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${request.pdf}" role="button">
-                <fmt:message key="button.read"/>
-              </a>
+              <c:if test="${!request.pdf.equals('')}">
+                <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${request.pdf}" role="button">
+                  <fmt:message key="button.read"/>
+                </a>
+              </c:if>
               <a class="btn btn-secondary" href="delete_book.do?bookId=${request.id}" role="button">
                 <fmt:message key="button.delete"/>
               </a>

@@ -21,15 +21,23 @@ public class BookRequest implements Serializable {
         this.requestDate = requestDate;
     }
 
-    public BookRequest(long requestId, BookRequestType type, BookRequestState state, String requestDate, String closingDate, int penaltyAmount, Book book, User user) {
-        this.id = requestId;
-        this.type = type;
-        this.state = state;
-        this.requestDate = requestDate;
+    public BookRequest( long id, BookRequestType type, BookRequestState state, String requestDate, String closingDate,
+                        int penaltyAmount, Book book, User user) {
+        this(id, type, state, requestDate, closingDate, penaltyAmount, book);
+        this.user = user;
+    }
+
+    public BookRequest(Book book) {
+        this.book = book;
+    }
+
+    public BookRequest(long id, BookRequestType requestType, BookRequestState requestState, String requestDate, String closingDate,
+                       int penaltyAmount, Book book) {
+        this(requestType, requestState, requestDate);
+        this.id = id;
         this.closingDate = closingDate;
         this.penaltyAmount = penaltyAmount;
         this.book = book;
-        this.user = user;
     }
 
     public long getId() {
