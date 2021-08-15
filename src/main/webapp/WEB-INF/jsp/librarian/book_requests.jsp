@@ -37,31 +37,31 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="request" items="${bookRequests}">
+                    <c:forEach var="book" items="${bookRequests}">
                         <tr class="table-secondary">
                             <th scope="row">
-                                <a href="load_user_profile.do?userId=${request.user.id}">
+                                <a href="load_user_profile.do?userId=${book.user.id}">
                                     <div>
-                                        <img src="load_profile_photo.do?fileName=${request.user.userDetails.photoPath}" alt=""
+                                        <img src="load_profile_photo.do?fileName=${book.user.userDetails.photoPath}" alt=""
                                              style="max-height: 250px;max-width: 250px">
                                     </div>
-                                    <ctg:out text="${request.user.username}"/>
+                                    <ctg:out text="${book.user.username}"/>
                                 </a>
                             </th>
                             <th scope="row">
-                                <a href="<c:url value="load_book_info.do?bookId=${request.book.id}"/>">
+                                <a href="<c:url value="load_book_info.do?bookId=${book.book.id}"/>">
                                     <div>
-                                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.book.img}" alt=""
+                                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.book.img}" alt=""
                                              style="max-height: 250px;max-width: 250px">
                                     </div>
-                                    <ctg:out text="${request.book.title}"/>
+                                    <ctg:out text="${book.book.title}"/>
                                 </a>
                             </th>
-                            <th scope="row"><ctg:out text="${request.type}"/></th>
-                            <th scope="row"><ctg:out text="${request.state}"/></th>
-                            <th scope="row"><ctg:out text="${request.requestDate}"/></th>
-                            <th scope="row"><ctg:out text="${request.closingDate}"/></th>
-                            <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
+                            <th scope="row"><ctg:out text="${book.type}"/></th>
+                            <th scope="row"><ctg:out text="${book.state}"/></th>
+                            <th scope="row"><ctg:out text="${book.requestDate}"/></th>
+                            <th scope="row"><ctg:out text="${book.closingDate}"/></th>
+                            <th scope="row"><ctg:out text="${book.penaltyAmount}"/></th>
                             <th scope="row">
                                 <div class="dropdown col-8 mb-4">
                                     <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
@@ -72,19 +72,19 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                                         aria-labelledby="actionDropDown">
-                                        <c:if test="${request.state.value.equals('left')}">
+                                        <c:if test="${book.state.value.equals('left')}">
 
                                                 <li><a class="dropdown-item"
-                                                       href="change_book_request_state.do?requestId=${request.id}&requestState=approved">
+                                                       href="change_book_request_state.do?requestId=${book.id}&requestState=approved">
                                                     <fmt:message key="button.approve"/> </a></li>
                                                 <li><a class="dropdown-item"
-                                                       href="change_book_request_state.do?requestId=${request.id}&requestState=denied">
+                                                       href="change_book_request_state.do?requestId=${book.id}&requestState=denied">
                                                     <fmt:message key="button.deny"/> </a></li>
 
                                         </c:if>
-                                        <c:if test="${request.state.value.equals('closed') || request.state.value.equals('denied')}">
+                                        <c:if test="${book.state.value.equals('closed') || book.state.value.equals('denied')}">
                                             <li><a class="dropdown-item"
-                                                   href="delete_book_request.do?requestId=${request.id}">
+                                                   href="delete_book_request.do?requestId=${book.id}">
                                                 <fmt:message key="button.delete"/> </a></li>
                                         </c:if>
                                     </ul>

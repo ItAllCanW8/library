@@ -10,7 +10,9 @@ import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookFactory;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.validation.BookValidator;
+import by.epamtc.library.util.SortingHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,6 +55,21 @@ public class BookServiceImpl implements BookService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<Book> sort(String sortingField, String sortingOrder) throws ServiceException {
+        try {
+            SortingHelper.SortingColumn sortingColumn = SortingHelper.SortingColumn.fromString(sortingField);
+            SortingHelper.SortingOrderType sortingOrderType = SortingHelper.SortingOrderType.fromString(sortingOrder);
+
+            if(sortingColumn != null && sortingOrderType != null)
+                return bookDao.sort(sortingColumn, sortingOrderType);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
+        return new ArrayList<>(0);
     }
 
     @Override
@@ -158,6 +175,15 @@ public class BookServiceImpl implements BookService {
     public boolean deleteBook(long bookId) throws ServiceException {
         try {
             return (bookDao.deleteBook(bookId));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateAvailableQuantity(long bookId, short newQuantity) throws ServiceException {
+        try {
+            return (bookDao.updateAvailableQuantity(bookId, newQuantity));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

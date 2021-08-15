@@ -12,6 +12,7 @@ public interface BookService {
     boolean addBook(Map<String, String> fields) throws ServiceException;
     List<Book> loadPopularBooks() throws ServiceException;
     List<Book> loadBooks() throws ServiceException;
+    List<Book> sort(String sortingField, String sortingOrder) throws ServiceException;
     Optional<Book> findBookById(long bookId) throws ServiceException;
     Optional<String> findBookCoverById(long bookId) throws ServiceException;
     Optional<String> findBookPdfById(long bookId) throws ServiceException;
@@ -22,5 +23,5 @@ public interface BookService {
     boolean isTitleAvailable(String title) throws ServiceException;
     boolean updateBook(long bookId, Map<String, String> newFields) throws ServiceException;
     boolean deleteBook(long bookId) throws ServiceException;
-
+    boolean updateAvailableQuantity(long bookId, short newQuantity) throws ServiceException;
 }

@@ -18,12 +18,6 @@ public class Book implements Serializable {
 
     public Book(long id){this.id = id;}
 
-    public Book(long id, String title, String authorPseudo, String isbn, short availableQuantity, String genre,
-                String shortDescription, String pdf, String img, String authorImg) {
-        this(title, authorPseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg);
-        this.id = id;
-    }
-
     public Book(String title, String authorPseudo, String isbn, short availableQuantity, String genre,
                 String shortDescription, String pdf, String img, String authorImg) {
         this.title = title;
@@ -36,6 +30,16 @@ public class Book implements Serializable {
         this.img = img;
         this.authorImg = authorImg;
     }
+    public Book(long id, String title, String authorPseudo, String isbn, short availableQuantity, String genre,
+                String img, String authorImg) {
+        this(id,title,img);
+        this.authorPseudo = authorPseudo;
+        this.isbn = isbn;
+        this.availableQuantity = availableQuantity;
+        this.genre = genre;
+        this.authorImg = authorImg;
+    }
+
 
     public Book(long bookId, String bookTitle, String bookImg, String bookPdf) {
         this(bookTitle, bookImg, bookPdf);
@@ -51,6 +55,12 @@ public class Book implements Serializable {
     public Book(long bookId, String bookTitle, String bookImg, String bookPdf, short bookAvailableQuantity) {
         this(bookId, bookTitle, bookImg, bookPdf);
         this.availableQuantity = bookAvailableQuantity;
+    }
+
+    public Book(long bookId, String bookTitle, String bookImg) {
+        this(bookId);
+        this.title = bookTitle;
+        this.img = bookImg;
     }
 
     public long getId() {

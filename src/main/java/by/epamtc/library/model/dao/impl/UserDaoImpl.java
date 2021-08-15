@@ -21,7 +21,6 @@ public class UserDaoImpl implements UserDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
     private static final String INVALID_ROLE_ERROR_MSG = "Invalid user role.";
-    private static final String INVALID_DETAILS_ERROR_MSG = "Invalid user details.";
 
     public UserDaoImpl() {
     }
@@ -95,7 +94,7 @@ public class UserDaoImpl implements UserDao {
                     insertUserSt.setString(4, user.getStatus().getValue());
 
                     insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber(), connection).
-                            orElseThrow(() -> new DaoException(INVALID_DETAILS_ERROR_MSG)));
+                            orElseThrow(() -> new DaoException("Error adding user. Invalid user details.")));
                     insertUserSt.setLong(6, findRoleId(user.getRole(), connection).
                             orElseThrow(() -> new DaoException(INVALID_ROLE_ERROR_MSG)));
 

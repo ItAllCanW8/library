@@ -21,8 +21,16 @@ import java.util.List;
 public class Home implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-//        BookService service = BookServiceImpl.getInstance();
-        BookService service = ServiceFactory.getInstance().getBookService();
+        BookService service = null;
+        try{
+            service = ServiceFactory.getInstance().getBookService();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+
+
+
         try {
             List<Book> books = service.loadPopularBooks();
             if (books.size() > 0) {

@@ -64,10 +64,13 @@
                             <fmt:message key="button.sortByQuantity"/>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByQuantity">
-                            <li><a class="dropdown-item" href="$sort_books_by_quantity.do?sortSequence=desc"><fmt:message
-                                    key="button.sortDesc"/> </a></li>
-                            <li><a class="dropdown-item" href="$sort_books_by_quantity.do?sortSequence=asc"><fmt:message
-                                    key="button.sortAsc"/> </a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=books&sortingField=available_quantity&sortingOrder=desc">
+                                <fmt:message key="button.sortDesc"/>
+                            </a></li>
+                            <li><a class="dropdown-item"
+                                   href=${pageContext.request.contextPath}/sort_records.do?sortingObject=books&sortingField=available_quantity&sortingOrder=asc">
+                                <fmt:message key="button.sortAsc"/> </a></li>
                         </ul>
                     </div>
                 </div>
@@ -78,8 +81,7 @@
             <table id="booksTable" class="table table-dark table-bordered border-secondary">
                 <thead>
                 <tr>
-                    <th scope="col"><fmt:message key="books.title"/></th>
-                    <th scope="col"><fmt:message key="books.cover"/></th>
+                    <th scope="col"><fmt:message key="librarian.book"/></th>
                     <th scope="col"><fmt:message key="books.author"/></th>
                     <th scope="col"><fmt:message key="books.genre"/></th>
                     <th scope="col">ISBN</th>
@@ -88,17 +90,27 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="request" items="${books}">
+                    <c:forEach var="book" items="${books}">
                         <tr class="table-secondary">
-                            <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${request.id}"/>">
-                                    ${request.title}</a></th>
-                            <th scope="row"><div>
-                                <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt=""
-                                     style="max-height: 250px;max-width: 250px"></div></th>
-                            <th scope="row">${request.authorPseudo}</th>
-                            <th scope="row">${request.genre}</th>
-                            <th scope="row">${request.isbn}</th>
-                            <th scope="row">${request.availableQuantity}</th>
+                            <th scope="row">
+                                <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${book.id}">
+                                    <div>
+                                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}"
+                                             alt="" style="max-height: 250px;max-width: 250px">
+                                    </div>
+                                    <ctg:out text="${book.title}"/>
+                                </a>
+                            </th>
+                            <th scope="row">
+                                <div>
+                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}"
+                                         alt="" style="max-height: 250px;max-width: 250px">
+                                </div>
+                                <ctg:out text="${book.authorPseudo}"/>
+                            </th>
+                            <th scope="row"><ctg:out text="${book.genre}"/>}</th>
+                            <th scope="row"><ctg:out text="${book.isbn}"/></th>
+                            <th scope="row"><ctg:out text="${book.availableQuantity}"/></th>
                         <tr>
                     </c:forEach>
                 </tbody>

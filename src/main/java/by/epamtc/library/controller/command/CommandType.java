@@ -116,6 +116,9 @@ public enum CommandType {
     }},
     DELETE_BOOK_REQUEST{{
         this.command = new DeleteBookRequest();
+    }},
+    SORT_RECORDS {{
+        this.command = new SortRecords();
     }};
 
     Command command;

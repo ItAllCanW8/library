@@ -37,19 +37,19 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="request" items="${books}">
+                    <c:forEach var="book" items="${books}">
                         <tr class="table-secondary">
-                            <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${request.id}"/>">
-                                <ctg:out text="${request.title}"/></a></th>
+                            <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${book.id}"/>">
+                                <ctg:out text="${book.title}"/></a></th>
                             <th scope="row">
                                 <div>
-                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt=""
+                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt=""
                                          style="max-height: 250px;max-width: 250px"></div>
                             </th>
-                            <th scope="row"><ctg:out text="${request.authorPseudo}"/></th>
-                            <th scope="row"><ctg:out text="${request.genre}"/></th>
-                            <th scope="row"><ctg:out text="${request.isbn}"/></th>
-                            <th scope="row"><ctg:out text="${request.availableQuantity}"/></th>
+                            <th scope="row"><ctg:out text="${book.authorPseudo}"/></th>
+                            <th scope="row"><ctg:out text="${book.genre}"/></th>
+                            <th scope="row"><ctg:out text="${book.isbn}"/></th>
+                            <th scope="row"><ctg:out text="${book.availableQuantity}"/></th>
                         <tr>
                     </c:forEach>
                 </tbody>

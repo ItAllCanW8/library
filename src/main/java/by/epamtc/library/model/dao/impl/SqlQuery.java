@@ -26,13 +26,19 @@ public class SqlQuery {
 
     public static final String SELECT_PASSWORD = "SELECT password FROM users WHERE email = ?;";
 
-    public static final String SELECT_POPULAR_BOOKS = "SELECT * FROM books ORDER BY available_quantity ASC LIMIT 6;";
+    public static final String SELECT_POPULAR_BOOKS = "SELECT book_id,title,img FROM books ORDER BY available_quantity " +
+            "ASC LIMIT 6;";
 
-    public static final String SELECT_BOOKS = "SELECT * FROM books;";
+    public static final String SELECT_BOOKS = "SELECT book_id,title,img,author_pseudo,genre,isbn,available_quantity," +
+            "author_img FROM books ORDER BY available_quantity DESC;";
+
+    public static final String SORT_BOOKS = "SELECT book_id,title,img,author_pseudo,genre,isbn,available_quantity," +
+            "author_img FROM books ORDER BY ?;";
 
     public static final String FIND_BOOK_BY_ID = "SELECT * FROM books WHERE book_id = ?;";
 
-    public static final String FIND_BOOKS_BY_KEYWORD = "SELECT * FROM books WHERE title LIKE ? OR author_pseudo LIKE ? " +
+    public static final String FIND_BOOKS_BY_KEYWORD = "SELECT book_id,title,img,author_pseudo,genre,isbn," +
+            "available_quantity,author_img FROM books WHERE title LIKE ? OR author_pseudo LIKE ? " +
             "OR isbn LIKE ? OR genre LIKE ? OR available_quantity LIKE ?;";
 
     public static final String FIND_BOOK_COVER_BY_ID = "SELECT img FROM books WHERE book_id = ?;";

@@ -36,23 +36,23 @@
         </thead>
 
         <tbody>
-          <c:forEach var="request" items="${bookRequests}">
-            <c:if test="${!request.state.value.equals('closed')}">
+          <c:forEach var="book" items="${bookRequests}">
+            <c:if test="${!book.state.value.equals('closed')}">
               <tr class="table-secondary">
                 <th scope="row">
-                  <a href="load_book_info.do?bookId=${request.book.id}">
+                  <a href="load_book_info.do?bookId=${book.book.id}">
                     <div>
-                      <img src="load_book_cover.do?fileName=${request.book.img}" alt=""
+                      <img src="load_book_cover.do?fileName=${book.book.img}" alt=""
                            style="max-height: 250px;max-width: 250px">
                     </div>
-                    <ctg:out text="${request.book.title}"/>
+                    <ctg:out text="${book.book.title}"/>
                   </a>
                 </th>
-                <th scope="row"><ctg:out text="${request.type}"/></th>
-                <th scope="row"><ctg:out text="${request.state}"/></th>
-                <th scope="row"><ctg:out text="${request.requestDate}"/></th>
-                <th scope="row"><ctg:out text="${request.closingDate}"/></th>
-                <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
+                <th scope="row"><ctg:out text="${book.type}"/></th>
+                <th scope="row"><ctg:out text="${book.state}"/></th>
+                <th scope="row"><ctg:out text="${book.requestDate}"/></th>
+                <th scope="row"><ctg:out text="${book.closingDate}"/></th>
+                <th scope="row"><ctg:out text="${book.penaltyAmount}"/></th>
                 <th scope="row">
                     <div class="dropdown col-8 mb-4">
                       <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
@@ -63,18 +63,18 @@
                       </button>
                       <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                           aria-labelledby="actionDropDown">
-                        <c:if test="${request.state.value.equals('approved')}">
+                        <c:if test="${book.state.value.equals('approved')}">
                           <li><a class="dropdown-item"
-                                 href="view_pdf.do?bookPdf=${request.book.pdf}">
+                                 href="view_pdf.do?bookPdf=${book.book.pdf}">
                             <fmt:message key="button.read"/> </a></li>
-                          <c:if test="${request.type.value.equals('for_subscription')}">
+                          <c:if test="${book.type.value.equals('for_subscription')}">
                             <li><a class="dropdown-item"
-                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="return_book.do?requestId=${book.id}&bookId=${book.book.id}&bookQuantity=${book.book.availableQuantity}&requestType=${book.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
-                          <c:if test="${request.type.value.equals('to_reading_room')}">
+                          <c:if test="${book.type.value.equals('to_reading_room')}">
                             <li><a class="dropdown-item"
-                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="return_book.do?requestId=${book.id}&bookId=${book.book.id}&bookQuantity=${book.book.availableQuantity}&requestType=${book.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                         </c:if>

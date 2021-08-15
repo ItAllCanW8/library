@@ -5,6 +5,7 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.entity.Book;
+import by.epamtc.library.util.SortingHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,7 +62,8 @@ public class BookDaoImpl implements BookDao {
              Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_POPULAR_BOOKS);
             while (resultSet.next()) {
-                books.add(createBookFromResultSet(resultSet));
+                books.add(new Book(resultSet.getLong(bookIdCol), resultSet.getString(bookTitleCol),
+                        resultSet.getString(bookImgCol)));
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
@@ -78,7 +80,7 @@ public class BookDaoImpl implements BookDao {
             ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_BOOKS);
 
             while (resultSet.next()) {
-                books.add(createBookFromResultSet(resultSet));
+                books.add(createBookFromResultSet(resultSet, false));
             }
 
         } catch (SQLException | ConnectionPoolException e) {
@@ -89,13 +91,32 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> sort(SortingHelper.SortingColumn sortingColumn, SortingHelper.SortingOrderType sortingOrderType)
+            throws DaoException {
+        List<Book> books = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SORT_BOOKS)) {
+            statement.setString(1, sortingColumn.getValue() + " " + sortingOrderType.getValue());
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                books.add(new Book(resultSet.getLong(bookIdCol), resultSet.getString(bookTitleCol),
+                        resultSet.getString(bookImgCol)));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+        return books;
+    }
+
+    @Override
     public Optional<Book> findBookById(long bookId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_BY_ID)) {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
 
-            return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet)) : Optional.empty());
+            return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet, true)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
         }
@@ -142,7 +163,7 @@ public class BookDaoImpl implements BookDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next())
-                books.add(createBookFromResultSet(resultSet));
+                books.add(createBookFromResultSet(resultSet, false));
 
             return books;
         } catch (SQLException | ConnectionPoolException e) {
@@ -235,7 +256,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public boolean updateAvailableQuantity(long bookId, int newQuantity) throws DaoException {
+    public boolean updateAvailableQuantity(long bookId, short newQuantity) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_QUANTITY)) {
             statement.setString(1, String.valueOf(newQuantity));
@@ -263,18 +284,23 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    private Book createBookFromResultSet(ResultSet resultSet) throws SQLException {
+    private Book createBookFromResultSet(ResultSet resultSet, boolean isDescAndPdfPresent) throws SQLException {
         long id = resultSet.getLong(bookIdCol);
         String title = resultSet.getString(bookTitleCol);
         String author_pseudo = resultSet.getString(bookAuthorCol);
         String isbn = resultSet.getString(bookIsbnCol);
         String genre = resultSet.getString(bookGenreCol);
-        String shortDescription = resultSet.getString(bookDescCol);
-        String pdf = resultSet.getString(bookPdfCol);
         String img = resultSet.getString(bookImgCol);
         String authorImg = resultSet.getString(bookAuthorImgCol);
         short availableQuantity = resultSet.getShort(bookQuantityCol);
 
-        return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg));
+        Book book = new Book(id, title, author_pseudo, isbn, availableQuantity, genre, img, authorImg);
+
+        if(isDescAndPdfPresent){
+            book.setPdf(resultSet.getString(bookPdfCol));
+            book.setShortDescription(resultSet.getString(bookDescCol));
+        }
+
+        return book;
     }
 }
