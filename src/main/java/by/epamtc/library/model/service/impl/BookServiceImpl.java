@@ -5,7 +5,6 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.factory.DaoFactory;
-import by.epamtc.library.model.dao.impl.BookDaoImpl;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookFactory;
@@ -178,7 +177,7 @@ public class BookServiceImpl implements BookService {
         String newTitle = fields.get(RequestParameter.BOOK_TITLE);
         String newAuthor = fields.get(RequestParameter.BOOK_AUTHOR);
         String newIsbn = fields.get(RequestParameter.BOOK_ISBN);
-        String newQuantity = fields.get(RequestParameter.BOOK_QUANTITY);
+        short newQuantity = Short.parseShort(fields.get(RequestParameter.BOOK_QUANTITY));
         String newGenre = fields.get(RequestParameter.BOOK_GENRE);
         String newDescription = fields.get(RequestParameter.BOOK_DESCRIPTION);
 

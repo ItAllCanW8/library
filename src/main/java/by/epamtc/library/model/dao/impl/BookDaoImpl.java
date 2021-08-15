@@ -39,7 +39,7 @@ public class BookDaoImpl implements BookDao {
             statement.setString(1, book.getTitle());
             statement.setString(2, book.getAuthorPseudo());
             statement.setString(3, book.getIsbn());
-            statement.setString(4, book.getAvailableQuantity());
+            statement.setInt(4, book.getAvailableQuantity());
             statement.setString(5, book.getGenre());
             statement.setString(6, book.getShortDescription());
             statement.setString(7, book.getPdf());
@@ -157,7 +157,7 @@ public class BookDaoImpl implements BookDao {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
 
-            return resultSet.next() ? resultSet.getInt(bookQuantityCol) : -1;
+            return resultSet.next() ? resultSet.getShort(bookQuantityCol) : -1;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error finding book quantity by id " + bookId, e);
         }
@@ -194,7 +194,7 @@ public class BookDaoImpl implements BookDao {
             statement.setString(1, book.getTitle());
             statement.setString(2, book.getAuthorPseudo());
             statement.setString(3, book.getIsbn());
-            statement.setString(4, book.getAvailableQuantity());
+            statement.setInt(4, book.getAvailableQuantity());
             statement.setString(5, book.getGenre());
             statement.setString(6, book.getShortDescription());
             statement.setLong(7, book.getId());
@@ -273,7 +273,7 @@ public class BookDaoImpl implements BookDao {
         String pdf = resultSet.getString(bookPdfCol);
         String img = resultSet.getString(bookImgCol);
         String authorImg = resultSet.getString(bookAuthorImgCol);
-        String availableQuantity = resultSet.getString(bookQuantityCol);
+        short availableQuantity = resultSet.getShort(bookQuantityCol);
 
         return (new Book(id, title, author_pseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg));
     }

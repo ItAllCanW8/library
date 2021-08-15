@@ -183,7 +183,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
             return new BookRequest(requestId,requestType, requestState, requestDate, closingDate,
                     penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
         } else {
-            String bookAvailableQuantity = resultSet.getString("available_quantity");
+            short bookAvailableQuantity = resultSet.getShort("available_quantity");
 
             return new BookRequest(requestId, requestType, requestState, requestDate, closingDate,
                     penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));

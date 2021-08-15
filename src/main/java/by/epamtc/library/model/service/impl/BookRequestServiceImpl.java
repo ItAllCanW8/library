@@ -20,7 +20,6 @@ public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = DaoFactory.getInstance().getBookRequestDao();
     private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
-//    private static final BookService bookService = BookServiceImpl.getInstance();
 
     public
     BookRequestServiceImpl() {
@@ -54,7 +53,7 @@ public class BookRequestServiceImpl implements BookRequestService {
                     BookRequest request = requestOptional.get();
                     Book book = bookOptional.get();
 
-                    if(!isToReadingRoom && Integer.parseInt(book.getAvailableQuantity()) <= 0)
+                    if(!isToReadingRoom && book.getAvailableQuantity() <= 0)
                         return false;
 
                     request.setUser(reader);
@@ -62,8 +61,7 @@ public class BookRequestServiceImpl implements BookRequestService {
 
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
                     if(!isToReadingRoom && isRequestCreated){
-                        bookDao.updateAvailableQuantity(bookId,
-                                Integer.parseInt(book.getAvailableQuantity()) - 1 );
+                        bookDao.updateAvailableQuantity(bookId,book.getAvailableQuantity() - 1 );
                     }
 
                     return isRequestCreated;

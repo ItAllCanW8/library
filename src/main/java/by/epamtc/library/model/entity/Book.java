@@ -7,7 +7,7 @@ public class Book implements Serializable {
     private String title;
     private String authorPseudo;
     private String isbn;
-    private String availableQuantity;
+    private short availableQuantity;
     private String genre;
     private String shortDescription;
     private String pdf;
@@ -18,13 +18,13 @@ public class Book implements Serializable {
 
     public Book(long id){this.id = id;}
 
-    public Book(long id, String title, String authorPseudo, String isbn, String availableQuantity, String genre,
+    public Book(long id, String title, String authorPseudo, String isbn, short availableQuantity, String genre,
                 String shortDescription, String pdf, String img, String authorImg) {
         this(title, authorPseudo, isbn, availableQuantity, genre, shortDescription, pdf, img, authorImg);
         this.id = id;
     }
 
-    public Book(String title, String authorPseudo, String isbn, String availableQuantity, String genre,
+    public Book(String title, String authorPseudo, String isbn, short availableQuantity, String genre,
                 String shortDescription, String pdf, String img, String authorImg) {
         this.title = title;
         this.authorPseudo = authorPseudo;
@@ -48,7 +48,7 @@ public class Book implements Serializable {
         this.pdf = bookPdf;
     }
 
-    public Book(long bookId, String bookTitle, String bookImg, String bookPdf, String bookAvailableQuantity) {
+    public Book(long bookId, String bookTitle, String bookImg, String bookPdf, short bookAvailableQuantity) {
         this(bookId, bookTitle, bookImg, bookPdf);
         this.availableQuantity = bookAvailableQuantity;
     }
@@ -81,11 +81,11 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public String getAvailableQuantity() {
+    public short getAvailableQuantity() {
         return availableQuantity;
     }
 
-    public void setAvailableQuantity(String availableQuantity) {
+    public void setAvailableQuantity(short availableQuantity) {
         this.availableQuantity = availableQuantity;
     }
 
@@ -137,10 +137,10 @@ public class Book implements Serializable {
         Book book = (Book) o;
 
         if (id != book.id) return false;
+        if (availableQuantity != book.availableQuantity) return false;
         if (!title.equals(book.title)) return false;
         if (!authorPseudo.equals(book.authorPseudo)) return false;
         if (!isbn.equals(book.isbn)) return false;
-        if (!availableQuantity.equals(book.availableQuantity)) return false;
         if (!genre.equals(book.genre)) return false;
         return shortDescription.equals(book.shortDescription);
     }
@@ -151,7 +151,7 @@ public class Book implements Serializable {
         result = 31 * result + title.hashCode();
         result = 31 * result + authorPseudo.hashCode();
         result = 31 * result + isbn.hashCode();
-        result = 31 * result + availableQuantity.hashCode();
+        result = 31 * result + availableQuantity;
         result = 31 * result + genre.hashCode();
         result = 31 * result + shortDescription.hashCode();
         return result;

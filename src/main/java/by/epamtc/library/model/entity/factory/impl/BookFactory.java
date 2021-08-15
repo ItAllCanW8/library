@@ -32,7 +32,7 @@ public class BookFactory implements LibraryFactory<Book> {
             String author = fields.get(RequestParameter.BOOK_AUTHOR);
             String isbn = fields.get(RequestParameter.BOOK_ISBN);
             String genre = fields.get(RequestParameter.BOOK_GENRE);
-            String quantity = fields.get(RequestParameter.BOOK_QUANTITY);
+            short quantity = Short.parseShort(fields.get(RequestParameter.BOOK_QUANTITY));
             String description = fields.get(RequestParameter.BOOK_DESCRIPTION);
 
             result = Optional.of(new Book(title,author,isbn,quantity,genre,description,DEFAULT_PDF,
