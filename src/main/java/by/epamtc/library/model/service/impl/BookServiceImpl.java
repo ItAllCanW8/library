@@ -4,6 +4,7 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookDao;
+import by.epamtc.library.model.dao.factory.DaoFactory;
 import by.epamtc.library.model.dao.impl.BookDaoImpl;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
@@ -16,17 +17,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BookServiceImpl implements BookService {
-    private static final BookDao bookDao = BookDaoImpl.getInstance();
+    private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
     private static final LibraryFactory<Book> bookFactory = BookFactory.getInstance();
 
-    private BookServiceImpl() {
-    }
-    private static class Holder {
-        static final BookService INSTANCE = new BookServiceImpl();
-    }
-
-    public static BookService getInstance() {
-        return BookServiceImpl.Holder.INSTANCE;
+    public BookServiceImpl() {
     }
 
     @Override

@@ -9,6 +9,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
 import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -30,7 +31,7 @@ public class UploadBookCover implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String bookId = req.getParameter(RequestParameter.BOOK_ID);
-        BookService service = BookServiceImpl.getInstance();
+        BookService service = ServiceFactory.getInstance().getBookService();
 
         try {
             Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));

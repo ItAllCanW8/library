@@ -10,6 +10,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequest;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class MyBookRequests implements Command {
         HttpSession session = req.getSession();
         long readerId = (long) session.getAttribute(SessionAttribute.USER_ID);
 
-        BookRequestService service = BookRequestServiceImpl.getInstance();
+        BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         CommandResult result = new CommandResult(PagePath.READER_BOOK_REQUESTS, CommandResult.Type.FORWARD);
         try {
             List<BookRequest> bookRequests = service.loadBookRequestsByReaderId(readerId);

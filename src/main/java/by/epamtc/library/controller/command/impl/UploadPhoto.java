@@ -7,6 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -29,6 +30,7 @@ public class UploadPhoto implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(SessionAttribute.USER);
+
         if (ServletFileUpload.isMultipartContent(req) && user != null) {
             Part part = null;
             try {
@@ -43,7 +45,8 @@ public class UploadPhoto implements Command {
                 try (InputStream inputStream = part.getInputStream()) {
                     if (FileHandler.uploadFile(inputStream, FileHandler.WEBAPP_FOLDER_PATH
                                     + FileHandler.PROFILE_PHOTOS_SUBFOLDER + randomFilename)) {
-                        UserService service = UserServiceImpl.getInstance();
+                        UserService service = ServiceFactory.getInstance().getUserService();
+
                         service.changePhoto(user.getUserDetails().getId(), randomFilename);
                         user.getUserDetails().setPhotoPath(randomFilename);
                         session.setAttribute(SessionAttribute.USER, user);

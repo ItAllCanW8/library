@@ -9,6 +9,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class DeactivateUserById implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String userId = req.getParameter(RequestParameter.USER_ID);
 
-        UserService service = UserServiceImpl.getInstance();
+        UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(CommandName.USERS, CommandResult.Type.REDIRECT);
         try {
             if(!service.deactivateUser(Long.parseLong(userId)))

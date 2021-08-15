@@ -22,25 +22,7 @@ public class LoadBookCover implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        String fileName = null;
-
-        if(req.getParameterMap().containsKey(RequestParameter.BOOK_ID)){
-            long bookId = Long.parseLong(req.getParameter(RequestParameter.BOOK_ID));
-            BookService service = BookServiceImpl.getInstance();
-
-            try{
-                Optional<String> bookCoverOptional = service.findBookCoverById(bookId);
-
-                if(bookCoverOptional.isPresent())
-                    fileName = bookCoverOptional.get();
-
-            } catch (ServiceException e) {
-                LOGGER.log(Level.ERROR, e);
-            }
-
-        } else
-            fileName = req.getParameter(RequestParameter.FILE_NAME);
-
+        String fileName = req.getParameter(RequestParameter.FILE_NAME);
 
         if (fileName != null && !fileName.isEmpty()) {
             try (ServletOutputStream outputStream = resp.getOutputStream()) {

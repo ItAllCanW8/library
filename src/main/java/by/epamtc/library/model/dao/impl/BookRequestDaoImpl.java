@@ -24,14 +24,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private static final String bookReqBookId = "book_id_fk";
     private static final String bookReqUserId = "user_id_fk";
 
-    private BookRequestDaoImpl() {
-    }
-    private static class Holder {
-        static final BookRequestDao INSTANCE = new BookRequestDaoImpl();
-    }
-
-    public static BookRequestDao getInstance() {
-        return BookRequestDaoImpl.Holder.INSTANCE;
+    public BookRequestDaoImpl() {
     }
 
     @Override

@@ -9,6 +9,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
 import by.epamtc.library.model.service.validation.BookValidator;
 import org.apache.logging.log4j.Level;
@@ -43,7 +44,7 @@ public class AddBook implements Command {
         fields.put(RequestParameter.BOOK_GENRE, genre);
         fields.put(RequestParameter.BOOK_DESCRIPTION, description);
 
-        BookService service = BookServiceImpl.getInstance();
+        BookService service = ServiceFactory.getInstance().getBookService();
         CommandResult result = new CommandResult(CommandName.TO_LIBRARIAN_BOOKS, CommandResult.Type.REDIRECT);
         try {
             if (service.addBook(fields)) {

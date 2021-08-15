@@ -8,6 +8,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class ChangeBookRequestState implements Command {
 
         CommandResult result = new CommandResult(CommandName.BOOK_REQUESTS, CommandResult.Type.REDIRECT);
 
-        BookRequestService service = BookRequestServiceImpl.getInstance();
+        BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
             if(!service.changeRequestState(Long.parseLong(requestId), newRequestStateStr)){
                 result = new CommandResult(PagePath.ERROR_PAGE, CommandResult.Type.FORWARD);

@@ -9,6 +9,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,8 @@ import java.util.List;
 public class Users implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        HttpSession session = req.getSession();
-        UserService service = UserServiceImpl.getInstance();
+//       UserService service = UserServiceImpl.getInstance();
+        UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(PagePath.USERS, CommandResult.Type.FORWARD);
         try {
             List<User> users = service.findAllUsers();

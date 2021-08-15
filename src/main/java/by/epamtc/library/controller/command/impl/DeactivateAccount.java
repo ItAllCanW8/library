@@ -7,6 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public class DeactivateAccount implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        UserService service = UserServiceImpl.getInstance();
+        UserService service = ServiceFactory.getInstance().getUserService();
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(SessionAttribute.USER);
         String currentPassword = req.getParameter(RequestParameter.PASSWORD);
@@ -33,7 +34,6 @@ public class DeactivateAccount implements Command {
                 req.setAttribute(JspAttribute.ERROR_INVALID_CURR_PASSWORD, JspAttribute.ERROR_INVALID_CURR_PASSWORD_MSG);
             }
         } catch (ServiceException | NumberFormatException e) {
-//            logger.log(Level.ERROR, "Couldn't delete user account");
             throw new CommandException(e);
         }
         return result;

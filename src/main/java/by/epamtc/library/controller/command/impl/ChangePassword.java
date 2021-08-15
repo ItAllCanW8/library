@@ -10,6 +10,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 import by.epamtc.library.model.service.validation.UserValidator;
 
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class ChangePassword implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        UserService service = UserServiceImpl.getInstance();
+        UserService service = ServiceFactory.getInstance().getUserService();
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(SessionAttribute.USER);
         String currentPassword = req.getParameter(RequestParameter.PASSWORD);

@@ -6,6 +6,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class Register implements Command {
         fields.put(RequestParameter.PASSWORD, password);
         fields.put(RequestParameter.REPEATED_PASSWORD, repeatedPassword);
 
-        UserService service = UserServiceImpl.getInstance();
+        UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(ServletAttribute.LOGIN_URL, CommandResult.Type.REDIRECT);
         try {
             if (service.register(fields)) {

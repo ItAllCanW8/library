@@ -5,6 +5,7 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
+import by.epamtc.library.model.dao.factory.DaoFactory;
 import by.epamtc.library.model.dao.impl.UserDaoImpl;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserRole;
@@ -22,17 +23,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    private static final UserDao userDao = UserDaoImpl.getInstance();
+    private static final UserDao userDao = DaoFactory.getInstance().getUserDao();
     private static final LibraryFactory<User> userFactory = UserFactory.getInstance();
 
-    private UserServiceImpl() {
+    public UserServiceImpl() {
     }
-
-    private static class Holder {
-        static final UserService INSTANCE = new UserServiceImpl();
-    }
-
-    public static UserService getInstance() { return UserServiceImpl.Holder.INSTANCE; }
 
     @Override
     public boolean register(Map<String, String> fields) throws ServiceException {

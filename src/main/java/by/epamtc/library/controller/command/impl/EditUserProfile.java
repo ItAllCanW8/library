@@ -10,6 +10,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class EditUserProfile implements Command {
         fields.put(RequestParameter.PHONE_NUMBER, newPhoneNumber);
         fields.put(RequestParameter.EMAIL, newEmail);
 
-        UserService service = UserServiceImpl.getInstance();
+        UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(CommandName.LOAD_USER_PROFILE + userId, CommandResult.Type.REDIRECT);
         try {
             Optional<User> userOptional = service.updateProfile(userId, fields);

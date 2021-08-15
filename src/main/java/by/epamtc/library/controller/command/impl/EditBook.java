@@ -8,6 +8,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
 import by.epamtc.library.model.service.validation.BookValidator;
 
@@ -36,7 +37,7 @@ public class EditBook implements Command {
         fields.put(RequestParameter.BOOK_GENRE, newGenre);
         fields.put(RequestParameter.BOOK_DESCRIPTION, newDescription);
 
-        BookService service = BookServiceImpl.getInstance();
+        BookService service = ServiceFactory.getInstance().getBookService();
         CommandResult result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.REDIRECT);
         try {
             if (!service.updateBook(Long.parseLong(bookId), fields)) {

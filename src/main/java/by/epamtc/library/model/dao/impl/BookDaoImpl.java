@@ -29,15 +29,7 @@ public class BookDaoImpl implements BookDao {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private BookDaoImpl() {
-    }
-
-    private static class Holder {
-        static final BookDao INSTANCE = new BookDaoImpl();
-    }
-
-    public static BookDao getInstance() {
-        return BookDaoImpl.Holder.INSTANCE;
+    public BookDaoImpl() {
     }
 
     @Override

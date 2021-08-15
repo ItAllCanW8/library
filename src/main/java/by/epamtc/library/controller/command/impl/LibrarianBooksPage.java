@@ -7,6 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,7 @@ import java.util.List;
 public class LibrarianBooksPage implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        BookService service = BookServiceImpl.getInstance();
-
+        BookService service = ServiceFactory.getInstance().getBookService();
         try {
             List<Book> books = service.loadBooks();
             if (books.size() > 0) {

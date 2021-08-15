@@ -9,6 +9,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class ReturnBook implements Command {
 
         CommandResult result = new CommandResult(CommandName.READER_BOOK_REQUESTS, CommandResult.Type.REDIRECT);
 
-        BookRequestService service = BookRequestServiceImpl.getInstance();
+        BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
             if(!service.closeBookRequest(requestId, bookId, bookQuantity, requestType))
                 result = new CommandResult(PagePath.ERROR_PAGE, CommandResult.Type.FORWARD);

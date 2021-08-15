@@ -22,24 +22,7 @@ public class ViewPdf implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        String pdf = null;
-
-        if(req.getParameterMap().containsKey(RequestParameter.BOOK_ID)){
-            long bookId = Long.parseLong(req.getParameter(RequestParameter.BOOK_ID));
-            BookService service = BookServiceImpl.getInstance();
-
-            try{
-                Optional<String> bookpdfOptional = service.findBookPdfById(bookId);
-
-                if(bookpdfOptional.isPresent())
-                    pdf = bookpdfOptional.get();
-
-            } catch (ServiceException e) {
-                LOGGER.log(Level.ERROR, e);
-            }
-
-        } else
-            pdf = req.getParameter(RequestParameter.BOOK_PDF);
+        String pdf = req.getParameter(RequestParameter.BOOK_PDF);
 
         if (pdf != null && !pdf.isEmpty()) {
             try (ServletOutputStream outputStream = resp.getOutputStream()) {

@@ -8,7 +8,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.impl.BookServiceImpl;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -43,7 +43,8 @@ public class UploadPdf implements Command {
                 try (InputStream inputStream = part.getInputStream()) {
                     if (FileHandler.uploadFile(inputStream, FileHandler.WEBAPP_FOLDER_PATH
                             + FileHandler.BOOK_PDF_SUBFOLDER + randomFilename)){
-                        BookService service = BookServiceImpl.getInstance();
+                        BookService service = ServiceFactory.getInstance().getBookService();
+
                         service.changePdf(Long.parseLong(bookId), randomFilename);
                     }
                 } catch (IOException | ServletException | ServiceException e) {

@@ -23,15 +23,7 @@ public class UserDaoImpl implements UserDao {
     private static final String INVALID_ROLE_ERROR_MSG = "Invalid user role.";
     private static final String INVALID_DETAILS_ERROR_MSG = "Invalid user details.";
 
-    private UserDaoImpl() {
-    }
-
-    private static class Holder {
-        static final UserDao INSTANCE = new UserDaoImpl();
-    }
-
-    public static UserDao getInstance() {
-        return UserDaoImpl.Holder.INSTANCE;
+    public UserDaoImpl() {
     }
 
     @Override

@@ -11,6 +11,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class RentBook implements Command {
         fields.put(RequestParameter.BOOK_ID, bookId);
 
         CommandResult result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.REDIRECT);
-        BookRequestService service = BookRequestServiceImpl.getInstance();
+        BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
             if (service.createBookRequest(fields, reader)) {
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);

@@ -5,8 +5,7 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.BookRequestDao;
-import by.epamtc.library.model.dao.impl.BookDaoImpl;
-import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
+import by.epamtc.library.model.dao.factory.DaoFactory;
 import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
@@ -18,20 +17,13 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BookRequestServiceImpl implements BookRequestService {
-    private static final BookRequestDao bookRequestDao = BookRequestDaoImpl.getInstance();
-    private static final BookDao bookDao = BookDaoImpl.getInstance();
+    private static final BookRequestDao bookRequestDao = DaoFactory.getInstance().getBookRequestDao();
+    private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
-    private static final BookService bookService = BookServiceImpl.getInstance();
+//    private static final BookService bookService = BookServiceImpl.getInstance();
 
-    private BookRequestServiceImpl() {
-    }
-
-    private static class Holder {
-        static final BookRequestService INSTANCE = new BookRequestServiceImpl();
-    }
-
-    public static BookRequestService getInstance() {
-        return BookRequestServiceImpl.Holder.INSTANCE;
+    public
+    BookRequestServiceImpl() {
     }
 
     @Override
@@ -56,7 +48,7 @@ public class BookRequestServiceImpl implements BookRequestService {
         try {
             if (requestOptional.isPresent()) {
                 long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
-                Optional<Book> bookOptional = bookService.findBookById(bookId);
+                Optional<Book> bookOptional = bookDao.findBookById(bookId);
 
                 if (bookOptional.isPresent()) {
                     BookRequest request = requestOptional.get();

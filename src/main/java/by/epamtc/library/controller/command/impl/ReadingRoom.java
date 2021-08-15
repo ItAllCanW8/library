@@ -13,6 +13,7 @@ import by.epamtc.library.model.entity.BookRequest;
 import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
 
@@ -29,7 +30,7 @@ public class ReadingRoom implements Command {
         HttpSession session = req.getSession();
         long readerId = (long) session.getAttribute(SessionAttribute.USER_ID);
 
-        BookRequestService bookRequestService = BookRequestServiceImpl.getInstance();
+        BookRequestService bookRequestService = ServiceFactory.getInstance().getBookRequestService();
         CommandResult result = new CommandResult(PagePath.READING_ROOM, CommandResult.Type.FORWARD);
         try {
             List<BookRequest> bookRequests = bookRequestService.loadReadingRoomByReaderId(readerId);
