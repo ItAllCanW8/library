@@ -6,6 +6,7 @@ import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookRequestDao;
 import by.epamtc.library.model.entity.*;
 import by.epamtc.library.util.DateTimeHelper;
+import by.epamtc.library.util.SortingHelper;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -119,6 +120,29 @@ public class BookRequestDaoImpl implements BookRequestDao {
     }
 
     @Override
+    public List<BookRequest> sort(SortingHelper.SortingColumn sortingColumn, SortingHelper.SortingOrderType sortingOrderType) throws DaoException {
+        List<BookRequest> bookRequests = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            System.out.println("dao " + sortingColumn.getValue());
+            System.out.println("dao " + sortingOrderType.getValue());
+            System.out.println(SqlQuery.SORT_BOOK_REQUESTS + sortingColumn.getValue() + " "
+                    + sortingOrderType.getValue());
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SORT_BOOK_REQUESTS + sortingColumn.getValue() + " "
+                    + sortingOrderType.getValue());
+
+
+
+            while (resultSet.next()) {
+                bookRequests.add(createRequestFromResultSet(resultSet, false));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error sorting book requests by " + sortingColumn + " " + sortingOrderType, e);
+        }
+        return bookRequests;
+    }
+
+    @Override
     public boolean changeRequestState(long requestId, String newRequestState) throws DaoException {
         try(Connection connection = pool.takeConnection();
             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_REQUEST_STATE)) {
@@ -162,7 +186,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
     }
 
-    private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean isReqFromLibrarian) throws SQLException {
+    private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean areUserFieldsPresent) throws SQLException {
         long requestId = resultSet.getLong(bookReqId);
         BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqType));
         BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSate));
@@ -175,7 +199,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         String bookImg = resultSet.getString("img");
         String bookPdf= resultSet.getString("pdf");
 
-        if(isReqFromLibrarian){
+        if(areUserFieldsPresent){
             long userId = resultSet.getLong(bookReqUserId);
             String username = resultSet.getString("username");
             String userPhoto = resultSet.getString("photo_path");

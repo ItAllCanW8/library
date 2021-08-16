@@ -28,7 +28,8 @@ public class PermissionFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         EnumSet<CommandType> sameCommands = EnumSet.of(CommandType.CHANGE_LANGUAGE, CommandType.LOAD_BOOKS,
                 CommandType.LOAD_BOOK_INFO, CommandType.HOME, CommandType.LOAD_BOOK_COVER,
-                CommandType.FIND_BOOKS_BY_KEYWORD, CommandType.SORT_RECORDS);
+                CommandType.FIND_BOOKS_BY_KEYWORD, CommandType.FIND_BOOKS_BY_GENRE, CommandType.FIND_BOOKS_BY_AUTHOR,
+                CommandType.SORT_RECORDS);
 
         EnumSet<CommandType> guestCommands = EnumSet.of(CommandType.REGISTER, CommandType.LOGIN);
         guestCommands.addAll(sameCommands);

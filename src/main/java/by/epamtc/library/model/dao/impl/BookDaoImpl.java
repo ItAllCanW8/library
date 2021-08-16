@@ -28,8 +28,6 @@ public class BookDaoImpl implements BookDao {
     private static final String bookAuthorImgCol = "author_img";
     private static final String bookQuantityCol = "available_quantity";
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     public BookDaoImpl() {
     }
 
@@ -95,16 +93,15 @@ public class BookDaoImpl implements BookDao {
             throws DaoException {
         List<Book> books = new ArrayList<>();
         try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SORT_BOOKS)) {
-            statement.setString(1, sortingColumn.getValue() + " " + sortingOrderType.getValue());
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SORT_BOOKS + sortingColumn.getValue() + " "
+                    + sortingOrderType.getValue());
 
-            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                books.add(new Book(resultSet.getLong(bookIdCol), resultSet.getString(bookTitleCol),
-                        resultSet.getString(bookImgCol)));
+                books.add(createBookFromResultSet(resultSet, false));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error sorting books by " + sortingColumn + " " + sortingOrderType, e);
         }
         return books;
     }
@@ -168,6 +165,42 @@ public class BookDaoImpl implements BookDao {
             return books;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error finding books by keyword " + keyword, e);
+        }
+    }
+
+    @Override
+    public List<Book> findBooksByGenre(String genre) throws DaoException {
+        List<Book> books = new ArrayList<>();
+
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOKS_BY_GENRE)) {
+            statement.setString(1, genre);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next())
+                books.add(createBookFromResultSet(resultSet, false));
+
+            return books;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding books by genre " + genre, e);
+        }
+    }
+
+    @Override
+    public List<Book> findBooksByAuthor(String author) throws DaoException {
+        List<Book> books = new ArrayList<>();
+
+        try(Connection connection = pool.takeConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOKS_BY_AUTHOR)) {
+            statement.setString(1, author);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next())
+                books.add(createBookFromResultSet(resultSet, false));
+
+            return books;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding books by author " + author, e);
         }
     }
 
@@ -284,7 +317,7 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    private Book createBookFromResultSet(ResultSet resultSet, boolean isDescAndPdfPresent) throws SQLException {
+    private Book createBookFromResultSet(ResultSet resultSet, boolean areDescAndPdfPresent) throws SQLException {
         long id = resultSet.getLong(bookIdCol);
         String title = resultSet.getString(bookTitleCol);
         String author_pseudo = resultSet.getString(bookAuthorCol);
@@ -296,7 +329,7 @@ public class BookDaoImpl implements BookDao {
 
         Book book = new Book(id, title, author_pseudo, isbn, availableQuantity, genre, img, authorImg);
 
-        if(isDescAndPdfPresent){
+        if(areDescAndPdfPresent){
             book.setPdf(resultSet.getString(bookPdfCol));
             book.setShortDescription(resultSet.getString(bookDescCol));
         }

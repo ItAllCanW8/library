@@ -46,7 +46,7 @@ public class RequestParameter {
     public static final String REQUEST_STATE = "requestState";
 
     public static final String SEARCH_KEYWORD = "keyword";
-    public static final String SORTING_FIELD = "by";
+    public static final String SORTING_FIELD = "sortingField";
     public static final String SORTING_ORDER = "sortingOrder";
     public static final String SORTING_OBJECT = "sortingObject";
 

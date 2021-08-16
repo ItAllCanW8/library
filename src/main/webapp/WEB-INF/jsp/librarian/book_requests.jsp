@@ -20,6 +20,24 @@
             <h3>
                 <fmt:message key="librarian.bookRequests"/>
             </h3>
+
+            <div class="col-2" style="display: flex;justify-content: center">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByDate"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <fmt:message key="button.sortByDate"/>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByDate">
+                        <li><a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=desc">
+                            <fmt:message key="button.sortDesc"/> </a></li>
+                        <li><a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=asc">
+                            <fmt:message key="button.sortAsc"/> </a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="event_container">
             <table id="booksTable" class="table table-dark table-bordered border-secondary">

@@ -33,13 +33,19 @@ public class SqlQuery {
             "author_img FROM books ORDER BY available_quantity DESC;";
 
     public static final String SORT_BOOKS = "SELECT book_id,title,img,author_pseudo,genre,isbn,available_quantity," +
-            "author_img FROM books ORDER BY ?;";
+            "author_img FROM books ORDER BY ";
 
     public static final String FIND_BOOK_BY_ID = "SELECT * FROM books WHERE book_id = ?;";
 
     public static final String FIND_BOOKS_BY_KEYWORD = "SELECT book_id,title,img,author_pseudo,genre,isbn," +
             "available_quantity,author_img FROM books WHERE title LIKE ? OR author_pseudo LIKE ? " +
             "OR isbn LIKE ? OR genre LIKE ? OR available_quantity LIKE ?;";
+
+    public static final String FIND_BOOKS_BY_GENRE = "SELECT book_id,title,img,author_pseudo,genre,isbn," +
+            "available_quantity,author_img FROM books WHERE genre LIKE ?;";
+
+    public static final String FIND_BOOKS_BY_AUTHOR = "SELECT book_id,title,img,author_pseudo,genre,isbn," +
+            "available_quantity,author_img FROM books WHERE author_pseudo LIKE ?;";
 
     public static final String FIND_BOOK_COVER_BY_ID = "SELECT img FROM books WHERE book_id = ?;";
 
@@ -82,6 +88,9 @@ public class SqlQuery {
     public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT request_id,request_type,state,request_date,closing_date," +
             "penalty_amount,book_id_fk,title,img,pdf,available_quantity FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ?;";
+
+    public static final String SORT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,closing_date," +
+            "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests ORDER BY ";
 
     public static final String LOAD_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ? AND state ='approved';";

@@ -18,6 +18,8 @@ public interface BookDao {
     Optional<String> findBookCoverById(long bookId) throws DaoException;
     Optional<String> findBookPdfById(long bookId) throws DaoException;
     List<Book> findBooksByKeyword(String keyword) throws DaoException;
+    List<Book> findBooksByGenre(String genre) throws DaoException;
+    List<Book> findBooksByAuthor(String author) throws DaoException;
     int findBookQuantityById(long bookId) throws DaoException;
     boolean changeCover(long bookId, String path) throws DaoException;
     boolean changeAuthorPhoto(long bookId, String path) throws DaoException;

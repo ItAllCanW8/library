@@ -114,6 +114,12 @@ public enum CommandType {
     FIND_BOOKS_BY_KEYWORD{{
         this.command = new FindBooksByKeyword();
     }},
+    FIND_BOOKS_BY_GENRE {{
+        this.command = new FindBooksByGenre();
+    }},
+    FIND_BOOKS_BY_AUTHOR{{
+        this.command = new FindBooksByAuthor();
+    }},
     DELETE_BOOK_REQUEST{{
         this.command = new DeleteBookRequest();
     }},

@@ -17,6 +17,8 @@ public interface BookService {
     Optional<String> findBookCoverById(long bookId) throws ServiceException;
     Optional<String> findBookPdfById(long bookId) throws ServiceException;
     List<Book> findBooksByKeyword(String keyword) throws ServiceException;
+    List<Book> findBooksByGenre(String genre) throws ServiceException;
+    List<Book> findBooksByAuthor(String author) throws ServiceException;
     boolean changeCover(long bookId, String path) throws ServiceException;
     boolean changeAuthorPhoto(long bookId, String path) throws ServiceException;
     boolean changePdf(long bookId, String pdfPath) throws ServiceException;
@@ -24,4 +26,5 @@ public interface BookService {
     boolean updateBook(long bookId, Map<String, String> newFields) throws ServiceException;
     boolean deleteBook(long bookId) throws ServiceException;
     boolean updateAvailableQuantity(long bookId, short newQuantity) throws ServiceException;
+
 }

@@ -40,22 +40,6 @@
                     </form>
                 </div>
 
-<%--                <div class="col-2" style="display: flex;justify-content: center">--%>
-<%--                    <div class="dropdown">--%>
-<%--                        <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByDate"--%>
-<%--                                data-bs-toggle="dropdown"--%>
-<%--                                aria-expanded="false">--%>
-<%--                            <fmt:message key="button.sortByDate"/>--%>
-<%--                        </button>--%>
-<%--                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByDate">--%>
-<%--                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/sort_books_by_date.do?sortSequence=desc"><fmt:message--%>
-<%--                                    key="button.sortDesc"/> </a></li>--%>
-<%--                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/sort_books_by_date.do?sortSequence=asc"><fmt:message--%>
-<%--                                    key="button.sortAsc"/> </a></li>--%>
-<%--                        </ul>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
                 <div class="col-2" style="display: flex;justify-content: center">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByQuantity"
@@ -69,7 +53,7 @@
                                 <fmt:message key="button.sortDesc"/>
                             </a></li>
                             <li><a class="dropdown-item"
-                                   href=${pageContext.request.contextPath}/sort_records.do?sortingObject=books&sortingField=available_quantity&sortingOrder=asc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=books&sortingField=available_quantity&sortingOrder=asc">
                                 <fmt:message key="button.sortAsc"/> </a></li>
                         </ul>
                     </div>
@@ -106,9 +90,15 @@
                                     <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}"
                                          alt="" style="max-height: 250px;max-width: 250px">
                                 </div>
-                                <ctg:out text="${book.authorPseudo}"/>
+                                <a href="${pageContext.request.contextPath}/find_books_by_author.do?bookAuthor=${book.authorPseudo}">
+                                    <ctg:out text="${book.authorPseudo}"/>
+                                </a>
                             </th>
-                            <th scope="row"><ctg:out text="${book.genre}"/>}</th>
+                            <th scope="row">
+                                <a href="${pageContext.request.contextPath}/find_books_by_genre.do?bookGenre=${book.genre}">
+                                    <ctg:out text="${book.genre}"/>
+                                </a>
+                            </th>
                             <th scope="row"><ctg:out text="${book.isbn}"/></th>
                             <th scope="row"><ctg:out text="${book.availableQuantity}"/></th>
                         <tr>

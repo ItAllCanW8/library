@@ -60,9 +60,18 @@
         <div class="detail-box">
           <div class="heading_container">
             <h3><ctg:out text="${book.title}"/></h3>
-            <h4><ctg:out text="${book.authorPseudo}"/></h4>
+            <h5>
+              <a href="${pageContext.request.contextPath}/find_books_by_author.do?bookAuthor=${book.authorPseudo}">
+                <ctg:out text="${book.authorPseudo}"/>
+              </a>
+            </h5>
             <h5>ISBN: <ctg:out text="${book.isbn}"/></h5>
-            <h5><fmt:message key="books.genre"/>:<ctg:out text="${book.genre}"/> </h5>
+            <h5><fmt:message key="books.genre"/>:
+              <a href="${pageContext.request.contextPath}/find_books_by_genre.do?bookGenre=${book.genre}"
+                 class="link-primary">
+                <ctg:out text="${book.genre}"/>
+              </a>
+            </h5>
             <h5><fmt:message key="books.availableQuantity"/>:<ctg:out text="${book.availableQuantity}"/> </h5>
             <hr style="width:100%;text-align:left;margin-left:0">
             <p>

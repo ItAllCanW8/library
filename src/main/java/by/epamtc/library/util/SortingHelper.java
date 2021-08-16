@@ -2,7 +2,7 @@ package by.epamtc.library.util;
 
 public final class SortingHelper {
     public enum SortingColumn {
-        AVAILABLE_QUANTITY("available_qunatity");
+        AVAILABLE_QUANTITY("available_quantity"), REQUEST_DATE("request_date");
 
         private final String value;
 

@@ -124,6 +124,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findBooksByGenre(String genre) throws ServiceException {
+        try {
+            return bookDao.findBooksByGenre(genre);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Book> findBooksByAuthor(String author) throws ServiceException {
+        try {
+            return bookDao.findBooksByAuthor(author);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean changeCover(long bookId, String path) throws ServiceException {
         try {
             return (BookValidator.isPhotoNameValid(path) && bookDao.changeCover(bookId, path));

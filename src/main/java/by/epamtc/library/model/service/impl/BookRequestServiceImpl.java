@@ -10,16 +10,17 @@ import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
-import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.util.SortingHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = DaoFactory.getInstance().getBookRequestDao();
-    private static final BookService bookService = ServiceFactory.getInstance().getBookService();
+//    private static final BookService bookService = ServiceFactory.getInstance().getBookService();
+    private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
 
     public
@@ -48,7 +49,7 @@ public class BookRequestServiceImpl implements BookRequestService {
         try {
             if (requestOptional.isPresent()) {
                 long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
-                Optional<Book> bookOptional = bookService.findBookById(bookId);
+                Optional<Book> bookOptional = bookDao.findBookById(bookId);
 
                 if (bookOptional.isPresent()) {
                     BookRequest request = requestOptional.get();
@@ -62,7 +63,7 @@ public class BookRequestServiceImpl implements BookRequestService {
 
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
                     if(!isToReadingRoom && isRequestCreated){
-                        bookService.updateAvailableQuantity(bookId, (short) (book.getAvailableQuantity() - 1));
+                        bookDao.updateAvailableQuantity(bookId, (short) (book.getAvailableQuantity() - 1));
                     }
 
                     return isRequestCreated;
@@ -103,7 +104,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             boolean isRequestClosed = bookRequestDao.closeBookRequest(requestId);
 
             if(!isToReadingRoom && isRequestClosed){
-                bookService.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
+                bookDao.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
             }
 
             return isRequestClosed;
@@ -137,5 +138,26 @@ public class BookRequestServiceImpl implements BookRequestService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<BookRequest> sort(String sortingField, String sortingOrder) throws ServiceException {
+        try {
+            System.out.println(sortingField);
+            System.out.println(sortingOrder);
+
+            SortingHelper.SortingColumn sortingColumn = SortingHelper.SortingColumn.fromString(sortingField);
+            SortingHelper.SortingOrderType sortingOrderType = SortingHelper.SortingOrderType.fromString(sortingOrder);
+
+            System.out.println(sortingColumn.getValue());
+            System.out.println(sortingOrderType.getValue());
+
+            if(sortingColumn != null && sortingOrderType != null)
+                return bookRequestDao.sort(sortingColumn, sortingOrderType);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
+        return new ArrayList<>(0);
     }
 }
