@@ -26,12 +26,12 @@
         <thead>
           <tr>
             <th scope="col"><fmt:message key="librarian.book"/></th>
-            <th scope="col">Type</th>
-            <th scope="col">State</th>
-            <th scope="col">Request date</th>
-            <th scope="col">Closing date</th>
-            <th scope="col">Penalty amount</th>
-            <th scope="col">Action</th>
+            <th scope="col"><fmt:message key="request.type"/></th>
+            <th scope="col"><fmt:message key="request.state"/></th>
+            <th scope="col"><fmt:message key="request.date"/></th>
+            <th scope="col"><fmt:message key="request.closingDate"/></th>
+            <th scope="col"><fmt:message key="request.penalty"/></th>
+            <th scope="col"><fmt:message key="button.action"/></th>
           </tr>
         </thead>
 

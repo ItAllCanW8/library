@@ -8,6 +8,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
+import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +44,10 @@ public class Register implements Command {
             if (service.register(fields)) {
                 HttpSession session = req.getSession();
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
+
+                MailSender mailSender = MailSender.getInstance();
+                mailSender.setupLetter(email, Message.LIBRARY_LETTER_SUBJECT, Message.WELCOME_LETTER);
+                mailSender.send();
             } else {
                 req.setAttribute(RequestParameter.USERNAME, fields.get(RequestParameter.USERNAME));
                 req.setAttribute(RequestParameter.NAME, fields.get(RequestParameter.NAME));

@@ -1,16 +1,15 @@
 package by.epamtc.library.controller.command.impl;
 
-import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.JspAttribute;
-import by.epamtc.library.controller.attribute.RequestParameter;
-import by.epamtc.library.controller.attribute.SessionAttribute;
+import by.epamtc.library.controller.attribute.*;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +34,11 @@ public class RentBook implements Command {
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
             if (service.createBookRequest(fields, reader)) {
+                if(BookRequestType.fromString(rentMethod) == BookRequestType.FOR_SUBSCRIPTION){
+                    MailSender mailSender = MailSender.getInstance();
+                    mailSender.setupLetter(reader.getEmail(), Message.LIBRARY_LETTER_SUBJECT, Message.BOOK_REQUEST_CREATED);
+                    mailSender.send();
+                }
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
             } else {
                 req.setAttribute(JspAttribute.ERROR_REQUEST_CREATION, JspAttribute.ERROR_REQUEST_CREATION_MSG);
