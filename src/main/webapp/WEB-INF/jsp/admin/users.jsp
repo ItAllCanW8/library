@@ -22,6 +22,11 @@
             <h3>
                 <fmt:message key="header.users"/>
             </h3>
+
+            <div style="display: flex;justify-content: center">
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/users.do" role="button">
+                    <fmt:message key="button.allUsers"/> </a>
+            </div>
         </div>
         <div class="event_container">
             <table class="table table-dark table-bordered border-secondary">
@@ -38,29 +43,37 @@
                 <tbody>
                 <c:forEach var="user" items="${users}">
                     <tr class="table-secondary">
-                        <th scope="row"><a href="<c:url value="load_user_profile.do?userId=${user.id}"/>">
+                        <th scope="row"><a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${user.id}">
                                 <ctg:out text="${user.username}"/></a></th>
                         <th scope="row">
                             <div>
-                                <img src="load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                                <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                                      alt="" style="max-height: 250px;max-width: 250px"></div>
                         </th>
-                        <th scope="row"><ctg:out text="${user.role}"/><br>
+                        <th scope="row">
+                            <a href="${pageContext.request.contextPath}/find_users_by_role.do?userRole=${user.role.toString()}">
+                                <ctg:out text="${user.role}"/><br>
+                            </a>
                             <c:if test="${user.role.toString().equals(reader)}"><br>
-                                <a href="change_role_to_librarian.do?userId=${user.id}"><fmt:message key="users.changeRole"/>
+                                <a href="${pageContext.request.contextPath}/change_role_to_librarian.do?userId=${user.id}"><fmt:message key="users.changeRole"/>
                                 </a>
                             </c:if>
                             <c:if test="${user.role.toString().equals(librarian)}"><br>
-                                <a href="change_role_to_reader.do?userId=${user.id}"><fmt:message key="users.changeRole"/></a>
+                                <a href="${pageContext.request.contextPath}/change_role_to_reader.do?userId=${user.id}"><fmt:message key="users.changeRole"/></a>
                             </c:if>
                         </th>
                         <th scope="row"><ctg:out text="${user.email}"/></th>
-                        <th scope="row"><ctg:out text="${user.status}"/>
-                            <c:if test="${user.status.value.equals('active')}"><br>
-                                <a href="deactivate_user_account.do?userId=${user.id}"><fmt:message key="users.deactivate"/></a>
-                            </c:if>
-                            <c:if test="${user.status.value.equals('deactivated')}"><br>
-                                <a href="activate_user_account.do?userId=${user.id}"><fmt:message key="users.activate"/></a>
+                        <th scope="row">
+                            <a href="${pageContext.request.contextPath}/find_users_by_status.do?userStatus=${user.status.value}">
+                                <ctg:out text="${user.status}"/>
+                            </a>
+                            <c:if test="${!user.role.toString().equals(admin)}">
+                                <c:if test="${user.status.value.equals('active')}"><br>
+                                    <a href="${pageContext.request.contextPath}/deactivate_user_account.do?userId=${user.id}"><fmt:message key="users.deactivate"/></a>
+                                </c:if>
+                                <c:if test="${user.status.value.equals('deactivated')}"><br>
+                                    <a href="${pageContext.request.contextPath}/activate_user_account.do?userId=${user.id}"><fmt:message key="users.activate"/></a>
+                                </c:if>
                             </c:if>
                         </th>
                     <tr>

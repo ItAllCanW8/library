@@ -32,7 +32,7 @@ public class UploadPhoto implements Command {
         User user = (User) session.getAttribute(SessionAttribute.USER);
 
         if (ServletFileUpload.isMultipartContent(req) && user != null) {
-            Part part = null;
+            Part part;
             try {
                 part = req.getPart(RequestParameter.FILE);
             } catch (IOException | ServletException e) {
@@ -47,9 +47,10 @@ public class UploadPhoto implements Command {
                                     + FileHandler.PROFILE_PHOTOS_SUBFOLDER + randomFilename)) {
                         UserService service = ServiceFactory.getInstance().getUserService();
 
-                        service.changePhoto(user.getUserDetails().getId(), randomFilename);
-                        user.getUserDetails().setPhotoPath(randomFilename);
-                        session.setAttribute(SessionAttribute.USER, user);
+                        if (service.changePhoto(user.getUserDetails().getId(), randomFilename)) {
+                            user.getUserDetails().setPhotoPath(randomFilename);
+                            session.setAttribute(SessionAttribute.USER, user);
+                        }
                     }
                 } catch (IOException | ServletException | ServiceException e) {
                     req.setAttribute(JspAttribute.ERROR_MSG, e.getMessage());

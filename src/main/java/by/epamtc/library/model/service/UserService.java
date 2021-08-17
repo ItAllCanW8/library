@@ -22,5 +22,7 @@ public interface UserService {
     boolean changeRoleToLibrarian(long userId) throws ServiceException;
     boolean changeRoleToReader(long userId) throws ServiceException;
     List<User> findAllUsers() throws ServiceException;
+    List<User> findUsersByRole(String role) throws ServiceException;
+    List<User> findUsersByStatus(String status) throws ServiceException;
     Optional<User> findUserById(long userId) throws ServiceException;
 }

@@ -224,6 +224,38 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<User> findUsersByRole(String role) throws DaoException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USERS_BY_ROLE)) {
+            statement.setString(1, role);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                users.add(createUserFromResultSet(resultSet));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findUsersByStatus(UserStatus userStatus) throws DaoException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USERS_BY_STATUS)) {
+            statement.setString(1, userStatus.getValue());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                users.add(createUserFromResultSet(resultSet));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(e);
+        }
+        return users;
+    }
+
+    @Override
     public Optional<String> findPasswordByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_PASSWORD)) {

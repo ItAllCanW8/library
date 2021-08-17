@@ -18,6 +18,7 @@ import by.epamtc.library.model.service.validation.UserValidator;
 import by.epamtc.library.util.Encryptor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -183,6 +184,30 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<User> findUsersByRole(String role) throws ServiceException{
+        try {
+            if(role != null && !role.isEmpty())
+                return userDao.findUsersByRole(role);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public List<User> findUsersByStatus(String status) throws ServiceException {
+        try {
+            UserStatus userStatus = UserStatus.fromString(status);
+
+            if(userStatus != null)
+                return userDao.findUsersByStatus(userStatus);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return new ArrayList<>(0);
     }
 
     @Override

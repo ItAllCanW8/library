@@ -21,5 +21,7 @@ public interface UserDao {
     boolean updateUserStatus(long userId, UserStatus newStatus) throws DaoException;
     boolean updateUserRole(long userId, UserRole newRole) throws DaoException;
     List<User> findAllUsers() throws DaoException;
+    List<User> findUsersByRole(String role) throws DaoException;
+    List<User> findUsersByStatus(UserStatus userStatus) throws DaoException;
 }
 

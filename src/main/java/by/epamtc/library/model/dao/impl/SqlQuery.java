@@ -66,6 +66,15 @@ public class SqlQuery {
     public static final String SELECT_ALL_USERS = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
             "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk " +
             "JOIN user_roles ON role_id = role_id_fk;";
+
+    public static final String FIND_USERS_BY_ROLE = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
+            "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk " +
+            "JOIN user_roles ON role_id = role_id_fk WHERE role = ?;";
+
+    public static final String FIND_USERS_BY_STATUS = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
+            "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk " +
+            "JOIN user_roles ON role_id = role_id_fk WHERE status = ?;";
+
     public static final String CHECK_BOOK_FOR_EXISTENCE = "SELECT title FROM books WHERE title = ?;";
     public static final String INSERT_BOOK = "INSERT INTO books(title, author_pseudo, isbn, available_quantity," +
             " genre, short_description, pdf, img, author_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -77,7 +86,7 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_PDF = "UPDATE books SET pdf = ? WHERE book_id = ?";
 
     public static final String CHECK_BOOK_REQUEST_FOR_EXISTENCE = "SELECT request_id FROM book_requests WHERE" +
-            " book_id_fk = ? AND user_id_fk = ? AND state ='approved';";
+            " book_id_fk = ? AND user_id_fk = ? AND (state ='approved' OR state = 'left');";
     public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
@@ -90,7 +99,19 @@ public class SqlQuery {
             "book_id = book_id_fk WHERE user_id_fk = ?;";
 
     public static final String SORT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,closing_date," +
-            "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests ORDER BY ";
+            "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests JOIN users ON " +
+            "user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON book_id = book_id_fk" +
+            " ORDER BY ";
+
+    public static final String FIND_BOOK_REQUESTS_BY_TYPE = "SELECT request_id, request_type,state,request_date," +
+            "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
+            "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
+            " book_id = book_id_fk WHERE request_type LIKE ?;";
+
+    public static final String FIND_BOOK_REQUESTS_BY_STATE = "SELECT request_id, request_type,state,request_date," +
+            "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
+            "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
+            " book_id = book_id_fk WHERE state LIKE ?;";
 
     public static final String LOAD_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ? AND state ='approved';";

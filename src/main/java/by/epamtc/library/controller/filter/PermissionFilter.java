@@ -25,7 +25,7 @@ public class PermissionFilter implements Filter {
     private static final Map<UserRole, EnumSet<CommandType>> permissionCommands = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         EnumSet<CommandType> sameCommands = EnumSet.of(CommandType.CHANGE_LANGUAGE, CommandType.LOAD_BOOKS,
                 CommandType.LOAD_BOOK_INFO, CommandType.HOME, CommandType.LOAD_BOOK_COVER,
                 CommandType.FIND_BOOKS_BY_KEYWORD, CommandType.FIND_BOOKS_BY_GENRE, CommandType.FIND_BOOKS_BY_AUTHOR,
@@ -36,11 +36,13 @@ public class PermissionFilter implements Filter {
 
         EnumSet<CommandType> authorizedUserCommands = EnumSet.of(CommandType.LOGOUT, CommandType.LOAD_USER_PROFILE,
                 CommandType.LOAD_PROFILE_PHOTO, CommandType.EDIT_USER_PROFILE, CommandType.USER_PROFILE,
-                CommandType.UPLOAD_PHOTO, CommandType.CHANGE_PASSWORD, CommandType.VIEW_PDF);
+                CommandType.DEACTIVATE_ACCOUNT, CommandType.UPLOAD_PHOTO, CommandType.CHANGE_PASSWORD, CommandType.VIEW_PDF,
+                CommandType.FIND_BOOK_REQUESTS_BY_TYPE, CommandType.FIND_BOOK_REQUESTS_BY_STATE);
 
         EnumSet<CommandType> adminCommands = EnumSet.of(CommandType.CHANGE_ROLE_TO_LIBRARIAN,
                 CommandType.CHANGE_ROLE_TO_READER, CommandType.ACTIVATE_USER_ACCOUNT, CommandType.DEACTIVATE_USER_ACCOUNT,
-                CommandType.USERS, CommandType.COEFFICIENTS, CommandType.SET_COEFFICIENTS);
+                CommandType.USERS, CommandType.FIND_USERS_BY_ROLE, CommandType.FIND_USERS_BY_STATUS,
+                CommandType.COEFFICIENTS, CommandType.SET_COEFFICIENTS);
             adminCommands.addAll(authorizedUserCommands);
         adminCommands.addAll(sameCommands);
 
@@ -71,7 +73,7 @@ public class PermissionFilter implements Filter {
         UserRole role = (UserRole) session.getAttribute(SessionAttribute.CURRENT_ROLE);
         Optional<Command> optionalCommand = CommandProvider.defineCommand(request);
 
-        if (!optionalCommand.isPresent()) {
+        if (optionalCommand.isEmpty()) {
             chain.doFilter(request, response);
             return;
         }
@@ -79,7 +81,7 @@ public class PermissionFilter implements Filter {
         EnumSet<CommandType> commands = permissionCommands.get(role);
         Optional<CommandType> command = CommandProvider.defineCommandType(request);
 
-        if (commands == null || !command.isPresent() || !commands.contains(command.get())) {
+        if (commands == null || command.isEmpty() || !commands.contains(command.get())) {
             LOGGER.log(Level.ERROR, "User hasn't got permission to execute command " + command.get());
             RequestDispatcher dispatcher = request.getRequestDispatcher(ServletAttribute.HOME_URL);
             dispatcher.forward(request, response);

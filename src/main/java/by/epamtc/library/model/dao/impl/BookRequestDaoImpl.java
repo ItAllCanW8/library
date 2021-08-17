@@ -124,20 +124,48 @@ public class BookRequestDaoImpl implements BookRequestDao {
         List<BookRequest> bookRequests = new ArrayList<>();
         try (Connection connection = pool.takeConnection();
              Statement statement = connection.createStatement()) {
-            System.out.println("dao " + sortingColumn.getValue());
-            System.out.println("dao " + sortingOrderType.getValue());
-            System.out.println(SqlQuery.SORT_BOOK_REQUESTS + sortingColumn.getValue() + " "
-                    + sortingOrderType.getValue());
             ResultSet resultSet = statement.executeQuery(SqlQuery.SORT_BOOK_REQUESTS + sortingColumn.getValue() + " "
                     + sortingOrderType.getValue());
 
-
-
             while (resultSet.next()) {
-                bookRequests.add(createRequestFromResultSet(resultSet, false));
+                bookRequests.add(createRequestFromResultSet(resultSet, true));
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error sorting book requests by " + sortingColumn + " " + sortingOrderType, e);
+        }
+        return bookRequests;
+    }
+
+    @Override
+    public List<BookRequest> findBookRequestsByType(BookRequestType requestType) throws DaoException {
+        List<BookRequest> bookRequests = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_REQUESTS_BY_TYPE)) {
+            statement.setString(1, requestType.getValue());
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                bookRequests.add(createRequestFromResultSet(resultSet, true));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding book requests by type " + requestType.getValue(), e);
+        }
+        return bookRequests;
+    }
+
+    @Override
+    public List<BookRequest> findBookRequestsByState(BookRequestState requestState) throws DaoException {
+        List<BookRequest> bookRequests = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_REQUESTS_BY_STATE)) {
+            statement.setString(1, requestState.getValue());
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                bookRequests.add(createRequestFromResultSet(resultSet, true));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding book requests by state " + requestState.getValue(), e);
         }
         return bookRequests;
     }

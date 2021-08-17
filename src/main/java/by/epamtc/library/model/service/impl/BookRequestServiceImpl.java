@@ -39,7 +39,7 @@ public class BookRequestServiceImpl implements BookRequestService {
     @Override
     public boolean createBookRequest(Map<String, String> fields, User reader) throws ServiceException {
         Optional<BookRequest> requestOptional = bookRequestFactory.create(fields);
-        BookRequestType bookRequestType = BookRequestType.fromString(fields.get(RequestParameter.BOOK_REQUEST_TYPE));
+        BookRequestType bookRequestType = BookRequestType.fromString(fields.get(RequestParameter.REQUEST_TYPE));
 
         if(bookRequestType == null)
             return false;
@@ -143,14 +143,8 @@ public class BookRequestServiceImpl implements BookRequestService {
     @Override
     public List<BookRequest> sort(String sortingField, String sortingOrder) throws ServiceException {
         try {
-            System.out.println(sortingField);
-            System.out.println(sortingOrder);
-
             SortingHelper.SortingColumn sortingColumn = SortingHelper.SortingColumn.fromString(sortingField);
             SortingHelper.SortingOrderType sortingOrderType = SortingHelper.SortingOrderType.fromString(sortingOrder);
-
-            System.out.println(sortingColumn.getValue());
-            System.out.println(sortingOrderType.getValue());
 
             if(sortingColumn != null && sortingOrderType != null)
                 return bookRequestDao.sort(sortingColumn, sortingOrderType);
@@ -158,6 +152,34 @@ public class BookRequestServiceImpl implements BookRequestService {
             throw new ServiceException(e);
         }
 
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public List<BookRequest> findBookRequestsByType(String type) throws ServiceException {
+        try{
+            BookRequestType reqType = BookRequestType.fromString(type);
+
+            if(reqType != null)
+                return bookRequestDao.findBookRequestsByType(reqType);
+        }
+        catch (DaoException e){
+            throw new ServiceException(e);
+        }
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public List<BookRequest> findBookRequestsByState(String state) throws ServiceException {
+        try{
+            BookRequestState requestState = BookRequestState.fromString(state);
+
+            if(requestState != null)
+                return bookRequestDao.findBookRequestsByState(requestState);
+        }
+        catch (DaoException e){
+            throw new ServiceException(e);
+        }
         return new ArrayList<>(0);
     }
 }

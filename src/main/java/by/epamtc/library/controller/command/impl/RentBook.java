@@ -8,11 +8,9 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,13 +25,13 @@ public class RentBook implements Command {
         HttpSession session = req.getSession();
         User reader = (User) session.getAttribute(SessionAttribute.USER);
         String bookId = req.getParameter(RequestParameter.BOOK_ID);
-        String rentMethod = req.getParameter(RequestParameter.BOOK_REQUEST_TYPE);
+        String rentMethod = req.getParameter(RequestParameter.REQUEST_TYPE);
 
         Map<String, String> fields = new LinkedHashMap<>();
-        fields.put(RequestParameter.BOOK_REQUEST_TYPE, rentMethod);
+        fields.put(RequestParameter.REQUEST_TYPE, rentMethod);
         fields.put(RequestParameter.BOOK_ID, bookId);
 
-        CommandResult result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.REDIRECT);
+        CommandResult result = new CommandResult(CommandName.READER_BOOK_REQUESTS, CommandResult.Type.REDIRECT);
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
             if (service.createBookRequest(fields, reader)) {

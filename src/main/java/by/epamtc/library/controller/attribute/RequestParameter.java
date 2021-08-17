@@ -5,6 +5,8 @@ public class RequestParameter {
     public static final String USER_ID = "userId";
     public static final String USERNAME = "username";
     public static final String USER_DETAILS = "userDetails";
+    public static final String USER_ROLE= "userRole";
+    public static final String USER_STATUS= "userStatus";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String EMAIL = "email";
@@ -26,7 +28,6 @@ public class RequestParameter {
     public static final String BOOK_COVER = "bookCover";
     public static final String BOOK_AUTHOR_PHOTO = "bookAuthorPhoto";
     public static final String BOOKS = "books";
-    public static final String BOOK_REQUEST_TYPE = "requestType";
 
     public static final String NEW_LOCALIZATION = "newLocalization";
 
@@ -43,6 +44,7 @@ public class RequestParameter {
 
     public static final String BOOK_REQUESTS = "bookRequests";
     public static final String REQUEST_ID = "requestId";
+    public static final String REQUEST_TYPE = "requestType";
     public static final String REQUEST_STATE = "requestState";
 
     public static final String SEARCH_KEYWORD = "keyword";

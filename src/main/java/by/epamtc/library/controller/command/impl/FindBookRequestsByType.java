@@ -7,31 +7,32 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.entity.BookRequestType;
+import by.epamtc.library.model.entity.BookRequest;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
-public class ReturnBook implements Command {
+public class FindBookRequestsByType implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        long requestId = Long.parseLong(req.getParameter(RequestParameter.REQUEST_ID));
-        long bookId = Long.parseLong(req.getParameter(RequestParameter.BOOK_ID));
-        int bookQuantity = Integer.parseInt(req.getParameter(RequestParameter.BOOK_QUANTITY));
-        BookRequestType requestType = BookRequestType.fromString(req.getParameter(RequestParameter.REQUEST_TYPE));
-
-        CommandResult result = new CommandResult(CommandName.READER_BOOK_REQUESTS, CommandResult.Type.REDIRECT);
+        String type = req.getParameter(RequestParameter.REQUEST_TYPE);
 
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
-        try {
-            if(!service.closeBookRequest(requestId, bookId, bookQuantity, requestType))
-                result = new CommandResult(PagePath.ERROR_PAGE, CommandResult.Type.FORWARD);
+        CommandResult result = new CommandResult(CommandName.BOOK_REQUESTS, CommandResult.Type.REDIRECT);
+
+        try{
+            List<BookRequest> bookRequests = service.findBookRequestsByType(type);
+
+            if(bookRequests.size() > 0){
+                req.setAttribute(RequestParameter.BOOK_REQUESTS, bookRequests);
+                result = new CommandResult(PagePath.BOOK_REQUESTS, CommandResult.Type.FORWARD);
+            }
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-
         return result;
     }
 }

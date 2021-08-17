@@ -48,6 +48,12 @@ public enum CommandType {
     USERS{{
         this.command = new Users();
     }},
+    FIND_USERS_BY_ROLE{{
+        this.command = new FindUsersByRole();
+    }},
+    FIND_USERS_BY_STATUS{{
+        this.command = new FindUsersByStatus();
+    }},
     COEFFICIENTS{{
         this.command = new CoefficientsPage();
     }},
@@ -98,6 +104,12 @@ public enum CommandType {
     }},
     BOOK_REQUESTS{{
         this.command = new BookRequests();
+    }},
+    FIND_BOOK_REQUESTS_BY_TYPE{{
+        this.command = new FindBookRequestsByType();
+    }},
+    FIND_BOOK_REQUESTS_BY_STATE{{
+        this.command = new FindBookRequestsByState();
     }},
     CHANGE_BOOK_REQUEST_STATE{{
         this.command = new ChangeBookRequestState();
