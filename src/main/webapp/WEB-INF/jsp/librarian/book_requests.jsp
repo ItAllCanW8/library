@@ -21,7 +21,7 @@
                 <fmt:message key="librarian.bookRequests"/>
             </h3>
             <hr style="width:100%;text-align:left;margin-left:0">
-            <div class="row align-items-start" style="width:100%;">
+            <div class="row align-items-start" style="width:100%;margin-bottom: 20px">
                 <div class="col-2" style="display: flex;justify-content: center">
                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/book_requests.do"
                        role="button">
@@ -42,6 +42,45 @@
                             <li><a class="dropdown-item"
                                    href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=asc">
                                 <fmt:message key="button.sortAsc"/> </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-2" style="display: flex;justify-content: center">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="requestTypeDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <fmt:message key="button.requestType"/>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="requestTypeDropdown">
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/find_book_requests_by_type.do?requestType=for_subscription">
+                                <fmt:message key="reader.rentForSubscription"/> </a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/find_book_requests_by_type.do?requestType=to_reading_room">
+                                <fmt:message key="button.requestToRR"/> </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-2" style="display: flex;justify-content: center">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="requestStateDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <fmt:message key="button.requestState"/>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="requestStateDropdown">
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=approved">
+                                <fmt:message key="button.approvedRequests"/> </a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=denied">
+                                <fmt:message key="button.deniedRequests"/> </a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=closed">
+                                <fmt:message key="button.closedRequests"/> </a></li>
                         </ul>
                     </div>
                 </div>

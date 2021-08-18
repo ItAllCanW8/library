@@ -17,6 +17,9 @@
 <section class="event_section layout_padding">
     <div class="container">
         <div class="heading_container">
+            <h3>
+                <fmt:message key="header.booksManagement"/>
+            </h3>
             <button type="button" class="btn btn-secondary" style="margin-left: 30.7%; width: 40%" data-bs-toggle="modal"
                     data-bs-target="#addBookModal">
                 <fmt:message key="button.addBook"/>
