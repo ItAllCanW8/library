@@ -20,6 +20,7 @@
       <h3>
         <fmt:message key="librarian.bookRequests"/>
       </h3>
+      <hr style="width:100%;text-align:left;margin-left:0">
     </div>
     <div class="event_container">
       <table id="booksTable" class="table table-dark table-bordered border-secondary">

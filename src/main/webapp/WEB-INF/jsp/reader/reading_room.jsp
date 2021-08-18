@@ -18,6 +18,7 @@
             <h3>
                 <fmt:message key="header.readingRoom"/>
             </h3>
+            <hr style="width:100%;text-align:left;margin-left:0">
         </div>
         <div class="course_container">
             <div class="course_content">

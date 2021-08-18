@@ -12,18 +12,29 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BookRequestDaoImpl implements BookRequestDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
-    private static final String bookReqId = "request_id";
-    private static final String bookReqType = "request_type";
-    private static final String bookReqSate = "state";
-    private static final String bookReqDate = "request_date";
-    private static final String bookReqClosingDate = "closing_date";
-    private static final String bookReqPenaltyAmount = "penalty_amount";
-    private static final String bookReqBookId = "book_id_fk";
-    private static final String bookReqUserId = "user_id_fk";
+    private static final String bookReqIdCol = "request_id";
+    private static final String bookReqTypeCol = "request_type";
+    private static final String bookReqSateCol = "state";
+    private static final String bookReqDateCol = "request_date";
+    private static final String bookReqClosingDateCol = "closing_date";
+    private static final String bookReqPenaltyAmountCol = "penalty_amount";
+    private static final String bookReqBookIdCol = "book_id_fk";
+    private static final String bookReqUserIdCol = "user_id_fk";
+
+    private static final String bookImgCol = "img";
+    private static final String bookTitleCol = "title";
+    private static final String bookPdfCol = "pdf";
+    private static final String bookQuantityCol = "available_quantity";
+
+    private static final String usernameCol = "username";
+    private static final String userPhotoCol = "photo_path";
+
+
 
     public BookRequestDaoImpl() {
     }
@@ -108,8 +119,8 @@ public class BookRequestDaoImpl implements BookRequestDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                requests.add(new BookRequest(new Book(resultSet.getString("title"),
-                        resultSet.getString("img"), resultSet.getString("pdf"))));
+                requests.add(new BookRequest(new Book(resultSet.getString(bookTitleCol),
+                        resultSet.getString(bookImgCol), resultSet.getString(bookPdfCol))));
             }
 
         } catch (SQLException | ConnectionPoolException e) {
@@ -214,28 +225,40 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
     }
 
-    private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean areUserFieldsPresent) throws SQLException {
-        long requestId = resultSet.getLong(bookReqId);
-        BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqType));
-        BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSate));
-        String requestDate = resultSet.getString(bookReqDate);
-        String closingDate = resultSet.getString(bookReqClosingDate);
-        int penaltyAmount = resultSet.getInt(bookReqPenaltyAmount);
+    @Override
+    public Optional<String> findEmailByRequestId(long requestId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_EMAIL_BY_REQUEST_ID)) {
+            statement.setLong(1, requestId);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(resultSet.getString(1)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding email by book request id " + requestId, e);
+        }
+    }
 
-        long bookId = resultSet.getLong(bookReqBookId);
-        String bookTitle = resultSet.getString("title");
-        String bookImg = resultSet.getString("img");
-        String bookPdf= resultSet.getString("pdf");
+    private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean areUserFieldsPresent) throws SQLException {
+        long requestId = resultSet.getLong(bookReqIdCol);
+        BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqTypeCol));
+        BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSateCol));
+        String requestDate = resultSet.getString(bookReqDateCol);
+        String closingDate = resultSet.getString(bookReqClosingDateCol);
+        int penaltyAmount = resultSet.getInt(bookReqPenaltyAmountCol);
+
+        long bookId = resultSet.getLong(bookReqBookIdCol);
+        String bookTitle = resultSet.getString(bookTitleCol);
+        String bookImg = resultSet.getString(bookImgCol);
+        String bookPdf= resultSet.getString(bookPdfCol);
 
         if(areUserFieldsPresent){
-            long userId = resultSet.getLong(bookReqUserId);
-            String username = resultSet.getString("username");
-            String userPhoto = resultSet.getString("photo_path");
+            long userId = resultSet.getLong(bookReqUserIdCol);
+            String username = resultSet.getString(usernameCol);
+            String userPhoto = resultSet.getString(userPhotoCol);
 
             return new BookRequest(requestId,requestType, requestState, requestDate, closingDate,
                     penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
         } else {
-            short bookAvailableQuantity = resultSet.getShort("available_quantity");
+            short bookAvailableQuantity = resultSet.getShort(bookQuantityCol);
 
             return new BookRequest(requestId, requestType, requestState, requestDate, closingDate,
                     penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));

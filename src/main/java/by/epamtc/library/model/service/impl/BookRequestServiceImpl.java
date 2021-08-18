@@ -123,6 +123,20 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
+    public Optional<String> findEmailByRequestId(long requestId) throws ServiceException {
+        try {
+            Optional<String> emailOptional = bookRequestDao.findEmailByRequestId(requestId);
+            if (emailOptional.isPresent()) {
+                String email = emailOptional.get();
+                emailOptional = Optional.of(email);
+            }
+            return emailOptional;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException {
         try {
             return bookRequestDao.loadBookRequestsByReaderId(readerId);

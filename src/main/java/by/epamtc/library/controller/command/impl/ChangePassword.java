@@ -1,9 +1,6 @@
 package by.epamtc.library.controller.command.impl;
 
-import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.JspAttribute;
-import by.epamtc.library.controller.attribute.RequestParameter;
-import by.epamtc.library.controller.attribute.SessionAttribute;
+import by.epamtc.library.controller.attribute.*;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
@@ -13,6 +10,7 @@ import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 import by.epamtc.library.model.service.validation.UserValidator;
+import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +38,11 @@ public class ChangePassword implements Command {
             Optional<User> userOptional = service.login(user.getEmail(), currentPassword);
             if (userOptional.isPresent()) {
                 if (service.changePassword(user.getId(), fields)) {
+                    MailSender mailSender = MailSender.getInstance();
+                    mailSender.setupLetter(user.getEmail(), Message.LIBRARY_LETTER_SUBJECT,Message.HELLO_PREFIX
+                            + user.getUsername() +  Message.PASSWORD_CHANGED);
+                    mailSender.send();
+
                     session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
                     result = new CommandResult(CommandName.USER_PROFILE, CommandResult.Type.REDIRECT);
                 }

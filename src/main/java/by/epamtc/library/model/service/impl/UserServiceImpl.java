@@ -224,6 +224,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Optional<String> findEmailById(long userId) throws ServiceException {
+        try {
+            Optional<String> emailOptional = userDao.findEmailById(userId);
+            if (emailOptional.isPresent()) {
+                String email = emailOptional.get();
+                emailOptional = Optional.of(email);
+            }
+            return emailOptional;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private void updateUserFields(User user, Map<String, String> fields) {
         String newUsername = fields.get(RequestParameter.USERNAME);
         user.setUsername(newUsername);

@@ -46,7 +46,8 @@ public class Register implements Command {
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
 
                 MailSender mailSender = MailSender.getInstance();
-                mailSender.setupLetter(email, Message.LIBRARY_LETTER_SUBJECT, Message.WELCOME_LETTER);
+                mailSender.setupLetter(email, Message.LIBRARY_LETTER_SUBJECT, Message.HELLO_PREFIX + username +
+                        Message.WELCOME_LETTER);
                 mailSender.send();
             } else {
                 req.setAttribute(RequestParameter.USERNAME, fields.get(RequestParameter.USERNAME));

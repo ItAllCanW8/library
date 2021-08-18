@@ -25,4 +25,5 @@ public interface UserService {
     List<User> findUsersByRole(String role) throws ServiceException;
     List<User> findUsersByStatus(String status) throws ServiceException;
     Optional<User> findUserById(long userId) throws ServiceException;
+    Optional<String> findEmailById(long userId) throws ServiceException;
 }

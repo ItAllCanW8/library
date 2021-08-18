@@ -8,6 +8,7 @@ import by.epamtc.library.model.entity.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface BookRequestService {
     boolean bookRequestExists(BookRequest request) throws ServiceException;
@@ -21,4 +22,5 @@ public interface BookRequestService {
     boolean changeRequestState(long requestId, String newRequestStateStr) throws ServiceException;
     boolean closeBookRequest(long requestId, long bookId, int bookQuantity, BookRequestType requestType) throws ServiceException;
     boolean deleteBookRequest(long requestId) throws ServiceException;
+    Optional<String> findEmailByRequestId(long requestId) throws ServiceException;
 }

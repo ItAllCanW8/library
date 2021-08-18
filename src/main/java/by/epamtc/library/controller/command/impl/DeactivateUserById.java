@@ -2,6 +2,7 @@ package by.epamtc.library.controller.command.impl;
 
 import by.epamtc.library.controller.attribute.CommandName;
 import by.epamtc.library.controller.attribute.JspAttribute;
+import by.epamtc.library.controller.attribute.Message;
 import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
@@ -11,9 +12,11 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
+import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 
 public class DeactivateUserById implements Command {
@@ -24,8 +27,17 @@ public class DeactivateUserById implements Command {
         UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(CommandName.USERS, CommandResult.Type.REDIRECT);
         try {
-            if(!service.deactivateUser(Long.parseLong(userId)))
+            if(service.deactivateUser(Long.parseLong(userId))){
+                Optional<String> emailOptional = service.findEmailById(Long.parseLong(userId));
+
+                if(emailOptional.isPresent()){
+                    MailSender mailSender = MailSender.getInstance();
+                    mailSender.setupLetter(emailOptional.get(), Message.LIBRARY_LETTER_SUBJECT, Message.DEACTIVATION_LETTER);
+                    mailSender.send();
+                }
+            } else{
                 req.setAttribute(JspAttribute.ERROR_CHANGING_STATUS, JspAttribute.ERROR_CHANGING_STATUS_MSG);
+            }
         } catch (ServiceException e) {
             throw new CommandException("Error deactivating user account");
         }

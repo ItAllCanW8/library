@@ -13,7 +13,7 @@
 
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-    <c:set var="users" scope="session" value="${users}"/>
+    <c:set var="users" scope="request" value="${users}"/>
 </div>
 
 <section class="event_section layout_padding">
@@ -23,10 +23,11 @@
                 <fmt:message key="header.users"/>
             </h3>
 
-            <div style="display: flex;justify-content: center">
+            <div style="display: flex;justify-content: center; margin-top: 20px">
                 <a class="btn btn-secondary" href="${pageContext.request.contextPath}/users.do" role="button">
                     <fmt:message key="button.allUsers"/> </a>
             </div>
+            <hr style="width:100%;text-align:left;margin-left:0">
         </div>
         <div class="event_container">
             <table class="table table-dark table-bordered border-secondary">

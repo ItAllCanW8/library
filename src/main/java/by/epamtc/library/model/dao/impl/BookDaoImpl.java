@@ -49,7 +49,7 @@ public class BookDaoImpl implements BookDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error adding a book.", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class BookDaoImpl implements BookDao {
                         resultSet.getString(bookImgCol)));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error loading popular books.", e);
         }
         return books;
     }
@@ -82,7 +82,7 @@ public class BookDaoImpl implements BookDao {
             }
 
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error loading books.", e);
         }
 
         return books;
@@ -115,7 +115,7 @@ public class BookDaoImpl implements BookDao {
 
             return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet, true)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding book by id.", e);
         }
     }
 
@@ -237,7 +237,7 @@ public class BookDaoImpl implements BookDao {
             statement.execute();
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating book's pdf.", e);
         }
     }
 
@@ -257,7 +257,7 @@ public class BookDaoImpl implements BookDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating book.", e);
         }
     }
 
@@ -271,7 +271,7 @@ public class BookDaoImpl implements BookDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error deleting book.", e);
         }
     }
 
@@ -284,7 +284,7 @@ public class BookDaoImpl implements BookDao {
             ResultSet resultSet = statement.executeQuery();
             return !resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error checking if book title is available.", e);
         }
     }
 
@@ -299,7 +299,7 @@ public class BookDaoImpl implements BookDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating book's available quantity.", e);
         }
     }
 
@@ -313,7 +313,7 @@ public class BookDaoImpl implements BookDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating book's photo", e);
         }
     }
 

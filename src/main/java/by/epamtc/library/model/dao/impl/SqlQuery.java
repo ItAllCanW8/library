@@ -26,6 +26,8 @@ public class SqlQuery {
 
     public static final String SELECT_PASSWORD = "SELECT password FROM users WHERE email = ?;";
 
+    public static final String FIND_EMAIL_BY_ID = "SELECT email FROM users WHERE user_id = ?;";
+
     public static final String SELECT_POPULAR_BOOKS = "SELECT book_id,title,img FROM books ORDER BY available_quantity " +
             "ASC LIMIT 6;";
 
@@ -87,9 +89,12 @@ public class SqlQuery {
 
     public static final String CHECK_BOOK_REQUEST_FOR_EXISTENCE = "SELECT request_id FROM book_requests WHERE" +
             " book_id_fk = ? AND user_id_fk = ? AND (state ='approved' OR state = 'left');";
+
     public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
+
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
+
     public static final String SELECT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,closing_date, " +
             "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests JOIN users ON user_id = user_id_fk " +
             "JOIN user_details ON details_id = details_id_fk JOIN books ON book_id = book_id_fk;";
@@ -112,6 +117,9 @@ public class SqlQuery {
             "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
             "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
             " book_id = book_id_fk WHERE state LIKE ?;";
+
+    public static final String FIND_EMAIL_BY_REQUEST_ID = "SELECT email FROM book_requests JOIN users ON book_requests.user_id_fk" +
+            " = users.user_id WHERE request_id = ?;";
 
     public static final String LOAD_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ? AND state ='approved';";

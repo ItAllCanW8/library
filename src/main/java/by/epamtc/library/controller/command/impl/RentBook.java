@@ -36,7 +36,8 @@ public class RentBook implements Command {
             if (service.createBookRequest(fields, reader)) {
                 if(BookRequestType.fromString(rentMethod) == BookRequestType.FOR_SUBSCRIPTION){
                     MailSender mailSender = MailSender.getInstance();
-                    mailSender.setupLetter(reader.getEmail(), Message.LIBRARY_LETTER_SUBJECT, Message.BOOK_REQUEST_CREATED);
+                    mailSender.setupLetter(reader.getEmail(), Message.LIBRARY_LETTER_SUBJECT, Message.BOOK_REQUEST_CREATED
+                    + bookId);
                     mailSender.send();
                 }
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);

@@ -1,9 +1,6 @@
 package by.epamtc.library.controller.command.impl;
 
-import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.JspAttribute;
-import by.epamtc.library.controller.attribute.RequestParameter;
-import by.epamtc.library.controller.attribute.SessionAttribute;
+import by.epamtc.library.controller.attribute.*;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
@@ -12,6 +9,7 @@ import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
+import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -7,6 +7,7 @@ import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.util.SortingHelper;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRequestDao {
     boolean bookRequestExists(BookRequest request) throws DaoException;
@@ -21,4 +22,5 @@ public interface BookRequestDao {
     boolean changeRequestState(long requestId, String newRequestState) throws DaoException;
     boolean closeBookRequest(long requestId) throws DaoException;
     boolean deleteBookRequest(long requestId) throws DaoException;
+    Optional<String> findEmailByRequestId(long requestId) throws DaoException;
 }

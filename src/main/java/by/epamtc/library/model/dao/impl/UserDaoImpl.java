@@ -22,6 +22,18 @@ public class UserDaoImpl implements UserDao {
 
     private static final String INVALID_ROLE_ERROR_MSG = "Invalid user role.";
 
+    private static final String userIdCol = "user_id";
+    private static final String detailsIdCol = "details_id_fk";
+    private static final String usernameCol = "username";
+    private static final String emailCol = "email";
+    private static final String nameCol = "name";
+    private static final String surnameCol = "surname";
+    private static final String dateOfBirthCol = "date_of_birth";
+    private static final String phoneNumberCol = "phone_number";
+    private static final String photoPathCol = "photo_path";
+    private static final String statusCol = "status";
+    private static final String roleCol = "role";
+
     public UserDaoImpl() {
     }
 
@@ -33,7 +45,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             return !resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error checking if user's email is available", e);
         }
     }
 
@@ -45,7 +57,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             return !resultSet.next();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error checking if user's phone number is available", e);
         }
     }
 
@@ -63,7 +75,7 @@ public class UserDaoImpl implements UserDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error inserting user's details", e);
         }
     }
 
@@ -104,7 +116,7 @@ public class UserDaoImpl implements UserDao {
                 }
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error adding user", e);
         }
         return false;
     }
@@ -119,7 +131,7 @@ public class UserDaoImpl implements UserDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error changing user's photo", e);
         }
     }
 
@@ -131,7 +143,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(createUserFromResultSet(resultSet)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding user by id " + userId, e);
         }
     }
 
@@ -160,7 +172,7 @@ public class UserDaoImpl implements UserDao {
                 throw new DaoException("Error updating user profile");
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating user profile", e);
         }
     }
 
@@ -174,7 +186,7 @@ public class UserDaoImpl implements UserDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating user password",e);
         }
     }
 
@@ -189,7 +201,7 @@ public class UserDaoImpl implements UserDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating user status",e);
         }
     }
 
@@ -204,7 +216,7 @@ public class UserDaoImpl implements UserDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating user role", e);
         }
     }
 
@@ -218,7 +230,7 @@ public class UserDaoImpl implements UserDao {
                 users.add(createUserFromResultSet(resultSet));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding all users",e);
         }
         return users;
     }
@@ -234,7 +246,7 @@ public class UserDaoImpl implements UserDao {
                 users.add(createUserFromResultSet(resultSet));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding users by role",e);
         }
         return users;
     }
@@ -250,7 +262,7 @@ public class UserDaoImpl implements UserDao {
                 users.add(createUserFromResultSet(resultSet));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding users by status",e);
         }
         return users;
     }
@@ -263,7 +275,19 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(resultSet.getString(1)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding user password by email",e);
+        }
+    }
+
+    @Override
+    public Optional<String> findEmailById(long userId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_EMAIL_BY_ID)) {
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(resultSet.getString(1)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding email by user id " + userId,e);
         }
     }
 
@@ -275,22 +299,22 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(createUserFromResultSet(resultSet)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding user by email " + email,e);
         }
     }
 
     private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
-        long userId = resultSet.getLong("user_id");
-        long detailsId = resultSet.getLong("details_id_fk");
-        String username = resultSet.getString("username");
-        String email = resultSet.getString("email");
-        String name = resultSet.getString("name");
-        String surname = resultSet.getString("surname");
-        LocalDate dateOfBirth = resultSet.getDate("date_of_birth").toLocalDate();
-        String phoneNumber = resultSet.getString("phone_number");
-        String photoPath = resultSet.getString("photo_path");
-        UserStatus status = UserStatus.fromString(resultSet.getString("status"));
-        UserRole role = UserRole.valueOf(resultSet.getString("role").toUpperCase(Locale.ROOT));
+        long userId = resultSet.getLong(userIdCol);
+        long detailsId = resultSet.getLong(detailsIdCol);
+        String username = resultSet.getString(usernameCol);
+        String email = resultSet.getString(emailCol);
+        String name = resultSet.getString(nameCol);
+        String surname = resultSet.getString(surnameCol);
+        LocalDate dateOfBirth = resultSet.getDate(dateOfBirthCol).toLocalDate();
+        String phoneNumber = resultSet.getString(phoneNumberCol);
+        String photoPath = resultSet.getString(photoPathCol);
+        UserStatus status = UserStatus.fromString(resultSet.getString(statusCol));
+        UserRole role = UserRole.valueOf(resultSet.getString(roleCol).toUpperCase(Locale.ROOT));
         return (new User(userId, role, new UserDetails(detailsId, name, surname, dateOfBirth, phoneNumber, photoPath),
                 status, username, email));
     }

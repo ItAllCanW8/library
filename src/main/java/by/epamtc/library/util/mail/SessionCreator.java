@@ -6,8 +6,8 @@ import javax.mail.Session;
 import java.util.Properties;
 
 public class SessionCreator {
-    private static final String EMAIL = "email";
-    private static final String PASSWORD = "password";
+    private static final String EMAIL = "mail.user.name";
+    private static final String PASSWORD = "mail.user.password";
 
     public static Session createSession(Properties configProperties) {
         String userName = configProperties.getProperty(EMAIL);

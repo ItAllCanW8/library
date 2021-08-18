@@ -22,6 +22,7 @@
             <h3>
                 <fmt:message key="books.catalogue"/>
             </h3>
+            <hr style="width:100%;text-align:left;margin-left:0">
             <div class="row align-items-start" style="width:100%;">
                 <div class="col-2 offset-2" style="display: flex;justify-content: center">
                     <a class="btn btn-secondary" href="load_books.do" role="button"><fmt:message
