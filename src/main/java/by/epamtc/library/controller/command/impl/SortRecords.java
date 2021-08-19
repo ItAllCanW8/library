@@ -26,11 +26,6 @@ public class SortRecords implements Command {
         String sortingOrder = req.getParameter(RequestParameter.SORTING_ORDER);
         SortingHelper.SortingObject sortingObject = SortingHelper.SortingObject.
                 fromString(req.getParameter(RequestParameter.SORTING_OBJECT));
-
-        System.out.println(sortingField);
-        System.out.println(sortingOrder);
-        System.out.println(sortingObject);
-
         CommandResult result = new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.REDIRECT);
 
         if (sortingObject != null) {
@@ -44,11 +39,8 @@ public class SortRecords implements Command {
                         result = new CommandResult(PagePath.BOOKS, CommandResult.Type.FORWARD);
                     }
                 } else if (sortingObject.equals(SortingHelper.SortingObject.BOOK_REQUESTS)){
-                    System.out.println(true);
                     BookRequestService bookRequestService = ServiceFactory.getInstance().getBookRequestService();
                     List<BookRequest> bookRequests = bookRequestService.sort(sortingField, sortingOrder);
-
-                    System.out.println(bookRequests);
 
                     if (bookRequests.size() > 0) {
                         req.setAttribute(RequestParameter.BOOK_REQUESTS, bookRequests);

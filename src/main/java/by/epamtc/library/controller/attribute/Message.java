@@ -26,5 +26,8 @@ public class Message {
 
     public static final String ACTIVATION_LETTER = "Hello. Your account has been activated. Enjoy our library!";
 
+    public static final String USER_REPORT_CREATION = ". Thanks for the report you left. We will review your report and after processing you" +
+            " will receive a response to your email.";
+
     private Message(){}
 }

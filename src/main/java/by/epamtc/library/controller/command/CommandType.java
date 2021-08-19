@@ -137,6 +137,9 @@ public enum CommandType {
     }},
     SORT_RECORDS {{
         this.command = new SortRecords();
+    }},
+    SEND_REPORT {{
+        this.command = new SendReport();
     }};
 
     Command command;

@@ -52,5 +52,8 @@ public class RequestParameter {
     public static final String SORTING_ORDER = "sortingOrder";
     public static final String SORTING_OBJECT = "sortingObject";
 
+    public static final String USER_REPORT_SUBJECT = "reportSubject";
+    public static final String USER_REPORT_MESSAGE = "reportMessage";
+
     private RequestParameter(){}
 }

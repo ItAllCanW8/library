@@ -145,6 +145,13 @@
                         <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                              width="64" height="64"
                              class="rounded-circle avatar" alt="" style="margin-top: 20px">
+                        <c:if test="${!sessionScope.role.toString().equals(admin)}">
+                            <li class="nav-item">
+                                <a class="nav-link header-link" href="${pageContext.request.contextPath}/contact">
+                                    <fmt:message key="header.contact"/>
+                                </a>
+                            </li>
+                        </c:if>
                     </c:if>
                 </ul>
             </div>

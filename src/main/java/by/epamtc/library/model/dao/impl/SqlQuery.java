@@ -132,4 +132,10 @@ public class SqlQuery {
     public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +
             " reading_room_opening = ?, reading_room_closing = ?";
     public static final String SELECT_LIB_COEFFICIENTS = "SELECT * FROM coefficients;";
+
+    public static final String CHECK_USER_REPORT_FOR_EXISTENCE = "SELECT report_id FROM user_reports WHERE" +
+            " is_available = '1' AND subject = ? AND message = ? AND user_id_fk = ?;";
+
+    public static final String INSERT_USER_REPORT = "INSERT INTO user_reports(is_available, subject, message," +
+            " creation_date, user_id_fk) VALUES (?, ?, ?, ?, ?);";
 }

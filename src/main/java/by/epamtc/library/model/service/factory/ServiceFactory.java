@@ -2,15 +2,18 @@ package by.epamtc.library.model.service.factory;
 
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.UserReportService;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 import by.epamtc.library.model.service.impl.BookServiceImpl;
+import by.epamtc.library.model.service.impl.UserReportServiceImpl;
 import by.epamtc.library.model.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
     private final UserService userService = new UserServiceImpl();
     private final BookService bookService = new BookServiceImpl();
     private final BookRequestService bookRequestService = new BookRequestServiceImpl();
+    private final UserReportService userReportService = new UserReportServiceImpl();
 
     private ServiceFactory() {
     }
@@ -33,5 +36,9 @@ public class ServiceFactory {
 
     public BookRequestService getBookRequestService() {
         return bookRequestService;
+    }
+
+    public UserReportService getUserReportService() {
+        return userReportService;
     }
 }

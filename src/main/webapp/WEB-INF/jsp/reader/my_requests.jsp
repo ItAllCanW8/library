@@ -37,23 +37,23 @@
         </thead>
 
         <tbody>
-          <c:forEach var="request" items="${bookRequests}">
-            <c:if test="${!request.state.value.equals('closed')}">
+          <c:forEach var="report" items="${bookRequests}">
+            <c:if test="${!report.state.value.equals('closed')}">
               <tr class="table-secondary">
                 <th scope="row">
-                  <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.book.id}">
+                  <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${report.book.id}">
                     <div>
-                      <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.book.img}" alt=""
+                      <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${report.book.img}" alt=""
                            style="max-height: 250px;max-width: 250px">
                     </div>
-                    <ctg:out text="${request.book.title}"/>
+                    <ctg:out text="${report.book.title}"/>
                   </a>
                 </th>
-                <th scope="row"><ctg:out text="${request.type}"/></th>
-                <th scope="row"><ctg:out text="${request.state}"/></th>
-                <th scope="row"><ctg:out text="${request.requestDate}"/></th>
-                <th scope="row"><ctg:out text="${request.closingDate}"/></th>
-                <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
+                <th scope="row"><ctg:out text="${report.type}"/></th>
+                <th scope="row"><ctg:out text="${report.state}"/></th>
+                <th scope="row"><ctg:out text="${report.requestDate}"/></th>
+                <th scope="row"><ctg:out text="${report.closingDate}"/></th>
+                <th scope="row"><ctg:out text="${report.penaltyAmount}"/></th>
                 <th scope="row">
                     <div class="dropdown col-8 mb-4">
                       <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
@@ -64,18 +64,18 @@
                       </button>
                       <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                           aria-labelledby="actionDropDown">
-                        <c:if test="${request.state.value.equals('approved')}">
+                        <c:if test="${report.state.value.equals('approved')}">
                           <li><a class="dropdown-item"
-                                 href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${request.book.pdf}">
+                                 href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${report.book.pdf}">
                             <fmt:message key="button.read"/> </a></li>
-                          <c:if test="${request.type.value.equals('for_subscription')}">
+                          <c:if test="${report.type.value.equals('for_subscription')}">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${report.id}&bookId=${report.book.id}&bookQuantity=${report.book.availableQuantity}&requestType=${report.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
-                          <c:if test="${request.type.value.equals('to_reading_room')}">
+                          <c:if test="${report.type.value.equals('to_reading_room')}">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${report.id}&bookId=${report.book.id}&bookQuantity=${report.book.availableQuantity}&requestType=${report.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                         </c:if>

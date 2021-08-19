@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public final class BookValidator {
+public final class BookValidator extends LibraryValidator{
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Pattern TITLE_PATTERN = Pattern.compile("[А-Яа-я\\w\\p{Blank}]{3,255}");
     private static final Pattern AUTHOR_PATTERN = Pattern.compile("[А-Яа-яa-zA-Z.\\s]{3,255}");
@@ -98,13 +98,6 @@ public final class BookValidator {
             LOGGER.log(Level.DEBUG, "Description isn't valid: " + description);
         }
         return result;
-    }
-
-    private static boolean isFieldValid(String field, Pattern pattern){
-        if (field == null)
-            return false;
-
-        return pattern.matcher(field).matches();
     }
 
     public static boolean isPhotoNameValid(String photoName) {

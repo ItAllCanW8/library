@@ -12,7 +12,7 @@
 <body class="sub_page">
 <div class="hero_area">
   <%@ include file="../components/header.jsp"%>
-  <c:set var="request" scope="request" value="${book}"/>
+  <c:set var="report" scope="request" value="${book}"/>
 </div>
 
 <!-- about section -->
@@ -25,14 +25,14 @@
       <div class="col-md-6">
         <div class="img_container">
           <div class="img-box b1">
-            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
+            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${report.img}" alt="" />
           </div>
           <div class="img-box b2">
-            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.authorImg}" alt="" />
+            <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${report.authorImg}" alt="" />
           </div>
           <c:if test="${role.toString().equals(librarian)}">
             <label for="coverUpload"><fmt:message key="librarian.uploadBookCover"/> </label>
-            <form action="${pageContext.request.contextPath}/upload_book_cover.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
+            <form action="${pageContext.request.contextPath}/upload_book_cover.do?bookId=${report.id}" method="post" enctype="multipart/form-data"
                   id="coverUpload">
               <input type="file" name="bookCover" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary"
@@ -40,14 +40,14 @@
             </form>
 
             <label for="authorPhotoUpload"><fmt:message key="librarian.uploadAuthorPhoto"/></label>
-            <form action="${pageContext.request.contextPath}/upload_author_photo.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
+            <form action="${pageContext.request.contextPath}/upload_author_photo.do?bookId=${report.id}" method="post" enctype="multipart/form-data"
                   id="authorPhotoUpload">
               <input type="file" name="bookAuthorPhoto" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
             </form>
 
             <label for="pdfUpload"><fmt:message key="librarian.uploadBookPDf"/></label>
-            <form action="${pageContext.request.contextPath}/upload_pdf.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
+            <form action="${pageContext.request.contextPath}/upload_pdf.do?bookId=${report.id}" method="post" enctype="multipart/form-data"
                   id="pdfUpload">
               <input type="file" name="bookPdf" class="form-control-file" accept="application/pdf"/>
               <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
@@ -59,23 +59,23 @@
       <div class="col-md-6">
         <div class="detail-box">
           <div class="heading_container">
-            <h3><ctg:out text="${request.title}"/></h3>
+            <h3><ctg:out text="${report.title}"/></h3>
             <h5>
-              <a href="${pageContext.request.contextPath}/find_books_by_author.do?bookAuthor=${request.authorPseudo}">
-                <ctg:out text="${request.authorPseudo}"/>
+              <a href="${pageContext.request.contextPath}/find_books_by_author.do?bookAuthor=${report.authorPseudo}">
+                <ctg:out text="${report.authorPseudo}"/>
               </a>
             </h5>
-            <h5>ISBN: <ctg:out text="${request.isbn}"/></h5>
+            <h5>ISBN: <ctg:out text="${report.isbn}"/></h5>
             <h5><fmt:message key="books.genre"/>:
-              <a href="${pageContext.request.contextPath}/find_books_by_genre.do?bookGenre=${request.genre}"
+              <a href="${pageContext.request.contextPath}/find_books_by_genre.do?bookGenre=${report.genre}"
                  class="link-primary">
-                <ctg:out text="${request.genre}"/>
+                <ctg:out text="${report.genre}"/>
               </a>
             </h5>
-            <h5><fmt:message key="books.availableQuantity"/>:<ctg:out text="${request.availableQuantity}"/> </h5>
+            <h5><fmt:message key="books.availableQuantity"/>:<ctg:out text="${report.availableQuantity}"/> </h5>
             <hr style="width:100%;text-align:left;margin-left:0">
             <p>
-              <ctg:out text="${request.shortDescription}"/>
+              <ctg:out text="${report.shortDescription}"/>
             </p>
 
             <c:if test="${role.toString().equals(reader)}">
@@ -84,10 +84,10 @@
                    aria-expanded="false"><fmt:message key="reader.rent"/></a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="${pageContext.request.contextPath}/rent_book.do?bookId=${request.id}&requestType=to_reading_room">
+                         href="${pageContext.request.contextPath}/rent_book.do?bookId=${report.id}&requestType=to_reading_room">
                     <fmt:message key="reader.rentToReadingRoom"/></a></li>
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="${pageContext.request.contextPath}/rent_book.do?bookId=${request.id}&requestType=for_subscription">
+                         href="${pageContext.request.contextPath}/rent_book.do?bookId=${report.id}&requestType=for_subscription">
                     <fmt:message key="reader.rentForSubscription"/></a></li>
                 </ul>
               </div>
@@ -99,12 +99,12 @@
                 <fmt:message key="button.edit"/>
               </button>
               <hr style="width:100%;text-align:left;margin-left:0">
-              <c:if test="${!request.pdf.equals('')}">
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${request.pdf}" role="button">
+              <c:if test="${!report.pdf.equals('')}">
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${report.pdf}" role="button">
                   <fmt:message key="button.read"/>
                 </a>
               </c:if>
-              <a class="btn btn-secondary" href="${pageContext.request.contextPath}/delete_book.do?bookId=${request.id}" role="button">
+              <a class="btn btn-secondary" href="${pageContext.request.contextPath}/delete_book.do?bookId=${report.id}" role="button">
                 <fmt:message key="button.delete"/>
               </a>
             </c:if>
@@ -118,40 +118,40 @@
                   </div>
 
                   <div class="modal-body">
-                    <form id="editBookForm" method="POST" action="${pageContext.request.contextPath}/edit_book.do?bookId=${request.id}">
+                    <form id="editBookForm" method="POST" action="${pageContext.request.contextPath}/edit_book.do?bookId=${report.id}">
                       <label for="inputBookTitle"><fmt:message key="books.title"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookTitle" name="bookTitle" class="form-control field"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                               value="${request.title}" pattern="[А-Яа-я\w\p{Blank}]{3,255}"/>
+                               value="${report.title}" pattern="[А-Яа-я\w\p{Blank}]{3,255}"/>
                       </div>
 
                       <label for="inputBookAuthor"><fmt:message key="books.author"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookAuthor" name="bookAuthor" class="form-control field"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                               value="${request.authorPseudo}" pattern="[А-Яа-яa-zA-Z.\s]{3,255}"/>
+                               value="${report.authorPseudo}" pattern="[А-Яа-яa-zA-Z.\s]{3,255}"/>
                       </div>
 
                       <label for="inputBookISBN">ISBN-13</label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookISBN" name="bookISBN" class="form-control field"
                                placeholder="<fmt:message key="books.isbnPlaceholder"/>" required
-                               value="${request.isbn}" pattern="[\d]{13}"/>
+                               value="${report.isbn}" pattern="[\d]{13}"/>
                       </div>
 
                       <label for="inputBookGenre"><fmt:message key="books.genre"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookGenre" name="bookGenre" class="form-control field"
                                placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                               value="${request.genre}" pattern="[А-Яа-яa-zA-Z]{3,45}"/>
+                               value="${report.genre}" pattern="[А-Яа-яa-zA-Z]{3,45}"/>
                       </div>
 
                       <label for="inputBookQuantity"><fmt:message key="books.availableQuantity"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookQuantity" name="bookQuantity" class="form-control field"
                                placeholder="<fmt:message key="books.quantityPlaceholder"/>" required
-                               value="${request.availableQuantity}" pattern="[\d]{1,4}"/>
+                               value="${report.availableQuantity}" pattern="[\d]{1,4}"/>
                       </div>
 
                       <label for="inputBookDescription"><fmt:message key="books.shortDescription"/></label>
@@ -159,7 +159,7 @@
                             <textarea id="inputBookDescription" name="bookDescription" class="form-control"
                                       rows="5"
                                       placeholder="<fmt:message key="register.inputNamePlaceholder"/>"
-                                      required minlength="3" maxlength="1000">${request.shortDescription}</textarea>
+                                      required minlength="3" maxlength="1000">${report.shortDescription}</textarea>
                       </div>
                     </form>
                   </div>

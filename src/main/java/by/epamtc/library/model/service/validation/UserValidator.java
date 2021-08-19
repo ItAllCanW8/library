@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public final class UserValidator {
+public final class UserValidator extends LibraryValidator{
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Pattern NAME_PATTERN = Pattern.compile("[а-яА-Яa-zA-Z]{3,255}");
     private static final Pattern USERNAME_PATTERN = Pattern.compile("[а-яА-Я\\w]{3,255}");
@@ -211,12 +211,5 @@ public final class UserValidator {
             result = false;
         }
         return result;
-    }
-
-    private static boolean isFieldValid(String field, Pattern pattern){
-        if (field == null)
-            return false;
-
-        return pattern.matcher(field).matches();
     }
 }

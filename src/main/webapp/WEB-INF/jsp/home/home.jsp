@@ -79,7 +79,6 @@
             </div>
         </div>
     </section>
-    <!-- end slider section -->
 </div>
 
 <section class="course_section layout_padding-bottom">
@@ -95,13 +94,13 @@
         </div>
         <div class="course_container">
             <div class="course_content">
-                <c:forEach var="request" items="${books}">
+                <c:forEach var="report" items="${books}">
                     <div class="box">
-                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
-                        <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
+                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${report.img}" alt="" />
+                        <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${report.id}">
                             <img src="${pageContext.request.contextPath}/images/layout/link.png" alt="" />
                         </a>
-                        <h5><ctg:out text="${request.title}"/></h5>
+                        <h5><ctg:out text="${report.title}"/></h5>
                     </div>
                 </c:forEach>
             </div>
@@ -110,4 +109,5 @@
 </section>
 
 </body>
+
 </html>
