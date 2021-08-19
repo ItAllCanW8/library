@@ -24,9 +24,9 @@
             <div class="course_content">
                 <c:forEach var="request" items="${bookRequests}">
                     <div class="box">
-                        <img src="load_book_cover.do?fileName=${request.book.img}" alt="" />
+                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.book.img}" alt="" />
                         <h5><ctg:out text="${request.book.title}"/></h5>
-                        <a href="view_pdf.do?bookPdf=${request.book.pdf}" style="color:white"><fmt:message key="button.read"/> </a>
+                        <a href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${request.book.pdf}" style="color:white"><fmt:message key="button.read"/> </a>
                     </div>
                 </c:forEach>
             </div>

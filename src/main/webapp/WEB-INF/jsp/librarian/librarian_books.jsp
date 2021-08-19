@@ -42,7 +42,7 @@
                 <tbody>
                     <c:forEach var="request" items="${books}">
                         <tr class="table-secondary">
-                            <th scope="row"><a href="<c:url value="load_book_info.do?bookId=${request.id}"/>">
+                            <th scope="row"><a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
                                 <ctg:out text="${request.title}"/></a></th>
                             <th scope="row">
                                 <div>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="addBookForm" method="POST" action="add_book.do">
+                    <form id="addBookForm" method="POST" action="${pageContext.request.contextPath}/add_book.do">
                         <label for="inputBookTitle"><fmt:message key="books.title"/></label>
                         <div class="form-group mt-1">
                             <input type="text" id="inputBookTitle" name="bookTitle" class="form-control field"

@@ -19,7 +19,7 @@
                 <h4>
                     <fmt:message key="register.title"/>
                 </h4>
-                <form method="post" action="register.do">
+                <form method="post" action="${pageContext.request.contextPath}/register.do">
                     <label for="username"><fmt:message key="register.inputUsername"/></label>
                     <div>
                         <input type="text" id="username" name="username" value="${username}"

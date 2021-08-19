@@ -20,7 +20,7 @@
                 </h4>
 
                 <hr style="width:100%;text-align:left;margin-left:0">
-                <form method="post" action="set_coefficients.do">
+                <form method="post" action="${pageContext.request.contextPath}/set_coefficients.do">
                     <label for="bookIssuingDaysNum"><fmt:message key="admin.bookIssuingDaysNum"/></label>
                     <div>
                         <input type="text" id="bookIssuingDaysNum" name="bookIssuingDaysNum"

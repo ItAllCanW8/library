@@ -34,11 +34,11 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                              alt=""/>
                     </div>
                     <c:if test="${sessionScope.userId.equals(user.id)}">
-                        <form action="upload_photo.do" method="post" enctype="multipart/form-data">
+                        <form action="${pageContext.request.contextPath}/upload_photo.do" method="post" enctype="multipart/form-data">
                             <input type="file" name="file" class="form-control-file"/>
                             <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
                         </form>
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form method="POST" action="edit_user_profile.do" id="editForm">
+                                    <form method="POST" action="${pageContext.request.contextPath}/edit_user_profile.do" id="editForm">
                                         <label for="inputUsername"><fmt:message key="register.inputUsername"/> </label>
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputUsername"
@@ -172,7 +172,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form id="changePassForm" method="POST" action="change_password.do">
+                                    <form id="changePassForm" method="POST" action="${pageContext.request.contextPath}/change_password.do">
                                         <label for="inputCurrentPassword"><fmt:message
                                                 key="profile.currentPassword"/> </label>
                                         <div class="form-group mt-1">
@@ -242,7 +242,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form id="deactivateForm" method="POST" action="deactivate_account.do">
+                                    <form id="deactivateForm" method="POST" action="${pageContext.request.contextPath}/deactivate_account.do">
                                         <div class="mt-1">
                                             <h5><fmt:message key="profile.deactivateMsg"/></h5>
                                         </div>

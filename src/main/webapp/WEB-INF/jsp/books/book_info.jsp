@@ -32,7 +32,7 @@
           </div>
           <c:if test="${role.toString().equals(librarian)}">
             <label for="coverUpload"><fmt:message key="librarian.uploadBookCover"/> </label>
-            <form action="upload_book_cover.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
+            <form action="${pageContext.request.contextPath}/upload_book_cover.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
                   id="coverUpload">
               <input type="file" name="bookCover" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary"
@@ -40,14 +40,14 @@
             </form>
 
             <label for="authorPhotoUpload"><fmt:message key="librarian.uploadAuthorPhoto"/></label>
-            <form action="upload_author_photo.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
+            <form action="${pageContext.request.contextPath}/upload_author_photo.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
                   id="authorPhotoUpload">
               <input type="file" name="bookAuthorPhoto" class="form-control-file" accept="image/jpeg, image/png"/>
               <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
             </form>
 
             <label for="pdfUpload"><fmt:message key="librarian.uploadBookPDf"/></label>
-            <form action="upload_pdf.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
+            <form action="${pageContext.request.contextPath}/upload_pdf.do?bookId=${request.id}" method="post" enctype="multipart/form-data"
                   id="pdfUpload">
               <input type="file" name="bookPdf" class="form-control-file" accept="application/pdf"/>
               <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
@@ -84,10 +84,10 @@
                    aria-expanded="false"><fmt:message key="reader.rent"/></a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="rent_book.do?bookId=${request.id}&requestType=to_reading_room">
+                         href="${pageContext.request.contextPath}/rent_book.do?bookId=${request.id}&requestType=to_reading_room">
                     <fmt:message key="reader.rentToReadingRoom"/></a></li>
                   <li><a class="dropdown-item btn btn-secondary" role="button"
-                         href="rent_book.do?bookId=${request.id}&requestType=for_subscription">
+                         href="${pageContext.request.contextPath}/rent_book.do?bookId=${request.id}&requestType=for_subscription">
                     <fmt:message key="reader.rentForSubscription"/></a></li>
                 </ul>
               </div>
@@ -100,11 +100,11 @@
               </button>
               <hr style="width:100%;text-align:left;margin-left:0">
               <c:if test="${!request.pdf.equals('')}">
-                <a class="btn btn-secondary" href="view_pdf.do?bookPdf=${request.pdf}" role="button">
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${request.pdf}" role="button">
                   <fmt:message key="button.read"/>
                 </a>
               </c:if>
-              <a class="btn btn-secondary" href="delete_book.do?bookId=${request.id}" role="button">
+              <a class="btn btn-secondary" href="${pageContext.request.contextPath}/delete_book.do?bookId=${request.id}" role="button">
                 <fmt:message key="button.delete"/>
               </a>
             </c:if>
@@ -118,7 +118,7 @@
                   </div>
 
                   <div class="modal-body">
-                    <form id="editBookForm" method="POST" action="edit_book.do?bookId=${request.id}">
+                    <form id="editBookForm" method="POST" action="${pageContext.request.contextPath}/edit_book.do?bookId=${request.id}">
                       <label for="inputBookTitle"><fmt:message key="books.title"/></label>
                       <div class="form-group mt-1">
                         <input type="text" id="inputBookTitle" name="bookTitle" class="form-control field"

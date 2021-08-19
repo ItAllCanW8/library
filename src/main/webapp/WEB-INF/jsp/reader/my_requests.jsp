@@ -41,9 +41,9 @@
             <c:if test="${!request.state.value.equals('closed')}">
               <tr class="table-secondary">
                 <th scope="row">
-                  <a href="load_book_info.do?bookId=${request.book.id}">
+                  <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.book.id}">
                     <div>
-                      <img src="load_book_cover.do?fileName=${request.book.img}" alt=""
+                      <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.book.img}" alt=""
                            style="max-height: 250px;max-width: 250px">
                     </div>
                     <ctg:out text="${request.book.title}"/>
@@ -66,16 +66,16 @@
                           aria-labelledby="actionDropDown">
                         <c:if test="${request.state.value.equals('approved')}">
                           <li><a class="dropdown-item"
-                                 href="view_pdf.do?bookPdf=${request.book.pdf}">
+                                 href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${request.book.pdf}">
                             <fmt:message key="button.read"/> </a></li>
                           <c:if test="${request.type.value.equals('for_subscription')}">
                             <li><a class="dropdown-item"
-                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                           <c:if test="${request.type.value.equals('to_reading_room')}">
                             <li><a class="dropdown-item"
-                                   href="return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                         </c:if>

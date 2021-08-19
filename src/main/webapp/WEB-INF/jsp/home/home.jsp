@@ -98,7 +98,7 @@
                 <c:forEach var="request" items="${books}">
                     <div class="box">
                         <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
-                        <a href="<c:url value="load_book_info.do?bookId=${request.id}"/>">
+                        <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
                             <img src="${pageContext.request.contextPath}/images/layout/link.png" alt="" />
                         </a>
                         <h5><ctg:out text="${request.title}"/></h5>

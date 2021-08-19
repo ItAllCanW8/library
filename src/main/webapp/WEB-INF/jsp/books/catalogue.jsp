@@ -25,11 +25,11 @@
             <hr style="width:100%;text-align:left;margin-left:0">
             <div class="row align-items-start" style="width:100%;">
                 <div class="col-2 offset-2" style="display: flex;justify-content: center">
-                    <a class="btn btn-secondary" href="load_books.do" role="button"><fmt:message
+                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/load_books.do" role="button"><fmt:message
                             key="button.allBooks"/> </a>
                 </div>
                 <div class="col-3">
-                    <form name="findBooksForm" method="GET" action="find_books_by_keyword.do">
+                    <form name="findBooksForm" method="GET" action="${pageContext.request.contextPath}/find_books_by_keyword.do">
                         <div class="d-flex">
                             <input class="form-control me-2" type="search"
                                    placeholder="<fmt:message key="search.keyword"/>"

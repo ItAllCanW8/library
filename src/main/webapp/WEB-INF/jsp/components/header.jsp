@@ -106,7 +106,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
                                 <li><a class="dropdown-item"
-                                       href="<c:url value="user_profile.do"/>"><fmt:message
+                                       href="${pageContext.request.contextPath}/user_profile.do"><fmt:message
                                         key="header.profile"/></a></li>
                                 <li>
                                 <c:if test="${sessionScope.role.toString().equals(admin)}">
@@ -142,7 +142,7 @@
                                         key="header.logout"/></a></li>
                             </ul>
                         </li>
-                        <img src="load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
                              width="64" height="64"
                              class="rounded-circle avatar" alt="" style="margin-top: 20px">
                     </c:if>

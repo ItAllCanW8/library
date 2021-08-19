@@ -105,16 +105,16 @@
                 <c:forEach var="request" items="${bookRequests}">
                     <tr class="table-secondary">
                         <th scope="row">
-                            <a href="load_user_profile.do?userId=${request.user.id}">
+                            <a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${request.user.id}">
                                 <div>
-                                    <img src="load_profile_photo.do?fileName=${request.user.userDetails.photoPath}" alt=""
+                                    <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${request.user.userDetails.photoPath}" alt=""
                                          style="max-height: 250px;max-width: 250px">
                                 </div>
                                 <ctg:out text="${request.user.username}"/>
                             </a>
                         </th>
                         <th scope="row">
-                            <a href="<c:url value="load_book_info.do?bookId=${request.book.id}"/>">
+                            <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.book.id}">
                                 <div>
                                     <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.book.img}"
                                          alt=""
@@ -148,18 +148,16 @@
                                     <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                                         aria-labelledby="actionDropDown">
                                         <c:if test="${request.state.value.equals('left')}">
-
                                             <li><a class="dropdown-item"
-                                                   href="change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=approved">
+                                                   href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=approved">
                                                 <fmt:message key="button.approve"/> </a></li>
                                             <li><a class="dropdown-item"
-                                                   href="change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=denied">
+                                                   href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=denied">
                                                 <fmt:message key="button.deny"/> </a></li>
-
                                         </c:if>
                                         <c:if test="${request.state.value.equals('closed') || request.state.value.equals('denied')}">
                                             <li><a class="dropdown-item"
-                                                   href="delete_book_request.do?requestId=${request.id}">
+                                                   href="${pageContext.request.contextPath}/delete_book_request.do?requestId=${request.id}">
                                                 <fmt:message key="button.delete"/> </a></li>
                                         </c:if>
                                     </ul>

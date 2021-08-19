@@ -33,7 +33,7 @@
                     <h5>
                         <fmt:message key="header.login"/>
                     </h5>
-                    <form action="login.do" method="post">
+                    <form action="${pageContext.request.contextPath}/login.do" method="post">
                         <div>
                             <label for="email">
                                 <input type="email" id="email" name="email" value="${email}"
