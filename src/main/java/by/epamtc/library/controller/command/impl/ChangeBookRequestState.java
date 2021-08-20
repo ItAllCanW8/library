@@ -11,7 +11,6 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
 import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +44,7 @@ public class ChangeBookRequestState implements Command {
                     mailSender.send();
                 }
             } else
-                result = new CommandResult(PagePath.ERROR_PAGE, CommandResult.Type.FORWARD);
+                result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

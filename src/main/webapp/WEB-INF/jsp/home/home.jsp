@@ -32,7 +32,7 @@
                                             <fmt:message key="carousel.library"/>
                                         </h1>
                                         <a href="">
-                                            <fmt:message key="button.readMore"/>
+                                            <fmt:message key="button.moreInfo"/>
                                         </a>
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                             <fmt:message key="carousel.education"/>
                                         </h1>
                                         <a href="">
-                                            <fmt:message key="button.readMore"/>
+                                            <fmt:message key="button.moreInfo"/>
                                         </a>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                             <fmt:message key="carousel.leisure"/>
                                         </h1>
                                         <a href="">
-                                            <fmt:message key="button.readMore"/>
+                                            <fmt:message key="button.moreInfo"/>
                                         </a>
                                     </div>
                                 </div>

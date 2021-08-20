@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class UserReport implements Serializable {
     private long id;
-    private boolean isAvailable;
+    private boolean isProcessed;
     private String subject;
     private String message;
     private String response;
@@ -14,23 +14,31 @@ public class UserReport implements Serializable {
 
     private UserReport(){}
 
-    public UserReport(boolean isAvailable, String subject, String message, String creationDate){
-        this.isAvailable = isAvailable;
+    public UserReport(boolean isProcessed, String subject, String message, String creationDate){
+        this.isProcessed = isProcessed;
         this.subject = subject;
         this.message = message;
         this.creationDate = creationDate;
+    }
+
+    public UserReport(long id, boolean isProcessed, String subject, String creationDate, User user) {
+        this.id = id;
+        this.isProcessed = isProcessed;
+        this.subject = subject;
+        this.creationDate = creationDate;
+        this.user = user;
     }
 
     public long getId() {
         return id;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean isProcessed() {
+        return isProcessed;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setProcessed(boolean processed) {
+        isProcessed = processed;
     }
 
     public String getSubject() {
@@ -81,7 +89,7 @@ public class UserReport implements Serializable {
         UserReport that = (UserReport) o;
 
         if (id != that.id) return false;
-        if (isAvailable != that.isAvailable) return false;
+        if (isProcessed != that.isProcessed) return false;
         if (!subject.equals(that.subject)) return false;
         if (!message.equals(that.message)) return false;
         if (!Objects.equals(response, that.response)) return false;
@@ -92,7 +100,7 @@ public class UserReport implements Serializable {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (isAvailable ? 1 : 0);
+        result = 31 * result + (isProcessed ? 1 : 0);
         result = 31 * result + subject.hashCode();
         result = 31 * result + message.hashCode();
         result = 31 * result + (response != null ? response.hashCode() : 0);

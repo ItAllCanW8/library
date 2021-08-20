@@ -27,7 +27,7 @@ public class ReturnBook implements Command {
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
             if(!service.closeBookRequest(requestId, bookId, bookQuantity, requestType))
-                result = new CommandResult(PagePath.ERROR_PAGE, CommandResult.Type.FORWARD);
+                result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

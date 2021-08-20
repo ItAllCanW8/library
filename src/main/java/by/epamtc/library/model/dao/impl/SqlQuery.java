@@ -134,8 +134,22 @@ public class SqlQuery {
     public static final String SELECT_LIB_COEFFICIENTS = "SELECT * FROM coefficients;";
 
     public static final String CHECK_USER_REPORT_FOR_EXISTENCE = "SELECT report_id FROM user_reports WHERE" +
-            " is_available = '1' AND subject = ? AND message = ? AND user_id_fk = ?;";
+            " is_processed = '1' AND subject = ? AND message = ? AND user_id_fk = ?;";
 
-    public static final String INSERT_USER_REPORT = "INSERT INTO user_reports(is_available, subject, message," +
+    public static final String INSERT_USER_REPORT = "INSERT INTO user_reports(is_processed, subject, message," +
             " creation_date, user_id_fk) VALUES (?, ?, ?, ?, ?);";
+
+    public static final String SELECT_USER_REPORTS = "SELECT report_id, is_processed, subject, creation_date,user_id_fk, email, " +
+            "username, role FROM user_reports JOIN users ON user_id_fk = user_id JOIN user_roles ON role_id_fk = role_id;";
+
+    public static final String FIND_USER_REPORT_BY_ID = "SELECT report_id, is_processed, subject, message, response," +
+            " creation_date, user_id_fk, email, username, role FROM user_reports JOIN users ON user_id_fk = user_id " +
+            "JOIN user_roles ON role_id_fk = role_id WHERE report_id = ?;";
+
+    public static final String UPDATE_USER_REPORT_RESPONSE = "UPDATE user_reports SET response = ?, is_processed = 1" +
+            " WHERE report_id = ?;";
+
+    public static final String SORT_USER_REPORTS = "SELECT report_id, is_processed, subject, creation_date,user_id_fk," +
+            " email, username, role FROM user_reports JOIN users ON user_id_fk = user_id JOIN user_roles ON " +
+            "role_id_fk = role_id ORDER BY ";
 }

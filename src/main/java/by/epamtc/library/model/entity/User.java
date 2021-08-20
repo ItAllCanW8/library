@@ -16,6 +16,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public User(long id, String username, String email, UserRole role){
+        this(id);
+        this.username = username;
+        this.email = email;
+        this.role = role;
+    }
+
     public User(long id, UserRole role, UserDetails userDetails, UserStatus status,
                 String username, String email) {
         this(role,userDetails,status,username,email);
@@ -31,7 +38,7 @@ public class User implements Serializable {
     }
 
     public User(long userId, String username, String userPhoto) {
-        this.id = userId;
+        this(userId);
         this.username = username;
         this.userDetails = new UserDetails(userPhoto);
     }

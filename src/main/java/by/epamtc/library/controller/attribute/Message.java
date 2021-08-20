@@ -29,5 +29,7 @@ public class Message {
     public static final String USER_REPORT_CREATION = ". Thanks for the report you left. We will review your report and after processing you" +
             " will receive a response to your email.";
 
+    public static final String USER_REPORT_RESPONSE = ". The report you left has already been processed. Response: ";
+
     private Message(){}
 }

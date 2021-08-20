@@ -2,7 +2,9 @@ package by.epamtc.library.util;
 
 public final class SortingHelper {
     public enum SortingColumn {
-        AVAILABLE_QUANTITY("available_quantity"), REQUEST_DATE("request_date");
+        AVAILABLE_QUANTITY("available_quantity"),
+        REQUEST_DATE("request_date"),
+        CREATION_DATE("creation_date");
 
         private final String value;
 
@@ -25,7 +27,9 @@ public final class SortingHelper {
     }
 
     public enum SortingObject{
-        BOOKS("books"), BOOK_REQUESTS("book_requests");
+        BOOKS("books"),
+        BOOK_REQUESTS("book_requests"),
+        USER_REPORTS("user_reports");
 
         private final String value;
 
@@ -48,7 +52,8 @@ public final class SortingHelper {
     }
 
     public enum SortingOrderType {
-        ASC("asc"), DESC("desc");
+        ASC("asc"),
+        DESC("desc");
 
         private final String value;
 

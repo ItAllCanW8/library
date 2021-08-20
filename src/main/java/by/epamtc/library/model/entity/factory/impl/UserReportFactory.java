@@ -5,7 +5,6 @@ import by.epamtc.library.model.entity.UserReport;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.util.DateTimeHelper;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
@@ -13,7 +12,7 @@ import java.util.Optional;
 import static by.epamtc.library.model.service.validation.UserReportValidator.isUserReportFormValid;
 
 public class UserReportFactory implements LibraryFactory<UserReport> {
-    private static final boolean DEFAULT_AVAILABILITY_VALUE = true;
+    private static final boolean DEFAULT_PROCESSED_VALUE = false;
 
     public static class HOLDER{
         public static LibraryFactory<UserReport> INSTANCE = new UserReportFactory();
@@ -30,7 +29,7 @@ public class UserReportFactory implements LibraryFactory<UserReport> {
             String subject = fields.get(RequestParameter.USER_REPORT_SUBJECT);
             String message = fields.get(RequestParameter.USER_REPORT_MESSAGE);
             String creationDate = LocalDateTime.now().format(DateTimeHelper.formatter);
-            result = Optional.of(new UserReport(DEFAULT_AVAILABILITY_VALUE, subject, message, creationDate));
+            result = Optional.of(new UserReport(DEFAULT_PROCESSED_VALUE, subject, message, creationDate));
         }
         return result;
     }

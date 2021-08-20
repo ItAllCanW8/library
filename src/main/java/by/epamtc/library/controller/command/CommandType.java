@@ -140,6 +140,15 @@ public enum CommandType {
     }},
     SEND_REPORT {{
         this.command = new SendReport();
+    }},
+    USER_REPORTS {{
+        this.command = new UserReports();
+    }},
+    LOAD_USER_REPORT {{
+        this.command = new LoadUserReportById();
+    }},
+    CREATE_REPORT_RESPONSE{{
+        this.command = new CreateUserReportResponse();
     }};
 
     Command command;

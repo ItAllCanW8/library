@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 
 public class UserReportValidator extends LibraryValidator{
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Pattern SUBJECT_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{1,255}");
-    private static final Pattern MESSAGE_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{1,1000}");
+    private static final Pattern SUBJECT_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{3,255}");
+    private static final Pattern MESSAGE_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{3,1000}");
 
     private UserReportValidator() {
     }
@@ -45,6 +45,14 @@ public class UserReportValidator extends LibraryValidator{
         boolean result = isFieldValid(message, MESSAGE_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Report message isn't valid: " + message);
+        }
+        return result;
+    }
+
+    public static boolean isResponseValid(String response) {
+        boolean result = isFieldValid(response, MESSAGE_PATTERN);
+        if (!result) {
+            LOGGER.log(Level.DEBUG, "Report response isn't valid: " + response);
         }
         return result;
     }

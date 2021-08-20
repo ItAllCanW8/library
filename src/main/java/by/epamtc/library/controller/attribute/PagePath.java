@@ -13,8 +13,9 @@ public class PagePath {
     public static final String READER_BOOK_REQUESTS = "/WEB-INF/jsp/reader/my_requests.jsp";
     public static final String READING_ROOM = "/WEB-INF/jsp/reader/reading_room.jsp";
     public static final String SET_COEFFICIENTS = "/WEB-INF/jsp/admin/set_coefficients.jsp";
-    public static final String ERROR_PAGE = "/WEB-INF/jsp/error/500.jsp";
-
+    public static final String ERROR = "/WEB-INF/jsp/error/500.jsp";
+    public static final String USER_REPORTS = "/WEB-INF/jsp/admin/user_reports.jsp";
+    public static final String USER_REPORT = "/WEB-INF/jsp/admin/user_report_info.jsp";
 
     private PagePath(){}
 }

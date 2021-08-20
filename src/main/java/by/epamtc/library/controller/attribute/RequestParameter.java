@@ -54,6 +54,10 @@ public class RequestParameter {
 
     public static final String USER_REPORT_SUBJECT = "reportSubject";
     public static final String USER_REPORT_MESSAGE = "reportMessage";
+    public static final String USER_REPORTS = "userReports";
+    public static final String USER_REPORT = "userReport";
+    public static final String USER_REPORT_ID = "reportId";
+    public static final String USER_REPORT_RESPONSE = "response";
 
     private RequestParameter(){}
 }

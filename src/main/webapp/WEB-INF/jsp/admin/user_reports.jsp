@@ -33,14 +33,14 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByDate"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                            <fmt:message key="button.sortByDate"/>
+                            <fmt:message key="button.sortByCreationDate"/>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByDate">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=desc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=user_reports&sortingField=creation_date&sortingOrder=desc">
                                 <fmt:message key="button.sortDesc"/> </a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=asc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=user_reports&sortingField=creation_date&sortingOrder=asc">
                                 <fmt:message key="button.sortAsc"/> </a></li>
                         </ul>
                     </div>
@@ -88,26 +88,15 @@
                         <th scope="row">
                             <a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${report.user.id}">
                                 <ctg:out text="${report.user.username}"/>
-                            </a>
+                            </a><br>
                             <ctg:out text="${report.user.email}"/>
                         </th>
                         <th scope="row"><ctg:out text="${report.user.role}"/></th>
-                        <th scope="row">${report.isAvailable}</th>
+                        <th scope="row">${report.isProcessed()}</th>
                         <th scope="row">${report.creationDate}</th>
-                        <th scope="row">
-                            <a href="${pageContext.request.contextPath}/find_book_requests_by_type.do?requestType=${report.type}">
-                                <ctg:out text="${report.type}"/>
-                            </a>
-                        </th>
-                        <th scope="row">
-                            <a href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=${report.state}">
-                                <ctg:out text="${report.state}"/>
-                            </a>
-                        </th>
-                        <th scope="row"><ctg:out text="${report.requestDate}"/></th>
-                        <th scope="row"><ctg:out text="${report.closingDate}"/></th>
-                        <th scope="row"><ctg:out text="${report.penaltyAmount}"/></th>
-                        <th scope="row"><a href="${pageContext.request.contextPath}/find_user_report.do?reportId="></a> </th>
+                        <th scope="row"><a href="${pageContext.request.contextPath}/load_user_report.do?reportId=${report.id}">
+                            <fmt:message key="button.moreInfo"/>
+                        </a> </th>
                     </c:forEach>
                 </tbody>
             </table>
