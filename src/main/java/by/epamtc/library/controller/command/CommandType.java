@@ -149,6 +149,9 @@ public enum CommandType {
     }},
     CREATE_REPORT_RESPONSE{{
         this.command = new CreateUserReportResponse();
+    }},
+    FIND_REPORTS_BY_STATE{{
+        this.command = new FindUserReportsByState();
     }};
 
     Command command;

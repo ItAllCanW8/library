@@ -13,4 +13,6 @@ public interface UserReportService {
     Optional<UserReport> findUserReportById(long reportId) throws ServiceException;
     boolean createResponse(long reportId, String response) throws ServiceException;
     List<UserReport> sort(String sortingField, String sortingOrder) throws ServiceException;
+
+    List<UserReport> findReportsByState(boolean isProcessed) throws ServiceException;
 }

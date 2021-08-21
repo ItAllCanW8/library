@@ -1,9 +1,6 @@
 package by.epamtc.library.controller.command.impl;
 
-import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.Message;
-import by.epamtc.library.controller.attribute.PagePath;
-import by.epamtc.library.controller.attribute.RequestParameter;
+import by.epamtc.library.controller.attribute.*;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
@@ -45,7 +42,10 @@ public class ChangeBookRequestState implements Command {
                 }
             } else
                 result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
-        } catch (ServiceException e) {
+        } catch (NumberFormatException e){
+            req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
+            result = new CommandResult(CommandName.BOOK_REQUESTS, CommandResult.Type.FORWARD);
+        }catch (ServiceException e) {
             throw new CommandException(e);
         }
 

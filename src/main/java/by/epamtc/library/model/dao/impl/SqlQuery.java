@@ -152,4 +152,8 @@ public class SqlQuery {
     public static final String SORT_USER_REPORTS = "SELECT report_id, is_processed, subject, creation_date,user_id_fk," +
             " email, username, role FROM user_reports JOIN users ON user_id_fk = user_id JOIN user_roles ON " +
             "role_id_fk = role_id ORDER BY ";
+
+    public static final String FIND_REPORTS_BY_AVAILABILITY = "SELECT report_id, is_processed, subject, creation_date,user_id_fk, email, " +
+            "username, role FROM user_reports JOIN users ON user_id_fk = user_id JOIN user_roles ON role_id_fk = role_id " +
+            "WHERE is_processed = ?;";
 }

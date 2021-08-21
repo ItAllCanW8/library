@@ -52,7 +52,7 @@ public class ChangePassword implements Command {
                 req.setAttribute(JspAttribute.ERROR_INVALID_CURR_PASSWORD, JspAttribute.ERROR_INVALID_CURR_PASSWORD_MSG);
             }
         } catch (ServiceException | NumberFormatException e) {
-            throw new CommandException("Error changing user password");
+            throw new CommandException(e);
         }
         return result;
     }

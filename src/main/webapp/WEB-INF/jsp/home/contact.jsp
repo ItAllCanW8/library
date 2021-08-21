@@ -14,14 +14,21 @@
 
     <section class="login_section layout_padding">
         <div class="container">
+
+            <c:if test="${successMessage}">
+                <success-message>
+                    <fmt:message key="successMessage"/>
+                </success-message>
+            </c:if>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="detail-box">
                         <h3>
-                            Contact us
+                            <fmt:message key="header.contact"/>"
                         </h3>
                         <p>
-                            Share your wishes
+                            <fmt:message key="report.subjectPlaceholder"/>"
                         </p>
                     </div>
                 </div>

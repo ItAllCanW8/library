@@ -25,8 +25,11 @@ public class ChangeRoleToReader implements Command {
             if(!service.changeRoleToReader(Long.parseLong(userId)))
                 req.setAttribute(JspAttribute.ERROR_CHANGING_ROLE, JspAttribute.ERROR_CHANGING_ROLE_MSG);
 
+        } catch (NumberFormatException e){
+            req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
+            result = new CommandResult(CommandName.USERS, CommandResult.Type.FORWARD);
         } catch (ServiceException e) {
-            throw new CommandException("Error changing user role");
+            throw new CommandException(e);
         }
         return result;
     }

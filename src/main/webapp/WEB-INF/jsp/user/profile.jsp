@@ -12,24 +12,25 @@
 <body class="sub_page">
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-    <wrong-message>
-        ${errorInputData}
-        ${invalidCurrentPassword}
-    </wrong-message>
-
-    <c:if test="${successMessage}">
-        <success-message>
-            <fmt:message key="successMessage"/>
-        </success-message>
-    </c:if>
 </div>
 
-<!-- about section -->
 <section class="about_section layout_padding">
     <div class="side_img">
         <img src="${pageContext.request.contextPath}/images/layout/side-img.png" alt=""/>
     </div>
     <div class="container">
+
+        <wrong-message>
+            ${errorInputData}
+            ${invalidCurrPassword}
+        </wrong-message>
+
+        <c:if test="${successMessage}">
+            <success-message>
+                <fmt:message key="successMessage"/>
+            </success-message>
+        </c:if>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="img_container">

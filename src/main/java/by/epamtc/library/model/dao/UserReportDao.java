@@ -15,4 +15,5 @@ public interface UserReportDao {
     boolean updateUserReportResponse(long reportId, String response) throws DaoException;
     List<UserReport> sort(SortingHelper.SortingColumn sortingColumn, SortingHelper.SortingOrderType sortingOrderType)
             throws DaoException;
+    List<UserReport> findReportsByState(boolean isProcessed) throws DaoException;
 }

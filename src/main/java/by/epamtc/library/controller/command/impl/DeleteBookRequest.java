@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteBookRequest implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        long requestId = Long.parseLong(req.getParameter(RequestParameter.REQUEST_ID));
+        String requestIdStr = req.getParameter(RequestParameter.REQUEST_ID);
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
 
         try {
-            if(service.deleteBookRequest(requestId))
+            if(service.deleteBookRequest(Long.parseLong(requestIdStr)))
                 req.setAttribute(SessionAttribute.SUCCESS_MESSAGE, true);
         } catch (ServiceException e) {
             throw new CommandException(e);

@@ -38,6 +38,9 @@ public class ActivateUserById implements Command {
             else{
                 req.setAttribute(JspAttribute.ERROR_CHANGING_STATUS, JspAttribute.ERROR_CHANGING_STATUS_MSG);
             }
+        } catch (NumberFormatException e){
+            req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
+            result = new CommandResult(CommandName.USERS, CommandResult.Type.FORWARD);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

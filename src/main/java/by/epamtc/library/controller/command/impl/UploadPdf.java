@@ -47,7 +47,7 @@ public class UploadPdf implements Command {
 
                         service.changePdf(Long.parseLong(bookId), randomFilename);
                     }
-                } catch (IOException | ServletException | ServiceException e) {
+                } catch (IOException | ServletException | ServiceException e ) {
                     req.setAttribute(JspAttribute.ERROR_MSG, e.getMessage());
                     throw new CommandException(e);
                 }

@@ -38,8 +38,11 @@ public class DeactivateUserById implements Command {
             } else{
                 req.setAttribute(JspAttribute.ERROR_CHANGING_STATUS, JspAttribute.ERROR_CHANGING_STATUS_MSG);
             }
-        } catch (ServiceException e) {
-            throw new CommandException("Error deactivating user account");
+        } catch (NumberFormatException e){
+            req.setAttribute(JspAttribute.ERROR_CHANGING_STATUS, JspAttribute.ERROR_CHANGING_STATUS_MSG);
+        }
+        catch (ServiceException e) {
+            throw new CommandException(e);
         }
         return result;
     }

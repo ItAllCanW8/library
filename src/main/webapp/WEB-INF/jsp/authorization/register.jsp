@@ -74,6 +74,13 @@
                                pattern="[А-Яа-я\w\s\p{Punct}]{6,255}"
                                required/>
                     </div>
+
+                    <div class="mt-3">
+                        <wrong-message>
+                            ${errorInputData}
+                        </wrong-message>
+                    </div>
+
                     <button type="submit"><fmt:message key="button.completeRegister"/></button>
                 </form>
             </div>

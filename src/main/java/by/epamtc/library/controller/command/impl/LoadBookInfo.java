@@ -24,18 +24,16 @@ public class LoadBookInfo implements Command {
         BookService service = ServiceFactory.getInstance().getBookService();
         CommandResult result = new CommandResult(CommandName.LOAD_BOOKS, CommandResult.Type.FORWARD);
         try {
-            try {
-                Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));
-                if (bookOptional.isPresent()) {
-                    Book book = bookOptional.get();
-                    req.setAttribute(RequestParameter.BOOK, book);
-                    result = new CommandResult(PagePath.BOOK_INFO, CommandResult.Type.FORWARD);
-                } else {
-                    req.setAttribute(JspAttribute.NO_BOOK, JspAttribute.NO_BOOK_MSG);
-                }
-            } catch (NumberFormatException e) {
-                req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
+            Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));
+            if (bookOptional.isPresent()) {
+                Book book = bookOptional.get();
+                req.setAttribute(RequestParameter.BOOK, book);
+                result = new CommandResult(PagePath.BOOK_INFO, CommandResult.Type.FORWARD);
+            } else {
+                req.setAttribute(JspAttribute.NO_BOOK, JspAttribute.NO_BOOK_MSG);
             }
+        } catch (NumberFormatException e) {
+            req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -15,12 +15,18 @@
   <c:set var="report" scope="request" value="${book}"/>
 </div>
 
-<!-- about section -->
 <section class="about_section layout_padding">
   <div class="side_img">
     <img src="${pageContext.request.contextPath}/images/layout/side-img.png" alt="" />
   </div>
   <div class="container">
+
+    <wrong-message>
+      ${errorInputData}
+      ${errorBookUpdate}
+      ${errorDeletingBook}
+    </wrong-message>
+
     <div class="row">
       <div class="col-md-6">
         <div class="img_container">

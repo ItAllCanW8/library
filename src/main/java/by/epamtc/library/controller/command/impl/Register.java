@@ -62,7 +62,7 @@ public class Register implements Command {
                 result = new CommandResult(PagePath.REGISTER, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
-            throw new CommandException("Error registering user");
+            throw new CommandException(e);
         }
         return result;
     }

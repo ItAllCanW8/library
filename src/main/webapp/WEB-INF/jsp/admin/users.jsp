@@ -18,6 +18,13 @@
 
 <section class="event_section layout_padding">
     <div class="container">
+
+        <wrong-message>
+            ${errorInputData}
+            ${noReport}
+            ${errorDuplicate}
+        </wrong-message>
+
         <div class="heading_container">
             <h3>
                 <fmt:message key="header.users"/>

@@ -51,6 +51,8 @@ public class EditBook implements Command {
 
                 result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.FORWARD);
             }
+        } catch (NumberFormatException e) {
+            req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

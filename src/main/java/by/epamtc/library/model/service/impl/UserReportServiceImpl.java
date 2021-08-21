@@ -86,4 +86,13 @@ public class UserReportServiceImpl implements UserReportService {
 
         return new ArrayList<>(0);
     }
+
+    @Override
+    public List<UserReport> findReportsByState(boolean isProcessed) throws ServiceException {
+        try {
+            return userReportDao.findReportsByState(isProcessed);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

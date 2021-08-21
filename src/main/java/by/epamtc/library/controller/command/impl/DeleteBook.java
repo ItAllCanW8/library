@@ -33,8 +33,10 @@ public class DeleteBook implements Command {
             else {
                 FileHandler.deleteBookFiles(book.getImg(), book.getAuthorImg(), book.getPdf());
             }
-        } catch (ServiceException e) {
-            throw new CommandException("Error deleting book");
+        } catch (NumberFormatException e) {
+            req.setAttribute(JspAttribute.ERROR_DELETING_BOOK, JspAttribute.ERROR_DELETING_BOOK_MSG);
+        }catch (ServiceException e) {
+            throw new CommandException(e);
         }
         return result;
     }

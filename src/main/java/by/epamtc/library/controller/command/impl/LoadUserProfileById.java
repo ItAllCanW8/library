@@ -24,18 +24,14 @@ public class LoadUserProfileById implements Command {
         UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(CommandName.USERS, CommandResult.Type.FORWARD);
         try {
-            try {
-                Optional<User> userOptional = service.findUserById(Long.parseLong(userId));
-                if (userOptional.isPresent()) {
-                    User user = userOptional.get();
-                    req.setAttribute(RequestParameter.USER, user);
-                    result = new CommandResult(PagePath.USER_PROFILE, CommandResult.Type.FORWARD);
-                } else {
-                    req.setAttribute(JspAttribute.NO_BOOK, JspAttribute.NO_BOOK_MSG);
-                }
-            } catch (NumberFormatException e) {
-                req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
+            Optional<User> userOptional = service.findUserById(Long.parseLong(userId));
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                req.setAttribute(RequestParameter.USER, user);
+                result = new CommandResult(PagePath.USER_PROFILE, CommandResult.Type.FORWARD);
             }
+        } catch (NumberFormatException e) {
+            req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

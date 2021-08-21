@@ -30,7 +30,7 @@ public class SendReport implements Command {
         fields.put(RequestParameter.USER_REPORT_MESSAGE, comment);
 
         UserReportService service = ServiceFactory.getInstance().getUserReportService();
-        CommandResult result = new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.REDIRECT);
+        CommandResult result = new CommandResult(PagePath.CONTACT, CommandResult.Type.FORWARD);
         try {
             if (service.createUserReport(fields, userId)) {
                 MailSender mailSender = MailSender.getInstance();
@@ -41,12 +41,12 @@ public class SendReport implements Command {
                 mailSender.send();
 
                 session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);
+
+                result = new CommandResult(ServletAttribute.CONTACT_URL, CommandResult.Type.REDIRECT);
             } else {
                 req.setAttribute(RequestParameter.USER_REPORT_SUBJECT, fields.get(RequestParameter.USER_REPORT_SUBJECT));
                 req.setAttribute(RequestParameter.USER_REPORT_MESSAGE, fields.get(RequestParameter.USER_REPORT_MESSAGE));
                 req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
-
-                result = new CommandResult(ServletAttribute.HOME_URL, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
             throw new CommandException(e);

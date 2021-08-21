@@ -49,6 +49,19 @@
                                        required pattern="[а-яА-Я\w\s\p{Punct}]{6,255}"/>
                             </label>
                         </div>
+
+                        <div class="mt-3">
+                            <wrong-message>
+                                ${errorInputData}
+                                ${accountIsDeactivated}
+                            </wrong-message>
+                            <c:if test="${successMessage}">
+                                <success-message>
+                                    <fmt:message key="successMessage"/>
+                                </success-message>
+                            </c:if>
+                        </div>
+
                         <button type="submit"><fmt:message key="button.login"/></button>
                     </form>
                 </div>

@@ -18,6 +18,15 @@
 
 <section class="event_section layout_padding">
     <div class="container">
+
+        <wrong-message>
+            ${errorInputData}
+            ${errorBookCreation}
+            ${noBooks}
+            ${noBook}
+            ${errorRequestCreation}
+        </wrong-message>
+
         <div class="heading_container">
             <h3>
                 <fmt:message key="books.catalogue"/>

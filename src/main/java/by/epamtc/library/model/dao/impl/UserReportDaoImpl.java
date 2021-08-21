@@ -113,6 +113,24 @@ public class UserReportDaoImpl implements UserReportDao {
         return userReports;
     }
 
+    @Override
+    public List<UserReport> findReportsByState(boolean isProcessed) throws DaoException {
+        List<UserReport> userReports = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_REPORTS_BY_AVAILABILITY)) {
+            statement.setByte(1, (byte) (isProcessed ? 1 : 0));
+            System.out.println(statement);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                userReports.add(createUserReportFromResultSet(resultSet, false));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding user reports by state.", e);
+        }
+        return userReports;
+    }
+
     private UserReport createUserReportFromResultSet(ResultSet resultSet, boolean areMsgAndResponsePresent) throws SQLException {
         long id = resultSet.getLong("report_id");
         boolean isProcessed = resultSet.getByte("is_processed") == 1;

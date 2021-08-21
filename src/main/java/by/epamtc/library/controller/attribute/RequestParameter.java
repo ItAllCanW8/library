@@ -58,6 +58,7 @@ public class RequestParameter {
     public static final String USER_REPORT = "userReport";
     public static final String USER_REPORT_ID = "reportId";
     public static final String USER_REPORT_RESPONSE = "response";
+    public static final String USER_REPORT_STATE = "isProcessed";
 
     private RequestParameter(){}
 }

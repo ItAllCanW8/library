@@ -16,6 +16,13 @@
 
 <section class="event_section layout_padding">
     <div class="container">
+
+        <wrong-message>
+            ${errorInputData}
+            ${noReport}
+            ${errorDuplicate}
+        </wrong-message>
+
         <div class="heading_container">
             <h3>
                 <fmt:message key="admin.userReports"/>
@@ -48,21 +55,18 @@
 
                 <div class="col-2" style="display: flex;justify-content: center">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="requestStateDropdown"
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="reportStateDropdown"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                            <fmt:message key="button.requestState"/>
+                            <fmt:message key="button.reportState"/>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="requestStateDropdown">
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="reportStateDropdown">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=approved">
-                                <fmt:message key="button.approvedRequests"/> </a></li>
+                                   href="${pageContext.request.contextPath}/find_reports_by_state.do?isProcessed=1">
+                                <fmt:message key="button.processedReports"/> </a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=denied">
-                                <fmt:message key="button.deniedRequests"/> </a></li>
-                            <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=closed">
-                                <fmt:message key="button.closedRequests"/> </a></li>
+                                   href="${pageContext.request.contextPath}/find_reports_by_state.do?isProcessed=0">
+                                <fmt:message key="button.notProcessedReports"/> </a></li>
                         </ul>
                     </div>
                 </div>
