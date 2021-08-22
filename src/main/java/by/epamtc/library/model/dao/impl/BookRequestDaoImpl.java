@@ -21,6 +21,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private static final String bookReqTypeCol = "request_type";
     private static final String bookReqSateCol = "state";
     private static final String bookReqDateCol = "request_date";
+    private static final String bookReqExpectedReturnDate = "expected_return_date";
     private static final String bookReqClosingDateCol = "closing_date";
     private static final String bookReqPenaltyAmountCol = "penalty_amount";
     private static final String bookReqBookIdCol = "book_id_fk";
@@ -181,12 +182,19 @@ public class BookRequestDaoImpl implements BookRequestDao {
         return bookRequests;
     }
 
-    @Override
-    public boolean changeRequestState(long requestId, String newRequestState) throws DaoException {
+    private boolean updateBookRequestState(long requestId, String newRequestState, String query, String expectedReturnDate)
+            throws DaoException {
         try(Connection connection = pool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_REQUEST_STATE)) {
+            PreparedStatement statement = connection.prepareStatement(query)){
             statement.setString(1, newRequestState);
-            statement.setLong(2, requestId);
+
+            if(expectedReturnDate != null){
+                statement.setString(2, expectedReturnDate);
+                statement.setLong(3, requestId);
+            } else{
+                statement.setLong(2, requestId);
+            }
+
             statement.execute();
 
             return statement.getUpdateCount() == 1;
@@ -194,6 +202,16 @@ public class BookRequestDaoImpl implements BookRequestDao {
         catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error changing book request state.", e);
         }
+    }
+
+    @Override
+    public boolean changeRequestState(long requestId, String newRequestState, Optional<String> expectedReturnDate)
+            throws DaoException {
+        if(expectedReturnDate.isPresent())
+            return updateBookRequestState(requestId,newRequestState,SqlQuery.UPDATE_BOOK_REQUEST_STATE_TO_APPROVED,
+                    expectedReturnDate.get());
+        else
+            return updateBookRequestState(requestId,newRequestState,SqlQuery.UPDATE_BOOK_REQUEST_STATE,null);
     }
 
     @Override
@@ -237,11 +255,24 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
     }
 
+    @Override
+    public Optional<String> loadNumberOfDaysCoeff() throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.LOAD_NUMBER_OF_DAYS_COEFF);
+
+            return (resultSet.next() ? Optional.of(resultSet.getString(1)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading number of days coefficient." , e);
+        }
+    }
+
     private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean areUserFieldsPresent) throws SQLException {
         long requestId = resultSet.getLong(bookReqIdCol);
         BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqTypeCol));
         BookRequestState requestState = BookRequestState.fromString(resultSet.getString(bookReqSateCol));
         String requestDate = resultSet.getString(bookReqDateCol);
+        String expectedReturnDate = resultSet.getString(bookReqExpectedReturnDate);
         String closingDate = resultSet.getString(bookReqClosingDateCol);
         int penaltyAmount = resultSet.getInt(bookReqPenaltyAmountCol);
 
@@ -255,12 +286,12 @@ public class BookRequestDaoImpl implements BookRequestDao {
             String username = resultSet.getString(usernameCol);
             String userPhoto = resultSet.getString(userPhotoCol);
 
-            return new BookRequest(requestId,requestType, requestState, requestDate, closingDate,
+            return new BookRequest(requestId,requestType, requestState, requestDate, expectedReturnDate, closingDate,
                     penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
         } else {
             short bookAvailableQuantity = resultSet.getShort(bookQuantityCol);
 
-            return new BookRequest(requestId, requestType, requestState, requestDate, closingDate,
+            return new BookRequest(requestId, requestType, requestState, requestDate,expectedReturnDate, closingDate,
                     penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
         }
     }

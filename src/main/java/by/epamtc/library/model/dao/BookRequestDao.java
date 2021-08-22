@@ -19,8 +19,9 @@ public interface BookRequestDao {
             throws DaoException;
     List<BookRequest> findBookRequestsByType(BookRequestType requestType) throws DaoException;
     List<BookRequest> findBookRequestsByState(BookRequestState requestState) throws DaoException;
-    boolean changeRequestState(long requestId, String newRequestState) throws DaoException;
+    boolean changeRequestState(long requestId, String newRequestState, Optional<String> expectedReturnDate) throws DaoException;
     boolean closeBookRequest(long requestId) throws DaoException;
     boolean deleteBookRequest(long requestId) throws DaoException;
     Optional<String> findEmailByRequestId(long requestId) throws DaoException;
+    Optional<String> loadNumberOfDaysCoeff() throws DaoException;
 }

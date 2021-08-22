@@ -95,25 +95,26 @@ public class SqlQuery {
 
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
 
-    public static final String SELECT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,closing_date, " +
-            "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests JOIN users ON user_id = user_id_fk " +
-            "JOIN user_details ON details_id = details_id_fk JOIN books ON book_id = book_id_fk;";
+    public static final String SELECT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date," +
+            "expected_return_date,closing_date,penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path" +
+            " FROM book_requests JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk " +
+            "JOIN books ON book_id = book_id_fk;";
 
-    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT request_id,request_type,state,request_date,closing_date," +
-            "penalty_amount,book_id_fk,title,img,pdf,available_quantity FROM book_requests JOIN books ON " +
-            "book_id = book_id_fk WHERE user_id_fk = ?;";
+    public static final String SELECT_BOOK_REQUESTS_BY_READER_ID = "SELECT request_id,request_type,state,request_date," +
+            "expected_return_date,closing_date,penalty_amount,book_id_fk,title,img,pdf,available_quantity " +
+            "FROM book_requests JOIN books ON book_id = book_id_fk WHERE user_id_fk = ?;";
 
-    public static final String SORT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,closing_date," +
-            "penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests JOIN users ON " +
-            "user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON book_id = book_id_fk" +
-            " ORDER BY ";
+    public static final String SORT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,expected_return_date," +
+            "closing_date,penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
+            "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON " +
+            "book_id = book_id_fk ORDER BY ";
 
-    public static final String FIND_BOOK_REQUESTS_BY_TYPE = "SELECT request_id, request_type,state,request_date," +
+    public static final String FIND_BOOK_REQUESTS_BY_TYPE = "SELECT request_id, request_type,state,request_date,expected_return_date," +
             "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
             "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
             " book_id = book_id_fk WHERE request_type LIKE ?;";
 
-    public static final String FIND_BOOK_REQUESTS_BY_STATE = "SELECT request_id, request_type,state,request_date," +
+    public static final String FIND_BOOK_REQUESTS_BY_STATE = "SELECT request_id, request_type,state,request_date,expected_return_date," +
             "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
             "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
             " book_id = book_id_fk WHERE state LIKE ?;";
@@ -123,7 +124,11 @@ public class SqlQuery {
 
     public static final String LOAD_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
             "book_id = book_id_fk WHERE user_id_fk = ? AND request_type='to_reading_room' AND state ='approved';";
+
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
+    public static final String UPDATE_BOOK_REQUEST_STATE_TO_APPROVED = "UPDATE book_requests SET state = ?," +
+            "expected_return_date = ?  WHERE request_id = ?;";
+
     public static final String CLOSE_BOOK_REQUEST = "UPDATE book_requests SET state = 'closed', closing_date = ?" +
             " WHERE request_id = ?;";
 
@@ -156,4 +161,7 @@ public class SqlQuery {
     public static final String FIND_REPORTS_BY_AVAILABILITY = "SELECT report_id, is_processed, subject, creation_date,user_id_fk, email, " +
             "username, role FROM user_reports JOIN users ON user_id_fk = user_id JOIN user_roles ON role_id_fk = role_id " +
             "WHERE is_processed = ?;";
+
+    public static final String LOAD_NUMBER_OF_DAYS_COEFF = "SELECT coefficient_value FROM coefficients WHERE " +
+            "coefficient_name = 'number_of_days'";
 }

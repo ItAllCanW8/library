@@ -22,9 +22,9 @@ public class BookRequest implements Serializable {
         this.requestDate = requestDate;
     }
 
-    public BookRequest( long id, BookRequestType type, BookRequestState state, String requestDate, String closingDate,
-                        int penaltyAmount, Book book, User user) {
-        this(id, type, state, requestDate, closingDate, penaltyAmount, book);
+    public BookRequest(long id, BookRequestType type, BookRequestState state, String requestDate, String expectedReturnDate,
+                       String closingDate, int penaltyAmount, Book book, User user) {
+        this(id, type, state, requestDate,expectedReturnDate, closingDate, penaltyAmount, book);
         this.user = user;
     }
 
@@ -32,10 +32,11 @@ public class BookRequest implements Serializable {
         this.book = book;
     }
 
-    public BookRequest(long id, BookRequestType requestType, BookRequestState requestState, String requestDate, String closingDate,
-                       int penaltyAmount, Book book) {
+    public BookRequest(long id, BookRequestType requestType, BookRequestState requestState, String requestDate,
+                       String expectedReturnDate, String closingDate, int penaltyAmount, Book book) {
         this(requestType, requestState, requestDate);
         this.id = id;
+        this.expectedReturnDate = expectedReturnDate;
         this.closingDate = closingDate;
         this.penaltyAmount = penaltyAmount;
         this.book = book;

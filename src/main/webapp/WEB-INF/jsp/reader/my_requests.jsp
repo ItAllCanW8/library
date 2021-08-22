@@ -36,6 +36,7 @@
             <th scope="col"><fmt:message key="request.type"/></th>
             <th scope="col"><fmt:message key="request.state"/></th>
             <th scope="col"><fmt:message key="request.date"/></th>
+            <th scope="col"><fmt:message key="request.expectedReturnDate"/></th>
             <th scope="col"><fmt:message key="request.closingDate"/></th>
             <th scope="col"><fmt:message key="request.penalty"/></th>
             <th scope="col"><fmt:message key="button.action"/></th>
@@ -58,6 +59,7 @@
                 <th scope="row"><ctg:out text="${request.type}"/></th>
                 <th scope="row"><ctg:out text="${request.state}"/></th>
                 <th scope="row"><ctg:out text="${request.requestDate}"/></th>
+                <th scope="row"><ctg:out text="${request.expectedReturnDate}"/></th>
                 <th scope="row"><ctg:out text="${request.closingDate}"/></th>
                 <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
                 <th scope="row">

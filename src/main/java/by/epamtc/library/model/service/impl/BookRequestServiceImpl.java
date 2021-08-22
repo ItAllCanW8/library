@@ -10,8 +10,10 @@ import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.SortingHelper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +21,11 @@ import java.util.Optional;
 
 public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = DaoFactory.getInstance().getBookRequestDao();
-//    private static final BookService bookService = ServiceFactory.getInstance().getBookService();
+    //    private static final BookService bookService = ServiceFactory.getInstance().getBookService();
     private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
 
-    public
-    BookRequestServiceImpl() {
+    public BookRequestServiceImpl() {
     }
 
     @Override
@@ -41,7 +42,7 @@ public class BookRequestServiceImpl implements BookRequestService {
         Optional<BookRequest> requestOptional = bookRequestFactory.create(fields);
         BookRequestType bookRequestType = BookRequestType.fromString(fields.get(RequestParameter.REQUEST_TYPE));
 
-        if(bookRequestType == null)
+        if (bookRequestType == null)
             return false;
 
         boolean isToReadingRoom = bookRequestType.equals(BookRequestType.TO_READING_ROOM);
@@ -55,14 +56,14 @@ public class BookRequestServiceImpl implements BookRequestService {
                     BookRequest request = requestOptional.get();
                     Book book = bookOptional.get();
 
-                    if(!isToReadingRoom && book.getAvailableQuantity() <= 0)
+                    if (!isToReadingRoom && book.getAvailableQuantity() <= 0)
                         return false;
 
                     request.setUser(reader);
                     request.setBook(book);
 
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
-                    if(!isToReadingRoom && isRequestCreated){
+                    if (!isToReadingRoom && isRequestCreated) {
                         bookDao.updateAvailableQuantity(bookId, (short) (book.getAvailableQuantity() - 1));
                     }
 
@@ -88,8 +89,21 @@ public class BookRequestServiceImpl implements BookRequestService {
     public boolean changeRequestState(long requestId, String newRequestStateStr) throws ServiceException {
         try {
             BookRequestState newRequestState = BookRequestState.fromString(newRequestStateStr);
-            if(newRequestState != null)
-                return bookRequestDao.changeRequestState(requestId, newRequestState.getValue());
+
+            if(newRequestState != null) {
+                Optional<String> expectedReturnDate = Optional.empty();
+
+                if (newRequestState == BookRequestState.APPROVED) {
+                    Optional<String> numberOfDaysCoeffOptional = bookRequestDao.loadNumberOfDaysCoeff();
+                    if (numberOfDaysCoeffOptional.isPresent()) {
+                        int numberOfDaysCoeff = Integer.parseInt(numberOfDaysCoeffOptional.get());
+
+                        expectedReturnDate = Optional.of(LocalDateTime.now().plusDays(numberOfDaysCoeff).
+                                format(DateTimeHelper.formatter));
+                    }
+                }
+                return bookRequestDao.changeRequestState(requestId, newRequestState.getValue(), expectedReturnDate);
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -108,7 +122,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             System.out.println(isToReadingRoom);
             System.out.println(isRequestClosed);
 
-            if(!isToReadingRoom && isRequestClosed){
+            if (!isToReadingRoom && isRequestClosed) {
                 bookDao.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
             }
 
@@ -120,7 +134,7 @@ public class BookRequestServiceImpl implements BookRequestService {
 
     @Override
     public boolean deleteBookRequest(long requestId) throws ServiceException {
-        try{
+        try {
             return bookRequestDao.deleteBookRequest(requestId);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -165,7 +179,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             SortingHelper.SortingColumn sortingColumn = SortingHelper.SortingColumn.fromString(sortingField);
             SortingHelper.SortingOrderType sortingOrderType = SortingHelper.SortingOrderType.fromString(sortingOrder);
 
-            if(sortingColumn != null && sortingOrderType != null)
+            if (sortingColumn != null && sortingOrderType != null)
                 return bookRequestDao.sort(sortingColumn, sortingOrderType);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -176,13 +190,12 @@ public class BookRequestServiceImpl implements BookRequestService {
 
     @Override
     public List<BookRequest> findBookRequestsByType(String type) throws ServiceException {
-        try{
+        try {
             BookRequestType reqType = BookRequestType.fromString(type);
 
-            if(reqType != null)
+            if (reqType != null)
                 return bookRequestDao.findBookRequestsByType(reqType);
-        }
-        catch (DaoException e){
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return new ArrayList<>(0);
@@ -190,13 +203,12 @@ public class BookRequestServiceImpl implements BookRequestService {
 
     @Override
     public List<BookRequest> findBookRequestsByState(String state) throws ServiceException {
-        try{
+        try {
             BookRequestState requestState = BookRequestState.fromString(state);
 
-            if(requestState != null)
+            if (requestState != null)
                 return bookRequestDao.findBookRequestsByState(requestState);
-        }
-        catch (DaoException e){
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return new ArrayList<>(0);
