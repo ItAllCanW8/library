@@ -33,6 +33,7 @@ public class BookRequestFactory implements LibraryFactory<BookRequest> {
             }
             else{
                 state = DEFAULT_STATE;
+                System.out.println(LocalDateTime.now().plusDays(30).format(DateTimeHelper.formatter));
             }
 
             return (Optional.of(new BookRequest(requestType, state,

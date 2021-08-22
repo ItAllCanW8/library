@@ -8,8 +8,6 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.UserServiceImpl;
-import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,14 +47,14 @@ public class EditUserProfile implements Command {
                 if (!service.isEmailAvailable(newEmail)) {
                     req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.EMAIL_AVAILABLE_ERROR_MSG);
                 }
-                if (!service.isPhoneNumAvailable(newPhoneNumber)) {
+                else if (!service.isPhoneNumAvailable(newPhoneNumber)) {
                     req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.PHONE_AVAILABLE_ERROR_MSG);
                 } else {
                     req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
                 }
             }
-        } catch (ServiceException | NumberFormatException e) {
-            throw new CommandException("Error editing user profile");
+        } catch (ServiceException e) {
+            throw new CommandException(e);
         }
         return result;
     }

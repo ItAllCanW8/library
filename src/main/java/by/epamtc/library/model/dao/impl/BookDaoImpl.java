@@ -292,6 +292,7 @@ public class BookDaoImpl implements BookDao {
     public boolean updateAvailableQuantity(long bookId, short newQuantity) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_QUANTITY)) {
+            System.out.println(statement);
             statement.setString(1, String.valueOf(newQuantity));
             statement.setLong(2, bookId);
 

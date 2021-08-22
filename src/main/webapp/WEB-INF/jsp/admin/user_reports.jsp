@@ -86,19 +86,19 @@
                 </thead>
 
                 <tbody>
-                <c:forEach var="report" items="${userReports}">
+                <c:forEach var="request" items="${userReports}">
                     <tr class="table-secondary">
-                        <th scope="row"><ctg:out text="${report.subject}"/></th>
+                        <th scope="row"><ctg:out text="${request.subject}"/></th>
                         <th scope="row">
-                            <a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${report.user.id}">
-                                <ctg:out text="${report.user.username}"/>
+                            <a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${request.user.id}">
+                                <ctg:out text="${request.user.username}"/>
                             </a><br>
-                            <ctg:out text="${report.user.email}"/>
+                            <ctg:out text="${request.user.email}"/>
                         </th>
-                        <th scope="row"><ctg:out text="${report.user.role}"/></th>
-                        <th scope="row">${report.isProcessed()}</th>
-                        <th scope="row">${report.creationDate}</th>
-                        <th scope="row"><a href="${pageContext.request.contextPath}/load_user_report.do?reportId=${report.id}">
+                        <th scope="row"><ctg:out text="${request.user.role}"/></th>
+                        <th scope="row">${request.isProcessed()}</th>
+                        <th scope="row">${request.creationDate}</th>
+                        <th scope="row"><a href="${pageContext.request.contextPath}/load_user_report.do?reportId=${request.id}">
                             <fmt:message key="button.moreInfo"/>
                         </a> </th>
                     </c:forEach>

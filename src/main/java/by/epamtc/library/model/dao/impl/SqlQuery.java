@@ -122,7 +122,7 @@ public class SqlQuery {
             " = users.user_id WHERE request_id = ?;";
 
     public static final String LOAD_READING_ROOM_BY_READER_ID = "SELECT title,img,pdf FROM book_requests JOIN books ON " +
-            "book_id = book_id_fk WHERE user_id_fk = ? AND state ='approved';";
+            "book_id = book_id_fk WHERE user_id_fk = ? AND request_type='to_reading_room' AND state ='approved';";
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
     public static final String CLOSE_BOOK_REQUEST = "UPDATE book_requests SET state = 'closed', closing_date = ?" +
             " WHERE request_id = ?;";

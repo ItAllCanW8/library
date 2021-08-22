@@ -9,6 +9,7 @@ public class BookRequest implements Serializable {
     private BookRequestState state;
     private String requestDate;
     private String closingDate;
+    private String expectedReturnDate;
     private int penaltyAmount;
     private Book book;
     private User user;
@@ -100,21 +101,27 @@ public class BookRequest implements Serializable {
         this.type = type;
     }
 
+    public String getExpectedReturnDate() {
+        return expectedReturnDate;
+    }
+
+    public void setExpectedReturnDate(String expectedReturnDate) {
+        this.expectedReturnDate = expectedReturnDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BookRequest that = (BookRequest) o;
+        BookRequest request = (BookRequest) o;
 
-        if (id != that.id) return false;
-        if (penaltyAmount != that.penaltyAmount) return false;
-        if (type != that.type) return false;
-        if (state != that.state) return false;
-        if (!requestDate.equals(that.requestDate)) return false;
-        if (!Objects.equals(closingDate, that.closingDate)) return false;
-        if (!book.equals(that.book)) return false;
-        return user.equals(that.user);
+        if (id != request.id) return false;
+        if (type != request.type) return false;
+        if (state != request.state) return false;
+        if (!requestDate.equals(request.requestDate)) return false;
+        if (!book.equals(request.book)) return false;
+        return user.equals(request.user);
     }
 
     @Override
@@ -123,8 +130,6 @@ public class BookRequest implements Serializable {
         result = 31 * result + type.hashCode();
         result = 31 * result + state.hashCode();
         result = 31 * result + requestDate.hashCode();
-        result = 31 * result + (closingDate != null ? closingDate.hashCode() : 0);
-        result = 31 * result + penaltyAmount;
         result = 31 * result + book.hashCode();
         result = 31 * result + user.hashCode();
         return result;
@@ -139,6 +144,7 @@ public class BookRequest implements Serializable {
         sb.append(", requestDate=").append(requestDate);
         sb.append(", closingDate=").append(closingDate);
         sb.append(", penaltyAmount=").append(penaltyAmount);
+        sb.append(", expectedReturnDate=").append(expectedReturnDate);
         sb.append(", book=").append(book);
         sb.append(", user=").append(user);
         sb.append('}');

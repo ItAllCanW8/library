@@ -6,11 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 
 <body >
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
+
+    <c:if test="${sessionScope.role.toString().equals(guest)}">
+        <jsp:forward page="/login"/>
+    </c:if>
 
     <section class="login_section layout_padding">
         <div class="container">
@@ -25,7 +30,7 @@
                 <div class="col-md-6">
                     <div class="detail-box">
                         <h3>
-                            <fmt:message key="header.contact"/>"
+                            <fmt:message key="header.contact"/>
                         </h3>
                         <p>
                             <fmt:message key="report.subjectPlaceholder"/>"

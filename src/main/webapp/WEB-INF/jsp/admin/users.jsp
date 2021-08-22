@@ -21,8 +21,8 @@
 
         <wrong-message>
             ${errorInputData}
-            ${noReport}
-            ${errorDuplicate}
+            ${errorChangingRole}
+            ${noUsers}
         </wrong-message>
 
         <div class="heading_container">

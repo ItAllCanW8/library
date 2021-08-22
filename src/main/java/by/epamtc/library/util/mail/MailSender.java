@@ -88,7 +88,7 @@ public class MailSender {
 
     private void initMessage() throws MessagingException {
         Session mailSession = SessionCreator.createSession(properties);
-        mailSession.setDebug(true);
+//        mailSession.setDebug(true);
 
         message = new MimeMessage(mailSession);
         message.setSubject(letterSubject);

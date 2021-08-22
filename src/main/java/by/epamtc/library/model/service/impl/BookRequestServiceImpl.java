@@ -97,11 +97,16 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public boolean closeBookRequest(long requestId, long bookId, int bookQuantity, BookRequestType requestType)
+    public boolean closeBookRequest(long requestId, long bookId, short bookQuantity, BookRequestType requestType)
             throws ServiceException {
         try {
             boolean isToReadingRoom = requestType.equals(BookRequestType.TO_READING_ROOM);
+            System.out.println(requestId);
+
             boolean isRequestClosed = bookRequestDao.closeBookRequest(requestId);
+
+            System.out.println(isToReadingRoom);
+            System.out.println(isRequestClosed);
 
             if(!isToReadingRoom && isRequestClosed){
                 bookDao.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
