@@ -24,4 +24,6 @@ public interface BookRequestDao {
     boolean deleteBookRequest(long requestId) throws DaoException;
     Optional<String> findEmailByRequestId(long requestId) throws DaoException;
     Optional<String> loadNumberOfDaysCoeff() throws DaoException;
+
+    String findClosingDateById(long requestId) throws DaoException;
 }

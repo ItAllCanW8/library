@@ -164,4 +164,7 @@ public class SqlQuery {
 
     public static final String LOAD_NUMBER_OF_DAYS_COEFF = "SELECT coefficient_value FROM coefficients WHERE " +
             "coefficient_name = 'number_of_days'";
+
+    public static final String FIND_REQUEST_CLOSING_DATE = "SELECT closing_date FROM book_requests WHERE " +
+            "request_id = ?";
 }

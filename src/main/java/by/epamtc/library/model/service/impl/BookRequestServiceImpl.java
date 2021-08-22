@@ -111,18 +111,22 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public boolean closeBookRequest(long requestId, long bookId, short bookQuantity, BookRequestType requestType)
-            throws ServiceException {
+    public boolean closeBookRequest(long requestId, long bookId, short bookQuantity, BookRequestType requestType,
+        String expectedReturnDateStr) throws ServiceException {
         try {
             boolean isToReadingRoom = requestType.equals(BookRequestType.TO_READING_ROOM);
-            System.out.println(requestId);
-
             boolean isRequestClosed = bookRequestDao.closeBookRequest(requestId);
 
-            System.out.println(isToReadingRoom);
-            System.out.println(isRequestClosed);
-
             if (!isToReadingRoom && isRequestClosed) {
+                String closingDateStr = LocalDateTime.now().format(DateTimeHelper.formatter);
+
+                LocalDateTime closingDate = LocalDateTime.parse(closingDateStr,DateTimeHelper.formatter);
+                LocalDateTime expectedReturnDate = LocalDateTime.parse(expectedReturnDateStr,DateTimeHelper.formatter);
+
+                if(closingDate.isAfter(expectedReturnDate))
+                    System.out.println("badass user)");
+
+
                 bookDao.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
             }
 

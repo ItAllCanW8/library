@@ -267,6 +267,18 @@ public class BookRequestDaoImpl implements BookRequestDao {
         }
     }
 
+    @Override
+    public String findClosingDateById(long requestId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_REQUEST_CLOSING_DATE)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            return (resultSet.next() ? resultSet.getString(1) : null);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading number of days coefficient." , e);
+        }
+    }
+
     private BookRequest createRequestFromResultSet(ResultSet resultSet, boolean areUserFieldsPresent) throws SQLException {
         long requestId = resultSet.getLong(bookReqIdCol);
         BookRequestType requestType = BookRequestType.fromString(resultSet.getString(bookReqTypeCol));

@@ -78,7 +78,7 @@
                             <fmt:message key="button.read"/> </a></li>
                           <c:if test="${request.type.value.equals('for_subscription')}">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
+                                   href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}&expectedReturnDate=${request.expectedReturnDate}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
                           <c:if test="${request.type.value.equals('to_reading_room')}">

@@ -46,6 +46,7 @@ public class RequestParameter {
     public static final String REQUEST_ID = "requestId";
     public static final String REQUEST_TYPE = "requestType";
     public static final String REQUEST_STATE = "requestState";
+    public static final String EXPECTED_RETURN_DATE = "expectedReturnDate";
 
     public static final String SEARCH_KEYWORD = "keyword";
     public static final String SORTING_FIELD = "sortingField";
