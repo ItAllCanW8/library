@@ -18,9 +18,10 @@ public interface BookRequestService {
     List<BookRequest> sort(String sortingField, String sortingOrder) throws ServiceException;
     List<BookRequest> findBookRequestsByType(String type) throws ServiceException;
     List<BookRequest> findBookRequestsByState(String state) throws ServiceException;
-    boolean changeRequestState(long requestId, String newRequestStateStr) throws ServiceException;
+    boolean changeRequestState(long requestId, String newRequestStateStr, long bookId, short bookQuantity)
+            throws ServiceException;
     boolean closeBookRequest(long userId, long requestId, long bookId, short bookQuantity, BookRequestType requestType,
-                             String expectedReturnDate) throws ServiceException;
+             String expectedReturnDate) throws ServiceException;
     boolean deleteBookRequest(long requestId) throws ServiceException;
     Optional<String> findEmailByRequestId(long requestId) throws ServiceException;
 }

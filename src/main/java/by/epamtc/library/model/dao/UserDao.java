@@ -13,6 +13,7 @@ public interface UserDao {
     boolean isPhoneNumAvailable(String phoneNum) throws DaoException;
     Optional<String> findPasswordByEmail(String email) throws DaoException;
     Optional<String> findEmailById(long userId) throws DaoException;
+    Optional<String> findStatusById(long userId) throws DaoException;
     Optional<User> findUserByEmail(String email) throws DaoException;
     boolean add(User user, String encPass) throws DaoException;
     boolean changePhoto(long detailsId, String photoPath) throws DaoException;

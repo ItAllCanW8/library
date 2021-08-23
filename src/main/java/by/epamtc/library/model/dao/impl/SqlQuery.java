@@ -28,6 +28,8 @@ public class SqlQuery {
 
     public static final String FIND_EMAIL_BY_ID = "SELECT email FROM users WHERE user_id = ?;";
 
+    public static final String FIND_STATUS_BY_ID = "SELECT status FROM users WHERE user_id = ?;";
+
     public static final String SELECT_POPULAR_BOOKS = "SELECT book_id,title,img FROM books ORDER BY available_quantity " +
             "ASC LIMIT 6;";
 
@@ -96,7 +98,7 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
 
     public static final String SELECT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date," +
-            "expected_return_date,closing_date,penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path" +
+            "expected_return_date,closing_date,penalty_amount, book_id_fk, user_id_fk,title,img,pdf,available_quantity,username,photo_path" +
             " FROM book_requests JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk " +
             "JOIN books ON book_id = book_id_fk;";
 
@@ -105,17 +107,17 @@ public class SqlQuery {
             "FROM book_requests JOIN books ON book_id = book_id_fk WHERE user_id_fk = ?;";
 
     public static final String SORT_BOOK_REQUESTS = "SELECT request_id, request_type,state,request_date,expected_return_date," +
-            "closing_date,penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
+            "closing_date,penalty_amount, book_id_fk, user_id_fk,title,img,pdf,available_quantity,username,photo_path FROM book_requests " +
             "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON " +
             "book_id = book_id_fk ORDER BY ";
 
     public static final String FIND_BOOK_REQUESTS_BY_TYPE = "SELECT request_id, request_type,state,request_date,expected_return_date," +
-            "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
+            "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,available_quantity,username,photo_path FROM book_requests " +
             "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
             " book_id = book_id_fk WHERE request_type LIKE ?;";
 
     public static final String FIND_BOOK_REQUESTS_BY_STATE = "SELECT request_id, request_type,state,request_date,expected_return_date," +
-            "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,username,photo_path FROM book_requests " +
+            "closing_date, penalty_amount, book_id_fk, user_id_fk,title,img,pdf,available_quantity,username,photo_path FROM book_requests " +
             "JOIN users ON user_id = user_id_fk JOIN user_details ON details_id = details_id_fk JOIN books ON" +
             " book_id = book_id_fk WHERE state LIKE ?;";
 

@@ -31,7 +31,7 @@ public class Login implements Command {
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
 
-                if (user.getStatus().equals(UserStatus.ACTIVE)) {
+                if (!user.getStatus().equals(UserStatus.DEACTIVATED)) {
                     HttpSession session = req.getSession();
                     session.setAttribute(SessionAttribute.USER, user);
                     session.setAttribute(SessionAttribute.CURRENT_ROLE, user.getRole());

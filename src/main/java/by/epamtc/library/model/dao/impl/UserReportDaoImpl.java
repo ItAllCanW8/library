@@ -119,7 +119,6 @@ public class UserReportDaoImpl implements UserReportDao {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_REPORTS_BY_AVAILABILITY)) {
             statement.setByte(1, (byte) (isProcessed ? 1 : 0));
-            System.out.println(statement);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

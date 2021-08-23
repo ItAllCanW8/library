@@ -292,19 +292,22 @@ public class BookRequestDaoImpl implements BookRequestDao {
         String bookTitle = resultSet.getString(bookTitleCol);
         String bookImg = resultSet.getString(bookImgCol);
         String bookPdf= resultSet.getString(bookPdfCol);
+        short bookAvailableQuantity = resultSet.getShort(bookQuantityCol);
+
+        BookRequest bookRequest = new BookRequest(requestId, requestType, requestState, requestDate,expectedReturnDate, closingDate,
+                penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
 
         if(areUserFieldsPresent){
             long userId = resultSet.getLong(bookReqUserIdCol);
             String username = resultSet.getString(usernameCol);
             String userPhoto = resultSet.getString(userPhotoCol);
 
-            return new BookRequest(requestId,requestType, requestState, requestDate, expectedReturnDate, closingDate,
-                    penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
-        } else {
-            short bookAvailableQuantity = resultSet.getShort(bookQuantityCol);
+            bookRequest.setUser(new User(userId, username, userPhoto));
 
-            return new BookRequest(requestId, requestType, requestState, requestDate,expectedReturnDate, closingDate,
-                    penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
+//            return new BookRequest(requestId,requestType, requestState, requestDate, expectedReturnDate, closingDate,
+//                    penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
         }
+
+        return bookRequest;
     }
 }

@@ -24,6 +24,7 @@
     <wrong-message>
       ${errorInputData}
       ${errorBookUpdate}
+      ${errorRequestCreation}
       ${errorDeletingBook}
     </wrong-message>
 

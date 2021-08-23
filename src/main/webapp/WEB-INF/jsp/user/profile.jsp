@@ -242,6 +242,7 @@
                                 </div>
 
                                 <div class="modal-body">
+<%--                                    <form id="deactivateForm" method="POST" action="${pageContext.request.contextPath}/change_user_own_status.do?userStatus=deactivated">--%>
                                     <form id="deactivateForm" method="POST" action="${pageContext.request.contextPath}/deactivate_account.do">
                                         <div class="mt-1">
                                             <h5><fmt:message key="profile.deactivateMsg"/></h5>

@@ -21,10 +21,11 @@ public class Message {
     public static final String PASSWORD_CHANGED = ". Your account's password has been changed. " +
             "Thank you for using our library.";
 
-    public static final String DEACTIVATION = "Hello. Your account has been deactivated. If you want to continue" +
+    public static final String DEACTIVATION = ". Your account has been deactivated. If you want to continue" +
             " using our library, please contact the administration.";
 
-    public static final String STATUS_CHANGED_PREFIX = "Hello. Your account status has been changed to ";
+    public static final String STATUS_CHANGED_PREFIX = ". Your account status has been changed to ";
+
     public static final String STATUS_CHANGED_POSTFIX = ". If you have any questions please contact administration. Have " +
             "a good day!";
 

@@ -255,6 +255,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Optional<String> findStatusById(long userId) throws ServiceException {
+        try {
+            Optional<String> statusOptional = userDao.findStatusById(userId);
+            if (statusOptional.isPresent()) {
+                String status = statusOptional.get();
+                statusOptional = Optional.of(status);
+            }
+            return statusOptional;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private void updateUserFields(User user, Map<String, String> fields) {
         String newUsername = fields.get(RequestParameter.USERNAME);
         user.setUsername(newUsername);

@@ -29,7 +29,8 @@ public class DeactivateAccount implements Command {
             if (userOptional.isPresent()) {
                 if(service.deactivateUser(user.getId())){
                     MailSender mailSender = MailSender.getInstance();
-                    mailSender.setupLetter(user.getEmail(), Message.LIBRARY_LETTER_SUBJECT, Message.DEACTIVATION);
+                    mailSender.setupLetter(user.getEmail(), Message.LIBRARY_LETTER_SUBJECT,Message.HELLO_PREFIX
+                            + user.getUsername() + Message.DEACTIVATION);
                     mailSender.send();
 
                     session.setAttribute(SessionAttribute.SUCCESS_MESSAGE, Boolean.TRUE);

@@ -36,6 +36,8 @@ public class JspAttribute {
 
     public static final String ERROR_REQUEST_CREATION = "errorRequestCreation";
     public static final String ERROR_REQUEST_CREATION_MSG = "Error creating request because you have already created such";
+    public static final String ERROR_UNRELIABLE_ACCOUNT_MSG = "Error creating request because your account is flagged as" +
+            " unreliable and you are not allowed to rent books for subscription. Please contact the administration";
 
     private JspAttribute(){}
 }

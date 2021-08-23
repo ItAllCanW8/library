@@ -19,6 +19,7 @@
 
         <wrong-message>
             ${noBookRequests}
+            ${errorInputData}
         </wrong-message>
 
         <div class="heading_container">
@@ -77,6 +78,9 @@
                             <fmt:message key="button.requestState"/>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="requestStateDropdown">
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=left">
+                                <fmt:message key="button.leftRequests"/> </a></li>
                             <li><a class="dropdown-item"
                                    href="${pageContext.request.contextPath}/find_book_requests_by_state.do?requestState=approved">
                                 <fmt:message key="button.approvedRequests"/> </a></li>
@@ -156,10 +160,10 @@
                                         aria-labelledby="actionDropDown">
                                         <c:if test="${request.state.value.equals('left')}">
                                             <li><a class="dropdown-item"
-                                                   href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=approved">
+                                                   href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=approved&bookQuantity=${request.book.availableQuantity}">
                                                 <fmt:message key="button.approve"/> </a></li>
                                             <li><a class="dropdown-item"
-                                                   href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=denied">
+                                                   href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=denied&bookQuantity=${request.book.availableQuantity}">
                                                 <fmt:message key="button.deny"/> </a></li>
                                         </c:if>
                                         <c:if test="${request.state.value.equals('closed') || request.state.value.equals('denied')}">

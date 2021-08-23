@@ -77,11 +77,11 @@
                             </a>
                             <c:if test="${!user.role.toString().equals(admin)}">
                                 <c:if test="${user.status.value.equals('active')}"><br>
-                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&userStatus=deactivated">
+                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&username=${user.username}&userStatus=deactivated">
                                         <fmt:message key="users.deactivate"/></a>
                                 </c:if>
-                                <c:if test="${user.status.value.equals('deactivated')}"><br>
-                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&userStatus=active">
+                                <c:if test="${!user.status.value.equals('active')}"><br>
+                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&username=${user.username}&userStatus=active">
                                         <fmt:message key="users.activate"/></a>
                                 </c:if>
                             </c:if>

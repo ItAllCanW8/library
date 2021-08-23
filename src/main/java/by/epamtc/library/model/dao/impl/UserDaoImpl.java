@@ -292,6 +292,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<String> findStatusById(long userId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_STATUS_BY_ID)) {
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return (resultSet.next() ? Optional.of(resultSet.getString(1)) : Optional.empty());
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding user status by user id " + userId,e);
+        }
+    }
+
+    @Override
     public Optional<User> findUserByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL)) {

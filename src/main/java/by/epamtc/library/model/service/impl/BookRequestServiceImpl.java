@@ -87,10 +87,9 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public boolean changeRequestState(long requestId, String newRequestStateStr) throws ServiceException {
+    public boolean changeRequestState(long requestId, String newRequestStateStr, long bookId, short bookQuantity) throws ServiceException {
         try {
             BookRequestState newRequestState = BookRequestState.fromString(newRequestStateStr);
-
             if(newRequestState != null) {
                 Optional<String> expectedReturnDate = Optional.empty();
 
@@ -102,7 +101,11 @@ public class BookRequestServiceImpl implements BookRequestService {
                         expectedReturnDate = Optional.of(LocalDateTime.now().plusDays(numberOfDaysCoeff).
                                 format(DateTimeHelper.formatter));
                     }
+                } else if (newRequestState == BookRequestState.DENIED){
+                    ServiceFactory.getInstance().getBookService().updateAvailableQuantity(bookId,
+                            (short)(bookQuantity + 1));
                 }
+
                 return bookRequestDao.changeRequestState(requestId, newRequestState.getValue(), expectedReturnDate);
             }
         } catch (DaoException e) {
