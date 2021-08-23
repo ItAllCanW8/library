@@ -1,9 +1,6 @@
 package by.epamtc.library.controller.command.impl;
 
-import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.JspAttribute;
-import by.epamtc.library.controller.attribute.PagePath;
-import by.epamtc.library.controller.attribute.RequestParameter;
+import by.epamtc.library.controller.attribute.*;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
@@ -14,10 +11,14 @@ import by.epamtc.library.model.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ReturnBook implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+        HttpSession session = req.getSession();
+        long userId = (long) session.getAttribute(SessionAttribute.USER_ID);
+
         String requestIdStr = req.getParameter(RequestParameter.REQUEST_ID);
         String bookIdStr = req.getParameter(RequestParameter.BOOK_ID);
         String bookQuantityStr = req.getParameter(RequestParameter.BOOK_QUANTITY);
@@ -28,7 +29,7 @@ public class ReturnBook implements Command {
 
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
-            if(!service.closeBookRequest(Long.parseLong(requestIdStr), Long.parseLong(bookIdStr),
+            if(!service.closeBookRequest(userId,Long.parseLong(requestIdStr), Long.parseLong(bookIdStr),
                     Short.parseShort(bookQuantityStr), requestType, expectedReturnDate))
                 result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
         } catch (NumberFormatException e) {

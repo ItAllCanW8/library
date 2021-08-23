@@ -1,7 +1,9 @@
 package by.epamtc.library.model.entity;
 
 public enum UserStatus {
-    ACTIVE("active"), DEACTIVATED("deactivated");
+    ACTIVE("active"),
+    DEACTIVATED("deactivated"),
+    UNRELIABLE("unreliable");
 
     private final String value;
 

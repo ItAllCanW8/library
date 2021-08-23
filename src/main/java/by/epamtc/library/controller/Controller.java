@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = ServletAttribute.SERVLET_PATTERN, name = ServletAttribute.SERVLET_NAME)
@@ -35,6 +36,7 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(LocalDateTime.now());
         processRequest(req, resp);
     }
 

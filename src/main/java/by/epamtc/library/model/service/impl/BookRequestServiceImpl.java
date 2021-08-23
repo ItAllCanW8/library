@@ -3,13 +3,15 @@ package by.epamtc.library.model.service.impl;
 import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.BookRequestDao;
 import by.epamtc.library.model.dao.factory.DaoFactory;
 import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
+import by.epamtc.library.model.service.BookService;
+import by.epamtc.library.model.service.UserService;
+import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.SortingHelper;
 
@@ -21,8 +23,6 @@ import java.util.Optional;
 
 public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = DaoFactory.getInstance().getBookRequestDao();
-    //    private static final BookService bookService = ServiceFactory.getInstance().getBookService();
-    private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
     private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
 
     public BookRequestServiceImpl() {
@@ -49,8 +49,9 @@ public class BookRequestServiceImpl implements BookRequestService {
 
         try {
             if (requestOptional.isPresent()) {
+                BookService bookService = ServiceFactory.getInstance().getBookService();
                 long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
-                Optional<Book> bookOptional = bookDao.findBookById(bookId);
+                Optional<Book> bookOptional = bookService.findBookById(bookId);
 
                 if (bookOptional.isPresent()) {
                     BookRequest request = requestOptional.get();
@@ -64,7 +65,7 @@ public class BookRequestServiceImpl implements BookRequestService {
 
                     boolean isRequestCreated = !bookRequestDao.bookRequestExists(request) && bookRequestDao.add(request);
                     if (!isToReadingRoom && isRequestCreated) {
-                        bookDao.updateAvailableQuantity(bookId, (short) (book.getAvailableQuantity() - 1));
+                        bookService.updateAvailableQuantity(bookId, (short) (book.getAvailableQuantity() - 1));
                     }
 
                     return isRequestCreated;
@@ -111,23 +112,26 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public boolean closeBookRequest(long requestId, long bookId, short bookQuantity, BookRequestType requestType,
+    public boolean closeBookRequest(long userId, long requestId, long bookId, short bookQuantity, BookRequestType requestType,
         String expectedReturnDateStr) throws ServiceException {
         try {
             boolean isToReadingRoom = requestType.equals(BookRequestType.TO_READING_ROOM);
             boolean isRequestClosed = bookRequestDao.closeBookRequest(requestId);
 
             if (!isToReadingRoom && isRequestClosed) {
+                BookService bookService = ServiceFactory.getInstance().getBookService();
+                UserService userService = ServiceFactory.getInstance().getUserService();
+
                 String closingDateStr = LocalDateTime.now().format(DateTimeHelper.formatter);
 
                 LocalDateTime closingDate = LocalDateTime.parse(closingDateStr,DateTimeHelper.formatter);
                 LocalDateTime expectedReturnDate = LocalDateTime.parse(expectedReturnDateStr,DateTimeHelper.formatter);
 
                 if(closingDate.isAfter(expectedReturnDate))
-                    System.out.println("badass user)");
+                    userService.c
 
 
-                bookDao.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
+                bookService.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));
             }
 
             return isRequestClosed;
