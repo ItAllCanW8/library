@@ -21,10 +21,12 @@ public class Message {
     public static final String PASSWORD_CHANGED = ". Your account's password has been changed. " +
             "Thank you for using our library.";
 
-    public static final String DEACTIVATION_LETTER = "Hello. Your account has been deactivated. If you want to continue" +
+    public static final String DEACTIVATION = "Hello. Your account has been deactivated. If you want to continue" +
             " using our library, please contact the administration.";
 
-    public static final String ACTIVATION_LETTER = "Hello. Your account has been activated. Enjoy our library!";
+    public static final String STATUS_CHANGED_PREFIX = "Hello. Your account status has been changed to ";
+    public static final String STATUS_CHANGED_POSTFIX = ". If you have any questions please contact administration. Have " +
+            "a good day!";
 
     public static final String USER_REPORT_CREATION = ". Thanks for the report you left. We will review your report and after processing you" +
             " will receive a response to your email.";

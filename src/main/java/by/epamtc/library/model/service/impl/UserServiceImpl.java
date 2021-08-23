@@ -7,6 +7,7 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.dao.factory.DaoFactory;
 import by.epamtc.library.model.dao.impl.UserDaoImpl;
+import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
@@ -15,9 +16,11 @@ import by.epamtc.library.model.entity.factory.impl.UserFactory;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.validation.UserValidator;
+import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.Encryptor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +160,20 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public boolean changeUserStatus(long userId, String newStatusStr) throws ServiceException {
+        try {
+            UserStatus newStatus = UserStatus.fromString(newStatusStr);
+
+            if(newStatus != null) {
+                return userDao.updateUserStatus(userId, newStatus);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return false;
     }
 
     @Override

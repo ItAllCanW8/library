@@ -128,7 +128,7 @@ public class BookRequestServiceImpl implements BookRequestService {
                 LocalDateTime expectedReturnDate = LocalDateTime.parse(expectedReturnDateStr,DateTimeHelper.formatter);
 
                 if(closingDate.isAfter(expectedReturnDate))
-                    userService.c
+                    userService.changeUserStatus(userId, UserStatus.UNRELIABLE.getValue());
 
 
                 bookService.updateAvailableQuantity(bookId, (short) (bookQuantity + 1));

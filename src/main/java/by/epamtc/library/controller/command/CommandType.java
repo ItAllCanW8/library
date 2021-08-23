@@ -63,11 +63,8 @@ public enum CommandType {
     LOAD_USER_PROFILE{{
         this.command = new LoadUserProfileById();
     }},
-    DEACTIVATE_USER_ACCOUNT{{
-        this.command = new DeactivateUserById();
-    }},
-    ACTIVATE_USER_ACCOUNT{{
-        this.command = new ActivateUserById();
+    CHANGE_USER_STATUS{{
+        this.command = new ChangeUserStatus();
     }},
     CHANGE_ROLE_TO_LIBRARIAN{{
         this.command = new ChangeRoleToLibrarian();

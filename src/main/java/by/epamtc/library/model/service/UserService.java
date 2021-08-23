@@ -19,6 +19,7 @@ public interface UserService {
     boolean changePassword(long userId, Map<String, String> fields) throws ServiceException;
     boolean deactivateUser(long userId) throws ServiceException;
     boolean activateUser(long userId) throws ServiceException;
+    boolean changeUserStatus(long userId, String newStatusStr) throws ServiceException;
     boolean changeRoleToLibrarian(long userId) throws ServiceException;
     boolean changeRoleToReader(long userId) throws ServiceException;
     List<User> findAllUsers() throws ServiceException;
