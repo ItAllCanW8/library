@@ -2,107 +2,112 @@
   Created by IntelliJ IDEA.
   User: ya
   Date: 18.07.2021
-  Time: 15:16
+  Time: 16:29
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
-<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<body>
+<div class="hero_area">
+    <%@ include file="../components/header.jsp" %>
 
-    <title>SB Admin 2 - Register</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="${pageContext.request.contextPath}/css/sb-admin-2.min.css" rel="stylesheet">
-
-</head>
-<body class="bg-gradient-primary">
-
-<div class="container">
-
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                <div class="col-lg-7">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+    <c:set var="books" scope="request" value="${books}"/>
+    <section class=" slider_section position-relative">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="detail-box">
+                                    <div>
+                                        <h1>
+                                            <fmt:message key="carousel.library"/>
+                                        </h1>
+                                        <a href="">
+                                            <fmt:message key="button.moreInfo"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <form class="user">
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                           placeholder="First Name">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                           placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                       placeholder="Email Address">
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Repeat Password">
+                    </div>
+                </div>
+                <div class="carousel-item ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="detail-box">
+                                    <div>
+                                        <h1>
+                                            <fmt:message key="carousel.education"/>
+                                        </h1>
+                                        <a href="">
+                                            <fmt:message key="button.moreInfo"/>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                Register Account
-                            </a>
-                            <hr>
-                            <a href="index.html" class="btn btn-google btn-user btn-block">
-                                <i class="fab fa-google fa-fw"></i> Register with Google
-                            </a>
-                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                            </a>
-                        </form>
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
                         </div>
-                        <div class="text-center">
-                            <a class="small" href="login.html">Already have an account? Login!</a>
+                    </div>
+                </div>
+                <div class="carousel-item ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="detail-box">
+                                    <div>
+                                        <h1>
+                                            <fmt:message key="carousel.leisure"/>
+                                        </h1>
+                                        <a href="">
+                                            <fmt:message key="button.moreInfo"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </section>
 </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="${pageContext.request.contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="${pageContext.request.contextPath}/js/sb-admin-2.min.js"></script>
+<section class="course_section layout_padding-bottom">
+    <div class="side_img">
+        <img src="${pageContext.request.contextPath}/images/layout/side-img.png" alt="" />
+    </div>
+    <div class="container">
+        <div class="heading_container">
+            <h3>
+                <fmt:message key="books.popular"/>
+            </h3>
+            <hr style="width:100%;text-align:left;margin-left:0">
+        </div>
+        <div class="course_container">
+            <div class="course_content">
+                <c:forEach var="request" items="${books}">
+                    <div class="box">
+                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
+                        <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
+                            <img src="${pageContext.request.contextPath}/images/layout/link.png" alt="" />
+                        </a>
+                        <h5><ctg:out text="${request.title}"/></h5>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+</section>
 
 </body>
 
 </html>
-

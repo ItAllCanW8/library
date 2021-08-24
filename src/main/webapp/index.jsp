@@ -2,9 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
 </head>
 <body>
-<jsp:forward page="/controller"/>
+    <jsp:forward page="/home.do"/>
 </body>
 </html>

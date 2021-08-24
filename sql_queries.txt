@@ -1,0 +1,5 @@
+insert into library.books(title, author_pseudo, isbn, available_quantity, genre, short_description, pdf, img) values ('harry potter and the philosophers stone', 'J. K. Rowling', '9780747532743',
+5, 'fantasy', 'It is a story about Harry Potter, an orphan brought up by his aunt and uncle because his parents were killed when he was a baby. Harry is unloved by his uncle and aunt but everything changes when he is invited to join Hogwarts School of Witchcraft and Wizardry and he finds out hes a wizard.',
+'hp_1.pdf', 'hp_1.jpg');
+
+insert into book_requests(request_type, state, request_date, book_id_fk, user_id_fk) values('a', 'a', '2021-08-08 14:55:43', 2,4);
