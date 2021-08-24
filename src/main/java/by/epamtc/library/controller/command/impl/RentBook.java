@@ -16,7 +16,6 @@ import by.epamtc.library.util.mail.MailSender;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -51,6 +50,9 @@ public class RentBook implements Command {
                 }
                 else if (UserStatus.fromString(userStatusOptional.get()) == UserStatus.UNRELIABLE) {
                     req.setAttribute(JspAttribute.ERROR_REQUEST_CREATION, JspAttribute.ERROR_UNRELIABLE_ACCOUNT_MSG);
+                    return result;
+                } else if(!bookRequestService.isUserBooksNumLessThanMax(reader.getId())) {
+                    req.setAttribute(JspAttribute.ERROR_REQUEST_CREATION, JspAttribute.TOO_MUCH_SUB_BOOK_REQUESTS_MSG);
                     return result;
                 }
 

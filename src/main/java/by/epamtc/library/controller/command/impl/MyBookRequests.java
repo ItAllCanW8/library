@@ -27,6 +27,8 @@ public class MyBookRequests implements Command {
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         CommandResult result = new CommandResult(PagePath.READER_BOOK_REQUESTS, CommandResult.Type.FORWARD);
         try {
+            req.setAttribute(RequestParameter.MAX_NUM_OF_BOOK_REQUESTS_FOR_SUB, service.loadMaxSubBooksCoeff());
+
             List<BookRequest> bookRequests = service.loadBookRequestsByReaderId(readerId);
             if (bookRequests.size() > 0) {
                 req.setAttribute(RequestParameter.BOOK_REQUESTS, bookRequests);

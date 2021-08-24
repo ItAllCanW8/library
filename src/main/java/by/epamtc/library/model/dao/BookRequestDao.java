@@ -29,4 +29,6 @@ public interface BookRequestDao {
     Map<String, String> loadRRWorkingHours() throws DaoException;
     String findClosingDateById(long requestId) throws DaoException;
     void deleteRRRequests(long userId) throws  DaoException;
+    Map<String, String> loadUserAndMaxCountOfBooks(long userId) throws DaoException;
+    String loadMaxSubBooksCoeff() throws DaoException;
 }

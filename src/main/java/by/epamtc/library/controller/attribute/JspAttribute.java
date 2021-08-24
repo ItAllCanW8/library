@@ -9,6 +9,8 @@ public class JspAttribute {
             "Pls contact administration";
 
     public static final String READING_ROOM_CLOSED_MSG = "Sorry, the reading room is closed now.";
+    public static final String TOO_MUCH_SUB_BOOK_REQUESTS_MSG = "Sorry, the number of your book requests for a subscription is" +
+            " greater than or equal to the maximum";
 
     public static final String ERROR_INPUT_DATA = "errorInputData";
     public static final String ERROR_INPUT_DATA_MSG = "Input data isn't valid.";

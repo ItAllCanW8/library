@@ -27,6 +27,7 @@
         <fmt:message key="librarian.bookRequests"/>
       </h3>
       <hr style="width:100%;text-align:left;margin-left:0">
+      <h4><fmt:message key="request.maxNumForSub"/> ${maxNumOfBooks}</h4>
     </div>
     <div class="event_container">
       <table id="booksTable" class="table table-dark table-bordered border-secondary">

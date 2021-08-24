@@ -16,6 +16,8 @@ public interface BookRequestService {
     List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException;
     List<BookRequest> loadReadingRoomByReaderId(long readerId, boolean isReadingRoomOpened) throws ServiceException;
     Map<String, String> loadRRWorkingHours() throws ServiceException;
+    boolean isUserBooksNumLessThanMax(long userId) throws ServiceException;
+    String loadMaxSubBooksCoeff() throws ServiceException;
     List<BookRequest> sort(String sortingField, String sortingOrder) throws ServiceException;
     List<BookRequest> findBookRequestsByType(String type) throws ServiceException;
     List<BookRequest> findBookRequestsByState(String state) throws ServiceException;

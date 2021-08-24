@@ -42,6 +42,8 @@ public class RequestParameter {
     public static final String READING_ROOM_OPENING = "readingRoomOpening";
     public static final String READING_ROOM_CLOSING = "readingRoomClosing";
 
+    public static final String MAX_NUM_OF_BOOK_REQUESTS_FOR_SUB = "maxNumOfBooks";
+
     public static final String BOOK_REQUESTS = "bookRequests";
     public static final String REQUEST_ID = "requestId";
     public static final String REQUEST_TYPE = "requestType";

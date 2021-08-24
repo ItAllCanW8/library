@@ -57,7 +57,7 @@ public class SqlQuery {
 
     public static final String FIND_BOOK_QUANTITY_BY_ID = "SELECT available_quantity FROM books WHERE book_id = ?;";
 
-    public static final String UPDATE_USER_PHOTO = "UPDATE user_details SET photo_path = ? WHERE details_id = ?";
+    public static final String UPDATE_USER_PHOTO = "UPDATE user_details SET photo_path = ? WHERE details_id = ?;";
 
     public static final String UPDATE_USER = "UPDATE users SET username = ?, email = ? WHERE user_id = ?;";
 
@@ -65,8 +65,11 @@ public class SqlQuery {
             " phone_number = ? WHERE details_id = ?;";
 
     public static final String UPDATE_PASSWORD= "UPDATE users SET password = ? WHERE user_id = ?;";
+
     public static final String UPDATE_USER_STATUS = "UPDATE users SET status = ? WHERE user_id = ?;";
+
     public static final String UPDATE_USER_ROLE = "UPDATE users SET role_id_fk = ? WHERE user_id = ?;";
+
     public static final String SELECT_ALL_USERS = "SELECT user_id,username,email,status,name,surname,date_of_birth," +
             "phone_number,photo_path,role,details_id_fk FROM users JOIN user_details ON details_id = details_id_fk " +
             "JOIN user_roles ON role_id = role_id_fk;";
@@ -80,13 +83,19 @@ public class SqlQuery {
             "JOIN user_roles ON role_id = role_id_fk WHERE status = ?;";
 
     public static final String CHECK_BOOK_FOR_EXISTENCE = "SELECT title FROM books WHERE title = ?;";
+
     public static final String INSERT_BOOK = "INSERT INTO books(title, author_pseudo, isbn, available_quantity," +
             " genre, short_description, pdf, img, author_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
     public static final String UPDATE_BOOK = "UPDATE books SET title = ?, author_pseudo = ?, isbn = ?," +
             " available_quantity = ?, genre = ?, short_description = ? WHERE book_id = ?;";
+
     public static final String DELETE_BOOK = "DELETE FROM books WHERE book_id = ?;";
+
     public static final String UPDATE_BOOK_COVER = "UPDATE books SET img = ? WHERE book_id = ?";
+
     public static final String UPDATE_AUTHOR_PHOTO = "UPDATE books SET author_img = ? WHERE book_id = ?";
+
     public static final String UPDATE_BOOK_PDF = "UPDATE books SET pdf = ? WHERE book_id = ?";
 
     public static final String CHECK_BOOK_REQUEST_FOR_EXISTENCE = "SELECT request_id FROM book_requests WHERE" +
@@ -94,6 +103,13 @@ public class SqlQuery {
 
     public static final String INSERT_BOOK_REQUEST = "INSERT INTO book_requests(request_type, state, request_date," +
             " book_id_fk, user_id_fk) VALUES (?, ?, ?, ?, ?);";
+
+    public static final String SELECT_USER_AND_MAX_COUNT_OF_BOOKS_FOR_SUB = "SELECT COUNT(request_id),coefficient_value FROM book_requests" +
+            " JOIN coefficients WHERE user_id_fk = ? AND request_type = 'for_subscription' AND (state = 'left' or state" +
+            " = 'approved') AND coefficient_name = 'max_number_of_user_books'";
+
+    public static final String SELECT_MAX_COUNT_OF_BOOKS_FOR_SUB = "SELECT coefficient_value FROM coefficients WHERE " +
+            "coefficient_name = 'max_number_of_user_books'";
 
     public static final String UPDATE_BOOK_QUANTITY = "UPDATE books SET available_quantity = ? WHERE book_id = ?;";
 
@@ -128,6 +144,7 @@ public class SqlQuery {
             "book_id = book_id_fk WHERE user_id_fk = ? AND request_type='to_reading_room' AND state ='approved';";
 
     public static final String UPDATE_BOOK_REQUEST_STATE = "UPDATE book_requests SET state = ? WHERE request_id = ?;";
+
     public static final String UPDATE_BOOK_REQUEST_STATE_TO_APPROVED = "UPDATE book_requests SET state = ?," +
             "expected_return_date = ?  WHERE request_id = ?;";
 
@@ -141,6 +158,7 @@ public class SqlQuery {
 
     public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +
             " reading_room_opening = ?, reading_room_closing = ?";
+
     public static final String SELECT_LIB_COEFFICIENTS = "SELECT * FROM coefficients;";
 
     public static final String CHECK_USER_REPORT_FOR_EXISTENCE = "SELECT report_id FROM user_reports WHERE" +

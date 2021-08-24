@@ -16,7 +16,6 @@ import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.SortingHelper;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +108,7 @@ public class BookRequestServiceImpl implements BookRequestService {
 
                 return bookRequestDao.changeRequestState(requestId, newRequestState.getValue(), expectedReturnDate);
             }
-        } catch (DaoException e) {
+        } catch (DaoException | NumberFormatException e) {
             throw new ServiceException(e);
         }
         return false;
@@ -139,7 +138,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             }
 
             return isRequestClosed;
-        } catch (DaoException e) {
+        } catch (DaoException | NumberFormatException e) {
             throw new ServiceException(e);
         }
     }
@@ -205,6 +204,28 @@ public class BookRequestServiceImpl implements BookRequestService {
             return bookRequestDao.loadRRWorkingHours();
         } catch (DaoException e){
             throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean isUserBooksNumLessThanMax(long userId) throws ServiceException {
+        try {
+            Map<String, String> fields = bookRequestDao.loadUserAndMaxCountOfBooks(userId);
+            if(!fields.isEmpty())
+                return Short.parseShort(fields.get("COUNT(request_id)")) < Short.parseShort(fields.get("coefficient_value"));
+        } catch (DaoException | NumberFormatException e){
+            throw new ServiceException(e);
+        }
+
+        return false;
+    }
+
+    @Override
+    public String loadMaxSubBooksCoeff() throws ServiceException {
+        try{
+            return bookRequestDao.loadMaxSubBooksCoeff();
+        } catch (DaoException e){
+         throw new ServiceException(e);
         }
     }
 

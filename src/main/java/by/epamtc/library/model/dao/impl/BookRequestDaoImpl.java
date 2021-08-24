@@ -301,8 +301,41 @@ public class BookRequestDaoImpl implements BookRequestDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_READING_ROOM_REQUESTS)) {
             statement.setLong(1, userId);
             statement.execute();
+
+            System.out.println(statement.getUpdateCount());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error deleting reading room requests by user id " + userId, e);
+        }
+    }
+
+    @Override
+    public Map<String, String> loadUserAndMaxCountOfBooks(long userId) throws DaoException {
+        Map<String, String> fields = new HashMap<>();
+
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USER_AND_MAX_COUNT_OF_BOOKS_FOR_SUB)) {
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                fields.put("COUNT(request_id)", resultSet.getString("COUNT(request_id)"));
+                fields.put("coefficient_value", resultSet.getString("coefficient_value"));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading user and max count of book requests by user id " + userId, e);
+        }
+        return fields;
+    }
+
+    @Override
+    public String loadMaxSubBooksCoeff() throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_MAX_COUNT_OF_BOOKS_FOR_SUB);
+
+            return (resultSet.next() ? resultSet.getString(1) : null);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading max number of books for subscription." , e);
         }
     }
 
@@ -330,9 +363,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
             String userPhoto = resultSet.getString(userPhotoCol);
 
             bookRequest.setUser(new User(userId, username, userPhoto));
-
-//            return new BookRequest(requestId,requestType, requestState, requestDate, expectedReturnDate, closingDate,
-//                    penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf), new User(userId, username, userPhoto));
         }
 
         return bookRequest;
