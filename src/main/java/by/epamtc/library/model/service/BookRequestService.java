@@ -14,7 +14,8 @@ public interface BookRequestService {
     boolean createBookRequest(Map<String, String> fields, User reader) throws ServiceException;
     List<BookRequest> loadBookRequests() throws ServiceException;
     List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException;
-    List<BookRequest> loadReadingRoomByReaderId(long readerId) throws ServiceException;
+    List<BookRequest> loadReadingRoomByReaderId(long readerId, boolean isReadingRoomOpened) throws ServiceException;
+    Map<String, String> loadRRWorkingHours() throws ServiceException;
     List<BookRequest> sort(String sortingField, String sortingOrder) throws ServiceException;
     List<BookRequest> findBookRequestsByType(String type) throws ServiceException;
     List<BookRequest> findBookRequestsByState(String state) throws ServiceException;
@@ -23,5 +24,6 @@ public interface BookRequestService {
     boolean closeBookRequest(long userId, long requestId, long bookId, short bookQuantity, BookRequestType requestType,
              String expectedReturnDate) throws ServiceException;
     boolean deleteBookRequest(long requestId) throws ServiceException;
+    void deleteRRRequests(long userId) throws ServiceException;
     Optional<String> findEmailByRequestId(long requestId) throws ServiceException;
 }

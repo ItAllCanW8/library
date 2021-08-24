@@ -10,9 +10,7 @@ import by.epamtc.library.util.SortingHelper;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class BookRequestDaoImpl implements BookRequestDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
@@ -268,6 +266,24 @@ public class BookRequestDaoImpl implements BookRequestDao {
     }
 
     @Override
+    public Map<String, String> loadRRWorkingHours() throws DaoException {
+        Map<String, String> workingHours = new HashMap<>();
+
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.LOAD_READING_ROOM_COEFFS);
+
+            while(resultSet.next())
+                workingHours.put(resultSet.getString("coefficient_name"),
+                        resultSet.getString("coefficient_value"));
+
+            return workingHours;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading reading room working hours." , e);
+        }
+    }
+
+    @Override
     public String findClosingDateById(long requestId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_REQUEST_CLOSING_DATE)) {
@@ -276,6 +292,17 @@ public class BookRequestDaoImpl implements BookRequestDao {
             return (resultSet.next() ? resultSet.getString(1) : null);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error loading number of days coefficient." , e);
+        }
+    }
+
+    @Override
+    public void deleteRRRequests(long userId) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_READING_ROOM_REQUESTS)) {
+            statement.setLong(1, userId);
+            statement.execute();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error deleting reading room requests by user id " + userId, e);
         }
     }
 

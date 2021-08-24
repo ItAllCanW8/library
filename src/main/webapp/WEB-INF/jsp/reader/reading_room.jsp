@@ -23,6 +23,8 @@
             <h3>
                 <fmt:message key="header.readingRoom"/>
             </h3>
+            <h4><fmt:message key="admin.readingRoomOpening"/>: ${readingRoomOpening}</h4>
+            <h4><fmt:message key="admin.readingRoomClosing"/>: ${readingRoomClosing}</h4>
             <hr style="width:100%;text-align:left;margin-left:0">
         </div>
         <div class="course_container">

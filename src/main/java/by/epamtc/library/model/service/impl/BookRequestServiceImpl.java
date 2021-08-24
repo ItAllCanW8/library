@@ -16,6 +16,7 @@ import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.SortingHelper;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +154,15 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
+    public void deleteRRRequests(long userId) throws ServiceException {
+        try {
+            bookRequestDao.deleteRRRequests(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public Optional<String> findEmailByRequestId(long requestId) throws ServiceException {
         try {
             Optional<String> emailOptional = bookRequestDao.findEmailByRequestId(requestId);
@@ -176,10 +186,24 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public List<BookRequest> loadReadingRoomByReaderId(long readerId) throws ServiceException {
+    public List<BookRequest> loadReadingRoomByReaderId(long readerId, boolean isReadingRoomOpened) throws ServiceException {
         try {
-            return bookRequestDao.loadReadingRoomByReaderId(readerId);
+            if(isReadingRoomOpened)
+                return bookRequestDao.loadReadingRoomByReaderId(readerId);
+            else {
+                bookRequestDao.deleteRRRequests(readerId);
+            }
         } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public Map<String, String> loadRRWorkingHours() throws ServiceException {
+        try {
+            return bookRequestDao.loadRRWorkingHours();
+        } catch (DaoException e){
             throw new ServiceException(e);
         }
     }

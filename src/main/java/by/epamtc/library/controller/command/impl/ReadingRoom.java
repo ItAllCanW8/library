@@ -8,21 +8,16 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.BookRequest;
-import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.service.BookRequestService;
-import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.BookRequestServiceImpl;
-import by.epamtc.library.model.service.impl.BookServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public class ReadingRoom implements Command {
     @Override
@@ -33,9 +28,22 @@ public class ReadingRoom implements Command {
         BookRequestService bookRequestService = ServiceFactory.getInstance().getBookRequestService();
         CommandResult result = new CommandResult(PagePath.READING_ROOM, CommandResult.Type.FORWARD);
         try {
-            List<BookRequest> bookRequests = bookRequestService.loadReadingRoomByReaderId(readerId);
+            Map<String, String> workingHours = bookRequestService.loadRRWorkingHours();
+            LocalTime opening = LocalTime.parse(workingHours.get("reading_room_opening"));
+            LocalTime closing = LocalTime.parse(workingHours.get("reading_room_closing"));
+            LocalTime now = LocalTime.now();
 
-            if (bookRequests.size() > 0) {
+            req.setAttribute(RequestParameter.READING_ROOM_OPENING, opening);
+            req.setAttribute(RequestParameter.READING_ROOM_CLOSING, closing);
+
+            boolean isReadingRoomOpened = now.isAfter(opening) && now.isBefore(closing);
+
+            List<BookRequest> bookRequests = bookRequestService.loadReadingRoomByReaderId(readerId,isReadingRoomOpened);
+
+            if(!isReadingRoomOpened){
+                req.setAttribute(JspAttribute.NO_BOOK_REQUESTS, JspAttribute.READING_ROOM_CLOSED_MSG);
+            }
+            else if (bookRequests.size() > 0) {
                 req.setAttribute(RequestParameter.BOOK_REQUESTS, bookRequests);
             } else {
                 req.setAttribute(JspAttribute.NO_BOOK_REQUESTS, JspAttribute.NO_BOOK_REQUESTS_MSG);

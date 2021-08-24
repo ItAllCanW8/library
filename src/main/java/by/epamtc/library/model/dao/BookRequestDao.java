@@ -7,6 +7,7 @@ import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.util.SortingHelper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface BookRequestDao {
@@ -19,11 +20,13 @@ public interface BookRequestDao {
             throws DaoException;
     List<BookRequest> findBookRequestsByType(BookRequestType requestType) throws DaoException;
     List<BookRequest> findBookRequestsByState(BookRequestState requestState) throws DaoException;
-    boolean changeRequestState(long requestId, String newRequestState, Optional<String> expectedReturnDate) throws DaoException;
+    boolean changeRequestState(long requestId, String newRequestState, Optional<String> expectedReturnDate)
+            throws DaoException;
     boolean closeBookRequest(long requestId) throws DaoException;
     boolean deleteBookRequest(long requestId) throws DaoException;
     Optional<String> findEmailByRequestId(long requestId) throws DaoException;
     Optional<String> loadNumberOfDaysCoeff() throws DaoException;
-
+    Map<String, String> loadRRWorkingHours() throws DaoException;
     String findClosingDateById(long requestId) throws DaoException;
+    void deleteRRRequests(long userId) throws  DaoException;
 }

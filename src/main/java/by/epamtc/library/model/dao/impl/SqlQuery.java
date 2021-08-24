@@ -136,6 +136,9 @@ public class SqlQuery {
 
     public static final String DELETE_BOOK_REQUEST = "DELETE FROM book_requests WHERE request_id = ?;";
 
+    public static final String DELETE_READING_ROOM_REQUESTS = "DELETE FROM book_requests WHERE user_id_fk = ? AND " +
+            "request_type = 'to_reading_room';";
+
     public static final String UPDATE_LIB_COEFFICIENTS = "UPDATE coefficients SET issuing_days_number = ?," +
             " reading_room_opening = ?, reading_room_closing = ?";
     public static final String SELECT_LIB_COEFFICIENTS = "SELECT * FROM coefficients;";
@@ -166,6 +169,10 @@ public class SqlQuery {
 
     public static final String LOAD_NUMBER_OF_DAYS_COEFF = "SELECT coefficient_value FROM coefficients WHERE " +
             "coefficient_name = 'number_of_days'";
+
+    public static final String LOAD_READING_ROOM_COEFFS = "SELECT coefficient_name,coefficient_value FROM coefficients WHERE" +
+            " coefficient_name LIKE 'reading_room_%ing'";
+
 
     public static final String FIND_REQUEST_CLOSING_DATE = "SELECT closing_date FROM book_requests WHERE " +
             "request_id = ?";
