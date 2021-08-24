@@ -28,15 +28,7 @@ public class ReadingRoom implements Command {
         BookRequestService bookRequestService = ServiceFactory.getInstance().getBookRequestService();
         CommandResult result = new CommandResult(PagePath.READING_ROOM, CommandResult.Type.FORWARD);
         try {
-            Map<String, String> workingHours = bookRequestService.loadRRWorkingHours();
-            LocalTime opening = LocalTime.parse(workingHours.get("reading_room_opening"));
-            LocalTime closing = LocalTime.parse(workingHours.get("reading_room_closing"));
-            LocalTime now = LocalTime.now();
-
-            req.setAttribute(RequestParameter.READING_ROOM_OPENING, opening);
-            req.setAttribute(RequestParameter.READING_ROOM_CLOSING, closing);
-
-            boolean isReadingRoomOpened = now.isAfter(opening) && now.isBefore(closing);
+            boolean isReadingRoomOpened = isReadingRoomOpened(req, bookRequestService);
 
             List<BookRequest> bookRequests = bookRequestService.loadReadingRoomByReaderId(readerId,isReadingRoomOpened);
 
@@ -52,5 +44,17 @@ public class ReadingRoom implements Command {
             throw new CommandException(e);
         }
         return result;
+    }
+
+    static boolean isReadingRoomOpened(HttpServletRequest req, BookRequestService bookRequestService) throws ServiceException {
+        Map<String, String> workingHours = bookRequestService.loadRRWorkingHours();
+        LocalTime opening = LocalTime.parse(workingHours.get("reading_room_opening"));
+        LocalTime closing = LocalTime.parse(workingHours.get("reading_room_closing"));
+        LocalTime now = LocalTime.now();
+
+        req.setAttribute(RequestParameter.READING_ROOM_OPENING, opening);
+        req.setAttribute(RequestParameter.READING_ROOM_CLOSING, closing);
+
+        return now.isAfter(opening) && now.isBefore(closing);
     }
 }

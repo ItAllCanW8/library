@@ -16,6 +16,7 @@ import by.epamtc.library.util.mail.MailSender;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class RentBook implements Command {
         fields.put(RequestParameter.BOOK_ID, bookId);
 
         CommandResult result = new CommandResult(CommandName.LOAD_BOOK_INFO + bookId, CommandResult.Type.FORWARD);
-        BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
+        BookRequestService bookRequestService = ServiceFactory.getInstance().getBookRequestService();
         UserService userService = ServiceFactory.getInstance().getUserService();
 
         boolean isForSubscription = BookRequestType.fromString(rentMethod) == BookRequestType.FOR_SUBSCRIPTION;
@@ -42,9 +43,18 @@ public class RentBook implements Command {
         try {
             Optional<String> userStatusOptional = userService.findStatusById(reader.getId());
             if (userStatusOptional.isPresent()) {
-                if (UserStatus.fromString(userStatusOptional.get()) == UserStatus.UNRELIABLE && isForSubscription) {
+                if(!isForSubscription){
+                    if(!ReadingRoom.isReadingRoomOpened(req, bookRequestService)){
+                        req.setAttribute(JspAttribute.ERROR_REQUEST_CREATION, JspAttribute.READING_ROOM_CLOSED_MSG);
+                        return result;
+                    }
+                }
+                else if (UserStatus.fromString(userStatusOptional.get()) == UserStatus.UNRELIABLE) {
                     req.setAttribute(JspAttribute.ERROR_REQUEST_CREATION, JspAttribute.ERROR_UNRELIABLE_ACCOUNT_MSG);
-                } else if (service.createBookRequest(fields, reader)) {
+                    return result;
+                }
+
+                if (bookRequestService.createBookRequest(fields, reader)) {
                     if (isForSubscription) {
                         MailSender mailSender = MailSender.getInstance();
                         mailSender.setupLetter(reader.getEmail(), Message.LIBRARY_LETTER_SUBJECT,
