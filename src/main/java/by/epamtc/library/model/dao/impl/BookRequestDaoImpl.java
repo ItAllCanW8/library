@@ -21,7 +21,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private static final String bookReqDateCol = "request_date";
     private static final String bookReqExpectedReturnDate = "expected_return_date";
     private static final String bookReqClosingDateCol = "closing_date";
-    private static final String bookReqPenaltyAmountCol = "penalty_amount";
     private static final String bookReqBookIdCol = "book_id_fk";
     private static final String bookReqUserIdCol = "user_id_fk";
 
@@ -33,7 +32,9 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private static final String usernameCol = "username";
     private static final String userPhotoCol = "photo_path";
 
-
+    private static final String coeffNameCol = "coefficient_name";
+    public static final String coeffValueCol = "coefficient_value";
+    public static final String countOfRequestsCol = "COUNT(request_id)";
 
     public BookRequestDaoImpl() {
     }
@@ -274,8 +275,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
             ResultSet resultSet = statement.executeQuery(SqlQuery.LOAD_READING_ROOM_COEFFS);
 
             while(resultSet.next())
-                workingHours.put(resultSet.getString("coefficient_name"),
-                        resultSet.getString("coefficient_value"));
+                workingHours.put(resultSet.getString(coeffNameCol),resultSet.getString(coeffValueCol));
 
             return workingHours;
         } catch (SQLException | ConnectionPoolException e) {
@@ -301,8 +301,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
              PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_READING_ROOM_REQUESTS)) {
             statement.setLong(1, userId);
             statement.execute();
-
-            System.out.println(statement.getUpdateCount());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error deleting reading room requests by user id " + userId, e);
         }
@@ -318,8 +316,12 @@ public class BookRequestDaoImpl implements BookRequestDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()){
-                fields.put("COUNT(request_id)", resultSet.getString("COUNT(request_id)"));
-                fields.put("coefficient_value", resultSet.getString("coefficient_value"));
+                if(resultSet.getString(coeffValueCol) == null)
+                    fields.put(coeffValueCol, loadMaxSubBooksCoeff());
+                else
+                    fields.put(coeffValueCol, resultSet.getString(coeffValueCol));
+
+                fields.put(countOfRequestsCol, resultSet.getString(countOfRequestsCol));
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error loading user and max count of book requests by user id " + userId, e);
@@ -346,7 +348,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
         String requestDate = resultSet.getString(bookReqDateCol);
         String expectedReturnDate = resultSet.getString(bookReqExpectedReturnDate);
         String closingDate = resultSet.getString(bookReqClosingDateCol);
-        int penaltyAmount = resultSet.getInt(bookReqPenaltyAmountCol);
 
         long bookId = resultSet.getLong(bookReqBookIdCol);
         String bookTitle = resultSet.getString(bookTitleCol);
@@ -355,7 +356,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         short bookAvailableQuantity = resultSet.getShort(bookQuantityCol);
 
         BookRequest bookRequest = new BookRequest(requestId, requestType, requestState, requestDate,expectedReturnDate, closingDate,
-                penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
+                new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
 
         if(areUserFieldsPresent){
             long userId = resultSet.getLong(bookReqUserIdCol);

@@ -38,15 +38,13 @@
             <th scope="col"><fmt:message key="request.state"/></th>
             <th scope="col"><fmt:message key="request.date"/></th>
             <th scope="col"><fmt:message key="request.expectedReturnDate"/></th>
-            <th scope="col"><fmt:message key="request.closingDate"/></th>
-            <th scope="col"><fmt:message key="request.penalty"/></th>
             <th scope="col"><fmt:message key="button.action"/></th>
           </tr>
         </thead>
 
         <tbody>
           <c:forEach var="request" items="${bookRequests}">
-            <c:if test="${!request.state.value.equals('closed')}">
+            <c:if test="${!request.state.value.equals(closedState)}">
               <tr class="table-secondary">
                 <th scope="row">
                   <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.book.id}">
@@ -61,9 +59,8 @@
                 <th scope="row"><ctg:out text="${request.state}"/></th>
                 <th scope="row"><ctg:out text="${request.requestDate}"/></th>
                 <th scope="row"><ctg:out text="${request.expectedReturnDate}"/></th>
-                <th scope="row"><ctg:out text="${request.closingDate}"/></th>
-                <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
                 <th scope="row">
+                  <c:if test="${request.state.value.equals(approvedState)}">
                     <div class="dropdown col-8 mb-4">
                       <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
                               id="actionDropDown"
@@ -73,23 +70,22 @@
                       </button>
                       <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                           aria-labelledby="actionDropDown">
-                        <c:if test="${request.state.value.equals('approved')}">
                           <li><a class="dropdown-item"
                                  href="${pageContext.request.contextPath}/view_pdf.do?bookPdf=${request.book.pdf}">
                             <fmt:message key="button.read"/> </a></li>
-                          <c:if test="${request.type.value.equals('for_subscription')}">
+                          <c:if test="${request.type.value.equals(forSubscription)}">
                             <li><a class="dropdown-item"
                                    href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}&expectedReturnDate=${request.expectedReturnDate}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
-                          <c:if test="${request.type.value.equals('to_reading_room')}">
+                          <c:if test="${request.type.value.equals(toReadingRoom)}">
                             <li><a class="dropdown-item"
                                    href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
-                        </c:if>
                       </ul>
                     </div>
+                  </c:if>
                 </th>
               <tr>
             </c:if>

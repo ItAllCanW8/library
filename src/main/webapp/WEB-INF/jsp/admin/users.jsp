@@ -76,11 +76,11 @@
                                 <ctg:out text="${user.status}"/>
                             </a>
                             <c:if test="${!user.role.toString().equals(admin)}">
-                                <c:if test="${user.status.value.equals('active')}"><br>
+                                <c:if test="${user.status.value.equals(activeStatus)}"><br>
                                     <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&username=${user.username}&userStatus=deactivated">
                                         <fmt:message key="users.deactivate"/></a>
                                 </c:if>
-                                <c:if test="${!user.status.value.equals('active')}"><br>
+                                <c:if test="${!user.status.value.equals(activeStatus)}"><br>
                                     <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&username=${user.username}&userStatus=active">
                                         <fmt:message key="users.activate"/></a>
                                 </c:if>
