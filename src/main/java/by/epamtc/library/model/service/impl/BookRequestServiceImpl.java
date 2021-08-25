@@ -5,6 +5,7 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookRequestDao;
 import by.epamtc.library.model.dao.factory.DaoFactory;
+import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
 import by.epamtc.library.model.entity.*;
 import by.epamtc.library.model.entity.factory.LibraryFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
@@ -211,8 +212,10 @@ public class BookRequestServiceImpl implements BookRequestService {
     public boolean isUserBooksNumLessThanMax(long userId) throws ServiceException {
         try {
             Map<String, String> fields = bookRequestDao.loadUserAndMaxCountOfBooks(userId);
+
             if(!fields.isEmpty())
-                return Short.parseShort(fields.get("COUNT(request_id)")) < Short.parseShort(fields.get("coefficient_value"));
+                return Short.parseShort(fields.get(BookRequestDaoImpl.countOfRequestsCol))
+                        < Short.parseShort(fields.get(BookRequestDaoImpl.coeffValueCol));
         } catch (DaoException | NumberFormatException e){
             throw new ServiceException(e);
         }

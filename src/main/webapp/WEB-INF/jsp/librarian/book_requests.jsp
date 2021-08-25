@@ -148,7 +148,7 @@
                         <th scope="row"><ctg:out text="${request.closingDate}"/></th>
                         <th scope="row"><ctg:out text="${request.penaltyAmount}"/></th>
                         <th scope="row">
-                            <c:if test="${request.type.value.equals('for_subscription')}">
+                            <c:if test="${request.type.value.equals(forSubscription) && !request.state.value.equals(approvedState)}">
                                 <div class="dropdown col-8 mb-4">
                                     <button class="btn btn-outline-secondary dropdown-toggle button mt-3" type="button"
                                             id="actionDropDown"
@@ -158,7 +158,7 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                                         aria-labelledby="actionDropDown">
-                                        <c:if test="${request.state.value.equals('left')}">
+                                        <c:if test="${request.state.value.equals(leftState)}">
                                             <li><a class="dropdown-item"
                                                    href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=approved&bookQuantity=${request.book.availableQuantity}">
                                                 <fmt:message key="button.approve"/> </a></li>
@@ -166,7 +166,7 @@
                                                    href="${pageContext.request.contextPath}/change_book_request_state.do?requestId=${request.id}&bookId=${request.book.id}&requestState=denied&bookQuantity=${request.book.availableQuantity}">
                                                 <fmt:message key="button.deny"/> </a></li>
                                         </c:if>
-                                        <c:if test="${request.state.value.equals('closed') || request.state.value.equals('denied')}">
+                                        <c:if test="${request.state.value.equals(closedState) || request.state.value.equals(deniedState)}">
                                             <li><a class="dropdown-item"
                                                    href="${pageContext.request.contextPath}/delete_book_request.do?requestId=${request.id}">
                                                 <fmt:message key="button.delete"/> </a></li>

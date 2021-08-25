@@ -21,7 +21,6 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
-<!-- header section starts -->
 <header class="header_section">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -31,6 +30,15 @@
             <c:set var="librarian" scope="session" value="LIBRARIAN"/>
             <c:set var="reader" scope="session" value="READER"/>
             <c:set var="user" scope="session" value="${sessionScope.user}"/>
+
+            <c:set var="activeStatus" scope="session" value="active"/>
+            <c:set var="forSubscription" scope="session" value="for_subscription"/>
+            <c:set var="toReadingRoom" scope="session" value="to_reading_room"/>
+            <c:set var="leftState" scope="session" value="left"/>
+            <c:set var="approvedState" scope="session" value="approved"/>
+            <c:set var="closedState" scope="session" value="closed"/>
+            <c:set var="deniedState" scope="session" value="denied"/>
+
 
             <a class="navbar-brand" href="${pageContext.request.contextPath}/home.do">
                 <h3>

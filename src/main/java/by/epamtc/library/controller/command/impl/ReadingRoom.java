@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ReadingRoom implements Command {
+    private static final String readingRoomOpeningCol = "reading_room_opening";
+    private static final String readingRoomClosingCol = "reading_room_closing";
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();
@@ -48,8 +51,8 @@ public class ReadingRoom implements Command {
 
     static boolean isReadingRoomOpened(HttpServletRequest req, BookRequestService bookRequestService) throws ServiceException {
         Map<String, String> workingHours = bookRequestService.loadRRWorkingHours();
-        LocalTime opening = LocalTime.parse(workingHours.get("reading_room_opening"));
-        LocalTime closing = LocalTime.parse(workingHours.get("reading_room_closing"));
+        LocalTime opening = LocalTime.parse(workingHours.get(readingRoomOpeningCol));
+        LocalTime closing = LocalTime.parse(workingHours.get(readingRoomClosingCol));
         LocalTime now = LocalTime.now();
 
         req.setAttribute(RequestParameter.READING_ROOM_OPENING, opening);

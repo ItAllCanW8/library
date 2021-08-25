@@ -20,6 +20,18 @@ import java.util.Optional;
 public class UserReportDaoImpl implements UserReportDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
+    private static final String reportIdCol = "report_id";
+    private static final String messageCol = "message";
+    private static final String responseCol = "response";
+    private static final String isProcessedCol = "is_processed";
+    private static final String subjectCol = "subject";
+    private static final String creationDateCol = "creation_date";
+
+    private static final String userIdCol = "user_id_fk";
+    private static final String usernameCol = "username";
+    private static final String emailCol = "email";
+    private static final String roleCol = "role";
+
     @Override
     public boolean userReportExists(String message,String subject, long userId) throws DaoException {
         try (Connection connection = pool.takeConnection();
@@ -131,21 +143,21 @@ public class UserReportDaoImpl implements UserReportDao {
     }
 
     private UserReport createUserReportFromResultSet(ResultSet resultSet, boolean areMsgAndResponsePresent) throws SQLException {
-        long id = resultSet.getLong("report_id");
-        boolean isProcessed = resultSet.getByte("is_processed") == 1;
-        String subject = resultSet.getString("subject");
-        String creationDate = resultSet.getString("creation_date");
+        long id = resultSet.getLong(reportIdCol);
+        boolean isProcessed = resultSet.getByte(isProcessedCol) == 1;
+        String subject = resultSet.getString(subjectCol);
+        String creationDate = resultSet.getString(creationDateCol);
 
-        long userId = resultSet.getLong("user_id_fk");
-        String username = resultSet.getString("username");
-        String email = resultSet.getString("email");
-        UserRole role = UserRole.valueOf(resultSet.getString("role").toUpperCase());
+        long userId = resultSet.getLong(userIdCol);
+        String username = resultSet.getString(usernameCol);
+        String email = resultSet.getString(emailCol);
+        UserRole role = UserRole.valueOf(resultSet.getString(roleCol).toUpperCase());
 
         UserReport report = new UserReport(id, isProcessed, subject, creationDate, new User(userId, username, email, role));
 
         if(areMsgAndResponsePresent) {
-            report.setResponse(resultSet.getString("response"));
-            report.setMessage(resultSet.getString("message"));
+            report.setResponse(resultSet.getString(responseCol));
+            report.setMessage(resultSet.getString(messageCol));
         }
 
         return report;
