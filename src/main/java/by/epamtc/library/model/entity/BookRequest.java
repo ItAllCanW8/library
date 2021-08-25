@@ -1,7 +1,6 @@
 package by.epamtc.library.model.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class BookRequest implements Serializable {
     private long id;
@@ -10,7 +9,6 @@ public class BookRequest implements Serializable {
     private String requestDate;
     private String closingDate;
     private String expectedReturnDate;
-    private int penaltyAmount;
     private Book book;
     private User user;
 
@@ -23,8 +21,8 @@ public class BookRequest implements Serializable {
     }
 
     public BookRequest(long id, BookRequestType type, BookRequestState state, String requestDate, String expectedReturnDate,
-                       String closingDate, int penaltyAmount, Book book, User user) {
-        this(id, type, state, requestDate,expectedReturnDate, closingDate, penaltyAmount, book);
+                       String closingDate, Book book, User user) {
+        this(id, type, state, requestDate,expectedReturnDate, closingDate, book);
         this.user = user;
     }
 
@@ -33,12 +31,11 @@ public class BookRequest implements Serializable {
     }
 
     public BookRequest(long id, BookRequestType requestType, BookRequestState requestState, String requestDate,
-                       String expectedReturnDate, String closingDate, int penaltyAmount, Book book) {
+                       String expectedReturnDate, String closingDate, Book book) {
         this(requestType, requestState, requestDate);
         this.id = id;
         this.expectedReturnDate = expectedReturnDate;
         this.closingDate = closingDate;
-        this.penaltyAmount = penaltyAmount;
         this.book = book;
     }
 
@@ -68,14 +65,6 @@ public class BookRequest implements Serializable {
 
     public void setClosingDate(String closingDate) {
         this.closingDate = closingDate;
-    }
-
-    public int getPenaltyAmount() {
-        return penaltyAmount;
-    }
-
-    public void setPenaltyAmount(int penaltyAmount) {
-        this.penaltyAmount = penaltyAmount;
     }
 
     public Book getBook() {
@@ -144,7 +133,6 @@ public class BookRequest implements Serializable {
         sb.append(", state=").append(state);
         sb.append(", requestDate=").append(requestDate);
         sb.append(", closingDate=").append(closingDate);
-        sb.append(", penaltyAmount=").append(penaltyAmount);
         sb.append(", expectedReturnDate=").append(expectedReturnDate);
         sb.append(", book=").append(book);
         sb.append(", user=").append(user);

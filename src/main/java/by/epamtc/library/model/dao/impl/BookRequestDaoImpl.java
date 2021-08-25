@@ -21,7 +21,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
     private static final String bookReqDateCol = "request_date";
     private static final String bookReqExpectedReturnDate = "expected_return_date";
     private static final String bookReqClosingDateCol = "closing_date";
-    private static final String bookReqPenaltyAmountCol = "penalty_amount";
     private static final String bookReqBookIdCol = "book_id_fk";
     private static final String bookReqUserIdCol = "user_id_fk";
 
@@ -349,7 +348,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
         String requestDate = resultSet.getString(bookReqDateCol);
         String expectedReturnDate = resultSet.getString(bookReqExpectedReturnDate);
         String closingDate = resultSet.getString(bookReqClosingDateCol);
-        int penaltyAmount = resultSet.getInt(bookReqPenaltyAmountCol);
 
         long bookId = resultSet.getLong(bookReqBookIdCol);
         String bookTitle = resultSet.getString(bookTitleCol);
@@ -358,7 +356,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
         short bookAvailableQuantity = resultSet.getShort(bookQuantityCol);
 
         BookRequest bookRequest = new BookRequest(requestId, requestType, requestState, requestDate,expectedReturnDate, closingDate,
-                penaltyAmount, new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
+                new Book(bookId, bookTitle, bookImg, bookPdf, bookAvailableQuantity));
 
         if(areUserFieldsPresent){
             long userId = resultSet.getLong(bookReqUserIdCol);
