@@ -1,5 +1,6 @@
 package by.epamtc.library.controller.filter;
 
+import by.epamtc.library.controller.attribute.CommandName;
 import by.epamtc.library.controller.attribute.ServletAttribute;
 import by.epamtc.library.controller.attribute.SessionAttribute;
 import by.epamtc.library.controller.command.Command;
@@ -84,7 +85,7 @@ public class PermissionFilter implements Filter {
 
         if (commands == null || command.isEmpty() || !commands.contains(command.get())) {
             LOGGER.log(Level.ERROR, "User hasn't got permission to execute command " + command.get());
-            RequestDispatcher dispatcher = request.getRequestDispatcher(ServletAttribute.HOME_URL);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(CommandName.HOME_URL);
             dispatcher.forward(request, response);
         } else {
             chain.doFilter(servletRequest, servletResponse);

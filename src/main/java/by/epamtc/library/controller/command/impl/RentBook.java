@@ -22,6 +22,13 @@ import java.util.Optional;
 
 
 public class RentBook implements Command {
+    /**
+     *
+     * @param req
+     * @param resp
+     * @return
+     * @throws CommandException
+     */
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();
