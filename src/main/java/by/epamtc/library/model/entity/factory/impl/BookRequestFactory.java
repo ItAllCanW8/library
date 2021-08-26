@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * LibraryFactory implementation used to create a BookRequest object.
+ *
+ * @author Artur Mironchik
+ */
 public class BookRequestFactory implements LibraryFactory<BookRequest> {
     private static final BookRequestState DEFAULT_STATE = BookRequestState.LEFT;
 

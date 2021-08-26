@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * BookDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class BookDaoImpl implements BookDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -28,6 +33,9 @@ public class BookDaoImpl implements BookDao {
     private static final String bookAuthorImgCol = "author_img";
     private static final String bookQuantityCol = "available_quantity";
 
+    /**
+     * Constructs a BookDaoImpl object.
+     */
     public BookDaoImpl() {
     }
 
@@ -201,19 +209,6 @@ public class BookDaoImpl implements BookDao {
             return books;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error finding books by author " + author, e);
-        }
-    }
-
-    @Override
-    public int findBookQuantityById(long bookId) throws DaoException {
-        try(Connection connection = pool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_QUANTITY_BY_ID)) {
-            statement.setLong(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return resultSet.next() ? resultSet.getShort(bookQuantityCol) : -1;
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error finding book quantity by id " + bookId, e);
         }
     }
 

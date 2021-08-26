@@ -9,6 +9,11 @@ import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
 import by.epamtc.library.model.dao.impl.UserDaoImpl;
 import by.epamtc.library.model.dao.impl.UserReportDaoImpl;
 
+/**
+ * Class that represents factory pattern for Dao layer.
+ *
+ * @author Artur Mironchik
+ */
 public class DaoFactory {
     private final UserDao userDao = new UserDaoImpl();
     private final BookDao bookDao = new BookDaoImpl();

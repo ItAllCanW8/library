@@ -17,6 +17,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * UserDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class UserDaoImpl implements UserDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -34,6 +39,9 @@ public class UserDaoImpl implements UserDao {
     private static final String statusCol = "status";
     private static final String roleCol = "role";
 
+    /**
+     * Constructs a UserDaoImpl object.
+     */
     public UserDaoImpl() {
     }
 

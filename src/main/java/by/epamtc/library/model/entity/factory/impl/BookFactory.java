@@ -8,6 +8,11 @@ import by.epamtc.library.model.service.validation.BookValidator;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * LibraryFactory implementation used to create a Book object.
+ *
+ * @author Artur Mironchik
+ */
 public class BookFactory implements LibraryFactory<Book> {
     public static final String DEFAULT_COVER = "default_book_cover.png";
     public static final String DEFAULT_AUTHOR_PHOTO = "default_author_photo.png";

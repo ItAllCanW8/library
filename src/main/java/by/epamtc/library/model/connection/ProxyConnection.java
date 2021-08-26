@@ -9,6 +9,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * A proxy Connection object with an overridden close() method. Used in ConnectionPool.
+ *
+ * @author Artur Mironchik
+ */
 public class ProxyConnection implements Connection {
     private final Connection connection;
     private static final Logger LOGGER = LogManager.getLogger();

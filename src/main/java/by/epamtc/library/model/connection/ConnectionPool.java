@@ -13,6 +13,11 @@ import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Class that represents a connection pool.
+ *
+ * @author Artur Mironchik
+ */
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger();
 

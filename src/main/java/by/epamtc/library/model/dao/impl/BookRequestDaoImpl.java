@@ -12,6 +12,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * BookRequestDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class BookRequestDaoImpl implements BookRequestDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -36,6 +41,9 @@ public class BookRequestDaoImpl implements BookRequestDao {
     public static final String coeffValueCol = "coefficient_value";
     public static final String countOfRequestsCol = "COUNT(request_id)";
 
+    /**
+     * Constructs a BookRequestDaoImpl object.
+     */
     public BookRequestDaoImpl() {
     }
 
@@ -280,18 +288,6 @@ public class BookRequestDaoImpl implements BookRequestDao {
             return workingHours;
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error loading reading room working hours." , e);
-        }
-    }
-
-    @Override
-    public String findClosingDateById(long requestId) throws DaoException {
-        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_REQUEST_CLOSING_DATE)) {
-            ResultSet resultSet = statement.executeQuery();
-
-            return (resultSet.next() ? resultSet.getString(1) : null);
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error loading number of days coefficient." , e);
         }
     }
 

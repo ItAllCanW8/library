@@ -1,5 +1,10 @@
 package by.epamtc.library.exception;
 
+/**
+ * An exception that provides information on errors thrown by Dao objects.
+ *
+ * @author Artur Mironchik
+ */
 public class DaoException extends Exception{
     public DaoException() {
         super();

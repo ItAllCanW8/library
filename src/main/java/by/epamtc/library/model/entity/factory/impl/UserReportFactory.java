@@ -11,6 +11,11 @@ import java.util.Optional;
 
 import static by.epamtc.library.model.service.validation.UserReportValidator.isUserReportFormValid;
 
+/**
+ * LibraryFactory implementation used to create a UserReport object.
+ *
+ * @author Artur Mironchik
+ */
 public class UserReportFactory implements LibraryFactory<UserReport> {
     private static final boolean DEFAULT_PROCESSED_VALUE = false;
 

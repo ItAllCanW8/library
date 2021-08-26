@@ -8,6 +8,11 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * Custom tag that prevents cross-site scripting(XSS).
+ *
+ * @author Artur Mironchik
+ */
 public class XSSProtectionTag extends TagSupport {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -36,6 +41,11 @@ public class XSSProtectionTag extends TagSupport {
     private static final String QUOTATION_HTML_SYMBOL = "&quot";
     private String text;
 
+    /**
+     * Setter method of text.
+     *
+     * @param text String object
+     */
     public void setText(String text) {
         this.text = text;
     }

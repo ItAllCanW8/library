@@ -1,5 +1,10 @@
 package by.epamtc.library.exception;
 
+/**
+ * An exception that provides information on errors occurred while processing a command.
+ *
+ * @author Artur Mironchik
+ */
 public class CommandException extends Exception{
     public CommandException() {
         super();

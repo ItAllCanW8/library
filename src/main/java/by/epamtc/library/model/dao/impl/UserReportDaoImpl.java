@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * UserReportDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class UserReportDaoImpl implements UserReportDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -31,6 +36,11 @@ public class UserReportDaoImpl implements UserReportDao {
     private static final String usernameCol = "username";
     private static final String emailCol = "email";
     private static final String roleCol = "role";
+
+    /**
+     * Constructs a UserReportDaoImpl object.
+     */
+    public UserReportDaoImpl(){}
 
     @Override
     public boolean userReportExists(String message,String subject, long userId) throws DaoException {

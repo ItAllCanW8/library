@@ -12,6 +12,11 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * LibraryFactory implementation used to create a User object.
+ *
+ * @author Artur Mironchik
+ */
 public class UserFactory implements LibraryFactory<User> {
     private static final UserRole DEFAULT_ROLE = UserRole.READER;
     private static final String DEFAULT_PHOTO_NAME = "default_avatar.png";

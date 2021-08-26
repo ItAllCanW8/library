@@ -1,5 +1,10 @@
 package by.epamtc.library.exception;
 
+/**
+ * An exception that provides information on errors thrown by Service objects.
+ *
+ * @author Artur Mironchik
+ */
 public class ServiceException extends Exception {
     public ServiceException() {
         super();

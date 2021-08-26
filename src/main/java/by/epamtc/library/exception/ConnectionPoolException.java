@@ -1,5 +1,10 @@
 package by.epamtc.library.exception;
 
+/**
+ * An exception that provides information on errors thrown by a ConnectionPool.
+ *
+ * @author Artur Mironchik
+ */
 public class ConnectionPoolException extends Exception{
     public ConnectionPoolException() {
         super();
