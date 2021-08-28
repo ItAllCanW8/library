@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/**
+ * Command that loads profile photo.
+ *
+ * @author Artur Mironchik
+ */
 public class LoadProfilePhoto implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
@@ -30,5 +34,4 @@ public class LoadProfilePhoto implements Command {
         }
         return null;
     }
-
 }

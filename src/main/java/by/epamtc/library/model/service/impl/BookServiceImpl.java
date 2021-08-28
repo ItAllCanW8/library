@@ -4,9 +4,9 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookDao;
-import by.epamtc.library.model.dao.factory.DaoFactory;
+import by.epamtc.library.model.dao.impl.DaoFactory;
 import by.epamtc.library.model.entity.Book;
-import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.EntityFactory;
 import by.epamtc.library.model.entity.factory.impl.BookFactory;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.validation.BookValidator;
@@ -17,11 +17,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * BookService implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class BookServiceImpl implements BookService {
     private static final BookDao bookDao = DaoFactory.getInstance().getBookDao();
-    private static final LibraryFactory<Book> bookFactory = BookFactory.getInstance();
+    private static final EntityFactory<Book> bookFactory = BookFactory.getInstance();
 
-    public BookServiceImpl() {
+    /**
+     * Instantiates a new Book service.
+     */
+    BookServiceImpl() {
     }
 
     @Override
@@ -73,42 +81,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> findBookById(long bookId) throws ServiceException {
+    public Optional<Book> findById(long bookId) throws ServiceException {
         try {
-            Optional<Book> bookOptional = bookDao.findBookById(bookId);
-            if (bookOptional.isPresent()) {
-                Book book = bookOptional.get();
-                bookOptional = Optional.of(book);
-            }
-            return bookOptional;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Optional<String> findBookCoverById(long bookId) throws ServiceException {
-        try {
-            Optional<String> bookCoverOptional = bookDao.findBookCoverById(bookId);
-            if (bookCoverOptional.isPresent()) {
-                String bookCover = bookCoverOptional.get();
-                bookCoverOptional = Optional.of(bookCover);
-            }
-            return bookCoverOptional;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Optional<String> findBookPdfById(long bookId) throws ServiceException {
-        try {
-            Optional<String> bookPdfOptional = bookDao.findBookPdfById(bookId);
-            if (bookPdfOptional.isPresent()) {
-                String bookPdf = bookPdfOptional.get();
-                bookPdfOptional = Optional.of(bookPdf);
-            }
-            return bookPdfOptional;
+            return bookDao.findById(bookId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -117,7 +92,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findBooksByKeyword(String keyword) throws ServiceException {
         try {
-            return bookDao.findBooksByKeyword(keyword);
+            return bookDao.findByKeyword(keyword);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -160,19 +135,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean isTitleAvailable(String title) throws ServiceException {
-        try {
-            return (bookDao.isTitleAvailable(title));
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public boolean updateBook(long bookId, Map<String, String> newFields) throws ServiceException {
         try {
             if (BookValidator.isBookFormValid(newFields)) {
-                Optional<Book> bookOptional = bookDao.findBookById(bookId);
+                Optional<Book> bookOptional = bookDao.findById(bookId);
                 if (bookOptional.isPresent()) {
                     Book book = bookOptional.get();
 
@@ -210,7 +176,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean changePdf(long bookId, String pdfPath) throws ServiceException {
         try {
-            findBookById(bookId).get().setPdf(pdfPath);
+            findById(bookId).get().setPdf(pdfPath);
             return (bookDao.changePdf(bookId, pdfPath));
         } catch (DaoException e) {
             throw new ServiceException(e);

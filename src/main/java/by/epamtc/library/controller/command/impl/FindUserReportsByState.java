@@ -9,14 +9,17 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.UserReport;
 import by.epamtc.library.model.service.UserReportService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * Command that finds user reports by state.
+ *
+ * @author Artur Mironchik
+ */
 public class FindUserReportsByState implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

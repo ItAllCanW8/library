@@ -3,7 +3,7 @@ package by.epamtc.library.model.entity;
 import java.io.Serializable;
 
 /**
- * Entity class represents a user.
+ * Entity class that represents a user.
  *
  * @author Artur Mironchik
  */
@@ -198,33 +198,32 @@ public class User implements Serializable {
 
         if (id != user.id) return false;
         if (role != user.role) return false;
-        if (!userDetails.equals(user.userDetails)) return false;
-        if (!status.equals(user.status)) return false;
-        if (!username.equals(user.username)) return false;
-        return email.equals(user.email);
+        if (userDetails != null ? !userDetails.equals(user.userDetails) : user.userDetails != null) return false;
+        if (status != user.status) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        return email != null ? email.equals(user.email) : user.email == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + role.hashCode();
-        result = 31 * result + userDetails.hashCode();
-        result = 31 * result + status.hashCode();
-        result = 31 * result + username.hashCode();
-        result = 31 * result + email.hashCode();
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (userDetails != null ? userDetails.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder(User.class.getSimpleName() + "{");
-        sb.append("id=").append(id);
-        sb.append(", role=").append(role);
-        sb.append(", userDetails=").append(userDetails);
-        sb.append(", status=").append(status);
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "User{" +
+                "id=" + id +
+                ", role=" + role +
+                ", userDetails=" + userDetails +
+                ", status=" + status +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

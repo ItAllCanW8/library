@@ -111,18 +111,6 @@ public enum CommandType {
         this.command = new FindUsersByStatus();
     }},
     /**
-     * Represents coefficients command implementation of Command interface.
-     */
-    COEFFICIENTS{{
-        this.command = new CoefficientsPage();
-    }},
-    /**
-     * Represents set coefficients command implementation of Command interface.
-     */
-    SET_COEFFICIENTS{{
-        this.command = new SetCoefficients();
-    }},
-    /**
      * Represents load user profile command implementation of Command interface.
      */
     LOAD_USER_PROFILE{{

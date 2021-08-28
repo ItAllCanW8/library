@@ -10,7 +10,7 @@ import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserStatus;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,15 +20,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-
+/**
+ * Command that creates book request.
+ *
+ * @author Artur Mironchik
+ */
 public class RentBook implements Command {
-    /**
-     *
-     * @param req
-     * @param resp
-     * @return
-     * @throws CommandException
-     */
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();

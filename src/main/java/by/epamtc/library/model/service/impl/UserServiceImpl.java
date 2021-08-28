@@ -5,32 +5,35 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
-import by.epamtc.library.model.dao.factory.DaoFactory;
-import by.epamtc.library.model.dao.impl.UserDaoImpl;
-import by.epamtc.library.model.entity.BookRequestState;
+import by.epamtc.library.model.dao.impl.DaoFactory;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
-import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.EntityFactory;
 import by.epamtc.library.model.entity.factory.impl.UserFactory;
-import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.UserService;
 import by.epamtc.library.model.service.validation.UserValidator;
-import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.Encryptor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * UserService implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class UserServiceImpl implements UserService {
     private static final UserDao userDao = DaoFactory.getInstance().getUserDao();
-    private static final LibraryFactory<User> userFactory = UserFactory.getInstance();
+    private static final EntityFactory<User> userFactory = UserFactory.getInstance();
 
-    public UserServiceImpl() {
+    /**
+     * Instantiates a new User service.
+     */
+    UserServiceImpl() {
     }
 
     @Override
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
             if (UserValidator.isEmailValid(email) && UserValidator.isPasswordValid(password) && !userDao.isEmailAvailable(email)) {
                 Optional<String> passFromDb = userDao.findPasswordByEmail(email);
                 if (passFromDb.isPresent() && Encryptor.check(password, passFromDb.get())) {
-                    return userDao.findUserByEmail(email);
+                    return userDao.findByEmail(email);
                 }
             }
         } catch (DaoException e) {
@@ -108,7 +111,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> updateProfile(long userId, Map<String, String> newFields) throws ServiceException {
         try {
             if (UserValidator.isEditFormValid(newFields)) {
-                Optional<User> userOptional = userDao.findUserById(userId);
+                Optional<User> userOptional = userDao.findById(userId);
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
 
@@ -148,15 +151,6 @@ public class UserServiceImpl implements UserService {
     public boolean deactivateUser(long userId) throws ServiceException {
         try {
             return userDao.updateUserStatus(userId, UserStatus.DEACTIVATED);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean activateUser(long userId) throws ServiceException {
-        try {
-            return userDao.updateUserStatus(userId, UserStatus.ACTIVE);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -228,9 +222,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserById(long userId) throws ServiceException {
+    public Optional<User> findById(long userId) throws ServiceException {
         try {
-            Optional<User> userOptional = userDao.findUserById(userId);
+            Optional<User> userOptional = userDao.findById(userId);
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 userOptional = Optional.of(user);

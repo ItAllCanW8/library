@@ -8,7 +8,11 @@ import by.epamtc.library.exception.CommandException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * Command that librarian management books page.
+ *
+ * @author Artur Mironchik
+ */
 public class LibrarianBooksPage implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

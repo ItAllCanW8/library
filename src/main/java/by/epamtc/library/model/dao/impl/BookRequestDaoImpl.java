@@ -44,7 +44,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
     /**
      * Constructs a BookRequestDaoImpl object.
      */
-    public BookRequestDaoImpl() {
+    BookRequestDaoImpl() {
     }
 
     @Override
@@ -292,7 +292,7 @@ public class BookRequestDaoImpl implements BookRequestDao {
     }
 
     @Override
-    public void deleteRRRequests(long userId) throws DaoException {
+    public void deleteReadingRoomRequests(long userId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.DELETE_READING_ROOM_REQUESTS)) {
             statement.setLong(1, userId);

@@ -9,7 +9,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public final class BookValidator extends LibraryValidator{
+/**
+ * Class that validates a book.
+ *
+ * @author Artur Mironchik
+ */
+public final class BookValidator {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Pattern TITLE_PATTERN = Pattern.compile("[А-Яа-я\\w\\p{Blank}]{3,255}");
     private static final Pattern AUTHOR_PATTERN = Pattern.compile("[А-Яа-яa-zA-Z.\\s]{3,255}");
@@ -20,6 +25,14 @@ public final class BookValidator extends LibraryValidator{
 
     private static final int PHOTO_NAME_MAX_LENGTH = 45;
 
+    private BookValidator(){}
+
+    /**
+     * Is book form valid boolean.
+     *
+     * @param fields the fields
+     * @return the boolean
+     */
     public static boolean isBookFormValid(Map<String, String> fields) {
         boolean result = true;
         String title = fields.get(RequestParameter.BOOK_TITLE);
@@ -56,50 +69,96 @@ public final class BookValidator extends LibraryValidator{
         return result;
     }
 
+    /**
+     * Is title valid boolean.
+     *
+     * @param title the title
+     * @return the boolean
+     */
     public static boolean isTitleValid(String title) {
-        boolean result = isFieldValid(title, TITLE_PATTERN);
+        boolean result = EntityValidator.isFieldValid(title, TITLE_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Book title isn't valid: " + title);
         }
         return result;
     }
 
+    /**
+     * Is author valid boolean.
+     *
+     * @param author the author
+     * @return the boolean
+     */
     public static boolean isAuthorValid(String author) {
-        boolean result = isFieldValid(author, AUTHOR_PATTERN);
+        boolean result = EntityValidator.isFieldValid(author, AUTHOR_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Author isn't valid: " + author);
         }
         return result;
     }
+
+    /**
+     * Is isbn valid boolean.
+     *
+     * @param isbn the isbn
+     * @return the boolean
+     */
     public static boolean isISBNValid(String isbn) {
-        boolean result = isFieldValid(isbn, ISBN_PATTERN);
+        boolean result = EntityValidator.isFieldValid(isbn, ISBN_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "ISBN isn't valid: " + isbn);
         }
         return result;
     }
+
+    /**
+     * Is genre valid boolean.
+     *
+     * @param genre the genre
+     * @return the boolean
+     */
     public static boolean isGenreValid(String genre) {
-        boolean result = isFieldValid(genre, GENRE_PATTERN);
+        boolean result = EntityValidator.isFieldValid(genre, GENRE_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Genre isn't valid: " + genre);
         }
         return result;
     }
+
+    /**
+     * Is quantity valid boolean.
+     *
+     * @param quantity the quantity
+     * @return the boolean
+     */
     public static boolean isQuantityValid(String quantity) {
-        boolean result = isFieldValid(quantity, QUANTITY_PATTERN);
+        boolean result = EntityValidator.isFieldValid(quantity, QUANTITY_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Quantity isn't valid: " + quantity);
         }
         return result;
     }
+
+    /**
+     * Is description valid boolean.
+     *
+     * @param description the description
+     * @return the boolean
+     */
     public static boolean isDescriptionValid(String description) {
-        boolean result = isFieldValid(description, DESCRIPTION_PATTERN);
+        boolean result = EntityValidator.isFieldValid(description, DESCRIPTION_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Description isn't valid: " + description);
         }
         return result;
     }
 
+    /**
+     * Is photo name valid boolean.
+     *
+     * @param photoName the photo name
+     * @return the boolean
+     */
     public static boolean isPhotoNameValid(String photoName) {
         if (photoName == null) {
             return false;
@@ -110,6 +169,4 @@ public final class BookValidator extends LibraryValidator{
         }
         return result;
     }
-
-    private BookValidator(){}
 }

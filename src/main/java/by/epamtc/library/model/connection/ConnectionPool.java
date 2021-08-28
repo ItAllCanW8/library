@@ -8,7 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -36,20 +38,33 @@ public class ConnectionPool {
     }
 
     private static class Holder {
+        /**
+         * The Instance.
+         */
         static final ConnectionPool INSTANCE = new ConnectionPool();
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ConnectionPool getInstance() {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Init.
+     *
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public void init() throws ConnectionPoolException {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("db.properties")) {
             Properties properties = new Properties();
             properties.load(input);
             byte errorCounter = 0;
 
-            int poolSize = Integer.parseInt(properties.getProperty(POOL_SIZE));
+            byte poolSize = Byte.parseByte(properties.getProperty(POOL_SIZE));
             String url = properties.getProperty(DB_URL);
             String user = properties.getProperty(DB_USER);
             String password = properties.getProperty(DB_PASSWORD);
@@ -84,6 +99,12 @@ public class ConnectionPool {
         LOGGER.info("Connection pool initialized.");
     }
 
+    /**
+     * Take connection connection.
+     *
+     * @return the connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public Connection takeConnection() throws ConnectionPoolException {
         ProxyConnection connection;
         try {
@@ -96,6 +117,12 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection.
+     *
+     * @param connection the connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public void releaseConnection(Connection connection) throws ConnectionPoolException {
         if (connection != null) {
             try {
@@ -108,6 +135,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Dispose.
+     *
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public void dispose() throws ConnectionPoolException {
         try {
             for (ProxyConnection connection : freePool)

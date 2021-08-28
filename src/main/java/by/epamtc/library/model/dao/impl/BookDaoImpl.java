@@ -36,7 +36,7 @@ public class BookDaoImpl implements BookDao {
     /**
      * Constructs a BookDaoImpl object.
      */
-    public BookDaoImpl() {
+    BookDaoImpl() {
     }
 
     @Override
@@ -115,7 +115,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Optional<Book> findBookById(long bookId) throws DaoException {
+    public Optional<Book> findById(long bookId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_BY_ID)) {
             statement.setLong(1, bookId);
@@ -154,7 +154,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findBooksByKeyword(String keyword) throws DaoException {
+    public List<Book> findByKeyword(String keyword) throws DaoException {
         List<Book> books = new ArrayList<>();
 
         try(Connection connection = pool.takeConnection();

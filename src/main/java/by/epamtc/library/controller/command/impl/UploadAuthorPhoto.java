@@ -9,12 +9,12 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.BookServiceImpl;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -23,6 +23,14 @@ import java.io.InputStream;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Command that uploads book author photo.
+ *
+ * @author Artur Mironchik
+ */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UploadAuthorPhoto implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -30,7 +38,7 @@ public class UploadAuthorPhoto implements Command {
         BookService service = ServiceFactory.getInstance().getBookService();
 
         try {
-            Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));
+            Optional<Book> bookOptional = service.findById(Long.parseLong(bookId));
             if (ServletFileUpload.isMultipartContent(req) && bookOptional.isPresent()) {
                 Book book = bookOptional.get();
                 Part part = null;

@@ -40,7 +40,7 @@ public class UserReportDaoImpl implements UserReportDao {
     /**
      * Constructs a UserReportDaoImpl object.
      */
-    public UserReportDaoImpl(){}
+    UserReportDaoImpl(){}
 
     @Override
     public boolean userReportExists(String message,String subject, long userId) throws DaoException {
@@ -92,7 +92,7 @@ public class UserReportDaoImpl implements UserReportDao {
     }
 
     @Override
-    public Optional<UserReport> findUserReportById(long reportId) throws DaoException {
+    public Optional<UserReport> findById(long reportId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_REPORT_BY_ID)) {
             statement.setLong(1, reportId);

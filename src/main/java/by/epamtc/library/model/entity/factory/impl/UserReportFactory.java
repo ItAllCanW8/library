@@ -2,7 +2,7 @@ package by.epamtc.library.model.entity.factory.impl;
 
 import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.model.entity.UserReport;
-import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.EntityFactory;
 import by.epamtc.library.util.DateTimeHelper;
 
 import java.time.LocalDateTime;
@@ -12,18 +12,26 @@ import java.util.Optional;
 import static by.epamtc.library.model.service.validation.UserReportValidator.isUserReportFormValid;
 
 /**
- * LibraryFactory implementation used to create a UserReport object.
+ * EntityFactory implementation used to create a UserReport object.
  *
  * @author Artur Mironchik
  */
-public class UserReportFactory implements LibraryFactory<UserReport> {
+public class UserReportFactory implements EntityFactory<UserReport> {
     private static final boolean DEFAULT_PROCESSED_VALUE = false;
 
-    public static class HOLDER{
-        public static LibraryFactory<UserReport> INSTANCE = new UserReportFactory();
+    private static class HOLDER{
+        /**
+         * The constant INSTANCE.
+         */
+        public static EntityFactory<UserReport> INSTANCE = new UserReportFactory();
     }
 
-    public static LibraryFactory<UserReport> getInstance(){
+    /**
+     * Get instance entity factory.
+     *
+     * @return the entity factory
+     */
+    public static EntityFactory<UserReport> getInstance(){
         return HOLDER.INSTANCE;
     }
 

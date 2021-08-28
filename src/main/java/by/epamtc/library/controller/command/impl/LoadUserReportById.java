@@ -10,13 +10,18 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.UserReport;
 import by.epamtc.library.model.service.UserReportService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * Command that loads user report page by id.
+ *
+ * @author Artur Mironchik
+ */
 public class LoadUserReportById implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -25,7 +30,7 @@ public class LoadUserReportById implements Command {
         CommandResult result = new CommandResult(CommandName.USER_REPORTS, CommandResult.Type.FORWARD);
         try {
             long reportId = Long.parseLong(reportIdStr);
-            Optional<UserReport> reportOptional = service.findUserReportById(reportId);
+            Optional<UserReport> reportOptional = service.findById(reportId);
 
             if (reportOptional.isPresent()) {
                 UserReport report = reportOptional.get();

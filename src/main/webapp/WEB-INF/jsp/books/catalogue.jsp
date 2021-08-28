@@ -59,11 +59,11 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByQuantity">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=books&sortingField=available_quantity&sortingOrder=desc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingEntity=books&sortingField=available_quantity&sortingOrder=desc">
                                 <fmt:message key="button.sortDesc"/>
                             </a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=books&sortingField=available_quantity&sortingOrder=asc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingEntity=books&sortingField=available_quantity&sortingOrder=asc">
                                 <fmt:message key="button.sortAsc"/> </a></li>
                         </ul>
                     </div>

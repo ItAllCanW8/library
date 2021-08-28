@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Command that loads book cover.
+ *
+ * @author Artur Mironchik
+ */
 public class LoadBookCover implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override

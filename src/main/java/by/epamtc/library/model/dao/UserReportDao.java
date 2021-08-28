@@ -45,7 +45,7 @@ public interface UserReportDao {
      * @return Optional object of user report if exists, Optional.empty() otherwise.
      * @throws DaoException if the database throws SQLException.
      */
-    Optional<UserReport> findUserReportById(long reportId) throws DaoException;
+    Optional<UserReport> findById(long reportId) throws DaoException;
     /**
      * Updates user report response.
      *

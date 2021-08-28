@@ -7,7 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +16,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Command that edit user profile.
+ *
+ * @author Artur Mironchik
+ */
 public class EditUserProfile implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

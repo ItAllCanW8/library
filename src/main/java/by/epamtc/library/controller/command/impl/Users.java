@@ -9,18 +9,20 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.UserServiceImpl;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * Command that loads admin page with users.
+ *
+ * @author Artur Mironchik
+ */
 public class Users implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-//       UserService service = UserServiceImpl.getInstance();
         UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(PagePath.USERS, CommandResult.Type.FORWARD);
         try {

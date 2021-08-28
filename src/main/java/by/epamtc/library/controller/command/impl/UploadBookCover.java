@@ -9,7 +9,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -23,6 +23,11 @@ import java.io.InputStream;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Command that uploads book cover.
+ *
+ * @author Artur Mironchik
+ */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
@@ -33,7 +38,7 @@ public class UploadBookCover implements Command {
         BookService service = ServiceFactory.getInstance().getBookService();
 
         try {
-            Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));
+            Optional<Book> bookOptional = service.findById(Long.parseLong(bookId));
             if (ServletFileUpload.isMultipartContent(req) && bookOptional.isPresent()) {
                 Book book = bookOptional.get();
                 Part part = null;
@@ -48,11 +53,10 @@ public class UploadBookCover implements Command {
                     String randomFilename = UUID.randomUUID() + path.substring(path.lastIndexOf(FileHandler.DOT_SYMBOL));
                     try (InputStream inputStream = part.getInputStream()) {
                         if (FileHandler.uploadFile(inputStream, FileHandler.WEBAPP_FOLDER_PATH
-                                + FileHandler.BOOK_COVERS_SUBFOLDER + randomFilename)) {
-                            if(service.changeCover(book.getId(), randomFilename)){
-                                book.setImg(randomFilename);
-                                req.setAttribute(RequestParameter.BOOK, book);
-                            }
+                                + FileHandler.BOOK_COVERS_SUBFOLDER + randomFilename) &&
+                                service.changeCover(book.getId(), randomFilename)) {
+                            book.setImg(randomFilename);
+                            req.setAttribute(RequestParameter.BOOK, book);
                         }
                     }
                 }

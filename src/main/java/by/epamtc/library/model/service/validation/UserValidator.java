@@ -7,14 +7,17 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public final class UserValidator extends LibraryValidator{
+/**
+ * Class that validates a user.
+ *
+ * @author Artur Mironchik
+ */
+public final class UserValidator{
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Pattern NAME_PATTERN = Pattern.compile("[а-яА-Яa-zA-Z]{3,255}");
     private static final Pattern USERNAME_PATTERN = Pattern.compile("[а-яА-Я\\w]{3,255}");
@@ -30,6 +33,12 @@ public final class UserValidator extends LibraryValidator{
     private UserValidator() {
     }
 
+    /**
+     * Is register form valid boolean.
+     *
+     * @param fields the fields
+     * @return the boolean
+     */
     public static boolean isRegisterFormValid(Map<String, String> fields) {
         boolean result = true;
 
@@ -76,6 +85,12 @@ public final class UserValidator extends LibraryValidator{
         return result;
     }
 
+    /**
+     * Is user role valid boolean.
+     *
+     * @param role the role
+     * @return the boolean
+     */
     public static boolean isUserRoleValid(String role) {
         if (role == null || role.isEmpty()) {
             return false;
@@ -93,24 +108,42 @@ public final class UserValidator extends LibraryValidator{
         return result;
     }
 
+    /**
+     * Is username valid boolean.
+     *
+     * @param username the username
+     * @return the boolean
+     */
     public static boolean isUsernameValid(String username) {
-        boolean result = isFieldValid(username, USERNAME_PATTERN);
+        boolean result = EntityValidator.isFieldValid(username, USERNAME_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Username isn't valid: " + username);
         }
         return result;
     }
 
+    /**
+     * Is name valid boolean.
+     *
+     * @param name the name
+     * @return the boolean
+     */
     public static boolean isNameValid(String name) {
-        boolean result = isFieldValid(name, NAME_PATTERN);
+        boolean result = EntityValidator.isFieldValid(name, NAME_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Name isn't valid: " + name);
         }
         return result;
     }
 
+    /**
+     * Is phone number valid boolean.
+     *
+     * @param phoneNumber the phone number
+     * @return the boolean
+     */
     public static boolean isPhoneNumberValid(String phoneNumber) {
-        boolean result = isFieldValid(phoneNumber, PHONE_NUMBER_PATTERN) &&
+        boolean result = EntityValidator.isFieldValid(phoneNumber, PHONE_NUMBER_PATTERN) &&
                 phoneNumber.length() <= PHONE_NUMBER_MAX_LENGTH;
         if (!result) {
             LOGGER.log(Level.DEBUG, "Phone number isn't valid: " + phoneNumber);
@@ -118,14 +151,26 @@ public final class UserValidator extends LibraryValidator{
         return result;
     }
 
+    /**
+     * Is email valid boolean.
+     *
+     * @param email the email
+     * @return the boolean
+     */
     public static boolean isEmailValid(String email) {
-        boolean result = isFieldValid(email, EMAIL_PATTERN);
+        boolean result = EntityValidator.isFieldValid(email, EMAIL_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Email isn't valid: " + email);
         }
         return result;
     }
 
+    /**
+     * Is photo name valid boolean.
+     *
+     * @param photoName the photo name
+     * @return the boolean
+     */
     public static boolean isPhotoNameValid(String photoName) {
         if (photoName == null) {
             return false;
@@ -137,30 +182,55 @@ public final class UserValidator extends LibraryValidator{
         return result;
     }
 
+    /**
+     * Is repeated password valid boolean.
+     *
+     * @param password     the password
+     * @param repeatedPass the repeated pass
+     * @return the boolean
+     */
     public static boolean isRepeatedPasswordValid(String password, String repeatedPass) {
-        boolean result = isFieldValid(password, PASSWORD_PATTERN) && password.equals(repeatedPass);
+        boolean result = EntityValidator.isFieldValid(password, PASSWORD_PATTERN) && password.equals(repeatedPass);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Repeated password isn't valid: " + repeatedPass);
         }
         return result;
     }
 
+    /**
+     * Is password valid boolean.
+     *
+     * @param password the password
+     * @return the boolean
+     */
     public static boolean isPasswordValid(String password) {
-        boolean result = isFieldValid(password, PASSWORD_PATTERN);
+        boolean result = EntityValidator.isFieldValid(password, PASSWORD_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Password isn't valid: " + password);
         }
         return result;
     }
 
+    /**
+     * Is date format valid boolean.
+     *
+     * @param date the date
+     * @return the boolean
+     */
     public static boolean isDateFormatValid(String date) {
-        boolean result = isFieldValid(date, DATE_FORMAT_PATTERN);
+        boolean result = EntityValidator.isFieldValid(date, DATE_FORMAT_PATTERN);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Date isn't valid: " + date);
         }
         return result;
     }
 
+    /**
+     * Is edit form valid boolean.
+     *
+     * @param fields the fields
+     * @return the boolean
+     */
     public static boolean isEditFormValid(Map<String, String> fields) {
         boolean result = true;
         String username = fields.get(RequestParameter.USERNAME);
@@ -196,6 +266,12 @@ public final class UserValidator extends LibraryValidator{
         return result;
     }
 
+    /**
+     * Is change password form valid boolean.
+     *
+     * @param fields the fields
+     * @return the boolean
+     */
     public static boolean isChangePasswordFormValid(Map<String, String> fields) {
         boolean result = true;
         String newPassword = fields.get(RequestParameter.NEW_PASSWORD);

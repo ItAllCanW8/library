@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Command that loads book pdf.
+ *
+ * @author Artur Mironchik
+ */
 public class ViewPdf implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override

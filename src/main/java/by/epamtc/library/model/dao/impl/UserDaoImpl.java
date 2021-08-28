@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao {
     /**
      * Constructs a UserDaoImpl object.
      */
-    public UserDaoImpl() {
+    UserDaoImpl() {
     }
 
     @Override
@@ -104,13 +104,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean add(User user, String encPass) throws DaoException {
+    public boolean add(User user, String encryptedPassword) throws DaoException {
         try (Connection connection = pool.takeConnection()) {
             if (insertUserDetails(user.getUserDetails(), connection)) {
                 try (PreparedStatement insertUserSt = connection.prepareStatement(SqlQuery.INSERT_USER)) {
                     insertUserSt.setString(1, user.getUsername());
                     insertUserSt.setString(2, user.getEmail());
-                    insertUserSt.setString(3, encPass);
+                    insertUserSt.setString(3, encryptedPassword);
                     insertUserSt.setString(4, user.getStatus().getValue());
 
                     insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber(), connection).
@@ -144,7 +144,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserById(long userId) throws DaoException {
+    public Optional<User> findById(long userId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_ID)) {
             statement.setLong(1, userId);
@@ -312,7 +312,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws DaoException {
+    public Optional<User> findByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL)) {
             statement.setString(1, email);

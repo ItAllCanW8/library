@@ -18,10 +18,20 @@ public class ProxyConnection implements Connection {
     private final Connection connection;
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Instantiates a new Proxy connection.
+     *
+     * @param connection the connection
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Really close.
+     *
+     * @throws SQLException the sql exception
+     */
     void reallyClose() throws SQLException {
         connection.close();
     }

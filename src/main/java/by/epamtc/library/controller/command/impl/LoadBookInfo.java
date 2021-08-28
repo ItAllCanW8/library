@@ -10,13 +10,17 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.BookServiceImpl;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+/**
+ * Command that loads book info.
+ *
+ * @author Artur Mironchik
+ */
 public class LoadBookInfo implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -24,7 +28,7 @@ public class LoadBookInfo implements Command {
         BookService service = ServiceFactory.getInstance().getBookService();
         CommandResult result = new CommandResult(CommandName.LOAD_BOOKS, CommandResult.Type.FORWARD);
         try {
-            Optional<Book> bookOptional = service.findBookById(Long.parseLong(bookId));
+            Optional<Book> bookOptional = service.findById(Long.parseLong(bookId));
             if (bookOptional.isPresent()) {
                 Book book = bookOptional.get();
                 req.setAttribute(RequestParameter.BOOK, book);

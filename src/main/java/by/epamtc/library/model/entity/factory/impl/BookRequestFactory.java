@@ -4,7 +4,7 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.model.entity.BookRequest;
 import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.entity.BookRequestType;
-import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.EntityFactory;
 import by.epamtc.library.util.DateTimeHelper;
 
 import java.time.LocalDateTime;
@@ -12,18 +12,26 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * LibraryFactory implementation used to create a BookRequest object.
+ * EntityFactory implementation used to create a BookRequest object.
  *
  * @author Artur Mironchik
  */
-public class BookRequestFactory implements LibraryFactory<BookRequest> {
+public class BookRequestFactory implements EntityFactory<BookRequest> {
     private static final BookRequestState DEFAULT_STATE = BookRequestState.LEFT;
 
     private static class Holder {
-        static final LibraryFactory<BookRequest> INSTANCE = new BookRequestFactory();
+        /**
+         * The Instance.
+         */
+        static final EntityFactory<BookRequest> INSTANCE = new BookRequestFactory();
     }
 
-    public static LibraryFactory<BookRequest> getInstance() {
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+    public static EntityFactory<BookRequest> getInstance() {
         return BookRequestFactory.Holder.INSTANCE;
     }
 
@@ -32,18 +40,15 @@ public class BookRequestFactory implements LibraryFactory<BookRequest> {
         BookRequestType requestType = BookRequestType.fromString(fields.get(RequestParameter.REQUEST_TYPE));
         BookRequestState state;
 
-        if(requestType != null) {
-            if(requestType.equals(BookRequestType.TO_READING_ROOM)) {
-                state = BookRequestState.APPROVED;
-            }
-            else{
-                state = DEFAULT_STATE;
-            }
+        Optional<BookRequest> requestOptional = Optional.empty();
 
-            return (Optional.of(new BookRequest(requestType, state,
-                    LocalDateTime.now().format(DateTimeHelper.formatter))));
+        if(requestType != null) {
+            state = requestType.equals(BookRequestType.TO_READING_ROOM) ? BookRequestState.APPROVED : DEFAULT_STATE;
+
+            requestOptional = Optional.of(new BookRequest(requestType, state, LocalDateTime.now()
+                    .format(DateTimeHelper.formatter)));
         }
 
-        return Optional.empty();
+        return requestOptional;
     }
 }

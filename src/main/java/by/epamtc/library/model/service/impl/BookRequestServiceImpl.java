@@ -4,15 +4,14 @@ import by.epamtc.library.controller.attribute.RequestParameter;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.BookRequestDao;
-import by.epamtc.library.model.dao.factory.DaoFactory;
+import by.epamtc.library.model.dao.impl.DaoFactory;
 import by.epamtc.library.model.dao.impl.BookRequestDaoImpl;
 import by.epamtc.library.model.entity.*;
-import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.EntityFactory;
 import by.epamtc.library.model.entity.factory.impl.BookRequestFactory;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
 import by.epamtc.library.util.DateTimeHelper;
 import by.epamtc.library.util.SortingHelper;
 
@@ -22,20 +21,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
+/**
+ * BookRequestService implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class BookRequestServiceImpl implements BookRequestService {
     private static final BookRequestDao bookRequestDao = DaoFactory.getInstance().getBookRequestDao();
-    private static final LibraryFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
+    private static final EntityFactory<BookRequest> bookRequestFactory = BookRequestFactory.getInstance();
 
-    public BookRequestServiceImpl() {
-    }
-
-    @Override
-    public boolean bookRequestExists(BookRequest request) throws ServiceException {
-        try {
-            return bookRequestDao.bookRequestExists(request);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    /**
+     * Instantiates a new Book request service.
+     */
+    BookRequestServiceImpl() {
     }
 
     @Override
@@ -52,7 +51,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             if (requestOptional.isPresent()) {
                 BookService bookService = ServiceFactory.getInstance().getBookService();
                 long bookId = Long.parseLong(fields.get(RequestParameter.BOOK_ID));
-                Optional<Book> bookOptional = bookService.findBookById(bookId);
+                Optional<Book> bookOptional = bookService.findById(bookId);
 
                 if (bookOptional.isPresent()) {
                     BookRequest request = requestOptional.get();
@@ -154,23 +153,9 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
-    public void deleteRRRequests(long userId) throws ServiceException {
-        try {
-            bookRequestDao.deleteRRRequests(userId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public Optional<String> findEmailByRequestId(long requestId) throws ServiceException {
         try {
-            Optional<String> emailOptional = bookRequestDao.findEmailByRequestId(requestId);
-            if (emailOptional.isPresent()) {
-                String email = emailOptional.get();
-                emailOptional = Optional.of(email);
-            }
-            return emailOptional;
+            return bookRequestDao.findEmailByRequestId(requestId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -191,7 +176,7 @@ public class BookRequestServiceImpl implements BookRequestService {
             if(isReadingRoomOpened)
                 return bookRequestDao.loadReadingRoomByReaderId(readerId);
             else {
-                bookRequestDao.deleteRRRequests(readerId);
+                bookRequestDao.deleteReadingRoomRequests(readerId);
             }
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -249,27 +234,29 @@ public class BookRequestServiceImpl implements BookRequestService {
 
     @Override
     public List<BookRequest> findBookRequestsByType(String type) throws ServiceException {
+        List<BookRequest> bookRequests = new ArrayList<>(0);
         try {
             BookRequestType reqType = BookRequestType.fromString(type);
 
             if (reqType != null)
-                return bookRequestDao.findBookRequestsByType(reqType);
+                bookRequests.addAll(bookRequestDao.findBookRequestsByType(reqType));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        return new ArrayList<>(0);
+        return bookRequests;
     }
 
     @Override
     public List<BookRequest> findBookRequestsByState(String state) throws ServiceException {
+        List<BookRequest> bookRequests = new ArrayList<>(0);
         try {
             BookRequestState requestState = BookRequestState.fromString(state);
 
             if (requestState != null)
-                return bookRequestDao.findBookRequestsByState(requestState);
+                bookRequests.addAll(bookRequestDao.findBookRequestsByState(requestState));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        return new ArrayList<>(0);
+        return bookRequests;
     }
 }

@@ -145,7 +145,7 @@ public interface BookRequestDao {
     Map<String, String> loadRRWorkingHours() throws DaoException;
 
 
-    void deleteRRRequests(long userId) throws  DaoException;
+    void deleteReadingRoomRequests(long userId) throws  DaoException;
 
     /**
      * Loads max allowed number of book requests for subscription and number of such user book requests.

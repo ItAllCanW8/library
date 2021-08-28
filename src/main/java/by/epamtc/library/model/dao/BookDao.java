@@ -56,7 +56,7 @@ public interface BookDao {
      * @return Optional object of book if exists, Optional.empty() otherwise.
      * @throws DaoException if the database throws SQLException.
      */
-    Optional<Book> findBookById(long bookId) throws DaoException;
+    Optional<Book> findById(long bookId) throws DaoException;
 
     /**
      * Finds book cover by id.
@@ -83,7 +83,7 @@ public interface BookDao {
      * @return List object of books.
      * @throws DaoException if the database throws SQLException.
      */
-    List<Book> findBooksByKeyword(String keyword) throws DaoException;
+    List<Book> findByKeyword(String keyword) throws DaoException;
 
     /**
      * Finds books by genre.

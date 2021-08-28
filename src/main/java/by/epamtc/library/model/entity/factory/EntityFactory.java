@@ -9,7 +9,7 @@ import java.util.Optional;
  * @param <T> the type of class, which object should be created.
  * @author Artur Mironchik
  */
-public interface LibraryFactory<T> {
+public interface EntityFactory<T> {
     /**
      * Creates an Optional object of the given type from the Map of its fields.
      *

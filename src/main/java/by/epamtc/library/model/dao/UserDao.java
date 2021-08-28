@@ -66,7 +66,7 @@ public interface UserDao {
      * @return Optional object of user if exists, Optional.empty() otherwise.
      * @throws DaoException if the database throws SQLException.
      */
-    Optional<User> findUserByEmail(String email) throws DaoException;
+    Optional<User> findByEmail(String email) throws DaoException;
 
     /**
      * Adds user to the table.
@@ -95,7 +95,7 @@ public interface UserDao {
      * @return Optional object of user if exists, Optional.empty() otherwise.
      * @throws DaoException if the database throws SQLException.
      */
-    Optional<User> findUserById(long userId) throws DaoException;
+    Optional<User> findById(long userId) throws DaoException;
 
     /**
      * Updates user's profile.

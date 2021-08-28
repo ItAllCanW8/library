@@ -7,8 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.UserServiceImpl;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.FileHandler;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -22,6 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+/**
+ * Command that uploads user photo.
+ *
+ * @author Artur Mironchik
+ */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)

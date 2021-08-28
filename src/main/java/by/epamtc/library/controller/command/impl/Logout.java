@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command that logouts user to account.
+ *
+ * @author Artur Mironchik
+ */
 public class Logout implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -18,6 +23,6 @@ public class Logout implements Command {
         session.removeAttribute(SessionAttribute.USER_ID);
         session.removeAttribute(SessionAttribute.USER);
         session.setAttribute(SessionAttribute.CURRENT_ROLE, UserRole.GUEST);
-        return (new CommandResult(CommandName.HOME_URL, CommandResult.Type.REDIRECT));
+        return new CommandResult(CommandName.HOME_URL, CommandResult.Type.REDIRECT);
     }
 }
