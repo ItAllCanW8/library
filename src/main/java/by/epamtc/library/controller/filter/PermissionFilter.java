@@ -1,7 +1,6 @@
 package by.epamtc.library.controller.filter;
 
 import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.ServletAttribute;
 import by.epamtc.library.controller.attribute.SessionAttribute;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandProvider;

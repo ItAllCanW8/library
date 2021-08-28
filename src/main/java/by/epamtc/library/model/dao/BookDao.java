@@ -59,24 +59,6 @@ public interface BookDao {
     Optional<Book> findById(long bookId) throws DaoException;
 
     /**
-     * Finds book cover by id.
-     *
-     * @param bookId long value of book id.
-     * @return Optional object of String if exists, Optional.empty() otherwise.
-     * @throws DaoException if the database throws SQLException.
-     */
-    Optional<String> findBookCoverById(long bookId) throws DaoException;
-
-    /**
-     * Finds book pdf by id.
-     *
-     * @param bookId long value of book id.
-     * @return Optional object of String if exists, Optional.empty() otherwise.
-     * @throws DaoException if the database throws SQLException.
-     */
-    Optional<String> findBookPdfById(long bookId) throws DaoException;
-
-    /**
      * Finds books by keyword.
      *
      * @param keyword String object. Key word used to find books.

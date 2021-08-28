@@ -1,7 +1,6 @@
 package by.epamtc.library.model.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Entity class that represents a book.

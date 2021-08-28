@@ -23,7 +23,7 @@ public class UserReportFactory implements EntityFactory<UserReport> {
         /**
          * The constant INSTANCE.
          */
-        public static EntityFactory<UserReport> INSTANCE = new UserReportFactory();
+        static final EntityFactory<UserReport> INSTANCE = new UserReportFactory();
     }
 
     /**

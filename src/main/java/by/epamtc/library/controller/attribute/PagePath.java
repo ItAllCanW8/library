@@ -55,10 +55,6 @@ public class PagePath {
      */
     public static final String READING_ROOM = "/WEB-INF/jsp/reader/reading_room.jsp";
     /**
-     * Represents the path of set_coefficients.jsp.
-     */
-    public static final String SET_COEFFICIENTS = "/WEB-INF/jsp/admin/set_coefficients.jsp";
-    /**
      * Represents the path of 500.jsp.
      */
     public static final String ERROR = "/WEB-INF/jsp/error/500.jsp";

@@ -61,11 +61,12 @@ public class FileHandler {
                 FileOutputStream fops = new FileOutputStream(path);
                 fops.write(bytes);
                 fops.close();
+                return true;
             }
         } catch (IOException e) {
             throw new ServletException(e);
         }
-        return true;
+        return false;
     }
 
     /**

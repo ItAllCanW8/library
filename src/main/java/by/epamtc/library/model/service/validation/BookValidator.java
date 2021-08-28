@@ -23,8 +23,6 @@ public final class BookValidator {
     private static final Pattern QUANTITY_PATTERN = Pattern.compile("[\\d]{1,4}");
     private static final Pattern DESCRIPTION_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{3,1000}");
 
-    private static final int PHOTO_NAME_MAX_LENGTH = 45;
-
     private BookValidator(){}
 
     /**
@@ -160,10 +158,7 @@ public final class BookValidator {
      * @return the boolean
      */
     public static boolean isPhotoNameValid(String photoName) {
-        if (photoName == null) {
-            return false;
-        }
-        boolean result = photoName.length() > 0 && photoName.length() <= PHOTO_NAME_MAX_LENGTH;
+        boolean result = EntityValidator.isPhotoNameValid(photoName);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Photo name isn't valid: " + photoName);
         }

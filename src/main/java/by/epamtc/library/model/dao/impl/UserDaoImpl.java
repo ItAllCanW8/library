@@ -3,7 +3,6 @@ package by.epamtc.library.model.dao.impl;
 import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
-import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
@@ -87,7 +86,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private Optional<Long> findRoleId(UserRole role, Connection connection) throws SQLException, ConnectionPoolException {
+    private Optional<Long> findRoleId(UserRole role, Connection connection) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ROLE_ID_BY_NAME)) {
             statement.setString(1, role.name());
             ResultSet resultSet = statement.executeQuery();
@@ -95,7 +94,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private Optional<Long> findDetailsId(String phoneNum, Connection connection) throws SQLException, ConnectionPoolException {
+    private Optional<Long> findDetailsId(String phoneNum, Connection connection) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_DETAILS_ID_BY_PHONE)) {
             statement.setString(1, phoneNum);
             ResultSet resultSet = statement.executeQuery();

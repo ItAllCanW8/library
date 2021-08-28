@@ -41,7 +41,7 @@ public class UploadAuthorPhoto implements Command {
             Optional<Book> bookOptional = service.findById(Long.parseLong(bookId));
             if (ServletFileUpload.isMultipartContent(req) && bookOptional.isPresent()) {
                 Book book = bookOptional.get();
-                Part part = null;
+                Part part;
                 try {
                     part = req.getPart(RequestParameter.BOOK_AUTHOR_PHOTO);
                 } catch (IOException | ServletException e) {

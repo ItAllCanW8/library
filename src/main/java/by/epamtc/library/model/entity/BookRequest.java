@@ -35,24 +35,6 @@ public class BookRequest implements Serializable {
     /**
      * Instantiates a new Book request.
      *
-     * @param id                 the id
-     * @param type               the type
-     * @param state              the state
-     * @param requestDate        the request date
-     * @param expectedReturnDate the expected return date
-     * @param closingDate        the closing date
-     * @param book               the book
-     * @param user               the user
-     */
-    public BookRequest(long id, BookRequestType type, BookRequestState state, String requestDate, String expectedReturnDate,
-                       String closingDate, Book book, User user) {
-        this(id, type, state, requestDate,expectedReturnDate, closingDate, book);
-        this.user = user;
-    }
-
-    /**
-     * Instantiates a new Book request.
-     *
      * @param book the book
      */
     public BookRequest(Book book) {

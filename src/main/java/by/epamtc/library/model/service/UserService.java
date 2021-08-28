@@ -1,9 +1,7 @@
 package by.epamtc.library.model.service;
 
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.model.entity.User;
-import by.epamtc.library.model.entity.UserRole;
 
 import java.util.List;
 import java.util.Map;

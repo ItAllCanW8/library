@@ -27,7 +27,6 @@ public final class UserValidator{
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("[А-Яа-я\\w\\s\\p{Punct}]{6,255}");
 
     private static final int PHONE_NUMBER_MAX_LENGTH = 20;
-    private static final int PHOTO_NAME_MAX_LENGTH = 45;
     private static final Pattern DATE_FORMAT_PATTERN = Pattern.compile("([1-2][0-9]{3})-([0][1-9]|[1][0-2])-([0][1-9]|[12][0-9]|[3][01])");
 
     private UserValidator() {
@@ -40,8 +39,23 @@ public final class UserValidator{
      * @return the boolean
      */
     public static boolean isRegisterFormValid(Map<String, String> fields) {
-        boolean result = true;
+        areUserFieldsValid(fields);
+        boolean result = areUserFieldsValid(fields);
+        String password = fields.get(RequestParameter.PASSWORD);
+        if (!isPasswordValid(password)) {
+            fields.put(RequestParameter.PASSWORD, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        String repeatedPassword = fields.get(RequestParameter.REPEATED_PASSWORD);
+        if (!isRepeatedPasswordValid(password, repeatedPassword)) {
+            fields.put(RequestParameter.REPEATED_PASSWORD, JspAttribute.INVALID_INPUT_DATA_MSG);
+            result = false;
+        }
+        return result;
+    }
 
+    private static boolean areUserFieldsValid(Map<String, String> fields) {
+        boolean result = true;
         String username = fields.get(RequestParameter.USERNAME);
         if (!isUsernameValid(username)) {
             fields.put(RequestParameter.USERNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
@@ -72,39 +86,6 @@ public final class UserValidator{
             fields.put(RequestParameter.EMAIL, JspAttribute.INVALID_INPUT_DATA_MSG);
             result = false;
         }
-        String password = fields.get(RequestParameter.PASSWORD);
-        if (!isPasswordValid(password)) {
-            fields.put(RequestParameter.PASSWORD, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        String repeatedPassword = fields.get(RequestParameter.REPEATED_PASSWORD);
-        if (!isRepeatedPasswordValid(password, repeatedPassword)) {
-            fields.put(RequestParameter.REPEATED_PASSWORD, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        return result;
-    }
-
-    /**
-     * Is user role valid boolean.
-     *
-     * @param role the role
-     * @return the boolean
-     */
-    public static boolean isUserRoleValid(String role) {
-        if (role == null || role.isEmpty()) {
-            return false;
-        }
-
-        boolean result = Arrays.stream(UserRole.values())
-                .map(Enum::toString)
-                .collect(Collectors.toList())
-                .contains(role.toUpperCase());
-
-        if (!result) {
-            LOGGER.log(Level.DEBUG, "Role isn't valid: " + role);
-        }
-
         return result;
     }
 
@@ -172,10 +153,7 @@ public final class UserValidator{
      * @return the boolean
      */
     public static boolean isPhotoNameValid(String photoName) {
-        if (photoName == null) {
-            return false;
-        }
-        boolean result = photoName.length() > 0 && photoName.length() <= PHOTO_NAME_MAX_LENGTH;
+        boolean result = EntityValidator.isPhotoNameValid(photoName);
         if (!result) {
             LOGGER.log(Level.DEBUG, "Photo name isn't valid: " + photoName);
         }
@@ -232,38 +210,7 @@ public final class UserValidator{
      * @return the boolean
      */
     public static boolean isEditFormValid(Map<String, String> fields) {
-        boolean result = true;
-        String username = fields.get(RequestParameter.USERNAME);
-        if (!isUsernameValid(username)) {
-            fields.put(RequestParameter.USERNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        String name = fields.get(RequestParameter.NAME);
-        if (!isNameValid(name)) {
-            fields.put(RequestParameter.NAME, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        String surname = fields.get(RequestParameter.SURNAME);
-        if (!isNameValid(surname)) {
-            fields.put(RequestParameter.SURNAME, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        String dateOfBirth = fields.get(RequestParameter.DATE_OF_BIRTH);
-        if (!isDateFormatValid(dateOfBirth)) {
-            fields.put(RequestParameter.DATE_OF_BIRTH, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        String phoneNumber = fields.get(RequestParameter.PHONE_NUMBER);
-        if (!isPhoneNumberValid(phoneNumber)) {
-            fields.put(RequestParameter.PHONE_NUMBER, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        String email = fields.get(RequestParameter.EMAIL);
-        if (!isEmailValid(email)) {
-            fields.put(RequestParameter.EMAIL, JspAttribute.INVALID_INPUT_DATA_MSG);
-            result = false;
-        }
-        return result;
+        return areUserFieldsValid(fields);
     }
 
     /**

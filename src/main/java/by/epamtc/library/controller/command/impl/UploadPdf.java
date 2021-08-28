@@ -35,7 +35,7 @@ public class UploadPdf implements Command {
         String bookId = req.getParameter(RequestParameter.BOOK_ID);
 
         if (ServletFileUpload.isMultipartContent(req)) {
-            Part part = null;
+            Part part;
             try {
                 part = req.getPart(RequestParameter.BOOK_PDF);
             } catch (IOException | ServletException e) {

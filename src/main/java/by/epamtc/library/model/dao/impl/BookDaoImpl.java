@@ -6,8 +6,6 @@ import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.util.SortingHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,12 +41,7 @@ public class BookDaoImpl implements BookDao {
     public boolean add(Book book) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_BOOK)) {
-            statement.setString(1, book.getTitle());
-            statement.setString(2, book.getAuthorPseudo());
-            statement.setString(3, book.getIsbn());
-            statement.setInt(4, book.getAvailableQuantity());
-            statement.setString(5, book.getGenre());
-            statement.setString(6, book.getShortDescription());
+            setBookFields(book, statement);
             statement.setString(7, book.getPdf());
             statement.setString(8, book.getImg());
             statement.setString(9, book.getAuthorImg());
@@ -59,6 +52,15 @@ public class BookDaoImpl implements BookDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error adding a book.", e);
         }
+    }
+
+    private void setBookFields(Book book, PreparedStatement statement) throws SQLException {
+        statement.setString(1, book.getTitle());
+        statement.setString(2, book.getAuthorPseudo());
+        statement.setString(3, book.getIsbn());
+        statement.setInt(4, book.getAvailableQuantity());
+        statement.setString(5, book.getGenre());
+        statement.setString(6, book.getShortDescription());
     }
 
     @Override
@@ -124,32 +126,6 @@ public class BookDaoImpl implements BookDao {
             return (resultSet.next() ? Optional.of(createBookFromResultSet(resultSet, true)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error finding book by id.", e);
-        }
-    }
-
-    @Override
-    public Optional<String> findBookCoverById(long bookId) throws DaoException {
-        try(Connection connection = pool.takeConnection();
-        PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_COVER_BY_ID)) {
-            statement.setLong(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return resultSet.next() ? Optional.of(resultSet.getString(bookImgCol)) : Optional.empty();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error finding book cover by id " + bookId, e);
-        }
-    }
-
-    @Override
-    public Optional<String> findBookPdfById(long bookId) throws DaoException {
-        try(Connection connection = pool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_PDF_BY_ID)) {
-            statement.setLong(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return resultSet.next() ? Optional.of(resultSet.getString(bookPdfCol)) : Optional.empty();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error finding book pdf by id " + bookId, e);
         }
     }
 
@@ -240,12 +216,7 @@ public class BookDaoImpl implements BookDao {
     public boolean updateBook(Book book) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK)) {
-            statement.setString(1, book.getTitle());
-            statement.setString(2, book.getAuthorPseudo());
-            statement.setString(3, book.getIsbn());
-            statement.setInt(4, book.getAvailableQuantity());
-            statement.setString(5, book.getGenre());
-            statement.setString(6, book.getShortDescription());
+            setBookFields(book, statement);
             statement.setLong(7, book.getId());
 
             statement.execute();

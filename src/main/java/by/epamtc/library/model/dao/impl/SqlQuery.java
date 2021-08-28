@@ -101,10 +101,6 @@ public class SqlQuery {
      */
     public static final String FIND_BOOK_PDF_BY_ID = "SELECT pdf FROM books WHERE book_id = ?;";
     /**
-     * The constant FIND_BOOK_QUANTITY_BY_ID.
-     */
-    public static final String FIND_BOOK_QUANTITY_BY_ID = "SELECT available_quantity FROM books WHERE book_id = ?;";
-    /**
      * The constant UPDATE_USER_PHOTO.
      */
     public static final String UPDATE_USER_PHOTO = "UPDATE user_details SET photo_path = ? WHERE details_id = ?;";
@@ -317,9 +313,4 @@ public class SqlQuery {
      */
     public static final String LOAD_READING_ROOM_COEFFS = "SELECT coefficient_name,coefficient_value FROM coefficients WHERE" +
             " coefficient_name LIKE 'reading_room_%ing'";
-    /**
-     * The constant FIND_REQUEST_CLOSING_DATE.
-     */
-    public static final String FIND_REQUEST_CLOSING_DATE = "SELECT closing_date FROM book_requests WHERE " +
-            "request_id = ?";
 }

@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
  * @author Artur Mironchik
  */
 public class ChangeLanguage implements Command {
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    @Override
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException{
         HttpSession session = req.getSession();
         String newLocalizationStr = req.getParameter(RequestParameter.NEW_LOCALIZATION);
         Localization newLocalization = Localization.defineLocalization(newLocalizationStr);
