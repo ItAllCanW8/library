@@ -31,9 +31,6 @@
                                         <h1>
                                             <fmt:message key="carousel.library"/>
                                         </h1>
-                                        <a href="">
-                                            <fmt:message key="button.moreInfo"/>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
