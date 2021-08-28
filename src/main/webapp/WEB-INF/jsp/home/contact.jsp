@@ -33,7 +33,7 @@
                             <fmt:message key="header.contact"/>
                         </h3>
                         <p>
-                            <fmt:message key="report.subjectPlaceholder"/>"
+                            <fmt:message key="report.subjectPlaceholder"/>
                         </p>
                     </div>
                 </div>

@@ -84,33 +84,33 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="request" items="${books}">
+                    <c:forEach var="book" items="${books}">
                         <tr class="table-secondary">
                             <th scope="row">
-                                <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
+                                <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${book.id}">
                                     <div>
-                                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}"
+                                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}"
                                              alt="" style="max-height: 250px;max-width: 250px">
                                     </div>
-                                    <ctg:out text="${request.title}"/>
+                                    <ctg:out text="${book.title}"/>
                                 </a>
                             </th>
                             <th scope="row">
                                 <div>
-                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.authorImg}"
+                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.authorImg}"
                                          alt="" style="max-height: 250px;max-width: 250px">
                                 </div>
-                                <a href="${pageContext.request.contextPath}/find_books_by_author.do?bookAuthor=${request.authorPseudo}">
-                                    <ctg:out text="${request.authorPseudo}"/>
+                                <a href="${pageContext.request.contextPath}/find_books_by_author.do?bookAuthor=${book.authorPseudo}">
+                                    <ctg:out text="${book.authorPseudo}"/>
                                 </a>
                             </th>
                             <th scope="row">
-                                <a href="${pageContext.request.contextPath}/find_books_by_genre.do?bookGenre=${request.genre}">
-                                    <ctg:out text="${request.genre}"/>
+                                <a href="${pageContext.request.contextPath}/find_books_by_genre.do?bookGenre=${book.genre}">
+                                    <ctg:out text="${book.genre}"/>
                                 </a>
                             </th>
-                            <th scope="row"><ctg:out text="${request.isbn}"/></th>
-                            <th scope="row"><ctg:out text="${request.availableQuantity}"/></th>
+                            <th scope="row"><ctg:out text="${book.isbn}"/></th>
+                            <th scope="row"><ctg:out text="${book.availableQuantity}"/></th>
                         <tr>
                     </c:forEach>
                 </tbody>
