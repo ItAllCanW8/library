@@ -55,10 +55,6 @@ public class PagePath {
      */
     public static final String READING_ROOM = "/WEB-INF/jsp/reader/reading_room.jsp";
     /**
-     * Represents the path of 500.jsp.
-     */
-    public static final String ERROR = "/WEB-INF/jsp/error/500.jsp";
-    /**
      * Represents the path of user_reports.jsp.
      */
     public static final String USER_REPORTS = "/WEB-INF/jsp/admin/user_reports.jsp";
@@ -66,6 +62,10 @@ public class PagePath {
      * Represents the path of user_report_info.jsp.
      */
     public static final String USER_REPORT = "/WEB-INF/jsp/admin/user_report_info.jsp";
+    /**
+     * Represents the path of user_report_info.jsp.
+     */
+    public static final String ERROR_404 = "/WEB-INF/jsp/error/404.jsp";
 
     private PagePath(){}
 }

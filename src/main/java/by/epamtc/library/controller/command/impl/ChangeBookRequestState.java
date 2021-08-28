@@ -46,8 +46,7 @@ public class ChangeBookRequestState implements Command {
 
                     mailSender.send();
                 }
-            } else
-                result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
+            }
         } catch (NumberFormatException e){
             req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
             result = new CommandResult(CommandName.BOOK_REQUESTS, CommandResult.Type.FORWARD);

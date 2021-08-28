@@ -34,9 +34,8 @@ public class ReturnBook implements Command {
 
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
-            if(!service.closeBookRequest(userId,Long.parseLong(requestIdStr), Long.parseLong(bookIdStr),
-                    Short.parseShort(bookQuantityStr), requestType, expectedReturnDate))
-                result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
+            service.closeBookRequest(userId,Long.parseLong(requestIdStr), Long.parseLong(bookIdStr),
+                    Short.parseShort(bookQuantityStr), requestType, expectedReturnDate);
         } catch (NumberFormatException e) {
             req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
             result = new CommandResult(CommandName.READER_BOOK_REQUESTS, CommandResult.Type.FORWARD);

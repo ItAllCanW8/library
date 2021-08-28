@@ -27,8 +27,6 @@ import java.util.Map;
  * @author Artur Mironchik
  */
 public class AddBook implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();
@@ -65,7 +63,6 @@ public class AddBook implements Command {
                 result = new CommandResult(CommandName.TO_LIBRARIAN_BOOKS, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
-            LOGGER.log(Level.ERROR, "Couldn't create book");
             throw new CommandException(e);
         }
         return result;

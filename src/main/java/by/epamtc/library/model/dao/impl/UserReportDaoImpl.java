@@ -86,7 +86,7 @@ public class UserReportDaoImpl implements UserReportDao {
                 reports.add(createUserReportFromResultSet(resultSet, false));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error loading user reports", e);
         }
         return reports;
     }
@@ -99,12 +99,12 @@ public class UserReportDaoImpl implements UserReportDao {
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(createUserReportFromResultSet(resultSet, true)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding user report by id " + reportId, e);
         }
     }
 
     @Override
-    public boolean updateUserReportResponse(long reportId, String response) throws DaoException {
+    public boolean createUserReportResponse(long reportId, String response) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_REPORT_RESPONSE)) {
             statement.setString(1, response);
@@ -114,7 +114,7 @@ public class UserReportDaoImpl implements UserReportDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error creating response to user report", e);
         }
     }
 

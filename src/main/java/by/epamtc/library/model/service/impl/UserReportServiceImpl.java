@@ -69,7 +69,7 @@ public class UserReportServiceImpl implements UserReportService {
             if (UserReportValidator.isResponseValid(response)) {
                 Optional<UserReport> reportOptional = userReportDao.findById(reportId);
                 if (reportOptional.isPresent()) {
-                    return userReportDao.updateUserReportResponse(reportId, response);
+                    return userReportDao.createUserReportResponse(reportId, response);
                 }
             }
         } catch (DaoException e) {

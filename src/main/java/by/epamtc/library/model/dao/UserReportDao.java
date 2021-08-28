@@ -53,7 +53,7 @@ public interface UserReportDao {
      * @return boolean value. True if the user report response has been updated, false otherwise.
      * @throws DaoException if the database throws SQLException.
      */
-    boolean updateUserReportResponse(long reportId, String response) throws DaoException;
+    boolean createUserReportResponse(long reportId, String response) throws DaoException;
 
     /**
      * Sorts user reports.

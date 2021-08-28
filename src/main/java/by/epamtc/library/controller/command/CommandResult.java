@@ -1,6 +1,7 @@
 package by.epamtc.library.controller.command;
 
 import by.epamtc.library.controller.attribute.CommandName;
+import by.epamtc.library.controller.attribute.PagePath;
 import by.epamtc.library.controller.attribute.RequestParameter;
 
 import javax.servlet.ServletException;
@@ -142,7 +143,7 @@ public class CommandResult {
                 break;
             }
             default: {
-                response.sendRedirect(request.getContextPath() + CommandResult.DEFAULT_PATH);
+                request.getRequestDispatcher(PagePath.ERROR_404).forward(request, response);
             }
         }
     }

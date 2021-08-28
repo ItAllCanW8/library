@@ -134,9 +134,9 @@ public class MailSender {
             initMessage();
             Transport.send(message);
         } catch (AddressException e) {
-            LOGGER.log(Level.ERROR, "Invalid email: " + recipientEmail , e);
+            LOGGER.log(Level.ERROR, "Invalid email: " + recipientEmail + e);
         } catch (MessagingException e) {
-            LOGGER.log(Level.ERROR, "Error generating or sending message: ", e);
+            LOGGER.log(Level.ERROR, "Error generating or sending message: " + e);
         }
     }
 
