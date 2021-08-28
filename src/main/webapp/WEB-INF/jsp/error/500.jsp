@@ -15,10 +15,10 @@
 </div>
 
 <h1 style="margin-top: 10%; display: flex; justify-content: center">
-  <fmt:message key="error.status500"/>
+  <fmt:message key="error.status_500"/>
 </h1>
 <h1 style="margin-bottom: 5%; margin-top: 3%; display: flex; justify-content: center">
-  <fmt:message key="error.status500msg"/></h1>
+  <fmt:message key="error.status500Msg"/></h1>
 
 <h5 style="margin-bottom: 5%; margin-top: 3%; display: flex; color: red; justify-content: center">
   ${errorMsg}
