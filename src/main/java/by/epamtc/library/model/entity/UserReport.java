@@ -16,7 +16,7 @@ public class UserReport implements Serializable {
     private String creationDate;
     private User user;
 
-    private UserReport(){}
+    public UserReport(){}
 
     public UserReport(boolean isProcessed, String subject, String message, String creationDate){
         this.isProcessed = isProcessed;

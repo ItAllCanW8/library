@@ -17,7 +17,11 @@ public class BookRequest implements Serializable {
     private Book book;
     private User user;
 
-    private BookRequest(){}
+    /**
+     * Instantiates a new Book request.
+     *
+     */
+    public BookRequest(){}
 
     /**
      * Instantiates a new Book request.

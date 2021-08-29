@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * Entity class that represents a user details.
+ * Entity class that represents user details.
  *
  * @author Artur Mironchik
  */
@@ -16,7 +16,7 @@ public class UserDetails implements Serializable {
     private String phoneNumber;
     private String photoPath;
 
-    private UserDetails(){}
+    public UserDetails(){ }
 
     /**
      * Instantiates a new User details.
