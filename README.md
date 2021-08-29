@@ -10,13 +10,12 @@
 * [Additional Info](#additional-info)
 
 # Project Description
-Library Management System
+Library Management System (Java EE, Bootstrap, Tomcat, Maven, JUnit, javadoc)
 
 # Project Features
 * Design patterns: MVC, Layered architecture, DAO, Factory, Command, Singleton, Proxy
 * Localization: en_EN, ru_RU
 * 4 user's roles
-* Bootstrap
 * XSS protection with custom tag
 * Custom connection pool and proxy connections
 * Double data validation
