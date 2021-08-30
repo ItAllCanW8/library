@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -149,8 +150,22 @@ public class ConnectionPool {
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR,"Error destroying connection pool.", e);
             throw new ConnectionPoolException("Error destroying connection pool.", e);
+        } finally {
+            deregisterDrivers();
         }
 
         LOGGER.info("Connection pool closed.");
+    }
+
+    private void deregisterDrivers() throws ConnectionPoolException {
+        try {
+            while (DriverManager.getDrivers().hasMoreElements()) {
+                Driver driver = DriverManager.getDrivers().nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "Error deregister drivers: " + e);
+            throw new ConnectionPoolException(e);
+        }
     }
 }

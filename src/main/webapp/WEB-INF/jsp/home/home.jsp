@@ -46,9 +46,6 @@
                                         <h1>
                                             <fmt:message key="carousel.education"/>
                                         </h1>
-                                        <a href="">
-                                            <fmt:message key="button.moreInfo"/>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -64,9 +61,6 @@
                                         <h1>
                                             <fmt:message key="carousel.leisure"/>
                                         </h1>
-                                        <a href="">
-                                            <fmt:message key="button.moreInfo"/>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
