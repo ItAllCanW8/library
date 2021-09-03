@@ -7,13 +7,18 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.service.BookRequestService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+/**
+ * Command that changes book request state.
+ *
+ * @author Artur Mironchik
+ */
 public class ChangeBookRequestState implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -41,15 +46,13 @@ public class ChangeBookRequestState implements Command {
 
                     mailSender.send();
                 }
-            } else
-                result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
+            }
         } catch (NumberFormatException e){
             req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
             result = new CommandResult(CommandName.BOOK_REQUESTS, CommandResult.Type.FORWARD);
         }catch (ServiceException e) {
             throw new CommandException(e);
         }
-
         return result;
     }
 }

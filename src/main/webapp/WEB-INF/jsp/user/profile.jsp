@@ -39,9 +39,11 @@
                              alt=""/>
                     </div>
                     <c:if test="${sessionScope.userId.equals(user.id)}">
-                        <form action="${pageContext.request.contextPath}/upload_photo.do" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file" class="form-control-file"/>
-                            <input type="submit" class="btn btn-outline-secondary" value="Upload"/>
+                        <label for="photoUpload"><fmt:message key="profile.uploadPhoto"/> </label>
+                        <form action="${pageContext.request.contextPath}/upload_photo.do" method="post" enctype="multipart/form-data"
+                        id="photoUpload">
+                            <input type="file" name="file" class="form-control-file" title="" accept="image/jpeg, image/png"/>
+                            <input type="submit" class="btn btn-outline-secondary" value="<fmt:message key="button.upload"/>"/>
                         </form>
                     </c:if>
                 </div>

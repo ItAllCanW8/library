@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Filter moves a success message to the jsp page and removes this message from the session.
+ *
+ * @author Artur Mironchik
+ */
 public class SuccessMsgFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {

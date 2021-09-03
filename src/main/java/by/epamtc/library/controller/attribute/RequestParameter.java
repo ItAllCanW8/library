@@ -177,7 +177,7 @@ public class RequestParameter {
     /**
      * The constant that represents SORTING_OBJECT.
      */
-    public static final String SORTING_OBJECT = "sortingObject";
+    public static final String SORTING_ENTITY = "sortingEntity";
     /**
      * The constant that represents USER_REPORT_SUBJECT.
      */

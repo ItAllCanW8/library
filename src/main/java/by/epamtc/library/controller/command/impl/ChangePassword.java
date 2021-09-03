@@ -7,9 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.UserServiceImpl;
-import by.epamtc.library.model.service.validation.UserValidator;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Command that changes user password.
+ *
+ * @author Artur Mironchik
+ */
 public class ChangePassword implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

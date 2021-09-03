@@ -14,6 +14,12 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
+
+/**
+ * Class provides methods for mail sending.
+ *
+ * @author Artur Mironchik
+ */
 public class MailSender {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String MAIL_PROPERTY_FILE_PATH = "/mail.properties";
@@ -25,6 +31,9 @@ public class MailSender {
     private String letterSubject;
     private String letterContent;
 
+    private MailSender() {
+    }
+
     static {
         properties = new Properties();
         try {
@@ -35,60 +44,104 @@ public class MailSender {
     }
 
     private static class Holder {
+        /**
+         * The Instance.
+         */
         static final MailSender INSTANCE = new MailSender();
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MailSender getInstance() {
         return MailSender.Holder.INSTANCE;
     }
 
-    private MailSender() {
-    }
-
+    /**
+     * Gets recipient email.
+     *
+     * @return the recipient email
+     */
     public String getRecipientEmail() {
         return recipientEmail;
     }
 
+    /**
+     * Sets recipient email.
+     *
+     * @param recipientEmail the recipient email
+     */
     public void setRecipientEmail(String recipientEmail) {
         this.recipientEmail = recipientEmail;
     }
 
+    /**
+     * Gets letter subject.
+     *
+     * @return the letter subject
+     */
     public String getLetterSubject() {
         return letterSubject;
     }
 
+    /**
+     * Sets letter subject.
+     *
+     * @param letterSubject the letter subject
+     */
     public void setLetterSubject(String letterSubject) {
         this.letterSubject = letterSubject;
     }
 
+    /**
+     * Gets letter content.
+     *
+     * @return the letter content
+     */
     public String getLetterContent() {
         return letterContent;
     }
 
+    /**
+     * Sets letter content.
+     *
+     * @param letterContent the letter content
+     */
     public void setLetterContent(String letterContent) {
         this.letterContent = letterContent;
     }
 
+    /**
+     * Sets letter.
+     *
+     * @param recipientEmail the recipient email
+     * @param letterSubject  the letter subject
+     * @param letterContent  the letter content
+     */
     public void setupLetter(String recipientEmail, String letterSubject, String letterContent) {
         this.recipientEmail = recipientEmail;
         this.letterSubject = letterSubject;
         this.letterContent = letterContent;
     }
 
+    /**
+     * Send.
+     */
     public void send() {
         try {
             initMessage();
             Transport.send(message);
         } catch (AddressException e) {
-            LOGGER.log(Level.ERROR, "Invalid email: " + recipientEmail , e);
+            LOGGER.log(Level.ERROR, "Invalid email: " + recipientEmail + e);
         } catch (MessagingException e) {
-            LOGGER.log(Level.ERROR, "Error generating or sending message: ", e);
+            LOGGER.log(Level.ERROR, "Error generating or sending message: " + e);
         }
     }
 
     private void initMessage() throws MessagingException {
         Session mailSession = SessionCreator.createSession(properties);
-//        mailSession.setDebug(true);
 
         message = new MimeMessage(mailSession);
         message.setSubject(letterSubject);

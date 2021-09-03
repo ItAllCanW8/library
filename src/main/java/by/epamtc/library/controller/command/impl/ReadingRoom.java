@@ -10,7 +10,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequest;
 import by.epamtc.library.model.service.BookRequestService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +19,11 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Command that loads user reading room.
+ *
+ * @author Artur Mironchik
+ */
 public class ReadingRoom implements Command {
     private static final String readingRoomOpeningCol = "reading_room_opening";
     private static final String readingRoomClosingCol = "reading_room_closing";

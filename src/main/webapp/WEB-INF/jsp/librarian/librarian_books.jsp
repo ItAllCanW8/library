@@ -16,6 +16,13 @@
 
 <section class="event_section layout_padding">
     <div class="container">
+
+        <wrong-message>
+            ${errorInputData}
+            ${noBooks}
+            ${errorBookCreation}
+        </wrong-message>
+
         <div class="heading_container">
             <h3>
                 <fmt:message key="header.booksManagement"/>
@@ -40,19 +47,19 @@
                 </thead>
 
                 <tbody>
-                    <c:forEach var="request" items="${books}">
+                    <c:forEach var="book" items="${books}">
                         <tr class="table-secondary">
-                            <th scope="row"><a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
-                                <ctg:out text="${request.title}"/></a></th>
+                            <th scope="row"><a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${book.id}">
+                                <ctg:out text="${book.title}"/></a></th>
                             <th scope="row">
                                 <div>
-                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt=""
+                                    <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt=""
                                          style="max-height: 250px;max-width: 250px"></div>
                             </th>
-                            <th scope="row"><ctg:out text="${request.authorPseudo}"/></th>
-                            <th scope="row"><ctg:out text="${request.genre}"/></th>
-                            <th scope="row"><ctg:out text="${request.isbn}"/></th>
-                            <th scope="row"><ctg:out text="${request.availableQuantity}"/></th>
+                            <th scope="row"><ctg:out text="${book.authorPseudo}"/></th>
+                            <th scope="row"><ctg:out text="${book.genre}"/></th>
+                            <th scope="row"><ctg:out text="${book.isbn}"/></th>
+                            <th scope="row"><ctg:out text="${book.availableQuantity}"/></th>
                         <tr>
                     </c:forEach>
                 </tbody>
@@ -74,14 +81,14 @@
                         <div class="form-group mt-1">
                             <input type="text" id="inputBookTitle" name="bookTitle" class="form-control field"
                                    placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                                   value="${bookTitle}" pattern="[А-Яа-я\w\p{Blank}]{3,255}"/>
+                                   value="${title}" pattern="[А-Яа-я\w\p{Blank}.]{3,255}"/>
                         </div>
 
                         <label for="inputBookAuthor"><fmt:message key="books.author"/></label>
                         <div class="form-group mt-1">
                             <input type="text" id="inputBookAuthor" name="bookAuthor" class="form-control field"
                                    placeholder="<fmt:message key="register.inputNamePlaceholder"/>" required
-                                   value="${bookAuthor}" pattern="[А-Яа-яa-zA-Z\s]{3,255}"/>
+                                   value="${bookAuthor}" pattern="[А-Яа-яa-zA-Z.\s]{3,255}"/>
                         </div>
 
                         <label for="inputBookISBN">ISBN-13</label>

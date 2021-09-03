@@ -3,6 +3,11 @@ package by.epamtc.library.controller.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Filter sets localization.
+ *
+ * @author Artur Mironchik
+ */
 public class EncodingFilter implements Filter{
     private static final String ENCODING_PARAMETER = "encoding";
     private String code;

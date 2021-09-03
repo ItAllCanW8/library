@@ -9,9 +9,7 @@ import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.BookServiceImpl;
-import by.epamtc.library.model.service.validation.BookValidator;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,9 +20,13 @@ import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AddBook implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
 
+/**
+ * Command that adds a book.
+ *
+ * @author Artur Mironchik
+ */
+public class AddBook implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();
@@ -61,7 +63,6 @@ public class AddBook implements Command {
                 result = new CommandResult(CommandName.TO_LIBRARIAN_BOOKS, CommandResult.Type.FORWARD);
             }
         } catch (ServiceException e) {
-            LOGGER.log(Level.ERROR, "Couldn't create book");
             throw new CommandException(e);
         }
         return result;

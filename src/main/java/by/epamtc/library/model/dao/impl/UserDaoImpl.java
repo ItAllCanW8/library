@@ -3,7 +3,6 @@ package by.epamtc.library.model.dao.impl;
 import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
-import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
@@ -17,6 +16,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * UserDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class UserDaoImpl implements UserDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -34,7 +38,10 @@ public class UserDaoImpl implements UserDao {
     private static final String statusCol = "status";
     private static final String roleCol = "role";
 
-    public UserDaoImpl() {
+    /**
+     * Constructs a UserDaoImpl object.
+     */
+    UserDaoImpl() {
     }
 
     @Override
@@ -79,7 +86,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private Optional<Long> findRoleId(UserRole role, Connection connection) throws SQLException, ConnectionPoolException {
+    private Optional<Long> findRoleId(UserRole role, Connection connection) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ROLE_ID_BY_NAME)) {
             statement.setString(1, role.name());
             ResultSet resultSet = statement.executeQuery();
@@ -87,7 +94,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private Optional<Long> findDetailsId(String phoneNum, Connection connection) throws SQLException, ConnectionPoolException {
+    private Optional<Long> findDetailsId(String phoneNum, Connection connection) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_DETAILS_ID_BY_PHONE)) {
             statement.setString(1, phoneNum);
             ResultSet resultSet = statement.executeQuery();
@@ -96,13 +103,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean add(User user, String encPass) throws DaoException {
+    public boolean add(User user, String encryptedPassword) throws DaoException {
         try (Connection connection = pool.takeConnection()) {
             if (insertUserDetails(user.getUserDetails(), connection)) {
                 try (PreparedStatement insertUserSt = connection.prepareStatement(SqlQuery.INSERT_USER)) {
                     insertUserSt.setString(1, user.getUsername());
                     insertUserSt.setString(2, user.getEmail());
-                    insertUserSt.setString(3, encPass);
+                    insertUserSt.setString(3, encryptedPassword);
                     insertUserSt.setString(4, user.getStatus().getValue());
 
                     insertUserSt.setLong(5, findDetailsId(user.getUserDetails().getPhoneNumber(), connection).
@@ -136,7 +143,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserById(long userId) throws DaoException {
+    public Optional<User> findById(long userId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_ID)) {
             statement.setLong(1, userId);
@@ -304,7 +311,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws DaoException {
+    public Optional<User> findByEmail(String email) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL)) {
             statement.setString(1, email);

@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * UserReportDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class UserReportDaoImpl implements UserReportDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -31,6 +36,11 @@ public class UserReportDaoImpl implements UserReportDao {
     private static final String usernameCol = "username";
     private static final String emailCol = "email";
     private static final String roleCol = "role";
+
+    /**
+     * Constructs a UserReportDaoImpl object.
+     */
+    UserReportDaoImpl(){}
 
     @Override
     public boolean userReportExists(String message,String subject, long userId) throws DaoException {
@@ -76,25 +86,25 @@ public class UserReportDaoImpl implements UserReportDao {
                 reports.add(createUserReportFromResultSet(resultSet, false));
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error loading user reports", e);
         }
         return reports;
     }
 
     @Override
-    public Optional<UserReport> findUserReportById(long reportId) throws DaoException {
+    public Optional<UserReport> findById(long reportId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_REPORT_BY_ID)) {
             statement.setLong(1, reportId);
             ResultSet resultSet = statement.executeQuery();
             return (resultSet.next() ? Optional.of(createUserReportFromResultSet(resultSet, true)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding user report by id " + reportId, e);
         }
     }
 
     @Override
-    public boolean updateUserReportResponse(long reportId, String response) throws DaoException {
+    public boolean createUserReportResponse(long reportId, String response) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_REPORT_RESPONSE)) {
             statement.setString(1, response);
@@ -104,7 +114,7 @@ public class UserReportDaoImpl implements UserReportDao {
 
             return statement.getUpdateCount() == 1;
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error creating response to user report", e);
         }
     }
 

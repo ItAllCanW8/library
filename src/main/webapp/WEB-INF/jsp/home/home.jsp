@@ -31,9 +31,6 @@
                                         <h1>
                                             <fmt:message key="carousel.library"/>
                                         </h1>
-                                        <a href="">
-                                            <fmt:message key="button.moreInfo"/>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -49,9 +46,6 @@
                                         <h1>
                                             <fmt:message key="carousel.education"/>
                                         </h1>
-                                        <a href="">
-                                            <fmt:message key="button.moreInfo"/>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -67,9 +61,6 @@
                                         <h1>
                                             <fmt:message key="carousel.leisure"/>
                                         </h1>
-                                        <a href="">
-                                            <fmt:message key="button.moreInfo"/>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -94,13 +85,13 @@
         </div>
         <div class="course_container">
             <div class="course_content">
-                <c:forEach var="request" items="${books}">
+                <c:forEach var="book" items="${books}">
                     <div class="box">
-                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${request.img}" alt="" />
-                        <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${request.id}">
+                        <img src="${pageContext.request.contextPath}/load_book_cover.do?fileName=${book.img}" alt="" />
+                        <a href="${pageContext.request.contextPath}/load_book_info.do?bookId=${book.id}">
                             <img src="${pageContext.request.contextPath}/images/layout/link.png" alt="" />
                         </a>
-                        <h5><ctg:out text="${request.title}"/></h5>
+                        <h5><ctg:out text="${book.title}"/></h5>
                     </div>
                 </c:forEach>
             </div>

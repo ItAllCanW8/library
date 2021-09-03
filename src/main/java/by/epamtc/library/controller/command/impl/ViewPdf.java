@@ -5,8 +5,6 @@ import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandResult;
 import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
-import by.epamtc.library.model.service.BookService;
-import by.epamtc.library.model.service.impl.BookServiceImpl;
 import by.epamtc.library.util.FileHandler;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -16,8 +14,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
+/**
+ * Command that loads book pdf.
+ *
+ * @author Artur Mironchik
+ */
 public class ViewPdf implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override

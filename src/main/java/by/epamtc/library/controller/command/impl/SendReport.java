@@ -7,7 +7,7 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserReportService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.mail.MailSender;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +16,12 @@ import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Command that creates and sends user report.
+ *
+ * @author Artur Mironchik
+ */
 public class SendReport implements Command {
-
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         HttpSession session = req.getSession();

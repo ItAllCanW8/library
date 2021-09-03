@@ -1,7 +1,6 @@
 package by.epamtc.library.controller.filter;
 
 import by.epamtc.library.controller.attribute.CommandName;
-import by.epamtc.library.controller.attribute.ServletAttribute;
 import by.epamtc.library.controller.attribute.SessionAttribute;
 import by.epamtc.library.controller.command.Command;
 import by.epamtc.library.controller.command.CommandProvider;
@@ -21,6 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Filter checks user's role and determines if user has such permissions to process the command.
+ *
+ * @author Artur Mironchik
+ */
 public class PermissionFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Map<UserRole, EnumSet<CommandType>> permissionCommands = new HashMap<>();
@@ -42,9 +46,8 @@ public class PermissionFilter implements Filter {
 
         EnumSet<CommandType> adminCommands = EnumSet.of(CommandType.CHANGE_ROLE_TO_LIBRARIAN,
                 CommandType.CHANGE_ROLE_TO_READER,CommandType.CHANGE_USER_STATUS, CommandType.USERS,
-                CommandType.FIND_USERS_BY_ROLE, CommandType.FIND_USERS_BY_STATUS, CommandType.COEFFICIENTS,
-                CommandType.SET_COEFFICIENTS, CommandType.USER_REPORTS, CommandType.LOAD_USER_REPORT,
-                CommandType.CREATE_REPORT_RESPONSE, CommandType.FIND_REPORTS_BY_STATE);
+                CommandType.FIND_USERS_BY_ROLE, CommandType.FIND_USERS_BY_STATUS, CommandType.USER_REPORTS,
+                CommandType.LOAD_USER_REPORT, CommandType.CREATE_REPORT_RESPONSE, CommandType.FIND_REPORTS_BY_STATE);
             adminCommands.addAll(authorizedUserCommands);
         adminCommands.addAll(sameCommands);
 
@@ -56,7 +59,7 @@ public class PermissionFilter implements Filter {
         librarianCommands.addAll(authorizedUserCommands);
 
         EnumSet<CommandType> readerCommands = EnumSet.of(CommandType.RENT_BOOK, CommandType.READING_ROOM,
-                CommandType.MY_BOOK_REQUESTS, CommandType.RETURN_BOOK);
+                CommandType.MY_BOOK_REQUESTS, CommandType.RETURN_BOOK, CommandType.EXTEND_BOOK);
         readerCommands.addAll(sameCommands);
         readerCommands.addAll(authorizedUserCommands);
 

@@ -5,14 +5,19 @@ import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserDetails;
 import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
-import by.epamtc.library.model.entity.factory.LibraryFactory;
+import by.epamtc.library.model.entity.factory.EntityFactory;
 import by.epamtc.library.model.service.validation.UserValidator;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
-public class UserFactory implements LibraryFactory<User> {
+/**
+ * EntityFactory implementation used to create a User object.
+ *
+ * @author Artur Mironchik
+ */
+public class UserFactory implements EntityFactory<User> {
     private static final UserRole DEFAULT_ROLE = UserRole.READER;
     private static final String DEFAULT_PHOTO_NAME = "default_avatar.png";
     private static final UserStatus DEFAULT_STATUS = UserStatus.ACTIVE;
@@ -21,10 +26,18 @@ public class UserFactory implements LibraryFactory<User> {
     }
 
     private static class Holder {
-        static final LibraryFactory<User> INSTANCE = new UserFactory();
+        /**
+         * The Instance.
+         */
+        static final EntityFactory<User> INSTANCE = new UserFactory();
     }
 
-    public static LibraryFactory<User> getInstance() { return UserFactory.Holder.INSTANCE; }
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+    public static EntityFactory<User> getInstance() { return UserFactory.Holder.INSTANCE; }
 
     @Override
     public Optional<User> create(Map<String, String> fields) {

@@ -11,7 +11,7 @@
 
 <div class="hero_area">
     <%@ include file="../components/header.jsp" %>
-    <c:set var="request" scope="request" value="${userReport}"/>
+    <c:set var="report" scope="request" value="${userReport}"/>
 </div>
 
 <div class="container">
@@ -26,36 +26,36 @@
         <div class="card-header">
             <h3>
                 <fmt:message key="report.info.title"/>
-                <c:if test="${request.isProcessed()}">
+                <c:if test="${report.isProcessed()}">
                     <fmt:message key="report.info.processed"/>
                 </c:if>
             </h3>
         </div>
         <div class="card-body">
             <h4 class="card-title"><fmt:message key="report.info.subject"/></h4>
-            <p class="card-text"><ctg:out text="${request.subject}"/></p>
+            <p class="card-text"><ctg:out text="${report.subject}"/></p>
         </div>
         <div class="card-body">
             <h4 class="card-title"><fmt:message key="report.info.message"/></h4>
-            <p class="card-text"><ctg:out text="${request.message}"/></p>
+            <p class="card-text"><ctg:out text="${report.message}"/></p>
         </div>
         <div class="card-body">
             <h4 class="card-title"><fmt:message key="report.info.creationDate"/></h4>
-            <p class="card-text"><ctg:out text="${request.creationDate}"/></p>
+            <p class="card-text"><ctg:out text="${report.creationDate}"/></p>
         </div>
         <div class="card-body">
             <h4 class="card-title"><fmt:message key="report.info.email"/></h4>
-            <p class="card-text"><ctg:out text="${request.user.email}"/></p>
+            <p class="card-text"><ctg:out text="${report.user.email}"/></p>
         </div>
         <div class="card-body">
             <h4 class="card-title"><fmt:message key="report.info.role"/></h4>
-            <p class="card-text"><ctg:out text="${request.user.role}"/></p>
+            <p class="card-text"><ctg:out text="${report.user.role}"/></p>
         </div>
 
-        <c:if test="${request.response != null}">
+        <c:if test="${report.response != null}">
             <div class="card-body">
                 <h4 class="card-title"><fmt:message key="report.info.response"/></h4>
-                <p class="card-text"><ctg:out text="${request.response}"/></p>
+                <p class="card-text"><ctg:out text="${report.response}"/></p>
             </div>
         </c:if>
 
@@ -70,7 +70,7 @@
                 <ul class="dropdown-menu dropdown-menu-dark" style="width: 100%"
                     aria-labelledby="actionDropDown">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/load_user_profile.do?userId=${request.user.id}"><fmt:message
+                           href="${pageContext.request.contextPath}/load_user_profile.do?userId=${report.user.id}"><fmt:message
                             key="report.info.userProfile"/> </a></li>
 <%--                    <c:if test="${report.response == null}">--%>
                         <li>
@@ -97,7 +97,7 @@
                     <div class="modal-body">
                         <form id="createResponseForm" method="POST"
                               action="${pageContext.request.contextPath}/create_report_response.do">
-                            <input type="hidden" name="reportId" value="${request.id}">
+                            <input type="hidden" name="reportId" value="${report.id}">
                             <label for="inputResponse"><fmt:message
                                     key="report.info.inputResponse"/> </label>
                             <div class="form-group mt-1">

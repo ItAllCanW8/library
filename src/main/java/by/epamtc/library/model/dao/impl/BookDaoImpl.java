@@ -6,14 +6,17 @@ import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookDao;
 import by.epamtc.library.model.entity.Book;
 import by.epamtc.library.util.SortingHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * BookDao implementation.
+ *
+ * @author Artur Mironchik
+ */
 public class BookDaoImpl implements BookDao {
     private static final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -28,19 +31,17 @@ public class BookDaoImpl implements BookDao {
     private static final String bookAuthorImgCol = "author_img";
     private static final String bookQuantityCol = "available_quantity";
 
-    public BookDaoImpl() {
+    /**
+     * Constructs a BookDaoImpl object.
+     */
+    BookDaoImpl() {
     }
 
     @Override
     public boolean add(Book book) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_BOOK)) {
-            statement.setString(1, book.getTitle());
-            statement.setString(2, book.getAuthorPseudo());
-            statement.setString(3, book.getIsbn());
-            statement.setInt(4, book.getAvailableQuantity());
-            statement.setString(5, book.getGenre());
-            statement.setString(6, book.getShortDescription());
+            setBookFields(book, statement);
             statement.setString(7, book.getPdf());
             statement.setString(8, book.getImg());
             statement.setString(9, book.getAuthorImg());
@@ -51,6 +52,15 @@ public class BookDaoImpl implements BookDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error adding a book.", e);
         }
+    }
+
+    private void setBookFields(Book book, PreparedStatement statement) throws SQLException {
+        statement.setString(1, book.getTitle());
+        statement.setString(2, book.getAuthorPseudo());
+        statement.setString(3, book.getIsbn());
+        statement.setInt(4, book.getAvailableQuantity());
+        statement.setString(5, book.getGenre());
+        statement.setString(6, book.getShortDescription());
     }
 
     @Override
@@ -107,7 +117,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Optional<Book> findBookById(long bookId) throws DaoException {
+    public Optional<Book> findById(long bookId) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_BY_ID)) {
             statement.setLong(1, bookId);
@@ -120,33 +130,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Optional<String> findBookCoverById(long bookId) throws DaoException {
-        try(Connection connection = pool.takeConnection();
-        PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_COVER_BY_ID)) {
-            statement.setLong(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return resultSet.next() ? Optional.of(resultSet.getString(bookImgCol)) : Optional.empty();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error finding book cover by id " + bookId, e);
-        }
-    }
-
-    @Override
-    public Optional<String> findBookPdfById(long bookId) throws DaoException {
-        try(Connection connection = pool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_PDF_BY_ID)) {
-            statement.setLong(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return resultSet.next() ? Optional.of(resultSet.getString(bookPdfCol)) : Optional.empty();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error finding book pdf by id " + bookId, e);
-        }
-    }
-
-    @Override
-    public List<Book> findBooksByKeyword(String keyword) throws DaoException {
+    public List<Book> findByKeyword(String keyword) throws DaoException {
         List<Book> books = new ArrayList<>();
 
         try(Connection connection = pool.takeConnection();
@@ -205,19 +189,6 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public int findBookQuantityById(long bookId) throws DaoException {
-        try(Connection connection = pool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BOOK_QUANTITY_BY_ID)) {
-            statement.setLong(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return resultSet.next() ? resultSet.getShort(bookQuantityCol) : -1;
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Error finding book quantity by id " + bookId, e);
-        }
-    }
-
-    @Override
     public boolean changeCover(long bookId, String path) throws DaoException {
         return changePhoto(bookId, path, SqlQuery.UPDATE_BOOK_COVER);
     }
@@ -245,12 +216,7 @@ public class BookDaoImpl implements BookDao {
     public boolean updateBook(Book book) throws DaoException {
         try (Connection connection = pool.takeConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK)) {
-            statement.setString(1, book.getTitle());
-            statement.setString(2, book.getAuthorPseudo());
-            statement.setString(3, book.getIsbn());
-            statement.setInt(4, book.getAvailableQuantity());
-            statement.setString(5, book.getGenre());
-            statement.setString(6, book.getShortDescription());
+            setBookFields(book, statement);
             statement.setLong(7, book.getId());
 
             statement.execute();

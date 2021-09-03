@@ -1,8 +1,12 @@
 package by.epamtc.library.model.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
+/**
+ * Entity class that represents a book.
+ *
+ * @author Artur Mironchik
+ */
 public class UserReport implements Serializable {
     private long id;
     private boolean isProcessed;
@@ -12,7 +16,7 @@ public class UserReport implements Serializable {
     private String creationDate;
     private User user;
 
-    private UserReport(){}
+    public UserReport(){}
 
     public UserReport(boolean isProcessed, String subject, String message, String creationDate){
         this.isProcessed = isProcessed;
@@ -90,35 +94,35 @@ public class UserReport implements Serializable {
 
         if (id != that.id) return false;
         if (isProcessed != that.isProcessed) return false;
-        if (!subject.equals(that.subject)) return false;
-        if (!message.equals(that.message)) return false;
-        if (!Objects.equals(response, that.response)) return false;
-        if (!creationDate.equals(that.creationDate)) return false;
-        return user.equals(that.user);
+        if (subject != null ? !subject.equals(that.subject) : that.subject != null) return false;
+        if (message != null ? !message.equals(that.message) : that.message != null) return false;
+        if (response != null ? !response.equals(that.response) : that.response != null) return false;
+        if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
+        return user != null ? user.equals(that.user) : that.user == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (isProcessed ? 1 : 0);
-        result = 31 * result + subject.hashCode();
-        result = 31 * result + message.hashCode();
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        result = 31 * result + (message != null ? message.hashCode() : 0);
         result = 31 * result + (response != null ? response.hashCode() : 0);
-        result = 31 * result + creationDate.hashCode();
-        result = 31 * result + user.hashCode();
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder(UserReport.class.getSimpleName()+"{");
-        sb.append("id=").append(id);
-        sb.append(", subject='").append(subject).append('\'');
-        sb.append(", message='").append(message).append('\'');
-        sb.append(", response='").append(response).append('\'');
-        sb.append(", creationDate='").append(creationDate).append('\'');
-        sb.append(", user=").append(user);
-        sb.append('}');
-        return sb.toString();
+        return "UserReport{" +
+                "id=" + id +
+                ", isProcessed=" + isProcessed +
+                ", subject='" + subject + '\'' +
+                ", message='" + message + '\'' +
+                ", response='" + response + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

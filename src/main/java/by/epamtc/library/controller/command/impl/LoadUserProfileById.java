@@ -10,13 +10,17 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.service.UserService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
-import by.epamtc.library.model.service.impl.UserServiceImpl;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+/**
+ * Command that loads user profile page by id.
+ *
+ * @author Artur Mironchik
+ */
 public class LoadUserProfileById implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -24,7 +28,7 @@ public class LoadUserProfileById implements Command {
         UserService service = ServiceFactory.getInstance().getUserService();
         CommandResult result = new CommandResult(CommandName.USERS, CommandResult.Type.FORWARD);
         try {
-            Optional<User> userOptional = service.findUserById(Long.parseLong(userId));
+            Optional<User> userOptional = service.findById(Long.parseLong(userId));
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 req.setAttribute(RequestParameter.USER, user);

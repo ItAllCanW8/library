@@ -18,9 +18,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * Controller class used to process all requests from users with url pattern '*.do'.
+ *
+ * @author Artur Mironchik
+ */
 @WebServlet(urlPatterns = ServletAttribute.SERVLET_PATTERN, name = ServletAttribute.SERVLET_NAME)
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();

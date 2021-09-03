@@ -11,13 +11,17 @@ import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserReport;
 import by.epamtc.library.model.service.UserReportService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.mail.MailSender;
-import org.apache.logging.log4j.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Command that creates response to user report.
+ *
+ * @author Artur Mironchik
+ */
 public class CreateUserReportResponse implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -29,7 +33,7 @@ public class CreateUserReportResponse implements Command {
         try {
             long reportId = Long.parseLong(reportIdStr);
             if (service.createResponse(reportId, userReportResponse)) {
-                UserReport userReport = service.findUserReportById(reportId).get();
+                UserReport userReport = service.findById(reportId).get();
                 User user = userReport.getUser();
 
                 MailSender sender = MailSender.getInstance();

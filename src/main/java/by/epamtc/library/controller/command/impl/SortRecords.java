@@ -13,25 +13,30 @@ import by.epamtc.library.model.entity.UserReport;
 import by.epamtc.library.model.service.BookRequestService;
 import by.epamtc.library.model.service.BookService;
 import by.epamtc.library.model.service.UserReportService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 import by.epamtc.library.util.SortingHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * Command that sorts given records.
+ *
+ * @author Artur Mironchik
+ */
 public class SortRecords implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String sortingField = req.getParameter(RequestParameter.SORTING_FIELD);
         String sortingOrder = req.getParameter(RequestParameter.SORTING_ORDER);
-        SortingHelper.SortingObject sortingObject = SortingHelper.SortingObject.
-                fromString(req.getParameter(RequestParameter.SORTING_OBJECT));
+        SortingHelper.SortingEntity sortingEntity = SortingHelper.SortingEntity.
+                fromString(req.getParameter(RequestParameter.SORTING_ENTITY));
         CommandResult result = new CommandResult(CommandName.HOME_URL, CommandResult.Type.REDIRECT);
 
-        if (sortingObject != null) {
+        if (sortingEntity != null) {
             try {
-                switch (sortingObject){
+                switch (sortingEntity){
                     case BOOKS:
                         BookService bookService = ServiceFactory.getInstance().getBookService();
                         List<Book> books = bookService.sort(sortingField, sortingOrder);

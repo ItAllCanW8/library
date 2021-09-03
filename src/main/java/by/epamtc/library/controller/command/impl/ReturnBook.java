@@ -7,12 +7,17 @@ import by.epamtc.library.exception.CommandException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequestType;
 import by.epamtc.library.model.service.BookRequestService;
-import by.epamtc.library.model.service.factory.ServiceFactory;
+import by.epamtc.library.model.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command that closes book request.
+ *
+ * @author Artur Mironchik
+ */
 public class ReturnBook implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -29,9 +34,8 @@ public class ReturnBook implements Command {
 
         BookRequestService service = ServiceFactory.getInstance().getBookRequestService();
         try {
-            if(!service.closeBookRequest(userId,Long.parseLong(requestIdStr), Long.parseLong(bookIdStr),
-                    Short.parseShort(bookQuantityStr), requestType, expectedReturnDate))
-                result = new CommandResult(PagePath.ERROR, CommandResult.Type.FORWARD);
+            service.closeBookRequest(userId,Long.parseLong(requestIdStr), Long.parseLong(bookIdStr),
+                    Short.parseShort(bookQuantityStr), requestType, expectedReturnDate);
         } catch (NumberFormatException e) {
             req.setAttribute(JspAttribute.ERROR_INPUT_DATA, JspAttribute.ERROR_INPUT_DATA_MSG);
             result = new CommandResult(CommandName.READER_BOOK_REQUESTS, CommandResult.Type.FORWARD);

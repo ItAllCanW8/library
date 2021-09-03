@@ -43,10 +43,10 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="sortByDate">
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=desc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingEntity=book_requests&sortingField=request_date&sortingOrder=desc">
                                 <fmt:message key="button.sortDesc"/> </a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/sort_records.do?sortingObject=book_requests&sortingField=request_date&sortingOrder=asc">
+                                   href="${pageContext.request.contextPath}/sort_records.do?sortingEntity=book_requests&sortingField=request_date&sortingOrder=asc">
                                 <fmt:message key="button.sortAsc"/> </a></li>
                         </ul>
                     </div>
