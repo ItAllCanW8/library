@@ -1,7 +1,7 @@
 # library
 * [Project Description](#project-description)
 * [Project Features](#project-features)
-* .[DB Scheme](#db-scheme)
+* [DB Scheme](#db-scheme)
 * [Roles](#roles)
 * [Guest's scope](#guests-scope)
 * [Reader's scope](#readers-scope)
