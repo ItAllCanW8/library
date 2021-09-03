@@ -1,6 +1,7 @@
 # library
 * [Project Description](#project-description)
 * [Project Features](#project-features)
+* .[DB Scheme](#db-scheme)
 * [Roles](#roles)
 * [Guest's scope](#guests-scope)
 * [Reader's scope](#readers-scope)
@@ -19,6 +20,9 @@ Library Management System (Java EE, Bootstrap, Tomcat, Maven, JUnit, javadoc)
 * XSS protection with custom tag
 * Custom connection pool and proxy connections
 * Double data validation
+
+# DB Scheme
+![bd](https://user-images.githubusercontent.com/62715846/131978786-30217d47-9bb1-4fb7-9f56-ff8b47563cc2.png)
 
 # Roles
 * Guest
