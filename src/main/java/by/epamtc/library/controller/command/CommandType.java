@@ -289,6 +289,9 @@ public enum CommandType {
      */
     FIND_REPORTS_BY_STATE{{
         this.command = new FindUserReportsByState();
+    }},
+    EXTEND_BOOK{{
+        this.command = new ExtendBook();
     }};
 
     /**

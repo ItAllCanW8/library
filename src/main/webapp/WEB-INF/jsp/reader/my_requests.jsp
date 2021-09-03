@@ -83,6 +83,9 @@
                                    href="${pageContext.request.contextPath}/return_book.do?requestId=${request.id}&bookId=${request.book.id}&bookQuantity=${request.book.availableQuantity}&requestType=${request.type}">
                               <fmt:message key="button.return"/> </a></li>
                           </c:if>
+                        <li><a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/extend_book.do?requestId=${request.id}&expectedReturnDate=${request.expectedReturnDate}">
+                          Extend </a></li>
                       </ul>
                     </div>
                   </c:if>

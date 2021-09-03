@@ -150,4 +150,9 @@ public interface BookRequestService {
      * @throws ServiceException the service exception
      */
     Optional<String> findEmailByRequestId(long requestId) throws ServiceException;
+
+    String loadExtensionDaysCoeff() throws ServiceException;
+
+    boolean extendBookRequest(long requestId, String expectedReturnDate, long extensionDaysCoeffStr)
+            throws ServiceException;
 }

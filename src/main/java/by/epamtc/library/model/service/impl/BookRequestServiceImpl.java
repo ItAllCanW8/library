@@ -162,6 +162,24 @@ public class BookRequestServiceImpl implements BookRequestService {
     }
 
     @Override
+    public String loadExtensionDaysCoeff() throws ServiceException {
+        try {
+            return bookRequestDao.loadExtensionDaysCoeff();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean extendBookRequest(long requestId, String expectedReturnDate, long extensionDaysCoeffStr) throws ServiceException {
+        try {
+            return bookRequestDao.extendBookRequest(requestId, expectedReturnDate, extensionDaysCoeffStr);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<BookRequest> loadBookRequestsByReaderId(long readerId) throws ServiceException {
         try {
             return bookRequestDao.loadBookRequestsByReaderId(readerId);

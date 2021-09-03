@@ -2,6 +2,7 @@ package by.epamtc.library.model.dao.impl;
 
 import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.exception.DaoException;
+import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.BookRequestDao;
 import by.epamtc.library.model.entity.*;
@@ -329,11 +330,39 @@ public class BookRequestDaoImpl implements BookRequestDao {
     public String loadMaxSubBooksCoeff() throws DaoException {
         try (Connection connection = pool.takeConnection();
              Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_MAX_COUNT_OF_BOOKS_FOR_SUB);
+            ResultSet resultSet = statement.executeQuery(SqlQuery.LOAD_EXTENSION_DAYS_COEFF);
 
             return (resultSet.next() ? resultSet.getString(1) : null);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Error loading max number of books for subscription." , e);
+        }
+    }
+
+    @Override
+    public String loadExtensionDaysCoeff() throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SqlQuery.LOAD_EXTENSION_DAYS_COEFF);
+
+            return (resultSet.next() ? resultSet.getString(1) : null);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error loading extension days coeff." , e);
+        }
+    }
+
+    @Override
+    public boolean extendBookRequest(long requestId, String expectedReturnDateStr, long extensionDaysCoeff) throws DaoException {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_BOOK_EXPECTED_RETURN_DATE)) {
+            LocalDateTime newExpectedReturnDate = LocalDateTime.parse(expectedReturnDateStr, DateTimeHelper.formatter)
+                    .plusDays(extensionDaysCoeff);
+
+            statement.setString(1, newExpectedReturnDate.toString());
+            statement.setLong(2, requestId);
+
+            return statement.executeUpdate() == 1;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error extending book request by request id " + requestId, e);
         }
     }
 

@@ -313,4 +313,11 @@ public class SqlQuery {
      */
     public static final String LOAD_READING_ROOM_COEFFS = "SELECT coefficient_name,coefficient_value FROM coefficients WHERE" +
             " coefficient_name LIKE 'reading_room_%ing'";
+
+    public static final String LOAD_EXTENSION_DAYS_COEFF = "SELECT coefficient_value FROM coefficients WHERE " +
+            "coefficient_name = 'book_extend_for_days'";
+
+    public static final String UPDATE_BOOK_EXPECTED_RETURN_DATE = "UPDATE book_requests SET expected_return_date = ? " +
+            "WHERE request_id = ?;";
+
 }

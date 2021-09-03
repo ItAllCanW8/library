@@ -59,7 +59,7 @@ public class PermissionFilter implements Filter {
         librarianCommands.addAll(authorizedUserCommands);
 
         EnumSet<CommandType> readerCommands = EnumSet.of(CommandType.RENT_BOOK, CommandType.READING_ROOM,
-                CommandType.MY_BOOK_REQUESTS, CommandType.RETURN_BOOK);
+                CommandType.MY_BOOK_REQUESTS, CommandType.RETURN_BOOK, CommandType.EXTEND_BOOK);
         readerCommands.addAll(sameCommands);
         readerCommands.addAll(authorizedUserCommands);
 
