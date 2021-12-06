@@ -206,6 +206,10 @@ public class RequestParameter {
      * The constant that represents USER_REPORT_STATE.
      */
     public static final String USER_REPORT_STATE = "isProcessed";
+    /**
+     * The constant that represents LOGGING_NOTES.
+     */
+    public static final String LOGGING_NOTES = "loggingNotes";
 
     private RequestParameter(){}
 }

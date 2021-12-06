@@ -15,8 +15,9 @@
 <head>
     <title><fmt:message key="title.library"/></title>
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"
+          rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
@@ -29,7 +30,7 @@
             <c:set var="admin" scope="session" value="ADMIN"/>
             <c:set var="librarian" scope="session" value="LIBRARIAN"/>
             <c:set var="reader" scope="session" value="READER"/>
-            <c:set var="user" scope="session" value="${sessionScope.user}"/>
+            <c:set var="loggingNotes" scope="session" value="${sessionScope.user}"/>
 
             <c:set var="activeStatus" scope="session" value="active"/>
             <c:set var="forSubscription" scope="session" value="for_subscription"/>
@@ -117,32 +118,35 @@
                                        href="${pageContext.request.contextPath}/user_profile.do"><fmt:message
                                         key="header.profile"/></a></li>
                                 <li>
-                                <c:if test="${sessionScope.role.toString().equals(admin)}">
-                                    <li><a class="dropdown-item"
-                                           href="${pageContext.request.contextPath}/users.do"><fmt:message
-                                            key="header.users"/></a></li>
-                                    <li>
-                                    <li><a class="dropdown-item"
-                                           href="${pageContext.request.contextPath}/user_reports.do"><fmt:message
-                                            key="header.user_reports"/></a></li>
-                                    <li>
-                                </c:if>
-                                <c:if test="${sessionScope.role.toString().equals(librarian)}">
-                                    <li><a class="dropdown-item"
-                                           href="${pageContext.request.contextPath}/to_librarian_books.do"><fmt:message
-                                            key="header.booksManagement"/></a></li>
-                                    <li>
-                                    <li><a class="dropdown-item"
-                                           href="${pageContext.request.contextPath}/book_requests.do"><fmt:message
-                                            key="librarian.bookRequests"/></a></li>
-                                    <li>
-                                </c:if>
-                                <c:if test="${sessionScope.role.toString().equals(reader)}">
-                                    <li><a class="dropdown-item"
-                                           href="${pageContext.request.contextPath}/my_book_requests.do"><fmt:message
-                                            key="header.readerRequests"/></a></li>
-                                    <li>
-                                </c:if>
+                                    <c:if test="${sessionScope.role.toString().equals(admin)}">
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/users.do"><fmt:message
+                                        key="header.users"/></a></li>
+                                <li>
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/user_reports.do"><fmt:message
+                                        key="header.user_reports"/></a></li>
+                                <li>
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/load_logging_notes.do">Logging Notes</a></li>
+                                <li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.role.toString().equals(librarian)}">
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/to_librarian_books.do"><fmt:message
+                                        key="header.booksManagement"/></a></li>
+                                <li>
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/book_requests.do"><fmt:message
+                                        key="librarian.bookRequests"/></a></li>
+                                <li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.role.toString().equals(reader)}">
+                                <li><a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/my_book_requests.do"><fmt:message
+                                        key="header.readerRequests"/></a></li>
+                                <li>
+                                    </c:if>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item"

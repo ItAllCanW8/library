@@ -1,6 +1,7 @@
 package by.epamtc.library.model.dao;
 
 import by.epamtc.library.exception.DaoException;
+import by.epamtc.library.model.entity.LoggingNote;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
@@ -161,4 +162,6 @@ public interface UserDao {
      * @throws DaoException if the database throws SQLException.
      */
     List<User> findUsersByStatus(UserStatus userStatus) throws DaoException;
+
+    List<LoggingNote> loadLoggingNotes() throws DaoException;
 }

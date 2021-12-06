@@ -4,10 +4,7 @@ import by.epamtc.library.exception.ConnectionPoolException;
 import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.model.connection.ConnectionPool;
 import by.epamtc.library.model.dao.UserDao;
-import by.epamtc.library.model.entity.User;
-import by.epamtc.library.model.entity.UserDetails;
-import by.epamtc.library.model.entity.UserRole;
-import by.epamtc.library.model.entity.UserStatus;
+import by.epamtc.library.model.entity.*;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -272,6 +269,27 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Error finding users by status",e);
         }
         return users;
+    }
+
+    @Override
+    public List<LoggingNote> loadLoggingNotes() throws DaoException {
+        List<LoggingNote> loggingNotes = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(SqlQuery.LOAD_LOGGING_NOTES);
+
+            while (resultSet.next()) {
+                loggingNotes.add(new LoggingNote(
+                        resultSet.getString("event"),
+                        resultSet.getString("date_time"),
+                        resultSet.getLong("user_id_fk")
+                ));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Error finding users by status",e);
+        }
+        return loggingNotes;
     }
 
     @Override

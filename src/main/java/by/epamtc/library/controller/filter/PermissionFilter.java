@@ -47,7 +47,8 @@ public class PermissionFilter implements Filter {
         EnumSet<CommandType> adminCommands = EnumSet.of(CommandType.CHANGE_ROLE_TO_LIBRARIAN,
                 CommandType.CHANGE_ROLE_TO_READER,CommandType.CHANGE_USER_STATUS, CommandType.USERS,
                 CommandType.FIND_USERS_BY_ROLE, CommandType.FIND_USERS_BY_STATUS, CommandType.USER_REPORTS,
-                CommandType.LOAD_USER_REPORT, CommandType.CREATE_REPORT_RESPONSE, CommandType.FIND_REPORTS_BY_STATE);
+                CommandType.LOAD_USER_REPORT, CommandType.CREATE_REPORT_RESPONSE, CommandType.FIND_REPORTS_BY_STATE,
+                CommandType.LOAD_LOGGING_NOTES);
             adminCommands.addAll(authorizedUserCommands);
         adminCommands.addAll(sameCommands);
 

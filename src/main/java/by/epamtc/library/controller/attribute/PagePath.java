@@ -43,6 +43,10 @@ public class PagePath {
      */
     public static final String USERS = "/WEB-INF/jsp/admin/users.jsp";
     /**
+     * Represents the path of logging.jsp.
+     */
+    public static final String LOGGING_NOTES = "/WEB-INF/jsp/admin/logging.jsp";
+    /**
      * Represents the path of book_requests.jsp.
      */
     public static final String BOOK_REQUESTS = "/WEB-INF/jsp/librarian/book_requests.jsp";

@@ -292,6 +292,9 @@ public enum CommandType {
     }},
     EXTEND_BOOK{{
         this.command = new ExtendBook();
+    }},
+    LOAD_LOGGING_NOTES{{
+        this.command = new LoadLoggingNotes();
     }};
 
     /**

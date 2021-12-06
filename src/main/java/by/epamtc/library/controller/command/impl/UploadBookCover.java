@@ -28,9 +28,7 @@ import java.util.UUID;
  *
  * @author Artur Mironchik
  */
-@MultipartConfig(fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 5 * 5)
+@MultipartConfig(maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UploadBookCover implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
