@@ -49,39 +49,39 @@
                 </thead>
 
                 <tbody>
-                <c:forEach var="user" items="${users}">
+                <c:forEach var="loggingNotes" items="${users}">
                     <tr class="table-secondary">
-                        <th scope="row"><a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${user.id}">
-                                <ctg:out text="${user.username}"/></a></th>
+                        <th scope="row"><a href="${pageContext.request.contextPath}/load_user_profile.do?userId=${loggingNotes.id}">
+                                <ctg:out text="${loggingNotes.username}"/></a></th>
                         <th scope="row">
                             <div>
-                                <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                                <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${loggingNotes.userDetails.photoPath}"
                                      alt="" style="max-height: 250px;max-width: 250px"></div>
                         </th>
                         <th scope="row">
-                            <a href="${pageContext.request.contextPath}/find_users_by_role.do?userRole=${user.role.toString()}">
-                                <ctg:out text="${user.role}"/><br>
+                            <a href="${pageContext.request.contextPath}/find_users_by_role.do?userRole=${loggingNotes.role.toString()}">
+                                <ctg:out text="${loggingNotes.role}"/><br>
                             </a>
-                            <c:if test="${user.role.toString().equals(reader)}"><br>
-                                <a href="${pageContext.request.contextPath}/change_role_to_librarian.do?userId=${user.id}"><fmt:message key="users.changeRole"/>
+                            <c:if test="${loggingNotes.role.toString().equals(reader)}"><br>
+                                <a href="${pageContext.request.contextPath}/change_role_to_librarian.do?userId=${loggingNotes.id}"><fmt:message key="users.changeRole"/>
                                 </a>
                             </c:if>
-                            <c:if test="${user.role.toString().equals(librarian)}"><br>
-                                <a href="${pageContext.request.contextPath}/change_role_to_reader.do?userId=${user.id}"><fmt:message key="users.changeRole"/></a>
+                            <c:if test="${loggingNotes.role.toString().equals(librarian)}"><br>
+                                <a href="${pageContext.request.contextPath}/change_role_to_reader.do?userId=${loggingNotes.id}"><fmt:message key="users.changeRole"/></a>
                             </c:if>
                         </th>
-                        <th scope="row"><ctg:out text="${user.email}"/></th>
+                        <th scope="row"><ctg:out text="${loggingNotes.email}"/></th>
                         <th scope="row">
-                            <a href="${pageContext.request.contextPath}/find_users_by_status.do?userStatus=${user.status.value}">
-                                <ctg:out text="${user.status}"/>
+                            <a href="${pageContext.request.contextPath}/find_users_by_status.do?userStatus=${loggingNotes.status.value}">
+                                <ctg:out text="${loggingNotes.status}"/>
                             </a>
-                            <c:if test="${!user.role.toString().equals(admin)}">
-                                <c:if test="${user.status.value.equals(activeStatus)}"><br>
-                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&username=${user.username}&userStatus=deactivated">
+                            <c:if test="${!loggingNotes.role.toString().equals(admin)}">
+                                <c:if test="${loggingNotes.status.value.equals(activeStatus)}"><br>
+                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${loggingNotes.id}&username=${loggingNotes.username}&userStatus=deactivated">
                                         <fmt:message key="users.deactivate"/></a>
                                 </c:if>
-                                <c:if test="${!user.status.value.equals(activeStatus)}"><br>
-                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${user.id}&username=${user.username}&userStatus=active">
+                                <c:if test="${!loggingNotes.status.value.equals(activeStatus)}"><br>
+                                    <a href="${pageContext.request.contextPath}/change_user_status.do?userId=${loggingNotes.id}&username=${loggingNotes.username}&userStatus=active">
                                         <fmt:message key="users.activate"/></a>
                                 </c:if>
                             </c:if>

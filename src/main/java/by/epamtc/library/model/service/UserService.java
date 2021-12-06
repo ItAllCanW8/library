@@ -1,6 +1,7 @@
 package by.epamtc.library.model.service;
 
 import by.epamtc.library.exception.ServiceException;
+import by.epamtc.library.model.entity.LoggingNote;
 import by.epamtc.library.model.entity.User;
 
 import java.util.List;
@@ -169,4 +170,6 @@ public interface UserService {
      * @throws ServiceException the service exception
      */
     Optional<String> findStatusById(long userId) throws ServiceException;
+
+    List<LoggingNote> loadLoggingNotes() throws ServiceException;
 }

@@ -6,6 +6,7 @@ import by.epamtc.library.exception.DaoException;
 import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.dao.UserDao;
 import by.epamtc.library.model.dao.impl.DaoFactory;
+import by.epamtc.library.model.entity.LoggingNote;
 import by.epamtc.library.model.entity.User;
 import by.epamtc.library.model.entity.UserRole;
 import by.epamtc.library.model.entity.UserStatus;
@@ -259,6 +260,15 @@ public class UserServiceImpl implements UserService {
             }
             return statusOptional;
         } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<LoggingNote> loadLoggingNotes() throws ServiceException {
+        try{
+            return userDao.loadLoggingNotes();
+        } catch (DaoException e){
             throw new ServiceException(e);
         }
     }

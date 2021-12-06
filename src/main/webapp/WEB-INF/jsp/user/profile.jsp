@@ -35,10 +35,10 @@
             <div class="col-md-6">
                 <div class="img_container">
                     <div class="img-box b1">
-                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${user.userDetails.photoPath}"
+                        <img src="${pageContext.request.contextPath}/load_profile_photo.do?fileName=${loggingNotes.userDetails.photoPath}"
                              alt=""/>
                     </div>
-                    <c:if test="${sessionScope.userId.equals(user.id)}">
+                    <c:if test="${sessionScope.userId.equals(loggingNotes.id)}">
                         <label for="photoUpload"><fmt:message key="profile.uploadPhoto"/> </label>
                         <form action="${pageContext.request.contextPath}/upload_photo.do" method="post" enctype="multipart/form-data"
                         id="photoUpload">
@@ -51,17 +51,17 @@
             <div class="col-md-6">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h3><ctg:out text="${user.username}"/></h3>
-                        <h4><ctg:out text="${user.email}"/></h4>
+                        <h3><ctg:out text="${loggingNotes.username}"/></h3>
+                        <h4><ctg:out text="${loggingNotes.email}"/></h4>
                         <hr style="width:100%;text-align:left;margin-left:0">
-                        <h5><fmt:message key="profile.name"/>: <ctg:out text="${user.userDetails.name}"/></h5>
-                        <h5><fmt:message key="profile.surname"/>: <ctg:out text="${user.userDetails.surname}"/></h5>
-                        <h5><fmt:message key="profile.dateOfBirth"/>: <ctg:out text="${user.userDetails.dateOfBirth}"/></h5>
-                        <h5><fmt:message key="profile.phoneNumber"/>: <ctg:out text="${user.userDetails.phoneNumber}"/></h5>
+                        <h5><fmt:message key="profile.name"/>: <ctg:out text="${loggingNotes.userDetails.name}"/></h5>
+                        <h5><fmt:message key="profile.surname"/>: <ctg:out text="${loggingNotes.userDetails.surname}"/></h5>
+                        <h5><fmt:message key="profile.dateOfBirth"/>: <ctg:out text="${loggingNotes.userDetails.dateOfBirth}"/></h5>
+                        <h5><fmt:message key="profile.phoneNumber"/>: <ctg:out text="${loggingNotes.userDetails.phoneNumber}"/></h5>
                         <hr style="width:100%;text-align:left;margin-left:0">
                     </div>
 
-                    <c:if test="${sessionScope.userId.equals(user.id)}">
+                    <c:if test="${sessionScope.userId.equals(loggingNotes.id)}">
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                                 data-bs-target="#editProfileModal">
                             <fmt:message key="button.edit"/>
@@ -88,7 +88,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputUsername"
                                                    name="username"
-                                                   value="${user.username}"
+                                                   value="${loggingNotes.username}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
                                                    pattern="[а-яА-Я\w]{3,255}">
@@ -98,7 +98,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputName"
                                                    name="name"
-                                                   value="${user.userDetails.name}"
+                                                   value="${loggingNotes.userDetails.name}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
                                                    pattern="[а-яА-Яa-zA-Z]{3,255}">
@@ -111,7 +111,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputSurname"
                                                    name="surname"
-                                                   value="${user.userDetails.surname}"
+                                                   value="${loggingNotes.userDetails.surname}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputNamePlaceholder"/>" required
                                                    pattern="[а-яА-Яa-zA-Z]{3,255}">
@@ -123,7 +123,7 @@
                                         </div>
                                         <div class="form-group mt-1">
                                             <input type="date" id="inputDate" class="form-control" name="dateOfBirth"
-                                                   value="${user.userDetails.dateOfBirth}"
+                                                   value="${loggingNotes.userDetails.dateOfBirth}"
                                                    required>
                                         </div>
 
@@ -134,7 +134,7 @@
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputPhoneNumber"
                                                    name="phoneNumber"
-                                                   value="${user.userDetails.phoneNumber}"
+                                                   value="${loggingNotes.userDetails.phoneNumber}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputPhoneNumberPlaceholder"/>"
                                                    required
@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="form-group mt-1">
                                             <input type="text" class="form-control field" id="inputEmail" name="email"
-                                                   value="${user.email}"
+                                                   value="${loggingNotes.email}"
                                                    placeholder=
                                                            "<fmt:message key="register.inputEmailPlaceholder"/>"
                                                    required
@@ -228,7 +228,7 @@
                         </div>
                     </div>
 
-                    <c:if test="${!sessionScope.role.toString().equals(admin) && sessionScope.userId == user.id}">
+                    <c:if test="${!sessionScope.role.toString().equals(admin) && sessionScope.userId == loggingNotes.id}">
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                                 data-bs-target="#deactivateModal">
                             <fmt:message key="button.deactivateAccount"/>

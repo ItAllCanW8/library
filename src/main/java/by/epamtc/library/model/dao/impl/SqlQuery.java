@@ -320,4 +320,5 @@ public class SqlQuery {
     public static final String UPDATE_BOOK_EXPECTED_RETURN_DATE = "UPDATE book_requests SET expected_return_date = ? " +
             "WHERE request_id = ?;";
 
+    public static final String LOAD_LOGGING_NOTES = "SELECT * FROM logging_notes;";
 }

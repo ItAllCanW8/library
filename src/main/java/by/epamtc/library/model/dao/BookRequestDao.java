@@ -1,6 +1,7 @@
 package by.epamtc.library.model.dao;
 
 import by.epamtc.library.exception.DaoException;
+import by.epamtc.library.exception.ServiceException;
 import by.epamtc.library.model.entity.BookRequest;
 import by.epamtc.library.model.entity.BookRequestState;
 import by.epamtc.library.model.entity.BookRequestType;
@@ -162,4 +163,8 @@ public interface BookRequestDao {
      * @throws DaoException if the database throws SQLException.
      */
     String loadMaxSubBooksCoeff() throws DaoException;
+    String loadExtensionDaysCoeff() throws DaoException;
+
+    boolean extendBookRequest(long requestId, String expectedReturnDate, long extensionDaysCoeffStr)
+            throws DaoException;
 }
